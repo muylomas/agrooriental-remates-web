@@ -25,7 +25,7 @@ const web_cattle = require('./routes/cattle');
 const web_accounts = require('./routes/accounts');
 
 // Google Auth
-const google_auth = require('./routes/auth/google');
+//const google_auth = require('./routes/auth/google');
 
 // API
 const api_accounts = require('./routes/api/accounts');
