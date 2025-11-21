@@ -75,12 +75,14 @@ head
   script(src='https://cdn.socket.io/4.7.4/socket.io.min.js')
   script.
     const socket = io();
-    const socketApp = io('mercado-agro.com', {
+    const socketApp = io('54.183.80.127', {
       transports: ['websocket', 'xhr-polling']
     });
+    /*
     const socketAppWWW = io('www.mercado-agro.com', {
       transports: ['websocket', 'xhr-polling']
     });
+    */
 
 body
   .container-scroller
