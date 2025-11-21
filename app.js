@@ -157,7 +157,7 @@ app.use('/ganado', web_cattle);
 
 app.use('/cuentas', web_accounts);
 
-app.use('/auth/google', google_auth);
+//app.use('/auth/google', google_auth);
 
 app.use('/login', web_login);
 app.use('/ingresar', web_login);
