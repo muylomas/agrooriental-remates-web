@@ -12,7 +12,7 @@ Common.prototype.sendAssignmentNotifications = function () {
             Destination: {
                 ToAddresses: [email]
             },
-            Source: '"MercadoAgro" <noreply@mercadoagro.com.uy>',
+            Source: '"Agro Oriental" <noreply@mercadoagro.com.uy>',
             Message: {
                 Subject: {
                     Data: subject
@@ -80,7 +80,7 @@ Common.prototype.sendAssignmentNotifications = function () {
                             "S" + results[index].requestId +
                             "</a>" +
                             "<br><br>" +
-                            "Este email fue enviado por el sistema de MercadoAgro, no responda al mismo." +
+                            "Este email fue enviado por el sistema de Agro Oriental, no responda al mismo." +
                             "</body></html>";
 
                         sendAssignmentNotificationEmail(
@@ -150,7 +150,7 @@ Common.prototype.sendAssignmentNotifications = function () {
                             "S" + results[index].requestId +
                             "</a>" +
                             "<br><br>" +
-                            "Este email fue enviado por el sistema de MercadoAgro, no responda al mismo." +
+                            "Este email fue enviado por el sistema de Agro Oriental, no responda al mismo." +
                             "</body></html>";
 
                         sendAssignmentNotificationEmail(

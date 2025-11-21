@@ -169,7 +169,7 @@ function sendNotifEmail(params, requestId, companyName, callback) {
 
         commonEmails.email_sender(
             htmlDir,
-            '"MercadoAgro" <no-reply@mercadoagro.com>',
+            '"Agro Oriental" <no-reply@mercadoagro.com>',
             [params.requestUser.email],
             params.ccUsers,
             subject,

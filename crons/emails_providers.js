@@ -57,7 +57,7 @@ function sendNotifEmail(tableRows, providerName, onlineKey, toName, updateItemCo
 
     commonEmails.email_sender(
         htmlDir,
-        '"MercadoAgro" <logistica@mercadoagro.com>',
+        '"Agro Oriental" <logistica@mercadoagro.com>',
         toEmails,
         [
             'martin@mercadoagro.com',

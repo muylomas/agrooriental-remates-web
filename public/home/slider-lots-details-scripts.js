@@ -51,7 +51,7 @@ function lotsDetailsParamsToHTML(lotParams) {
                                 <i class="mdi mdi-marker-check text-success"></i>
                             </h2>
                             <div class="pl-2 text-small">
-                                Lote certificado por MercadoAgro
+                                Lote certificado por Agro Oriental
                             </div>
                         </div>
                     </div>

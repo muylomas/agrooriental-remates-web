@@ -558,7 +558,7 @@ function updatePasswordAndNotify(userName, email, rewoUserId, notify, callback) 
 
                     common_gral.sendPlainTextEmail(
                         [__aux_user_email,],
-                        '"MercadoAgro" <noreply@mercadoagro.com.uy>',
+                        '"Agro Oriental" <noreply@mercadoagro.com.uy>',
                         "Reseteo de contraseña",
                         __aux_email_content,
                         function (err, result) {
