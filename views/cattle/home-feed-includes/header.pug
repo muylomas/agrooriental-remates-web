@@ -1,0 +1,56 @@
+.topbar-overlay-video.row.m-0.p-0.w-100
+  
+    if(cattleTypesAverages && cattleTypesAverages.length)
+      #averages-types-infinite-scroll.container-infinite-scroll
+        .button-infinite-scroll.d-flex.h-100
+          .row.justify-content-center.align-self-center
+            button#averages-by-type-open.btn.btn-warning.text-dark.p-1
+              i.mdi.mdi-chart-areaspline.icon-lg
+        .horizontal-scrolling-items.py-2
+          each indRepeat in [1,2]
+            each avgItem in cattleTypesAverages
+              .horizontal-scrolling-items__item.mx-2
+                small #{avgItem.name} 
+                | &nbsp;
+                b #{avgItem.avgPrice_1} 
+                if(avgItem.avgPrice_1 == avgItem.avgPriceOld_1)
+                  span.text-primary =&nbsp;
+                if(avgItem.avgPrice_1 < avgItem.avgPriceOld_1)
+                  i.mdi.mdi-arrow-down.text-danger
+                  span.text-danger #{Math.round((1-avgItem.avgPrice_1/avgItem.avgPriceOld_1) *100)}%&nbsp;
+                if(avgItem.avgPrice_1 > avgItem.avgPriceOld_1)
+                  i.mdi.mdi-arrow-up.text-success
+                  span.text-success #{Math.round((1-avgItem.avgPriceOld_1/avgItem.avgPrice_1) *100)}%&nbsp;
+                  
+    #top-menu.row.m-0.p-0.px-2.w-100
+      .col-md-12.m-0.p-0
+        .d-flex.justify-content-between.flex-wrap
+          .d-flex.align-items-center.flex-wrap
+            - var __aux_style = ""
+            if(customer)
+              - __aux_style = customer.customerImage ? 'background-image:url(' + customer.customerImage + ');' : "";
+            .user-profile-icon(style=__aux_style, onclick="window.location.href = '/usuario/perfil'")
+              img.w-100(src='https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png')
+          
+            ul.nav.nav-tabs.border-0(role='tablist')
+              li.nav-item.mx-2
+                a.nav-link.active.text-white.pt-2(data-toggle='tab', role='tab', aria-controls='', aria-selected='true')  
+                  b Comprar
+              li.nav-item
+                a.nav-link.text-white.pt-2( href='/ganado/vender')  
+                  b Vender
+              li.nav-item.mx-2
+                a.nav-link.text-white.pt-2(href='/cuentas/')  
+                  b Cuenta
+
+          .d-flex.justify-content-between.align-items-center.flex-wrap
+            button#search-for-cattle.text-white.border-0.p-0
+              i.mdi.mdi-magnify.icon-lg
+
+    .row.w-100.mt-3
+      .col-md-12
+        .d-flex.justify-content-between.flex-wrap
+          .d-flex.align-items-center.flex-wrap
+            ul#lots-active-bids.nav.nav-tabs.border-0(role='tablist')
+
+          .d-flex.justify-content-between.align-items-center.flex-wrap

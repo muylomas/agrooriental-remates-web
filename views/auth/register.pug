@@ -1,0 +1,37 @@
+extends ../baseAppHTML
+
+block content 
+  .content-wrapper.auth.app-full-bg.p-0.m-0
+    .row.w-100
+      .col-lg-4.mx-auto
+        img.app-profile-img.w-75.m-5.mb-4(style="max-width: 350px;", src='https://mercadoagro-app.s3.amazonaws.com/images/register/logo-app-register-legend.png?ver=1', alt='Mercadoagro')
+        .auth-form-transparent.text-left.p-5.pt-0.text-center
+          form.pt-3
+            h4.text-white.w-100.text-left Unite hoy
+            a.btn.btn-block.btn-light.text-dark.btn-lg.font-weight-medium.mt-3.px-2.w-100(href='/') 
+              i.mdi.mdi-google.btn-icon-prepend(style="font-size:22px;")
+              span 
+                | &nbsp;&nbsp;Ingresar con Google
+            //a.btn.btn-block.btn-light.text-dark.btn-lg.font-weight-medium.mt-3.px-2.w-100(href='/') 
+              i.mdi.mdi-apple.btn-icon-prepend(style="font-size:22px;")
+              span 
+                b &nbsp;&nbsp;Ingresar con Apple
+            h3.my-3.text-white o con
+            a.btn.btn-block.btn-warning.text-dark.btn-lg.font-weight-medium.w-100(href='/') 
+              | Crear una cuenta
+            p.mt-2.text-white
+              | Al crear una cuenta, adhieres a los 
+              a.css-1qaijid.r-bcqeeo.r-qvutc0.r-poiln3.r-1loqt21(href='#', target='_blank', role='link')
+                | Términos y Condiciones
+              |  y a la 
+              a.css-1qaijid.r-bcqeeo.r-qvutc0.r-poiln3.r-1loqt21(href='#', target='_blank', role='link')
+                | Política de Privacidad
+              | , incluyendo el uso de 
+              a.css-1qaijid.r-bcqeeo.r-qvutc0.r-poiln3.r-1loqt21(href='', target='_blank')
+                | Cookies.
+
+            h4.text-white.mt-5.mb-3.w-100.text-left Ya tenés una cuenta?
+            a.btn.btn-inverse-light.btn-fw.border-white.text-white.btn-lg.font-weight-medium.w-100(href='/ingresar') 
+              | Ingresar
+
+

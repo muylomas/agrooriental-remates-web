@@ -1,0 +1,52 @@
+.cattle-list-table tr,
+.cattle-list-table td {
+    font-size: 12px;
+}
+
+.cattle-list-table td.icon-cell {
+    font-size: 18px !important;
+}
+
+.cattle-list-table th {
+    font-size: 14px !important;
+    padding: 10px !important;
+}
+
+.cattle-list-table td.image-cel {
+    width: 40px;
+    background: white;
+}
+
+.cattle-list-table td.image-cel .image-container {
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    background-position: center !important;
+    border-radius: 0;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    margin: auto;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input#auction-bid-price::-webkit-outer-spin-button,
+input#auction-bid-price::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input#auction-bid-price {
+    -moz-appearance: textfield;
+    height: 40px;
+}
+
+.blink_me {
+    animation: blinker 3s linear infinite;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}

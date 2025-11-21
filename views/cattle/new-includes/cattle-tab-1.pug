@@ -1,0 +1,98 @@
+.row
+  - var cattleFamilySet = lot.typeFamily ? lot.typeFamily : cattleTypes[0].family;
+  .col-6
+    .form-group.m-0
+      label(for="type-family-selector")
+        | Ganado:
+      select#type-family-selector.form-control.m-0(name="typeFamily", onchange="updateOnTypeFamily()")
+        - var cattleFamilyUnique = [];
+        each cattleFamilyItem in cattleTypes
+          if(!cattleFamilyUnique.includes(cattleFamilyItem.family))
+            - cattleFamilyUnique.push(cattleFamilyItem.family);
+            if(cattleFamilyItem.family == cattleFamilySet)
+              option(value=cattleFamilyItem.family, selected="selected") #{cattleFamilyItem.family}
+            else
+              option(value=cattleFamilyItem.family) #{cattleFamilyItem.family}
+  .col-6
+    .form-group.m-0
+      label(for="type-selector")
+        | Categoría:
+      select#type-selector.form-control.m-0(name="typeId", onchange="updateOnType()")
+        each cattleTypeItem in cattleTypes
+          if(cattleTypeItem.family == cattleFamilySet)
+            if(cattleTypeItem.id == lot.typeId)
+              option(value=cattleTypeItem.id, selected="selected") #{cattleTypeItem.name}
+            else
+              option(value=cattleTypeItem.id) #{cattleTypeItem.name}
+  
+.row.mt-3 
+  .col-12
+    .form-group.m-0
+      label
+        | Cantidad de cabezas:
+      input#total-quantity.form-control.text-center.p-4(type="number", step="1", name="totalLotQuantity", placeholder="XXXX" value=lot.totalQuantity)
+
+#total-males-quantity.row.mt-3 
+  .col-12
+    .form-group.m-0
+      label
+        | Total de machos:
+      input.form-control.text-center.p-4(type="number", step="1", name="totalMalesQuantity", placeholder="XXXX" value=lot.totalQuantity - lot.totalFemalesQuantity)
+
+#calves-weaning.form-group.row.mt-3
+  input.form-control(type="hidden", name="weaning", value=lot.weaning)
+  input.form-control(type="hidden", name="calves", value=lot.calves)
+  .col-6
+    .form-check 
+      label.form-check-label
+        if(lot.weaning >= lot.calves)
+          input.form-check-input(type='radio', name='calvesWeaning', value='', onclick="updateOnTypesRelatedToCalves()")
+        else
+          input.form-check-input(type='radio', name='calvesWeaning', value='', onclick="updateOnTypesRelatedToCalves()", checked)
+        | Al pie
+        i.input-helper
+  .col-6
+    .form-check
+      label.form-check-label
+        if(lot.weaning > lot.calves)
+          input.form-check-input(type='radio', name='calvesWeaning', value='1', onclick="updateOnTypesRelatedToCalves()", checked)
+        else
+          input.form-check-input(type='radio', name='calvesWeaning', value='1', onclick="updateOnTypesRelatedToCalves()")
+        | Destetados
+        i.input-helper
+
+#caped-entire.form-group.row.mt-3
+  input.form-control(type="hidden", name="caped", value=lot.caped)
+  input.form-control(type="hidden", name="entire", value=lot.entire)
+  .col-6
+    .form-check 
+      label.form-check-label
+        if(lot.caped >= lot.entire)
+          input.form-check-input(type='radio', name='capedEntire', value='', onclick="updateOnTypesRelatedToCalves()")
+        else
+          input.form-check-input(type='radio', name='capedEntire', value='', onclick="updateOnTypesRelatedToCalves()", checked)
+        | Enteros
+        i.input-helper
+  .col-6
+    .form-check
+      label.form-check-label
+        if(lot.caped > lot.entire)
+          input.form-check-input(type='radio', name='capedEntire', value='1', onclick="updateOnTypesRelatedToCalves()", checked)
+        else
+          input.form-check-input(type='radio', name='capedEntire', value='1', onclick="updateOnTypesRelatedToCalves()")
+        | Castrados
+        i.input-helper
+        
+
+.row.mt-3 
+  .col-12
+    .form-group.m-0
+      label
+        | Observaciones (opcional):
+      textarea.form-control(cols="40", rows="3", name='explanations', placeholder="Agregá los comentarios aquí", aria-label="Agregá los comentarios aquí" value=lot.explanations)
+        | #{lot.explanations}
+
+#cattle-breeds.mt-3 
+
+input#age-unit(type="hidden", name="ageUnit", value=lot.ageUnit)
+#cattle-ages.mt-3.pb-5

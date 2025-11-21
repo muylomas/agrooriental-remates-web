@@ -1,0 +1,13 @@
+#uploader-image-container {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    position: relative;
+}
+
+#uploader-image-label {
+    position: absolute;
+    bottom: 0;
+    right: 7px;
+}

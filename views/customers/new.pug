@@ -1,0 +1,132 @@
+extends ../baseHTML
+
+block content
+
+  link(rel='stylesheet', href='/upload-profile-image/style.css?version=1')
+  link(rel='stylesheet', href='/customers/style.css?version=1')
+  
+  .main-panel
+    .content-wrapper
+        .row
+          .col-md-12
+            .card
+              .card-body
+                if(error.msj)
+                  #error-message.row
+                    .col-md-12.grid-margin
+                      .card.border-0(class= error.type == "success" ? "bg-success" : "bg-danger")
+                        .card-body.py-3.px-4.d-flex.align-items-center.justify-content-between.flex-wrap
+                          p.mb-0.text-white.font-weight-medium #{error.msj}
+
+                          .d-flex
+                            if(error.type == "success" && error.customer)
+                              a.btn.btn-light.mr-2(href="/personas/perfil/" + error.customer, target='_blank') Ver cliente
+
+                            button#error-close.btn.border-0.p-0
+                              i.mdi.mdi-close.text-white
+
+                form.my-4(method="post", enctype="multipart/form-data", action='/personas/nuevo/crear')
+                  .row
+                    .col-md-2.mt-2
+                      .card
+                        .card-body.p-0
+                          .media.w-100
+                            - let __aux_prod_image = 'background-image:url(' + (customer.imageToUploadUrl ? customer.imageToUploadUrl : "https://mercadoagro-backoffice.s3.amazonaws.com/images/customers/no-profile-img.png") + ')'
+                            #uploader-image-container(style=__aux_prod_image)
+                              img(src="https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png", width="100%", onclick="fireFileInputFromImg()")
+                              if(customer.imageToUploadUrl)
+                                input#image-to-upload-url(type="hidden", name="imageToUploadUrl", value=customer.imageToUploadUrl)
+                              else 
+                                input#image-to-upload-url(type="hidden", name="imageToUploadUrl", value="")
+
+                              input#uploader-image(type="file", name="imageToUpload", hidden, value="")
+                              input#file-name-to-upload(type='hidden', name='fileName', value="")
+                              label#uploader-image-label.btn.btn-danger(for="uploader-image") 
+                                i.mdi.mdi-upload.btn-icon-prepend
+
+                    .col-md-6.stretch-card
+                      .card.border-0
+                        .card-body.px-2.pt-2 
+                          h6 Datos básicos
+                          .row 
+                            .col-sm-6
+                              input.form-control.mb-2.mr-sm-2(type='text', name="name", placeholder='Nombres', value=customer.name)
+                            .col-sm-6
+                              input.form-control.mb-2(type='text', name="surname", placeholder='Apellidos', value=customer.surname)
+                          
+                          .row 
+                            .col-sm-6
+                              input.form-control.mb-2.mr-sm-2(type='email', name="email", placeholder='Email', value=customer.email)
+                            .col-sm-6
+                              select.form-control.mb-2.mr-sm-2(name="typeId")
+                                option(value="") Tipo de cliente
+                                each cType in customersTypes
+                                  if(cType.id == customer.typeId)
+                                    option(value=cType.id, selected="selected") #{cType.name}
+                                  else
+                                    option(value=cType.id) #{cType.name}
+                          .row 
+                            .col-sm-12
+                              input.form-control.mb-2.mr-sm-2(type='text', name="dicose", placeholder='DICOSE', value=customer.dicose)
+
+                          h6.mt-3 Teléfono    
+                          .row 
+                            .col-sm-12  
+                              .form-inline
+                                .w-20.pr-sm-2
+                                  select#phone-country.form-control.w-100(name="phoneCountry", onchange="hideShowAreacode()")
+                                    - var __aux_phoneCountry = customer.phoneCountry ?  customer.phoneCountry : 1;
+                                    each itemCountry in countries
+                                      if(itemCountry.id == __aux_phoneCountry)
+                                        option(value=itemCountry.id, selected="selected") #{itemCountry.name}
+                                      else 
+                                        option(value=itemCountry.id) #{itemCountry.name}        
+                                #phone-areacode.w-20.pr-sm-2(class=customer.phoneCountry == 2 ?  "": "d-none")
+                                  input.form-control.w-100(type='number', name="phoneAreacode", placeholder='Código de área', value=customer.phoneAreacode)
+                                .w-40.pr-sm-2
+                                  input.form-control.w-100(type='number', name="phoneNumber", placeholder='Número', value=customer.phoneNumber)
+                                .w-20
+                                  input.form-control.w-100(type='number', name="phoneIntern", placeholder='Interno', value=customer.phoneIntern)
+                            
+                    .col-md-4.stretch-card
+                      .card.border-0
+                        .card-body.px-2.pt-2  
+                          h6 Dirección   
+                          .form-group
+                            input(type="hidden", name="locationId", value=customer.locationId)
+                            input(type="hidden", name="stateId", value=customer.stateId)
+                            .row 
+                              .col-sm-12  
+                                input.form-control.w-100.mb-2(type='text', name="addressStreet", placeholder='Dirección', value=customer.addressStreet)
+                            .row 
+                              .col-sm-12  
+                                select#address-locations.form-control.mb-2.d-none(name="addressLocation", onchange="locationChanged()")
+                            .row 
+                              .col-sm-12  
+                                select#address-states.form-control.mb-2(name="addressState", onchange="getLocationsByState()" )
+                            .row 
+                              .col-sm-12  
+                                select#address-country.form-control(name="addressCountry", onchange="getStatesByCountry()")
+                                  - var __aux_addressCountry = customer.addressCountry ?  customer.addressCountry : 1;
+                                  each itemCountry in countries
+                                    if(itemCountry.id == __aux_addressCountry)
+                                      option(value=itemCountry.id, selected="selected") #{itemCountry.name}
+                                    else 
+                                      option(value=itemCountry.id) #{itemCountry.name} 
+
+                  .row.mt-4
+                    .col-md-2
+                    .col-md-10
+                      button.customer-submit.btn.btn-primary.mr-2(type='submit') Crear cliente
+                              
+    footer.footer
+      .d-sm-flex.justify-content-center.justify-content-sm-between
+        span.text-muted.text-center.text-sm-left.d-block.d-sm-inline-block
+          a(href='/', target='_blank') MercadoAgro
+        span.float-none.float-sm-right.d-block.mt-1.mt-sm-0.text-center
+          i.mdi.mdi-heart.text-danger
+
+  script(src='/upload-profile-image/scripts.js?version=1')
+  script(src='/address/manage-form.js?version=4')
+  script(src='/address/phone.js?version=1')
+  script(src='/errors/actions.js?version=1')

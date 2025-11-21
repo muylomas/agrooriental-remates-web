@@ -1,0 +1,127 @@
+h6.m-0.mb-3
+  | ¿Dónde está el ganado?
+
+script.
+  let _aux_customer_farms = !{JSON.stringify(customer.farms)};
+
+- var selectedFarmFromCustomer = false;
+
+select.form-control(name="customerFarmSelect", onchange="inspectFarmSelect()") 
+  each farmItem in customer.farms
+    if(farmItem.id == lot.farmId)
+      - selectedFarmFromCustomer = true;
+      option(value=farmItem.id, selected="selected") 
+        | #{farmItem.name}
+    else
+      option(value=farmItem.id) 
+        | #{farmItem.name}
+  if(!selectedFarmFromCustomer && lot.farmId)
+    option(value="", selected="selected") 
+      i.mdi-mdi-search 
+        | BUSCAR OTRO
+  else
+    option.bg-warning(value="10000001") 
+      i.mdi-mdi-search 
+        | BUSCAR OTRO
+  option.bg-primary(value="10000002") NUEVO ESTABLECIMIENTO
+    
+#farms-in-lot.mt-3.d-none
+.row#search-farms-container
+  .col-sm-12
+    .form-group.mb-0
+      .input-group
+        input#farms-search-input.form-control(type='text' placeholder="Buscar establecimiento" aria-label="Buscar establecimiento")
+        button#farms-search-input-clear.btn.btn-link.btn-fw(type="button",style="position: absolute;right: 62px;top: 2px;display:none") Borrar
+        .input-group-append
+          button#farms-search-button.btn.btn-sm.btn-primary(type='button') Buscar
+      p#farms-search-warning.text-secondary.text-danger.mt-2(style="display:none")
+        | Ingresá al menos 3 caracteres para realizar la búsqueda
+      p#farms-search-noresult.text-secondary.text-danger.mt-2.pl-2(style="display:none")
+        | No hay resultados para la búsqueda
+        
+      #farms-search-results.table-responsive
+
+  if(!selectedFarmFromCustomer && lot.farmId)
+    script.
+      var farmsInLot = [{
+        id: #{lot.farmId},
+        image: "#{lot.farmImage}",
+        name: "#{lot.farmName}",
+        societyId: false,
+        societyName: false,
+        societyCompany: false,
+      }];
+  else 
+    script.
+      var farmsInLot = [];
+
+#new-farm-input.d-none
+  h6.m-0.mt-3.mb-1 Nuevo Establecimiento 
+  h6.m-0.mt-2.mb-1 
+    small Nombre del establecimiento
+  input.form-control.w-100(type='text', name="farmName", placeholder='Nombre del establecimiento')
+  input(type="hidden", name="autocomplete-marker-label")
+  input(type="hidden", name="addressLocation")
+  input(type="hidden", name="addressState")
+  input(type="hidden", name="addressCountry")
+  input(type="hidden", name="addressZipCode")
+  input(type="hidden", name="addressLatitude")
+  input(type="hidden", name="addressLongitude")
+    
+  h6.m-0.mt-2.mb-1 
+    small Instrucciones de dirección
+  textarea.form-control.w-100(cols="20", rows="2", name='addressInstructions', placeholder="Instrucciones para llegar al establecimiento", aria-label="Instrucciones para llegar al establecimiento")
+        
+  #googleMap.w-100.mt-3(style="height:220px")
+
+h6.mt-4 Características:
+.row.mt-2
+  .col-6
+    .form-group.row.m-0
+      h6.m-0.p-0.mb-1
+        small Zona de garrapata:
+      .row
+        .col-6
+          .form-check.m-0 
+            label.form-check-label
+              if(lot.tick == "1")
+                input.form-check-input(type='radio', name='tick', value='')
+              else
+                input.form-check-input(type='radio', name='tick', value='', checked)
+              | No
+              i.input-helper
+        .col-6
+          .form-check.m-0 
+            label.form-check-label
+              if(lot.tick == "1")
+                input.form-check-input(type='radio', name='tick', value='1', checked)
+              else
+                input.form-check-input(type='radio', name='tick', value='1')
+              | Si
+              i.input-helper
+  .col-6
+    .form-group.row.m-0
+      h6.m-0.p-0.mb-1
+        small Conoce Mio-Mio:
+      .row
+        .col-6
+          .form-check.m-0
+            label.form-check-label
+              if(lot.mio == "1")
+                input.form-check-input(type='radio', name='mio', value='')
+              else
+                input.form-check-input(type='radio', name='mio', value='', checked)
+              | No
+              i.input-helper
+        .col-6
+          .form-check.m-0
+            label.form-check-label
+              if(lot.mio == "1")
+                input.form-check-input(type='radio', name='mio', value='1', checked)
+              else
+                input.form-check-input(type='radio', name='mio', value='1')
+              | Si
+              i.input-helper
+
+script(src='/cattle/sell-maps.js?version=1')
+script(src='https://maps.google.com/maps/api/js?key=AIzaSyBpSkP-tvO14Rgji6jzW_-xICmNwoVngf0&libraries=marker,places&loading=async', type='text/javascript')

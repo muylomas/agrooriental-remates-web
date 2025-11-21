@@ -1,0 +1,184 @@
+extends ../baseHTML
+
+block content
+  link(rel='stylesheet', href='/upload-profile-image/style.css?version=1')
+  link(rel='stylesheet', href='/farms/style.css?version=1')
+  
+  .main-panel
+    .content-wrapper
+      .row
+        .col-md-12
+          .card
+            .card-body
+              .row
+                .col-md-2.mt-2
+                  .card
+                    .card-body.p-0
+                      .media.w-100
+                        - let __aux_prod_image = 'background-image:url(' + (farm.farmImage ? farm.farmImage : "https://mercadoagro-backoffice.s3.amazonaws.com/images/farms/no-profile-img.png") + ')'
+                        #uploader-image-container(style=__aux_prod_image)
+                          img(src="https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png", width="100%", onclick="fireFileInputFromImg()")
+
+                .col-md-6.stretch-card
+                  .card.border-0
+                    .card-body.px-2.pt-2 
+                      h3 #{farm.farmName}
+                      .row.mt-4 
+                        .col-sm-4
+                          h6.p-0.m-0 Tipo:   
+                        .col-sm-8
+                          p
+                            each fType in farmsTypes
+                              if(fType.id == farm.farmType)
+                                | #{fType.name}
+                      .row.mt-3 
+                        .col-sm-4
+                          h6.p-0.m-0 Tipo de explotación:
+                        .col-sm-8
+                          p
+                            each fExploitation in farmsExploitations
+                              if(fExploitation.id == farm.farmExploitation)
+                                | #{fExploitation.name}
+                      .row.mt-3 
+                        .col-sm-4
+                          h6.p-0.m-0 Condición:   
+                        .col-sm-8
+                          if(farm.farmOwner == "1")
+                            p Propio
+                          if(farm.farmRented == "1")
+                            p Alquilado
+                      .row.mt-3 
+                        .col-sm-4
+                          h6.p-0.m-0 Superficie:   
+                        .col-sm-8
+                          p #{farm.farmSurface} hectáreas
+                      .row.mt-3 
+                        .col-sm-4
+                          h6.p-0.m-0 Dicose:   
+                        .col-sm-8
+                          p #{farm.farmDicose}
+
+                      if(farm.societiesId.length)
+                        h6.mt-5 Sociedades y personas
+                        .row.mt-2
+                          .col-sm-12
+                            each societyItem in farm.societies
+                              .row.mt-2.mb-2.mb-4
+                                .col-2
+                                  a(href="/sociedades/perfil/" + societyItem.id, target="_blank")
+                                    div(style='background:url(' + societyItem.image + ');\
+                                        background-size:cover;\
+                                        background-repeat:no-repeat;\
+                                        border-radius:50%;\
+                                        display: inline-block;\
+                                        width:50px;height:50px;')
+                                        img(src='https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png', alt=societyItem.name)
+                                .col-7
+                                  p.m-0.p-0
+                                    | #{societyItem.name}
+                                    br
+                                    span.text-small
+                                      b #{societyItem.company}
+                                .col-3
+
+                              each customerItem in societyItem.customers
+                                .row.mt-2
+                                  .col-1
+                                  .col-2
+                                    a(href="/personas/perfil/" + customerItem.id, target="_blank")
+                                      div(style='background:url(' + customerItem.image + ');\
+                                          background-size:cover;\
+                                          background-repeat:no-repeat;\
+                                          border-radius:50%;\
+                                          display: inline-block;\
+                                          width:35px;height:35px;')
+                                          img(src='https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png', alt=customerItem.name + " " + customerItem.surname)
+                                  .col-7
+                                    p.m-0.p-0(style="line-height: 33px;")
+                                      | #{customerItem.name}  #{customerItem.surname}
+                                  .col-2
+                              
+                .col-md-4.stretch-card
+                  .card.border-0
+                    .card-body.px-2.pt-2  
+                      h6 Dirección   
+                      p
+                        | #{farm.addressStreet}
+                        
+                      if(farm.phoneCountryCode && farm.phoneNumber)
+                        h6.mt-4 Teléfono:
+                        p 
+                          | (#{farm.phoneCountryCode}) 
+                          if(farm.phoneCountry == 2 && farm.phoneAreacode)
+                            | #{farm.phoneAreacode} 
+                          | #{farm.phoneNumber} 
+                          if(farm.phoneIntern)
+                            | #{farm.phoneIntern}
+                      
+                      if(farm.addressInstructions)
+                        h6.mt-4 Instrucciones 
+                        p 
+                          | #{farm.addressInstructions}
+
+                      h6.mt-4 Coordenadas de mapa
+                      p #{farm.addressLatitude}, #{farm.addressLongitude}
+                      
+                      #googleMap.w-100.mt-4(style="height:300px")
+                      if(farm.addressLatitude && farm.addressLongitude)
+                        input(type="hidden", name="autocomplete-marker-label", value=farm.farmName)
+                        script.
+                          $(document).ready(function () {
+                            init_map(#{farm.addressLatitude}, #{farm.addressLongitude});
+                          });
+
+      if(farm.lots.length)
+        .row.mt-4
+          .col-md-12.grid-margin.stretch-card
+            .card
+              .card-body 
+                h4.card-title Lotes
+                .table-responsive
+                  .dataTables_wrapper.dt-bootstrap4.no-footer          
+                    table.table.dataTable.no-footer.farms-list-table
+                      thead
+                        tr
+                          th.text-center #
+                          th.text-center Tipo
+                          th.text-center Cantidad
+                          th.text-center Peso (Kg)
+                          th.text-center Ubicación
+                          th.text-center Estado     
+                      tbody
+                        each lotItem in farm.lots
+                          tr(role="role", class=index%2 ? 'odd': 'even')
+                            td.p-1.text-center 
+                              a(href="/ganado/lote/publicacion/" + lotItem.lotId, target="_blank")
+                                | #{lotItem.lotId}
+                            td.p-1.text-center #{lotItem.type}
+                            td.p-1.text-center #{lotItem.totalQuantity}
+                            td.p-1.text-center #{lotItem.meanWeight.toFixed(0)}
+                            td.p-1.text-center(style="font-size:14px;")
+                              .mdi.mdi-map-marker
+                                | #{lotItem.addressLocationName}, #{lotItem.addressStateName}
+                            td.p-1.text-center
+                              .p.p-2(style="font-size:14px;")
+                                .mdi.mdi-brightness-1(class= lotItem.active == 1 ? "text-success" : "text-danger")
+                                  span.text-dark 
+                                    if(lotItem.active == 1)
+                                      | Activo
+                                    else 
+                                      | Finalizado
+                                      
+    footer.footer
+      .d-sm-flex.justify-content-center.justify-content-sm-between
+        span.text-muted.text-center.text-sm-left.d-block.d-sm-inline-block
+          a(href='/', target='_blank') MercadoAgro
+        span.float-none.float-sm-right.d-block.mt-1.mt-sm-0.text-center
+          i.mdi.mdi-heart.text-danger
+
+  script(src='/upload-profile-image/scripts.js?version=1')
+  script(src='/address/phone.js?version=1')
+  script(src='/errors/actions.js?version=1')
+  script(src='/farms/scripts.js?version=1')
+  script(src='/maps.js?version=1')
+  script(src='https://maps.google.com/maps/api/js?key=AIzaSyBpSkP-tvO14Rgji6jzW_-xICmNwoVngf0&loading=async&libraries=places' type='text/javascript')

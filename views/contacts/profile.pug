@@ -1,0 +1,203 @@
+extends ../baseHTML
+
+block content
+
+    - var __aux_a_href = '/requests/company/' + contact.companyId
+
+    .main-panel
+      .content-wrapper
+        if('emails' in contact && 'phones' in contact)
+          .row
+            .col-md-12.grid-margin
+              .card
+                .card-body
+                  .row
+                    .col-md-6
+                      .card
+                        .card-body
+                          h4.card-title 
+                            .mb-0 #{contact.name} #{contact.surname}
+                            .mb-0 
+                              a(style="font-size:.7rem;font-weight:300;", href="/companies/profile/" + contact.companyId) #{contact.company}
+                          .media
+                            .media-body
+                              h6 Cambiar de empresa 
+                              form(method='post', name='contactEmailSubmit', action='/contacts/profile/company/change')
+                                .form-inline
+                                  input(type='hidden', name='contactId', value=contact.id)
+                                  input.form-control.form-control-sm.mb-2.mr-sm-2(type='number', name='companyId', placeholder='# empresa', value=contact.companyId)
+                                  button.btn.btn-danger.mb-2.form-control-sm(type='submit') Cambiar
+                              br
+                              h6 Email: 
+                              if(contact.emails.length)
+                                if(contact.emails.length > 1)
+                                  each emailItem, indEmail in contact.emails
+                                    if(indEmail > 0)
+                                      form.mb-2.form-inline(method='post', name='deleteEmailSubmit', action='/contacts/profile/email/delete')
+                                        input(type='hidden', name='contactId', value=contact.id)
+                                        input(type='hidden', name='email', value=emailItem)
+                                        button.btn.btn-inverse-danger.btn-icon(type="submit")
+                                          i.mdi.mdi-delete
+                                        p.ml-2 #{emailItem}
+                                    else 
+                                      .mb-2.form-inline
+                                        button.btn.btn-inverse-warning.btn-icon(type="button")
+                                          i.mdi.mdi-key
+                                        p.ml-2 #{emailItem}
+                                else
+                                  .mb-2.form-inline
+                                    button.btn.btn-inverse-warning.btn-icon(type="button")
+                                      i.mdi.mdi-key
+                                    p.ml-2 #{contact.emails[0]}
+                                
+                              form.mt-2.mb-4(method='post', name='contactEmailSubmit', action='/contacts/profile/email/submit')
+                                .form-inline
+                                  input(type='hidden', name='contactId', value=contact.id)
+                                  input.form-control.form-control-sm.mb-2.mr-sm-2(type='email', name='email', placeholder='Email')
+                                  button.btn.btn-primary.mb-2.form-control-sm(type='submit') Ingresar
+                                
+                              h6 Teléfono: 
+                              if(contact.phones.length)
+                                each phoneItem, indPhone in contact.phones
+                                  form(method='post', name='contactPhoneSubmit', action='/contacts/profile/phone/update')
+                                    .form-group(style="margin-bottom: 0.2rem;")
+                                      .input-group
+                                        input(type='hidden', name='phoneId', value=phoneItem.id)
+                                        input(type='hidden', name='contactId', value=contact.id)
+                                        p.mb-2.mr-sm-2(style="padding: 0.5rem 0;") #{phoneItem.country}
+                                        input.form-control.mb-2.mr-sm-2.form-control-sm(type='number', name="contactInput[number]", placeholder='Número de teléfono', value=phoneItem.num)
+                                        input.form-control.mb-2.mr-sm-2.form-control-sm(type='intern', name="contactInput[intern]", placeholder='Interno', value=phoneItem.int)
+                                        button.btn.btn-primary.mb-2.form-control-sm(type='submit') Actualizar
+                                
+
+                              form(method='post', name='contactPhoneSubmit', action='/contacts/profile/phone/submit')
+                                .form-group(style="margin-bottom: 0.2rem;")
+                                  .input-group
+                                    input(type='hidden', name='contactId', value=contact.id)
+                                    select.form-control.form-control-sm(name="contactInput[country]", style="margin: 0 0.5rem 0.5rem -1px;")
+                                      option(value="1") Uruguay
+                                      option(value="2") Argentina
+                                    input.form-control.mb-2.mr-sm-2.form-control-sm(type='areacode', name="contactInput[areacode]", placeholder='Código de área' style="display:none;")
+                                    input.form-control.mb-2.mr-sm-2.form-control-sm(type='number', name="contactInput[number]", placeholder='Número de teléfono')
+                                    input.form-control.mb-2.mr-sm-2.form-control-sm(type='intern', name="contactInput[intern]", placeholder='Interno')
+                                    button.btn.btn-primary.mb-2.form-control-sm(type='submit') Ingresar
+                                      
+                    .col-md-6
+                      .card
+                        .card-body
+                          h4.card-title Actualizar datos
+                          p.card-description
+                            form.forms-sample(method='post', name='update-basic-data', action='/contacts/profile/name/submit')
+                              input(type='hidden', name='contactId', value=contact.id)
+                              input(name='userid', type='hidden', value=contact.userId)
+                              .form-group
+                                label(for='name') Nombre
+                                input.form-control(name='name', type='text', placeholder='Nombres', value=contact.name)
+                              .form-group
+                                label(for='surname') Apellido
+                                input.form-control(name='surname', type='text', placeholder='Apellidos', value=contact.surname)
+
+                              button.btn.btn-primary.mr-2(type='submit') Actualizar
+          .row
+            .col-md-12.grid-margin.stretch-card
+              .card
+                .card-body.dashboard-tabs.p-0
+                  ul.nav.nav-tabs(role='tablist',style="padding-left:0!important;padding-right:0!important;")
+                    each tab, nameTab in tabsByUser[userId]
+                      if(nameTab.toLowerCase().indexOf('projections') == -1)
+                        li.nav-item
+                          a.nav-link(id=nameTab + '-tab', class=(tabSelected[userId] == nameTab) ? 'active':'', href='/contacts/profile/' + contactUserId + '/tab/' + nameTab, aria-selected=tab.active)
+                            | #{tab.name} 
+                            if(tab.count)
+                              mark(style="background-color:#003399;color:#fff") 
+                                | #{tab.count}
+                            br
+                            mark.bg-success.text-white(style="font-size:12px; text-align:center;")
+                              | USD #{tab.quote.toFixed(2).toString().replace(".",",").replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                    
+                  .tab-content.py-0.px-0
+                    each tab, nameTab in tabsByUser[userId]
+                      .tab-pane.fade(role='tabpanel', id=nameTab, aria-labelledby=nameTab + '-tab', class=(tabSelected[userId] == nameTab) ? 'active show':'')
+                        .d-flex.flex-wrap.justify-content-xl-between
+                          .table-responsive
+                            .dataTables_wrapper.dt-bootstrap4.no-footer
+                              table.table.table-hover
+                                thead
+                                  tr
+                                    th Solicitud
+                                    th Empresa 
+                                    if(["quoted","sold", "cancelled","lost","projections"].includes(nameTab))
+                                      th Monto
+                                    if(nameTab == "projections")
+                                      th %
+                                    else
+                                      th Estado
+                                    th Usuario
+                                    th Fecha
+
+                                tbody 
+                                  - var __aux_description_style = "max-width:350px;overflow:hidden;white-space:normal;text-overflow:ellipsis;font-size: 12px;display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;"
+                                  if(nameTab != "projections")
+                                    each request, index in requests
+                                      if(index < 3)
+                                        if(tab.status.includes(request.reqStatusId))
+                                          tr(role="role", class=index%2 ? 'odd': 'even', style="cursor:pointer")
+                                            td(onclick="window.location.href = '/requests/detail/" + request.reqId + "';") 
+                                              | #{request.reqId}
+                                            td(onclick="window.location.href = '/requests/detail/" + request.reqId + "';", style="max-width: 300px;") 
+                                              | #{request.companyName}
+                                              p(style=__aux_description_style) #{request.reqSubject}
+                                            if(["quoted","sold", "cancelled","lost"].includes(nameTab))
+                                              td  
+                                                | #{request.reqQuote.toFixed(2).toString().replace(".",",").replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                                            td(onclick="window.location.href = '/requests/detail/" + request.reqId + "';")
+                                              case request.reqStatusId
+                                                when 1
+                                                when 31
+                                                when 20
+                                                when 21
+                                                when 22
+                                                  mark.bg-danger.text-white(style="line-height: 22px") 
+                                                    | #{request.reqStatus}
+                                                when 2
+                                                when 5
+                                                when 30
+                                                  mark.bg-warning.text-white(style="line-height: 22px") 
+                                                    | #{request.reqStatus}
+                                                when 10
+                                                when 11
+                                                  mark(style="background-color:#ccc;color:#fff;line-height: 22px") 
+                                                    | #{request.reqStatus}
+                                                when 50
+                                                  mark.bg-success.text-white(style="line-height: 22px") 
+                                                    | #{request.reqStatus}
+                                                when 60
+                                                  mark(style="background-color:#ff9933;color:#fff") 
+                                                    | #{request.reqStatus}
+                                                default
+                                                  mark.bg-warning.text-white(style="line-height: 22px") 
+                                                    | #{request.reqStatus}
+                                            if(nameTab != "active")
+                                              td(onclick="window.location.href = '/requests/detail/" + request.reqId + "';") 
+                                                | #{request.userName} #{request.userSurname}
+                                            else
+                                              td
+                                            td(onclick="window.location.href = '/requests/detail/" + request.reqId + "';") 
+                                              | #{request.reqDate}
+
+                                    if(requests.length > 3)
+                                      tr(role="role", class='odd', style="cursor:pointer")
+                                        if(["quoted","sold", "cancelled","lost"].includes(nameTab))
+                                          td.text-center(colspan = "6") 
+                                            a.btn.btn-outline-light.mr-2.bg-success.border-0(href=__aux_a_href) Ver más solicitudes
+                                        else 
+                                          td.text-center(colspan = "5") 
+                                            a.btn.btn-outline-light.mr-2.bg-success.border-0(href=__aux_a_href) Ver más solicitudes
+                                  
+            
+      footer.footer
+        .d-sm-flex.justify-content-center.justify-content-sm-between
+          span.text-muted.text-center.text-sm-left.d-block.d-sm-inline-block
+            a(href='/', target='_blank') MercadoAgro
+          span.float-none.float-sm-right.d-block.mt-1.mt-sm-0.text-center
+            i.mdi.mdi-heart.text-danger

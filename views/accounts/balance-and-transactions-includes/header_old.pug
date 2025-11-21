@@ -1,0 +1,49 @@
+
+.row.w-100.balance-header.align-items-center(style="min-height: 40vh; position: relative")
+  .col-md-12.m-0.p-0
+    .d-flex.justify-content-between.flex-wrap
+      .d-flex.align-items-center.flex-wrap
+        - var __aux_style = ""
+        if(customer)
+          - __aux_style = customer.customerImage ? 'background-image:url(' + customer.customerImage + ');' : "";
+        .user-profile-icon(style=__aux_style, onclick="window.location.href = '/usuario/perfil'")
+          img.w-100(src='https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png')
+      .d-flex.align-items-center.flex-wrap
+        ul.nav.nav-tabs.border-0(role='tablist')
+          li.nav-item
+            a.nav-link.active.text-white(href='/')  
+              b Comprar
+          li.nav-item.mx-3
+            a.nav-link.text-white(data-toggle='tab', href='#expired', role='tab', aria-selected='false')  
+              b Vender
+          li.nav-item.mx-3
+            a.nav-link.text-white(href='/cuentas/')  
+              b Cuenta
+
+      .d-flex.justify-content-between.align-items-center.flex-wrap
+        button#search-for-cattle.text-white.border-0.p-0
+          i.mdi.mdi-magnify.icon-lg
+
+  .col-12.text-white.text-center.pb-4
+    p.w-100.mx-auto
+      | Saldo de cuenta
+    h2.w-100.m-0.p-0
+      small USD 
+      | #{balance.toFixed(0).toString().replace(".",",").replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+  .d-flex.flex-wrap.justify-content-between.text-white.px-3.py-4.w-100(style="position:absolute; bottom: 0;")
+    .align-items-center.justify-content-center.justify-content-md-center.px-2.px-md-0.mx-1.mx-md-0.text-center.item
+      button.btn.btn-inverse-light.btn-rounded.btn-icon.text-white(type='button')
+        i.mdi.mdi-plus
+      p.pt-2 Depositar
+    .align-items-center.justify-content-center.justify-content-md-center.px-2.px-md-0.mx-1.mx-md-0.text-center.item
+      button.btn.btn-inverse-light.btn-rounded.btn-icon.text-white(type='button')
+        i.mdi.mdi-arrow-right
+      p.pt-2 Transferir
+    .align-items-center.justify-content-center.justify-content-md-center.px-2.px-md-0.mx-1.mx-md-0.text-center.item
+      button.btn.btn-inverse-light.btn-rounded.btn-icon.text-white(type='button')
+        i.mdi.mdi-sync
+      p.pt-2 Cambio
+    .align-items-center.justify-content-center.justify-content-md-center.px-2.px-md-0.mx-1.mx-md-0.text-center.item
+      button.btn.btn-inverse-light.btn-rounded.btn-icon.text-white(type='button')
+        i.mdi.mdi-currency-usd
+      p.pt-2 Adelanto

@@ -1,0 +1,57 @@
+doctype html
+html.fsvs.home-page
+  head
+    meta(name='layout', content='bootstrap')
+    meta(name='viewport', content='viewport-fit=cover, width=device-width, initial-scale=1.0, maximum-scale=1.0')
+    
+    title MercadoAgro
+    meta(name='keywords', content='MercadoAgro')
+    meta(name='author', content='MercadoAgro')
+    meta(name='description', content='MercadoAgro')
+    // Mobile App Download Meta
+    meta(name='apple-itunes-app', content='app-id=1430383201, app-argument=/')
+    link(rel='shortcut icon', sizes='64x64 48x48 32x32 24x24 16x16', href='https://mercadoagro-backoffice.s3.amazonaws.com/images/favico/favicon.ico')
+    link(rel='icon', type='image/png', href='https://mercadoagro-backoffice.s3.amazonaws.com/images/favico/favico-new/favicon-128.png', sizes='128x128')
+    link(rel='icon', type='image/png', href='https://mercadoagro-backoffice.s3.amazonaws.com/images/favico/favicon-196.png', sizes='196x196')
+    link(rel='shortcut icon', sizes='196x196', type='image/png', href='https://mercadoagro-backoffice.s3.amazonaws.com/images/favico/favicon-196.png')
+    meta(name='application-name', content='MercadoAgro')
+    link(rel='apple-touch-icon', sizes='57x57', href='https://mercadoagro-backoffice.s3.amazonaws.com/images/favico/apple-icon-57x57.png')
+    link(rel='apple-touch-icon', sizes='60x60', href='https://mercadoagro-backoffice.s3.amazonaws.com/images/favico/apple-icon-60x60.png')
+    link(rel='apple-touch-icon', sizes='72x72', href='https://mercadoagro-backoffice.s3.amazonaws.com/images/favico/apple-icon-72x72.png')
+    link(rel='apple-touch-icon', sizes='76x76', href='https://mercadoagro-backoffice.s3.amazonaws.com/images/favico/apple-icon-76x76.png')
+    link(rel='apple-touch-icon', sizes='114x114', href='https://mercadoagro-backoffice.s3.amazonaws.com/images/favico/apple-icon-114x114.png')
+    link(rel='apple-touch-icon', sizes='120x120', href='https://mercadoagro-backoffice.s3.amazonaws.com/images/favico/apple-icon-120x120.png')
+    link(rel='apple-touch-icon', sizes='144x144', href='https://mercadoagro-backoffice.s3.amazonaws.com/images/favico/apple-icon-144x144.png')
+    link(rel='apple-touch-icon', sizes='152x152', href='https://mercadoagro-backoffice.s3.amazonaws.com/images/favico/apple-icon-152x152.png')
+    link(rel='apple-touch-icon', sizes='180x180', href='https://mercadoagro-backoffice.s3.amazonaws.com/images/favico/apple-icon-180x180.png')
+    link(rel='icon', type='image/png', sizes='192x192', href='https://mercadoagro-backoffice.s3.amazonaws.com/images/favico/android-icon-192x192.png')
+    link(rel='icon', type='image/png', sizes='32x32', href='https://mercadoagro-backoffice.s3.amazonaws.com/images/favico/favicon-32x32.png')
+    link(rel='icon', type='image/png', sizes='96x96', href='https://mercadoagro-backoffice.s3.amazonaws.com/images/favico/favicon-96x96.png')
+    link(rel='icon', type='image/png', sizes='16x16', href='https://mercadoagro-backoffice.s3.amazonaws.com/images/favico/favicon-16x16.png')
+    link(rel='manifest', href='/manifest.json')
+    meta(name='application-name', content='MercadoAgro')
+    meta(name='msapplication-TileColor', content='#ffffff')
+    meta(name='msapplication-TileImage', content='https://mercadoagro-backoffice.s3.amazonaws.com/images/favico/ms-icon-144x144.png')
+    meta(name='theme-color', content='#ffffff')
+    link(rel='apple-touch-icon-precomposed', href='https://mercadoagro-backoffice.s3.amazonaws.com/images/favico/apple-icon-57x57.png', sizes='57x57')
+    link(rel='apple-touch-icon-precomposed', href='https://mercadoagro-backoffice.s3.amazonaws.com/images/favico/apple-icon-76x76.png', sizes='76x76')
+    link(rel='apple-touch-icon-precomposed', href='https://mercadoagro-backoffice.s3.amazonaws.com/images/favico/apple-icon-120x120.png', sizes='120x120')
+    link(rel='apple-touch-icon-precomposed', href='https://mercadoagro-backoffice.s3.amazonaws.com/images/favico/apple-icon-144x144.png', sizes='144x144')
+    link(rel='apple-touch-icon-precomposed', href='https://mercadoagro-backoffice.s3.amazonaws.com/images/favico/apple-icon-152x152.png', sizes='152x152')
+    base(href='/')
+
+    link(rel="stylesheet", href="/majestic/vertical-layout-light/style.css")
+    link(rel='stylesheet', href='https://s3.amazonaws.com/rewo/backoffice/vendors/mdi/css/materialdesignicons.min.css?version=1')
+
+    script(src='/carousel/fsvs.js?ver=2')
+    link(href='/carousel/style.css?ver=2' rel='stylesheet' type='text/css')
+
+    script(src='https://cdn.socket.io/4.7.4/socket.io.min.js')
+    script.
+      const socket = io();
+      const socketGestion = io('gestion.mercado-agro.com', {
+        transports: ['websocket', 'xhr-polling']
+      });
+      
+  body
+    block content

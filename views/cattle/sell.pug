@@ -1,0 +1,47 @@
+extends ../baseAppHTML
+
+block content 
+  link(href='/cattle/sell-styles.css?ver=1', rel='stylesheet', type='text/css')
+
+  script(src='https://s3.amazonaws.com/rewo/backoffice/js/jquery.min.js')
+  script(src='https://s3.amazonaws.com/rewo/backoffice/js/jquery-ui.min.js')
+
+  .content-wrapper.p-0.m-0.bg-white
+       
+    include sell-includes/header.pug
+
+    .row  
+      .col-md-4.grid-margin.stretch-card
+        .card.border-0
+          .card-body.px-2
+            .px-3 
+              p.text-center
+                | Ingresar los datos de un lote nuevo.
+              a.bid-action-button.btn.btn-warning.btn-lg.text-dark.w-100.mb-4(href="/ganado/lote/nuevo")
+                | Ingresar lote nuevo
+
+            if(savedLots.length || sellingLots.length)
+              ul#cattle-status-tabs.nav.nav-tabs.border-0.px-sm-4.px-0.pb-3(role='tablist')
+                li.nav-item.text-center
+                  a#saved-drafts-tab.nav-link.text-uppercase.active(data-toggle='tab', href='#saved-drafts', role='tab', aria-controls="true") 
+                    | Borradores
+                li.nav-item.text-center
+                  a#review-tab.nav-link.text-uppercase(data-toggle='tab', href='#review', role='tab', aria-controls="false") 
+                    | Revisión
+                li.nav-item.text-center
+                  a#approved-tab.nav-link.text-uppercase(data-toggle='tab', href='#approved', role='tab', aria-controls="false") 
+                    | En venta
+
+              .tab-content.p-0.border-0
+                include sell-includes/draft-tab-content.pug
+                include sell-includes/review-tab-content.pug
+                include sell-includes/approved-tab-content.pug
+     
+  script(src='https://s3.amazonaws.com/rewo/backoffice/vendors/base/vendor.bundle.base.js')
+  script(src='https://s3.amazonaws.com/rewo/backoffice/vendors/datatables.net/jquery.dataTables.js')
+  script(src='https://s3.amazonaws.com/rewo/backoffice/vendors/datatables.net-bs4/dataTables.bootstrap4.js')
+
+  script(src='https://s3.amazonaws.com/rewo/backoffice/js/off-canvas.js')
+  script(src='https://s3.amazonaws.com/rewo/backoffice/js/hoverable-collapse.js')
+  script(src='https://s3.amazonaws.com/rewo/backoffice/js/template.js')
+  script(src='/cattle/sell-scripts.js?ver=1')

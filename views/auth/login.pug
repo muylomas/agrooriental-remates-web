@@ -1,0 +1,96 @@
+extends ../baseAppHTML
+
+block content 
+  .content-wrapper.auth.app-full-bg.p-0.m-0
+    .row.w-100
+      .col-lg-4.mx-auto
+        img.app-profile-img.w-75.m-5.mb-0(style="max-width: 350px;", src='https://mercadoagro-app.s3.amazonaws.com/images/register/logo-app-register-legend.png?ver=1', alt='Mercadoagro')
+        .auth-form-transparent.text-left.p-5.text-center
+          form(method='post', name='loginForm', action='/login')
+            .form-group.row.text-white
+              .col-1
+              .col-5.text-left
+                .form-check.form-check-warning.m-0
+                  label.form-check-label
+                    input.form-check-input(type='radio', name='loginMethodType', value='phone', checked)
+                    i.input-helper
+                    h4 Celular
+              .col-5.text-left
+                .form-check.form-check-warning.m-0
+                  label.form-check-label
+                    input.form-check-input(type='radio', name='loginMethodType', value='email')
+                    i.input-helper
+                    h4 Email
+              .col-1
+              script.
+                $(document).ready(function () {
+                  var rad = document.loginForm.loginMethodType;
+                  var prev = null;
+                  for (var i = 0; i < rad.length; i++) {
+                    rad[i].addEventListener('change', function() {
+                        if (this !== prev) {
+                            prev = this;
+                        }
+                        
+                        showLoginInputsByType(this.value);
+                    });
+                  }
+
+                  showLoginInputsByType("phone");
+                });
+
+                function showLoginInputsByType(type){
+                  switch (type) {
+                    case "phone":
+                      $(".phone-form-input").show();
+                      $(".email-form-input").hide();
+                      break;
+                    case "email":
+                      $(".phone-form-input").hide();
+                      $(".email-form-input").show();
+                      break;
+                    default:
+                      $(".phone-form-input").hide();
+                      $(".email-form-input").show();
+                      break;
+                  }
+                };
+
+            .form-group.phone-form-input
+              .input-group
+                .input-group-prepend.m-0.p-0
+                  select.form-control.px-2.py-1(name="phoneCountry", style="line-height: 12px; height: 44px; position: relative; top: 1px;")
+                    option(value="1") +598
+                    option(value="2") +54
+                input.form-control(type="number", name="phoneNumber", placeholder="99099099", min="91000000", max="99999999")
+                 
+            .form-group.email-form-input
+              input.form-control.text-center(type='user', name="user", placeholder='Usuario')
+            .form-group.email-form-input
+              input.form-control.text-center(type='password', name="password", placeholder='Contraseña')
+            button.btn.btn-block.btn-warning.text-dark.btn-lg.font-weight-medium.w-100(type='submit') 
+              | Ingresar
+            h3.my-3.text-white o con
+            a.btn.btn-block.btn-light.text-dark.btn-lg.font-weight-medium.px-2.w-100(href='/') 
+              i.mdi.mdi-google.btn-icon-prepend(style="font-size:22px;")
+              span 
+                | &nbsp;&nbsp;Ingresar con Google
+            //a.btn.btn-block.btn-light.text-dark.btn-lg.font-weight-medium.mt-4.px-2.w-100(href='/') 
+              i.mdi.mdi-apple.btn-icon-prepend(style="font-size:22px;")
+              span 
+                b &nbsp;&nbsp;Ingresar con Apple
+                
+            h4.text-white.mt-5.mb-3.w-100.text-left No tenés cuenta?
+            a.btn.btn-inverse-light.btn-fw.border-white.text-white.btn-lg.font-weight-medium.w-100(href='/registro') 
+              | Crear una cuenta
+            p.mt-2.text-white
+              | Al crear una cuenta, adhieres a los 
+              a.css-1qaijid.r-bcqeeo.r-qvutc0.r-poiln3.r-1loqt21(href='#', target='_blank', role='link')
+                | Términos y Condiciones
+              |  y a la 
+              a.css-1qaijid.r-bcqeeo.r-qvutc0.r-poiln3.r-1loqt21(href='#', target='_blank', role='link')
+                | Política de Privacidad
+              | , incluyendo el uso de 
+              a.css-1qaijid.r-bcqeeo.r-qvutc0.r-poiln3.r-1loqt21(href='', target='_blank')
+                | Cookies.
+

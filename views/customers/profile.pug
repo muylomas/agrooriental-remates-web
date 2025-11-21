@@ -1,0 +1,89 @@
+extends ../baseAppHTML
+
+block content 
+  link(href='/customers/styles.css?ver=1', rel='stylesheet', type='text/css')
+
+  .content-wrapper.p-0.m-0
+    .row
+      .col-md-12
+        .card.border-0
+          .card-body
+            a(href="javascript:goBackwards()") 
+              i.mdi.mdi-arrow-left.icon-md
+    .row
+      .col-md-12
+        .card.border-0
+          .card-body.pt-0
+            .row.mb-3
+              .col-md-12
+                .media
+                  .mt-2
+                    - var __aux_userProfileImage = customer.customerImage ? "background-image:url(" + customer.customerImage + ")" : "";
+                    .customer-profile-image(style=__aux_userProfileImage)
+                      img.w-100(src="https://sits-backoffice.s3.us-west-1.amazonaws.com/images/img-pixel.png")
+                    .mt-2 
+                      h6
+                        small.text-muted
+                          | REF: ##{customer.customerId}
+                  .media-body.pl-4
+                    h6
+                      small.text-muted
+                        | Nombre
+                    input.form-control(type="text", name="name", placeholder="Nombres", value=customer.customerName)
+                    h6.mt-3
+                      small.text-muted
+                        | Apellido
+                    input.form-control(type="text", name="surname", placeholder="Apellido", value=customer.customerSurname)
+
+    if(customer.societiesLength)
+      .row
+        .col-md-12
+          .card.border-0
+            .card-body.pt-0
+              h5.mb-3 Sociedades
+              each societyItem in customer.societies
+                .row.mb-3
+                  .col-md-12
+                    .media
+                      - var __aux_societyProfileImage = societyItem.image ? "background-image:url(" + societyItem.image + ")" : "";
+                      .society-profile-image(style=__aux_societyProfileImage)
+                        img.w-100(src="https://sits-backoffice.s3.us-west-1.amazonaws.com/images/img-pixel.png")
+                      .media-body.pl-4
+                        p.p-0.m-0
+                          b #{societyItem.name}
+                        each farmItem in societyItem.farms
+                          .media.mt-2
+                            - var __aux_farmProfileImage = farmItem.image ? "background-image:url(" + farmItem.image + ")" : "";
+                            .farm-profile-image(style=__aux_farmProfileImage)
+                              img.w-100(src="https://sits-backoffice.s3.us-west-1.amazonaws.com/images/img-pixel.png")
+                            .media-body.pl-4
+                                p.p-0.m-0
+                                  | #{farmItem.name}
+                                p.p-0.m-0
+                                  small
+                                    if(farmItem.location && farmItem.state)
+                                      | #{farmItem.location}, #{farmItem.state}
+                                    else 
+                                      if(farmItem.location)
+                                        | #{farmItem.location}
+                                      else 
+                                        | #{farmItem.state}
+                              
+    .row
+      .col-md-12
+        .card.border-0
+          .card-body
+            form.my-4(method="post" action='/logout')
+              button.btn.btn-danger(type='submit')
+                | Salir
+    
+  script(src="/customers/scripts.js")
+  script(src='https://s3.amazonaws.com/rewo/backoffice/vendors/base/vendor.bundle.base.js')
+  script(src='https://s3.amazonaws.com/rewo/backoffice/vendors/datatables.net/jquery.dataTables.js')
+  script(src='https://s3.amazonaws.com/rewo/backoffice/vendors/datatables.net-bs4/dataTables.bootstrap4.js')
+
+  script(src='https://s3.amazonaws.com/rewo/backoffice/js/off-canvas.js')
+  script(src='https://s3.amazonaws.com/rewo/backoffice/js/hoverable-collapse.js')
+  script(src='https://s3.amazonaws.com/rewo/backoffice/js/template.js')
+  
+  script(src='https://maps.google.com/maps/api/js?key=AIzaSyBpSkP-tvO14Rgji6jzW_-xICmNwoVngf0&loading=async&libraries=places', type='text/javascript')

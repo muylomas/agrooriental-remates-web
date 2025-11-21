@@ -1,0 +1,310 @@
+html {
+    box-sizing: border-box;
+    font-family: sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    font-size: 14px
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+    display: block
+}
+
+audio,
+canvas,
+progress,
+video {
+    display: inline-block;
+    vertical-align: baseline
+}
+
+audio:not([controls]) {
+    display: none;
+    height: 0
+}
+
+body,
+html {
+    height: 100%
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    min-width: 320px;
+    background: #fff;
+    color: rgba(0, 0, 0, .87);
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+main,
+nav,
+section,
+summary {
+    display: block
+}
+
+audio,
+canvas,
+progress,
+video {
+    display: inline-block;
+    vertical-align: baseline
+}
+
+audio:not([controls]) {
+    display: none;
+    height: 0
+}
+
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+html {
+    background-color: white;
+    color: gray;
+    overflow-y: scroll;
+    height: 100%
+}
+
+body {
+    min-height: 100%
+}
+
+.scrollable {
+    height: 400px;
+    overflow: auto
+}
+
+html.hijacked {
+    overflow: hidden
+}
+
+.fsvs {
+    overflow: hidden;
+    position: relative
+}
+
+.fsvs>div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9
+}
+
+.fsvs>div>div {
+    height: 100%;
+    overflow: hidden
+}
+
+.fsvs+.fsvs-pagination {
+    -webkit-transition: all 0.4s;
+    transition: all 0.4s;
+    position: fixed;
+    z-index: 999;
+    left: 100%;
+    top: 50%;
+    margin: 0 0 0 -40px;
+    padding: 0 0 0 50px;
+    background: none
+}
+
+.fsvs+.fsvs-pagination li {
+    -webkit-transition: all 0.4s;
+    transition: all 0.4s;
+    border-radius: 100%;
+    list-style: none;
+    display: block;
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    line-height: 24px;
+    border: 1px solid #404040;
+    margin: 0 0 4px 0
+}
+
+.fsvs+.fsvs-pagination li span {
+    display: block;
+    width: 16px;
+    height: 16px;
+    border-radius: 100%;
+    border: 1px solid #404040;
+    margin: 3px auto
+}
+
+.fsvs+.fsvs-pagination li.active {
+    border: 1px dashed #fff
+}
+
+.fsvs+.fsvs-pagination li.active span {
+    background: #fff
+}
+
+.fsvs+.fsvs-pagination.visible {
+    padding: 0;
+    z-index: 9991
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+nav,
+section,
+main,
+summary {
+    display: block
+}
+
+audio,
+canvas,
+video {
+    display: inline-block;
+}
+
+audio:not([controls]) {
+    display: none
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box
+}
+
+html {
+    overflow-y: scroll;
+    min-height: 100%
+}
+
+html.fsvs {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden
+}
+
+html.fsvs #fsvs-body {
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    height: 100%;
+    width: 100%
+}
+
+html.fsvs #fsvs-body>* {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+}
+
+html.fsvs.no-hijack {
+    overflow: auto;
+    position: relative
+}
+
+html.fsvs.no-hijack #fsvs-body {
+    position: static;
+    transition: none !important;
+    -webkit-transition: none !important;
+    transform: none !important
+}
+
+html.fsvs.no-hijack #fsvs-pagination {
+    display: none
+}
+
+html.fsvs #fsvs-pagination {
+    margin: 0;
+    padding: 8px 4px;
+    position: fixed;
+    height: auto;
+    right: -100px;
+    top: 50%;
+    z-index: 999;
+    width: 32px
+}
+
+html.fsvs #fsvs-pagination li {
+    list-style: none;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    margin: 0 0 2px 0;
+    cursor: pointer
+}
+
+html.fsvs #fsvs-pagination li>span {
+    border-radius: 100%;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    border: 1px solid white;
+    display: block
+}
+
+html.fsvs #fsvs-pagination li>span>span {
+    border-radius: 100%;
+    width: 12px;
+    height: 12px;
+    line-height: 12px;
+    border: 1px solid white;
+    display: block;
+    margin: 4px
+}
+
+html.fsvs #fsvs-pagination li.active>span {
+    border: 1px dashed white
+}
+
+html.fsvs #fsvs-pagination li.active>span>span {
+    background: white
+}
+
+html.fsvs #fsvs-pagination li:last-child {
+    margin: 0
+}
+
+@media only screen and (max-width:500px) {
+    html.fsvs #fsvs-body #fsvs-pagination {
+        right: 3px !important
+    }
+}
+
+html.home-page body #fsvs-pagination {
+    display: none
+}

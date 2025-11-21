@@ -1,0 +1,422 @@
+.row
+  .col-md-8.stretch-card
+    .card.border-0
+      .card-body.px-2.pt-sm-2.pt-5
+        h6 Elegir cliente/establecimiento
+        #farms-in-lot
+        .row#search-farms-container
+          .col-sm-12
+            .form-group.mb-0
+              .input-group
+                input#farms-search-input.form-control(type='text' placeholder="Buscar establecimiento" aria-label="Buscar establecimiento")
+                button#farms-search-input-clear.btn.btn-link.btn-fw(type="button",style="position: absolute;right: 62px;top: 2px;display:none") Borrar
+                .input-group-append
+                  button#farms-search-button.btn.btn-sm.btn-primary(type='button') Buscar
+              p#farms-search-warning.text-secondary.text-danger.mt-2(style="display:none")
+                | Ingresá al menos 3 caracteres para realizar la búsqueda
+              p#farms-search-noresult.text-secondary.text-danger.mt-2.pl-2(style="display:none")
+                | No hay resultados
+                a.btn.btn-success.ml-2(href="/establecimientos/nuevo", target="_blank")
+                  | Crear establecimiento
+                
+              #farms-search-results.table-responsive
+        
+        h6.mt-5 Establecimiento:
+        .row
+          .col-sm-6.mt-3
+            .form-group.row.m-0
+              p.col-5.col-form-label.m-0.p-0(style="font-size: 0.875rem;") Zona de garrapata:
+              .col-3
+                .form-check.m-0 
+                  label.form-check-label
+                    if(lot.tick == "1")
+                      input.form-check-input(type='radio', name='tick', value='')
+                    else
+                      input.form-check-input(type='radio', name='tick', value='', checked)
+                    | No
+                    i.input-helper
+              .col-3
+                .form-check.m-0 
+                  label.form-check-label
+                    if(lot.tick == "1")
+                      input.form-check-input(type='radio', name='tick', value='1', checked)
+                    else
+                      input.form-check-input(type='radio', name='tick', value='1')
+                    | Si
+                    i.input-helper
+              .col-1
+          .col-sm-6.mt-3
+            .form-group.row.m-0
+              p.col-5.col-form-label.m-0.p-0(style="font-size: 0.875rem;") Conoce Mio-Mio:
+              .col-3
+                .form-check.m-0
+                  label.form-check-label
+                    if(lot.mio == "1")
+                      input.form-check-input(type='radio', name='mio', value='')
+                    else
+                      input.form-check-input(type='radio', name='mio', value='', checked)
+                    | No
+                    i.input-helper
+              .col-3
+                .form-check.m-0
+                  label.form-check-label
+                    if(lot.mio == "1")
+                      input.form-check-input(type='radio', name='mio', value='1', checked)
+                    else
+                      input.form-check-input(type='radio', name='mio', value='1')
+                    | Si
+                    i.input-helper
+              .col-1
+        
+        h6.mt-5 Ganado
+        .row 
+          - var cattleFamilySet = lot.typeFamily ? lot.typeFamily : cattleTypes[0].family;
+          .col-sm-3.col-6
+            .form-group.m-0
+              label(for="type-family-selector")
+                | Familia:
+              select#type-family-selector.form-control.mb-2.mr-sm-2(name="typeFamily", onchange="updateOnTypeFamily()")
+                - var cattleFamilyUnique = [];
+                each cattleFamilyItem in cattleTypes
+                  if(!cattleFamilyUnique.includes(cattleFamilyItem.family))
+                    - cattleFamilyUnique.push(cattleFamilyItem.family);
+                    if(cattleFamilyItem.family == cattleFamilySet)
+                      option(value=cattleFamilyItem.family, selected="selected") #{cattleFamilyItem.family}
+                    else
+                      option(value=cattleFamilyItem.family) #{cattleFamilyItem.family}
+          .col-sm-3.col-6
+            .form-group.m-0
+              label(for="type-selector")
+                | Categoría:
+              select#type-selector.form-control.mb-2.mr-sm-2(name="typeId", onchange="updateOnType()")
+                each cattleTypeItem in cattleTypes
+                  if(cattleTypeItem.family == cattleFamilySet)
+                    if(cattleTypeItem.id == lot.typeId)
+                      option(value=cattleTypeItem.id, selected="selected") #{cattleTypeItem.name}
+                    else
+                      option(value=cattleTypeItem.id) #{cattleTypeItem.name}
+                      
+          .col-sm-6
+          
+        #cattle-breeds.my-2
+        
+        input#age-unit(type="hidden", name="ageUnit", value=lot.ageUnit)
+        #cattle-ages.mt-sm-2.mt-3.mb-4
+        
+        #reproductive-status-container.row.mt-2
+          .col-sm-3
+            .form-group.m-0
+              label(for="reproductive-status-select")
+                | Estado reproductivo:
+              select#reproductive-status-select.form-control.mb-2.mr-sm-2(name="reproductiveStatusId")
+                each reproductiveStatusItem in cattleReproductiveStatus
+                  if(reproductiveStatusItem.id == lot.reproductiveStatusId)
+                    option(value=reproductiveStatusItem.id, selected="selected") #{reproductiveStatusItem.name}
+                  else
+                    option(value=reproductiveStatusItem.id) #{reproductiveStatusItem.name}
+          .col-sm-3
+            .form-group.m-0
+              label(for="pregnancy-diagnosis-select")
+                | Diagnóstico de preñez:
+              select#pregnancy-diagnosis-select.form-control.mb-2.mr-sm-2(name="pregnancyDiagnosisId")
+                each pregnancyDiagnosisItem in cattlePregnancyDiagnosis
+                  if(pregnancyDiagnosisItem.id == lot.pregnancyDiagnosisId)
+                    option(value=pregnancyDiagnosisItem.id, selected="selected") #{pregnancyDiagnosisItem.name}
+                  else
+                    option(value=pregnancyDiagnosisItem.id) #{pregnancyDiagnosisItem.name} 
+          .col-sm-3
+            .form-group.row.m-0
+              label(for="give-birth-season")
+                | A parir en:
+              select#give-birth-season.form-control.mb-2.mr-sm-2(name="birthSeason")
+                each seasonItem in seasons
+                  if(seasonItem.id == lot.birthSeason)
+                    option(value=seasonItem.id, selected="selected") #{seasonItem.name}
+                  else
+                    option(value=seasonItem.id) #{seasonItem.name}
+          .col-sm-3
+
+        #gender-age-conditions.row.mt-2
+          #weaning-input-container.col-sm-3.col-6
+            .form-group.m-0
+              label(for="weaning-input")
+                | Destetados
+              input#weaning-input.form-control(type="number", step="1", name="weaning", placeholder="# destetados", value=lot.weaning)
+          #calves-input-container.col-sm-3.col-6
+            .form-group.m-0
+              label(for="calves-input")
+                | Al pie
+              input#calves-input.form-control(type="number", step="1", name="calves", placeholder="# al pie", value=lot.calves)
+          #caped-input-container.col-sm-3.col-6.mt-sm-0.mt-3
+            .form-group.m-0
+              label(for="caped-input")
+                | Capados
+              input#caped-input.form-control(type="number", step="1", name="caped", placeholder="# capados", value=lot.caped)
+          #entire-input-container.col-sm-3.col-6.mt-sm-0.mt-3
+            .form-group.m-0
+              label(for="entire-input")
+                | Enteros
+              input#entire-input.form-control(type="number", step="1", name="entire", placeholder="# enteros", value=lot.entire)
+
+        .row.mt-3
+          .col-sm-3.col-6
+            .form-group.m-0
+              label(for="mochos-input")
+                | Mochos
+              input#mochos-input.form-control(type="number", step="1", name="mochos", placeholder="# mochos", value=lot.mochos)
+          .col-sm-3.col-6
+            .form-group.m-0
+              label(for="astados-input")
+                | Astados
+              input#astados-input.form-control(type="number", step="1", name="astados", placeholder="# astados", value=lot.astados)
+          .col-sm-3.col-6.mt-sm-0.mt-3
+            .form-group.m-0
+              label(for="mochados-input")
+                | Mochados
+              input#mochados-input.form-control(type="number", step="1", name="mochados", placeholder="# mochados", value=lot.mochados)
+          .col-sm-3.col-6.mt-sm-0.mt-3
+            .form-group.m-0
+              label(for="tocos-input")
+                | Tocos
+              input#tocos-input.form-control(type="number", step="1", name="tocos", placeholder="# tocos", value=lot.tocos)
+
+        .row.mt-sm-5.mt-5
+          .col-sm-3.col-5
+            select.form-control.mb-2.mr-sm-2.mt-sm-0.mt-4(name="feedingId")
+              option(value="") Tratamiento nutricional
+              each cattleFeedingItem in cattleFeeding
+                if(cattleFeedingItem.id == lot.feedingId)
+                  option(value=cattleFeedingItem.id, selected="selected") #{cattleFeedingItem.name}
+                else
+                  option(value=cattleFeedingItem.id) #{cattleFeedingItem.name}
+          .col-sm-9.col-7
+            .form-group.row.m-0
+              .col-sm-1
+              p.col-sm-4.col-form-label.m-0.p-0(style="padding-top: 10px !important;font-size: 0.875rem;") 
+                | Saben comer ración:
+              .col-sm-2.col-6
+                .form-check 
+                  label.form-check-label
+                    if(lot.ration == "1")
+                      input.form-check-input(type='radio', name='ration', value='')
+                    else
+                      input.form-check-input(type='radio', name='ration', value='', checked)
+                    | No
+                    i.input-helper
+              .col-sm-2.col-6
+                .form-check
+                  label.form-check-label
+                    if(lot.ration == "1")
+                      input.form-check-input(type='radio', name='ration', value='1', checked)
+                    else
+                      input.form-check-input(type='radio', name='ration', value='1')
+                    | Si
+                    i.input-helper
+              .col-sm-3.d-sm-inline.d-none
+              
+        h6.mt-5 Pesada
+        .row.mt-2
+          .col-sm-8
+            .form-group.row.m-0
+              p.col-sm-4.col-5.col-form-label.m-0.p-0(style="padding-top: 10px !important; font-size: 0.875rem;") Peso estimado:
+              .col-sm-2.col-3
+                .form-check
+                  label.form-check-label
+                    if(lot.weighed == "1")
+                      input.form-check-input(type='radio', name='weighed', value='')
+                    else
+                      input.form-check-input(type='radio', name='weighed', value='', checked)
+                    | No
+                    i.input-helper
+              .col-sm-2.col-4
+                .form-check
+                  label.form-check-label
+                    if(lot.weighed == "1")
+                      input.form-check-input(type='radio', name='weighed', value='1', checked)
+                    else
+                      input.form-check-input(type='radio', name='weighed', value='1')
+                    | Si
+                    i.input-helper
+              .col-sm-4.d-sm-inline.d-none
+          .col-sm-4
+            .input-group
+              input#weight-mean-input.form-control(type="number", step="1", name="weightMean", placeholder="Peso promedio", value=lot.weightMean)
+              .input-group-append
+                span.input-group-text.bg-primary.text-white.p-2 Kg
+        #weighed-extra-fields-1.row.mt-2
+          .col-sm-3.col-6.mt-3
+            .form-group.m-0
+              label(for="weightedPercentage-input")
+                | Porcentaje pesado
+              .input-group
+                input#weightedPercentage-input.form-control(type="number", step="1", name="weightedPercentage", placeholder="0 - 100", max="100", min="0", value=lot.weightedPercentage)
+                .input-group-append
+                  span.input-group-text.bg-primary.text-white.p-2 %
+          .col-sm-3.col-6.mt-3
+            .form-group.m-0
+              label(for="weightDate-input")
+                | Fecha de pesada
+              input#weightDate-input.form-control.w-100(type="date", name="weightDate", placeholder="Fecha de pesada", value=lot.weightDate)
+          .col-sm-3.col-6.mt-3
+            .form-group.m-0
+              label(for="weightMin-input")
+                | Peso mínimo
+              .input-group
+                input#weightMin-input.form-control(type="number", step="1", name="weightMin", placeholder="Peso mínimo", value=lot.weightMin)
+                .input-group-append
+                  span.input-group-text.bg-primary.text-white.p-2 Kg
+          .col-sm-3.col-6.mt-3
+            .form-group.m-0
+              label(for="weightMax-input")
+                | Peso máximo
+              .input-group
+                input#weightMax-input.form-control(type="number", step="1", name="weightMax", placeholder="Peso máximo", value=lot.weightMax)
+                .input-group-append
+                  span.input-group-text.bg-primary.text-white.p-2 Kg
+        #weighed-extra-fields-2.row.mt-2
+          .col-sm-3.col-6.mt-3
+            .form-group.m-0
+              label(for="weightConfinement-input")
+                | Horas de encierro
+              .input-group
+                input#weightConfinement-input.form-control(type="number", step="1", name="weightConfinement", placeholder="0 - 48", max="48", min="0", value=lot.weightConfinement)
+                .input-group-append
+                  span.input-group-text.bg-primary.text-white.p-2 hs
+          .col-sm-9.mt-3
+            .form-group.m-0
+              label(for="weightedPercentage-comment")
+                | Obs. pesada
+              textarea#weightedPercentage-comment.form-control(cols="40", rows="1", name='weightComment', placeholder="Agregá los comentarios de la pesada aquí", aria-label="Agregá los comentarios de la pesada aquí" value=lot.weightComment)
+                | #{lot.weightComment}
+                  
+        h6.mt-5 Precios y duración de la subasta
+        .row 
+          .col-sm-3
+            .form-group
+              label(for="auction-price-type")
+                | Tipo de remate
+              select#auction-price-type.form-control.mb-2.mr-sm-2(name="auctionPriceType", onchange="auctionPriceTypeChange()")
+                each auctionPriceTypeItem in auctionPriceType
+                  if(auctionPriceTypeItem.id == lot.auctionPriceType)
+                    option(value=auctionPriceTypeItem.id, selected="selected") #{auctionPriceTypeItem.name}
+                  else
+                    option(value=auctionPriceTypeItem.id) #{auctionPriceTypeItem.name}
+          .col-sm-3
+            .form-group
+              label(for="start-price-input")
+                | Precio base
+              .input-group
+                .input-group-prepend
+                  span.input-group-text.bg-primary.text-white.p-2 USD
+                input#start-price-input.form-control(type="number", step=".01", name="startPrice", placeholder="0.00", min="0", value=lot.startPrice)
+          .col-sm-3
+            .form-group
+              label(for="sale-price-input")
+                | Precio de venta
+              .input-group
+                .input-group-prepend
+                  span.input-group-text.bg-primary.text-white.p-2 USD
+                input#sale-price-input.form-control(type="number", step=".01", name="salePrice", placeholder="0.00", min="0", value=lot.salePrice)
+          .col-sm-3
+            .form-group
+              label(for="step-price-input")
+                | Incremento en subasta
+              .input-group
+                .input-group-prepend
+                  span.input-group-text.bg-primary.text-white.p-2 USD
+                input#step-price-input.form-control(type="number", step=".01", name="stepPrice", placeholder="0.00", min="0", value=lot.stepPrice)
+
+        .row 
+          .col-sm-4.mt-3.w-100
+            .form-group.m-0.w-100
+              label(for="auction-start-input")
+                | Inicio
+              input#auction-start-input.form-control(type="datetime-local", name="auctionStart", value=lot.auctionStart, onchange="updateOnStartAuctionDate()")
+          .col-sm-4.mt-3
+            .form-group.m-0.w-100
+              label(for="auction-end-input")
+                | Final
+              input#auction-end-input.form-control(type="datetime-local", name="auctionEnd",data-val="true", data-val-required="Date is required." value=lot.auctionEnd)
+          .col-sm-4.mt-3
+            .form-group.m-0
+              label(for="payment-term-selector")
+                | Forma de pago
+              select#payment-term-selector.form-control.mb-2.mr-sm-2(name="paymentTermId")
+                each paymentTermItem in cattlePaymentTerms
+                  if(paymentTermItem.id == lot.paymentTermId)
+                    option(value=paymentTermItem.id, selected="selected") #{paymentTermItem.name}
+                  else
+                    option(value=paymentTermItem.id) #{paymentTermItem.name}
+
+        h6.mt-5 Evaluaciones de lote
+        .row 
+          .col-sm-3.col-6.mt-3
+            .form-group.m-0
+              label(for="rating-selector")
+                | Clase
+              select#rating-selector.form-control.mb-2.mr-sm-2(name="rating")
+                each cattleRatingsItem in cattleRatings
+                  if(cattleRatingsItem.id == lot.rating)
+                    option(value=cattleRatingsItem.id, selected="selected") #{cattleRatingsItem.name}
+                  else
+                    option(value=cattleRatingsItem.id) #{cattleRatingsItem.name}
+          .col-sm-3.col-6.mt-3
+            .form-group.m-0
+              label(for="body-estimation-input")
+                | Eval. corporal (1 - 5)
+              input#body-estimation-input.form-control(type="number", step=".5", name="bodyStatus", placeholder="0.0", min="1", max="5", value=lot.bodyStatus)
+          .col-sm-6.mt-3
+            .form-group.m-0
+              label(for="health-input")
+                | Obs. sanitarias
+              textarea#health-input.form-control(cols="40", rows="1", name='health', placeholder="Agregá los comentarios aquí", aria-label="Agregá los comentarios de sanidad aquí" value=lot.health)
+                | #{lot.health}
+                
+        h6.mt-5 Comentarios    
+        .row 
+          .col-sm-12
+            textarea.form-control(cols="40", rows="5", name='explanations', placeholder="Agregá los comentarios aquí", aria-label="Agregá los comentarios aquí" value=lot.explanations)
+              | #{lot.explanations}
+              
+        .row.mt-5
+          .col-sm-6.mt-3
+            .form-group.row.m-0
+              p.col-4.col-form-label.m-0.p-0(style="font-size: 0.875rem;") 
+                b Lote certificado:
+              .col-3
+                .form-check.m-0 
+                  label.form-check-label
+                    if(lot.certified == "1")
+                      input.form-check-input(type='radio', name='certified', value='')
+                    else
+                      input.form-check-input(type='radio', name='certified', value='', checked)
+                    | No
+                    i.input-helper
+              .col-3
+                .form-check.m-0 
+                  label.form-check-label
+                    if(lot.certified == "1")
+                      input.form-check-input(type='radio', name='certified', value='1', checked)
+                    else
+                      input.form-check-input(type='radio', name='certified', value='1')
+                    | Si
+                    i.input-helper
+              .col-2
+          .col-sm-6.mt-3
+
+        h6.mt-5 Agente de venta
+        #salesagents-in-lot
+        .row#search-salesagents-container
+          .col-sm-6
+            .form-group.mb-0
+              .input-group
+                input#salesagents-search-input.form-control(type='text' placeholder="Buscar establecimiento" aria-label="Buscar establecimiento")
+                button#salesagents-search-input-clear.btn.btn-link.btn-fw(type="button",style="position: absolute;right: 62px;top: 2px;display:none") Borrar
+                .input-group-append
+                  button#salesagents-search-button.btn.btn-sm.btn-primary(type='button') Buscar
+              p#salesagents-search-warning.text-secondary.text-danger.mt-2(style="display:none")
+                | Ingresá al menos 3 caracteres para realizar la búsqueda
+              p#salesagents-search-noresult.text-secondary.text-danger.mt-2.pl-2(style="display:none")
+                | No hay resultados
+                
+              #salesagents-search-results.table-responsive

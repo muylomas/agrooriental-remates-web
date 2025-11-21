@@ -1,0 +1,56 @@
+h6.mt-2 Peso promedio
+input(type='hidden', name='weighed', value='1')
+.row
+  .col-12
+    .input-group
+      input#weight-mean-input.form-control(type="number", step="1", name="weightMean", placeholder="XXXX", value=lot.weightMean)
+      .input-group-append
+        span.input-group-text.bg-primary.text-white.p-2 Kg
+
+#weight-calves-mean.mt-3
+  h6 
+    small.text-muted 
+      | Peso promedio de los terneros
+  .row
+    .col-12
+      .input-group
+        input.form-control(type="number", step="1", name="weightCalvesMean", placeholder="XXXX", value=lot.weightCalvesMean)
+        .input-group-append
+          span.input-group-text.bg-primary.text-white.p-2 Kg
+
+#weight-destare.form-group.row.mt-4
+  .col-6
+    .form-check 
+      label.form-check-label
+        if(lot.weightDestare == "1")
+          input.form-check-input(type='radio', name='weightDestare', value='')
+        else
+          input.form-check-input(type='radio', name='weightDestare', value='', checked)
+        | Bruto
+        i.input-helper
+  .col-6
+    .form-check
+      label.form-check-label
+        if(lot.weightDestare == "1")
+          input.form-check-input(type='radio', name='weightDestare', value='1', checked)
+        else
+          input.form-check-input(type='radio', name='weightDestare', value='1')
+        | Destarado
+        i.input-helper
+        
+.row.mt-4
+  .col-12
+    .form-group.m-0
+      label(for="weightedPercentage-comment")
+        | Obs. peso
+      textarea#weightedPercentage-comment.form-control(cols="40", rows="3", name='weightComment', placeholder="Agregá los comentarios de la pesada aquí", aria-label="Agregá los comentarios de la pesada aquí" value=lot.weightComment)
+        | #{lot.weightComment}
+                  
+.row.mt-4
+  .col-12
+    .form-group.m-0
+      label(for="health-input")
+        | Tienes comentarios u observaciones sanitarias sobre el lote?
+      textarea#health-input.form-control(cols="40", rows="1", name='health', placeholder="Agregá los comentarios aquí", aria-label="Agregá los comentarios de sanidad aquí" value=lot.health)
+        | #{lot.health}
+        

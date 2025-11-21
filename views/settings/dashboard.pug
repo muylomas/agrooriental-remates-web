@@ -1,0 +1,424 @@
+extends ../baseHTML
+
+block content     
+  link(rel='stylesheet', href='/planning-classes.css')
+
+  .main-panel
+    .content-wrapper
+        .row
+          .col-md-12.grid-margin
+            .card
+              .card-body
+                form(method="post", enctype="multipart/form-data", action='/settings/update')
+                  input(type="hidden", name="userId", value=userId)
+                  .row
+                    .col-md-2(style="margin-top:1.5rem;")
+                      .card
+                        .card-body(style="padding:0;")
+                          style.
+                            #profileImg {
+                              background-size:contain;
+                              background-repeat:no-repeat;
+                              background-position: center;
+                              width: 100%;
+                              position:relative;
+                            }
+                            #imgInpLabel {
+                              position: absolute;
+                              bottom: 0;
+                              right: 7px;
+                            }
+                          .media(style="width:100%;")
+                            - var __aux_prod_image = 'background-image:url(' + (user.image ? user.image : "https://mercadoagro-backoffice.s3.amazonaws.com/images/logos/icon.png") + ')'
+                            #profileImg(style=__aux_prod_image)
+                              img(src="https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png", width="100%",onclick="fireFileInputFromImg()")
+                              input#imgInp(type="file", name="imagetoupload", hidden, value="")
+                              input#fileNameToUpload(type='hidden', name='fileName', value="")
+                              input(type="hidden", name="fileType", value="2")
+                              label#imgInpLabel.btn.btn-danger.btn-fw.btn-sm(for="imgInp") 
+                                i.mdi.mdi-upload.btn-icon-prepend
+
+                    .col-md-6.stretch-card
+                      .card.border-0
+                        .card-body
+                          .row
+                            .col-md-6
+                              label.mb-2
+                                b Nombre: 
+                              input.form-control.mb-2(type='text', name="userName", placeholder='Nombre', value=user.name)
+                            .col-md-6
+                              label.mb-2
+                                b Apellido: 
+                              input.form-control.mb-2(type='text', name="userSurname", placeholder='Apellido', value=user.surname)
+                          
+                          
+                          .row
+                            .col-md-6
+                              label.mb-2
+                                b Fecha de nacimiento: 
+                              input.form-control.mb-2(type='date', name="userBirthday", placeholder='dd/mm/aaaa', value=user.birthday)
+                            .col-md-6
+                              label.mb-2.mr-sm-2
+                                b Departamento: 
+                              select.form-control.mb-2(name="userDepartment")
+                                option(value="") Seleccionar departamento
+                                each department in departments
+                                  if(department.id == user.department)
+                                    option(value=department.id, selected="selected") #{department.name}
+                                  else
+                                    option(value=department.id) #{department.name}
+
+                          .form-group(style="margin-bottom: 0.2rem;")
+                            label.mb-2.mr-sm-2
+                              b Celular: 
+                            .input-group
+                              select.form-control.form-control.mr-sm-2(name="usercell_country", style="max-width: 100px;")
+                                each country, indexC in countries
+                                  if(indexC == user.cellCountry)
+                                    option(value=indexC, selected="selected") #{country}
+                                  else
+                                    option(value=indexC) #{country}
+                              input.form-control.mb-2.mr-sm-2.form-control(type='text', name="usercell_number", placeholder='Número de teléfono', value=user.cellNumber)
+                              input.form-control.mb-2.form-control(type='intern', name="usercell_intern", placeholder='Interno', style="max-width: 100px;", value=user.cellIntern)
+
+                          .form-group(style="margin-bottom: 0.2rem;")
+                            label.mb-2.mr-sm-2
+                              b Teléfono: 
+                            .input-group
+                              select.form-control.form-control.mr-sm-2(name="userphone_country", style="max-width: 100px;")
+                                each country, indexC in countries
+                                  if(indexC == user.phoneCountry)
+                                    option(value=indexC, selected="selected") #{country}
+                                  else
+                                    option(value=indexC) #{country}
+                              input.form-control.mb-2.mr-sm-2.form-control(type='text', name="userphone_number", placeholder='Número de teléfono', value=user.phoneNumber)
+                              input.form-control.mb-2.form-control(type='intern', name="userphone_intern", placeholder='Interno', style="max-width: 100px;", value=user.phoneIntern)
+
+                          .form-group(style="margin-bottom: 0.2rem;")
+                            label.mb-2.mr-sm-2
+                              b Fax: 
+                            .input-group
+                              select.form-control.form-control.mr-sm-2(name="userfax_country", style="max-width: 100px;")
+                                each country, indexC in countries
+                                  if(indexC == user.faxCountry)
+                                    option(value=indexC, selected="selected") #{country}
+                                  else
+                                    option(value=indexC) #{country}
+                              input.form-control.mb-2.mr-sm-2.form-control(type='text', name="userfax_number", placeholder='Número de teléfono', value=user.faxNumber)
+                              input.form-control.mb-2.form-control(type='intern', name="userfax_intern", placeholder='Interno', style="max-width: 100px;", value=user.faxIntern)
+
+                          
+
+                    .col-md-4.stretch-card
+                      .card.border-0
+                        .card-body
+                        
+                  .row
+                    .col-md-12
+                      .card.border-0
+                        .card-body.d-flex.align-items-center.justify-content-between.flex-wrap(style="padding:0;")
+                          p.mb-0.text-white.font-weight-medium 
+                          .d-flex        
+                            button.quote-submit.btn.btn-primary.mt-3(type='submit') Actualizar
+
+        .row
+          .col-12.grid-margin
+            .card
+              .card-body
+                .row
+                  .col-md-12
+                    .card.border-0
+                      #event-section.card-body
+                          h4.card-title.mb-5(style="position:relative;",onclick="openEvent()")
+                            | Actividades y licencias
+                            button.btn.border-0.p-0(type="button",style="float: right;position: absolute;right: 0;")
+                              i.mdi.mdi-chevron-down
+                            script.
+                              function openEvent() {
+                                if($("#event-section > form").is(":hidden")) {
+                                  $("#event-section > form").show();
+                                  $("#event-section > h4 > button > i").attr("class","mdi mdi-chevron-up");
+                                } else {
+                                  $("#event-section > form").hide();
+                                  $("#event-section > h4 > button > i").attr("class","mdi mdi-chevron-down");
+                                }
+                              }
+                              
+                          form.mb-5(method='post', name='requestSubmitEvent', action='/settings/event/new')
+                            
+                            .form-inline.mt-2.mb-3
+                              if(userType == 1)
+                                label.mr-sm-2(style="font-size: 0.875rem;")
+                                  b Usuario:
+                                select.form-control.mr-sm-4(name="rewouser", style="width:130px")
+                                  option(value="") Elegir usuario
+                                  each userInd in rewoUsers
+                                    if(userInd.group == 0)
+                                      if(userId == userInd.id)
+                                        option(value=userInd.id, selected="selected") #{userInd.name} #{userInd.surname}
+                                      else
+                                        option(value=userInd.id) #{userInd.name} #{userInd.surname}
+                              else 
+                                input(type="hidden", name="rewouser", value=userId)
+
+                              label.mr-sm-4(style="font-size: 0.875rem;")
+                                b Actividad:
+                              select.form-control.mr-sm-4(name="eventtype")
+                                option(value="") Seleccionar actividad
+                                each eventsNameItem in eventsName
+                                  option(value=eventsNameItem.id) #{eventsNameItem.name}
+
+                            .form-inline.mt-2.mb-3     
+                              label.mr-sm-2(style="font-size: 0.875rem;")
+                                b Desde: 
+                              input.form-control.mr-sm-4(type="date", name="startDay", style="width:180px")
+                              
+                              label.mr-sm-2(style="font-size: 0.875rem;")
+                                b Hora 
+                              - __auxHour = 0
+                              - __auxMinute = 0
+                              - __auxlast = 30
+                              select.form-control.mr-sm-2(name="startDayHour")
+                                while __auxHour < 24
+                                  option(value=__auxHour) #{(__auxHour < 10? "0" : "")}#{__auxHour}
+                                  - __auxHour += 1
+                              .mr-sm-2 : 
+                              select.form-control( name="startDayMinutes")
+                                while __auxMinute < 60
+                                  option(value=__auxMinute) #{(__auxMinute < 10? "0" : "")}#{__auxMinute}
+                                  - __auxMinute += 5
+
+                            .form-inline.mt-2.mb-3
+                              label.mr-sm-2(style="font-size: 0.875rem;")
+                                b Hasta: 
+                              input.form-control.mr-sm-4(type="date", name="endDay", style="width:180px")
+
+                              label.mr-sm-2(style="font-size: 0.875rem;")
+                                b Hora:
+                              - __auxHour = 0
+                              - __auxMinute = 0
+                              - __auxlast = 30
+                              select.form-control.mr-sm-2(name="endDayHour")
+                                while __auxHour < 24
+                                  if(__auxHour == 23)
+                                    option(value=__auxHour, selected="selected") #{(__auxHour < 10? "0" : "")}#{__auxHour}
+                                  else
+                                    option(value=__auxHour) #{(__auxHour < 10? "0" : "")}#{__auxHour}
+                                  - __auxHour += 1
+                              .mr-sm-2 : 
+                              select.form-control( name="endDayMinutes")
+                                while __auxMinute < 60
+                                  option(value=__auxMinute) #{(__auxMinute < 10? "0" : "")}#{__auxMinute}
+                                  - __auxMinute += 5
+                                option(value=59, selected="selected") 59
+                              
+                            button.btn.btn-primary.mb-4.mr-sm-2(type='submit') Ingresar 
+
+
+                          each eventsNameItem in eventsName
+                            h5.mb-3 #{eventsNameItem.name}:
+                            style. 
+                              #events-list-table tr td { padding: .5rem 1rem; }
+                            table#events-list-table.table.mb-4
+                              tbody
+                                - var __aux_items_count = 0
+                                - var __aux_items_count_edit = 0
+                                each eventsItem in events
+                                  if(eventsItem.type == eventsNameItem.id)
+                                    - ++__aux_items_count
+                                    tr
+                                      if(eventsItem.edit == 1)
+                                        - ++__aux_items_count_edit
+                                        td
+                                          form.forms-sample(method='post', action='/settings/event/update')
+                                            input(type="hidden", name="eventId", value=eventsItem.id)
+                                            .form-inline
+                                              label.mr-sm-2(style="font-size: 0.875rem;")
+                                                b De: 
+                                              input.form-control.mr-sm-4(type="datetime-local", name="startDay", value=eventsItem.start)
+
+                                              label.mr-sm-2(style="font-size: 0.875rem;")
+                                                b a: 
+                                              input.form-control.mr-sm-4(type="datetime-local", name="endDay", value=eventsItem.end)
+
+                                              button.btn.btn-primary.mr-4(type='submit')
+                                                | Actualizar
+                                        td
+                                          - var __aux_id_compose_form = "delete-form-" + eventsItem.id
+                                          - var __aux_id_compose_pre = "pre-" + __aux_id_compose_form 
+                                          button.btn.btn-sm.btn-light.btn-icon(id=__aux_id_compose_pre, onclick='enableDeleteButton("' + __aux_id_compose_form + '")')
+                                            i.mdi.mdi-delete(style="color:#ccc")
+                                          form.forms-sample(id=__aux_id_compose_form, method='post', action='/settings/event/remove', style="display:none;")
+                                            input(type="hidden", name="eventId", value=eventsItem.id)
+                                            button.btn.btn-sm.btn-danger.btn-icon(type='submit')
+                                                i.mdi.mdi-delete
+                                            script. 
+                                              function enableDeleteButton(buttonId) {
+                                                $('[id^="delete-form-"]').hide();
+                                                $('[id^="pre-delete-form-"]').show();
+                                                $("#" + "pre-" + buttonId).hide();
+                                                $("#" + buttonId).show();
+                                              }  
+
+                                if(__aux_items_count > 0 && __aux_items_count > __aux_items_count_edit)
+                                  tr
+                                    td 
+                                      .dropdown
+                                        button#dropdownMenuIconButton1.btn.btn-light.dropdown-toggle(type='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                                          i.mdi.mdi-check-circle-outline.font-weight-bold.text-success.mr-2
+                                          | Pasad@s
+                                        .dropdown-menu(aria-labelledby='dropdownMenuIconButton1' style="max-width:400px;width:100%")
+                                          each eventsItem in events
+                                            if(eventsItem.type == eventsNameItem.id && eventsItem.edit != 1)
+                                              p.ml-3 
+                                                | #{eventsItem.startText} 
+                                                b.mx2 - 
+                                                | #{eventsItem.endText}
+                                      td
+                                      
+
+                                if(__aux_items_count == 0)
+                                  tr
+                                    td 
+                                      | No hay registros.
+
+        if(superAdmin.includes(userId))
+          .row
+            .col-12.grid-margin
+              .card
+                .card-body
+                  .row
+                    .col-md-12
+                      .card.border-0
+                        #event-section.card-body
+                            h4.card-title(style="position:relative;",onclick="openEvent()")
+                              | Reseteo de contraseña
+                                
+                            form(method='post', name='requestSubmitEvent', action='/settings/password/reset')
+                              
+                              .form-inline.mt-2
+                                label.mr-sm-2(style="font-size: 0.875rem;")
+                                  b Usuario:
+                                select.form-control.mr-sm-4(name="rewoUserId", style="width:130px")
+                                  option(value="") Elegir usuario
+                                  each userInd in rewoUsers
+                                    if(userInd.group == 0)
+                                      if(userId == userInd.id)
+                                        option(value=userInd.id, selected="selected") #{userInd.name} #{userInd.surname}
+                                      else
+                                        option(value=userInd.id) #{userInd.name} #{userInd.surname}
+
+                                .form-check.mr-sm-4(style="margin-bottom: 0.5rem") 
+                                  input.form-check-input(type='checkbox', name="notify", checked="checked")
+                                  | Notificar por email
+                                  
+                                button.btn.btn-primary.mr-sm-2(type='submit') Resetear contraseña 
+
+          if(superAdmin.includes(userId))
+            .row
+              .col-md-12.grid-margin
+                .card
+                  .card-body
+                    h4.card-title.mt-4.ml-4.mb-4 Crear Usuario
+                    form(method="post", enctype="multipart/form-data", action='/settings/create')
+                      input(type="hidden", name="userId", value=userId)
+                      .row
+                        .col-md-2(style="margin-top:1.5rem;")
+                          .card
+                            .card-body(style="padding:0;")
+                              style.
+                                .newUserProfileImage {
+                                  background-image:url(https://mercadoagro-backoffice.s3.amazonaws.com/images/logos/icon.png);
+                                  background-size:contain;
+                                  background-repeat:no-repeat;
+                                  background-position: center;
+                                  width: 100%;
+                                  position:relative;
+                                }
+                              .media(style="width:100%;")
+                                .newUserProfileImage
+                                  img(src="https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png", width="100%")
+
+                        .col-md-6.stretch-card
+                          .card.border-0
+                            .card-body
+                              .row
+                                .col-md-12
+                                  label.mb-2
+                                    b Email: 
+                                  input.form-control.mb-2.mr-sm-2.form-control(type='text', name="userEmail", placeholder='Email', value="")
+                              .row 
+                                .col-md-6
+                                  label.mb-2
+                                    b Nombre: 
+                                  input.form-control.mb-2.mr-sm-2(type='text', name="userName", placeholder='Nombre', value="")
+                                .col-md-6
+                                  label.mb-2
+                                    b Apellido: 
+                                  input.form-control.mb-2.mr-sm-2(type='text', name="userSurname", placeholder='Apellido', value="")
+                              .row 
+                                .col-md-6
+                                  label.mb-2
+                                    b Fecha de nacimiento: 
+                                  input.form-control.mb-2(type='date', name="userBirthday", placeholder='dd/mm/aaaa')
+                            
+                                .col-md-6
+                                  label.mb-2
+                                    b Departamento: 
+                                  select.form-control.mb-2.mr-sm-2(name="userDepartment")
+                                    option(value="") Seleccionar departamento
+                                    each department in departments
+                                      option(value=department.id) #{department.name}
+
+                              .form-group(style="margin-bottom: 0.2rem;")
+                                label.mb-2.mr-sm-2
+                                  b Celular: 
+                                .input-group
+                                  select.form-control.form-control.mr-sm-2(name="usercell_country", style="max-width: 100px;")
+                                    each country, indexC in countries
+                                      option(value=indexC) #{country}
+                                  input.form-control.mb-2.mr-sm-2.form-control(type='text', name="usercell_number", placeholder='Número de teléfono', value="")
+                                  input.form-control.mb-2.form-control(type='intern', name="usercell_intern", placeholder='Interno', style="max-width: 100px;", value="")
+
+                              .form-group(style="margin-bottom: 0.2rem;")
+                                label.mb-2.mr-sm-2
+                                  b Teléfono: 
+                                .input-group
+                                  select.form-control.form-control.mr-sm-2(name="userphone_country", style="max-width: 100px;")
+                                    each country, indexC in countries
+                                      option(value=indexC) #{country}
+                                  input.form-control.mb-2.mr-sm-2.form-control(type='text', name="userphone_number", placeholder='Número de teléfono', value="")
+                                  input.form-control.mb-2.form-control(type='intern', name="userphone_intern", placeholder='Interno', style="max-width: 100px;", value="")
+
+                              .form-group(style="margin-bottom: 0.2rem;")
+                                label.mb-2.mr-sm-2
+                                  b Fax: 
+                                .input-group
+                                  select.form-control.form-control.mr-sm-2(name="userfax_country", style="max-width: 100px;")
+                                    each country, indexC in countries
+                                      option(value=indexC) #{country}
+                                  input.form-control.mb-2.mr-sm-2.form-control(type='text', name="userfax_number", placeholder='Número de teléfono', value="")
+                                  input.form-control.mb-2.form-control(type='intern', name="userfax_intern", placeholder='Interno', style="max-width: 100px;", value="")
+                                  
+                        .col-md-4.stretch-card
+                          .card.border-0
+                            .card-body
+
+                      .row
+                        .col-md-12
+                          .card.border-0
+                            .card-body.d-flex.align-items-center.justify-content-between.flex-wrap(style="padding:0;")
+                              p.mb-0.text-white.font-weight-medium 
+                              .d-flex        
+                                button.quote-submit.btn.btn-primary.mt-3(type='submit') Crear
+                                      
+                              
+    footer.footer
+      .d-sm-flex.justify-content-center.justify-content-sm-between
+        span.text-muted.text-center.text-sm-left.d-block.d-sm-inline-block
+          a(href='/', target='_blank') MercadoAgro
+        span.float-none.float-sm-right.d-block.mt-1.mt-sm-0.text-center
+          i.mdi.mdi-heart.text-danger
+
+  script(src='/settings.js?version=1')
+  script(src='/majestic/vendor_bundle_base.js')

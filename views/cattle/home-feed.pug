@@ -1,0 +1,46 @@
+
+extends ./home-baseHTML.pug
+
+block content 
+  link(href='/home/styles.css?ver=1', rel='stylesheet', type='text/css')
+  link(href='/vendors/jquery_toast/jquery.toast.min.css', rel='stylesheet', type='text/css')
+  link(href='/majestic/owlcarousel/assets/owl.carousel.min.css', rel='stylesheet', type='text/css')
+  link(href='/majestic/owlcarousel/assets/owl.theme.default.min.css', rel='stylesheet', type='text/css')
+
+  script.
+    var lots = !{JSON.stringify(lots)};
+    const userId = #{userId};
+    const activeAuctionBids = !{JSON.stringify(activeAuctionBids)};
+    const customerFarms = !{("farms" in customer && customer.farms.length) ? JSON.stringify(customer.farms) : "[]"};
+    const customerLatLng = !{("farms" in customer && customer.farms.length) ? "{lat: " + customer.farms[0].latitude + ", lng: " + customer.farms[0].longitude + ",}" : "{lat: -32.91738186664808, lng: -55.924416022336466,}"};
+    var startDates = {};
+    var endDates = {};
+    
+    var mapForLot = {};
+    var googleMapMarkerForLot = {};
+    var infoWindowForLot = {};
+    var latLngForLot = {};
+
+    var countdownTimers = {};
+
+  #fsvs-body
+      
+  include home-feed-includes/search.pug
+  include home-feed-includes/averages-by-type.pug
+  include home-feed-includes/header.pug
+  
+  script(src='/sweetalert.min.js')
+  script(src='/vendors/jquery_toast/jquery.toast.min.js')
+  script(src='/majestic/owlcarousel/owl.carousel.min.js')
+  script(src='/home/slide-template.js')
+  script(src='/home/slider-lots-details-scripts.js')
+  script(src='/home/slider-scripts.js')
+  script(src='/home/scripts.js')
+  script(src='/home/search-scripts.js')
+  script(src='/home/chat-scripts.js')
+  script(src='/home/auctions.js')      
+  script(src='/home/countdowns.js')
+  script(src='/home/toast_manager.js')
+  script(src='/home/maps.js?version=1')
+  script(src='https://maps.google.com/maps/api/js?key=AIzaSyBpSkP-tvO14Rgji6jzW_-xICmNwoVngf0&libraries=marker,places&loading=async', type='text/javascript')
+    

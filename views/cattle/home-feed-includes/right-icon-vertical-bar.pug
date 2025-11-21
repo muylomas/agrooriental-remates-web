@@ -1,0 +1,46 @@
+.iconbar-overlay-video.row.p-2.pb-5(id="iconbar-overlay-" + lot.lotId)
+  .col-12.text-center.pb-5 
+    - var __aux_style = lot.salesagentImageSafe ? 'background-image:url(' + lot.salesagentImageSafe + ');' : "";
+    .share-contact-salesagent.mb-3(id="share-contact-salesagent-" + lot.lotId, style=__aux_style)
+      img.w-100(src='https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png', alt=lot.salesagentName + " " + lot.salesagentSurname)
+    
+    .iconbar-toggler(id="lot-detail-icons-" + lot.lotId)
+      i.mdi.mdi-pound.mt-5.icon-md
+      h5 
+        | #{lot.lotId}
+        
+      i.mdi.mdi-weight-kilogram.mt-5.icon-md
+      h5 
+        | #{lot.meanWeight.toFixed(0)}
+
+      i.mdi.mdi-cow.mt-5.icon-md
+        h5 
+          | #{lot.totalQuantity}
+      //if('breedsArray' in lot && lot.breedsArray.length)
+        i.mdi.mdi-cow.mt-5.icon-md
+        h5 
+          | #{lot.breedsArray[0].breedName}
+          if(lot.breedsArray.length > 1)
+            | &nbsp;+ ...
+
+      if('ageArray' in lot && lot.ageArray.length)
+        .mb-0.mt-3
+          if(lot.ageArray[0].ageUnit == 5)
+            i.mdi.mdi-tooth.mt-5.icon-md
+            h5.mt-1 
+              | #{lot.ageArray[0].teethName}
+              if(lot.ageArray.length > 1)
+                | &nbsp;+ ...
+          else 
+            i.mdi.mdi-calendar.mt-5.icon-md
+            h5 
+              | #{lot.ageArray[0].quantity} #{lot.ageArray[0].ageUnitName}
+        
+      i.mdi.mdi-star.mt-5.icon-md.text-warning
+      h5 
+        | #{lot.rating}
+          
+    button.share-contact-whatsapp.btn.btn-success.btn-rounded.btn-icon.mt-2(id="lot-chat-button-" + lot.lotId, type='button')
+      i.mdi.mdi-whatsapp
+                
+        

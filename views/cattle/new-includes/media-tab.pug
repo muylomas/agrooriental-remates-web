@@ -1,0 +1,14 @@
+.media.media-cattle-video-container.position-relative.border.h-100.overflow-hidden
+  video#cattle-video.position-absolute.top-50.start-50.translate-middle(style="min-height:100%;min-width:100%", autoplay loop muted, src=lot.videoToUploadUrl)
+  
+  if(lot.videoToUploadUrl)
+    input#video-to-upload-url(type="hidden", name="videoToUploadUrl", value=lot.videoToUploadUrl)
+  else 
+    input#video-to-upload-url(type="hidden", name="videoToUploadUrl", value="")
+
+  input(id="uploader-video", type="file", name="videoToUpload", hidden, value=lot.videoToUpload)
+  input(id="video-name-to-upload", type='hidden', name='videoFileName', value=lot.videoToUpload)
+  label.uploader-video-label.btn.text-primary.p-0.m-0.position-absolute.top-50.start-50.translate-middle(for="uploader-video") 
+    i.mdi.mdi-cloud-upload
+    br
+    h6.p-3.bg-primary.text-white.m-0 Subir video

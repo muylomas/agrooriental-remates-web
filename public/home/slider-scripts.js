@@ -1,0 +1,670 @@
+var slider;
+
+function initializeActionsAndDisplays() {
+    $(
+        "[id^='share-contact-salesagent'], [id^='lot-chat-button'], .share-contact-bg, " +
+        "[id^='button-auction-bid'], .auction-bid-bg, " +
+        "[id^='lot-detail-description'], [id^='lot-detail-icons'], " +
+        ".lot-detail-close, .lot-chat-close, " +
+        "#averages-by-type-open, #averages-types-infinite-scroll, .averages-by-type-close"
+    ).on("click", function () {
+        if ($(this).attr("id")) {
+            let idMinusArray = $(this).attr("id").split("-");
+            const elementLotId = idMinusArray[idMinusArray.length - 1];
+            if ($(this).attr("id").startsWith("share-contact-salesagent-")) {
+                $("#share-contact-" + elementLotId).addClass("open");
+                $(".topbar-overlay-video").hide();
+            }
+            else if ($(this).attr("id").indexOf("auction-") != -1) {
+                $("#auction-bid-" + elementLotId).addClass("open");
+                getAuctionBidsForLot(elementLotId);
+                $(".topbar-overlay-video").hide();
+                slider.stopSlider();
+            }
+            else if ($(this).attr("id").indexOf("lot-detail-") != -1) {
+                $("#lot-detail-" + elementLotId).addClass("open");
+                $(".topbar-overlay-video").hide();
+                slider.stopSlider();
+            }
+            else if (
+                $(this).attr("id") == "averages-by-type-open" ||
+                $(this).attr("id") == "averages-types-infinite-scroll"
+            ) {
+                $("#averages-by-type").addClass("open");
+                $(".topbar-overlay-video").hide();
+                slider.stopSlider();
+            }
+            else if ($(this).attr("id").startsWith("lot-chat-button")) {
+                getInitialComments(elementLotId);
+                $("#lot-chat-" + elementLotId).addClass("open");
+                $(".topbar-overlay-video").hide();
+                slider.unbind();
+                slider.stopSlider();
+            }
+        }
+        else {
+            if (
+                $(this).attr("class").indexOf("lot-detail-") != -1 ||
+                $(this).attr("class").indexOf("lot-chat-") != -1 ||
+                $(this).hasClass("averages-by-type-close")
+            ) {
+                $("[id^='lot-chat-'].open").removeClass("open");
+                $("[id^='lot-detail-'].open").removeClass("open");
+                $("#averages-by-type").removeClass("open");
+            }
+            else
+                $(this).parent().removeClass("open");
+
+            slider.stopSlider();
+            slider.startSlider();
+
+            $(".topbar-overlay-video").show();
+        }
+    });
+
+    $("[id^='google-map-bottom-desc-text-']").hide();
+    $("[id^='google-map-under-desc-text-']").show();
+
+    if (lots && lots.length) {
+        for (let indSLots in lots) {
+
+            testVideo(
+                lots, indSLots,
+                function (lotsExtra, indSLotsExtra) {
+                    const __aux_lotId = lots[indSLots].lotId;
+
+                    if (!(__aux_lotId in mapForLot)) {
+                        mapForLot[__aux_lotId] = null;
+                        googleMapMarkerForLot[__aux_lotId] = null;
+                        infoWindowForLot[__aux_lotId] = null;
+                    }
+
+                    mapForLot[__aux_lotId] =
+                        create_map(
+                            latLngForLot[__aux_lotId].lat,
+                            latLngForLot[__aux_lotId].lng,
+                            "google-map-bottom-desc-" + __aux_lotId
+                        );
+
+                    update_marker_position(
+                        mapForLot[__aux_lotId],
+                        latLngForLot[__aux_lotId].lat,
+                        latLngForLot[__aux_lotId].lng,
+                        "LOTE " + __aux_lotId,
+                        infoWindowForLot[__aux_lotId],
+                        googleMapMarkerForLot[__aux_lotId]
+                    );
+
+                    if ($("#carousel-bid-" + __aux_lotId).length) {
+                        $("#carousel-bid-" + __aux_lotId).owlCarousel({
+                            loop: false,
+                            items: 1,
+                        });
+                    }
+
+                    if (customerFarms.length) {
+
+                        for (let indexFarm in customerFarms) {
+
+                            freightCalc(
+                                customerFarms[indexFarm].id,
+                                latLngForLot[__aux_lotId].lat,
+                                latLngForLot[__aux_lotId].lng,
+                                customerFarms[indexFarm].latitude,
+                                customerFarms[indexFarm].longitude,
+                                function (farmId, distanceText, distanceKm, durationText) {
+                                    setTimeout(() => {
+                                        $("#customer-farm" + farmId + "-" + __aux_lotId + "-freight").html(
+                                            `
+                                        <h5 class="m-0 mb-1 p-0 text-primary">
+                                            $ ` + (distanceKm * 407.96).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + `
+                                        </h5>
+                                        <div class="text-primary font-weight-normal text-small m-0 p-0">
+                                            <div class="mdi mdi-ruler" style="display: contents">
+                                                <span class="text-muted">` + distanceText + `</span>
+                                            </div>
+                                            <div class="mdi mdi-timelapse" style="display: contents">
+                                                <span class="text-muted">` + durationText + `</span>
+                                            </div>
+                                        </div>
+                                    `
+                                        );
+                                    }, "1000");
+                                }
+                            );
+                        }
+                    }
+                }
+            );
+        }
+    };
+
+    countdownTimers = {};
+    for (lotIdIndex in startDates) {
+        countdownTimers[lotIdIndex] = setInterval('generalTimer(' + lotIdIndex + ')', 1000);
+    }
+
+    for (let index in activeAuctionBids) {
+        if (activeAuctionBids[index].isWinning) {
+            showCustomerWinning(activeAuctionBids[index].lotId, false, false, true);
+        }
+        else {
+            showCustomerLoosing(activeAuctionBids[index].lotId, false, true, true);
+        }
+    }
+};
+
+function videoFitAndCenter(lotId) {
+    const windowHeight = $(document).height();
+    const windowWidth = $(document).width();
+    const videoHeight = $("#video-source-" + lotId).parent().height();
+    const videoWidth = $("#video-source-" + lotId).parent().width();
+
+    if ((videoHeight / videoWidth) > (windowHeight / windowWidth)) {
+        $("#video-source-" + lotId).parent().width("100%");
+        $("#video-source-" + lotId).parent().height("auto");
+    }
+    else {
+        $("#video-source-" + lotId).parent().height("100%");
+        $("#video-source-" + lotId).parent().width("auto");
+    }
+};
+
+function getAuctionBidsForLot(lotId) {
+    $.post(
+        "/api/cattle/lot/auction/bids",
+        {
+            "lotId": lotId,
+        },
+        function (results) {
+            if (typeof results === 'object' && results !== null) {
+                if (
+                    "auctionBids" in results &&
+                    "lotId" in results && results.lotId
+                ) {
+                    for (let index in lots) {
+                        if (lots[index].lotId == results.lotId) {
+                            lots[index].auctionBids = results.auctionBids;
+                            if (lots[index].auctionBids.length) {
+                                $("#auction-bid-view-history-" + results.lotId).removeClass("d-none");
+                                $("#last-auction-bid-price-auction-" + results.lotId).parent().removeClass("mt-1");
+                                $("#last-auction-bid-price-auction-" + results.lotId).parent().addClass("mt-2");
+                            }
+                            else {
+                                $("#auction-bid-view-history-" + results.lotId).addClass("d-none");
+                                $("#last-auction-bid-price-auction-" + results.lotId).parent().removeClass("mt-2");
+                                $("#last-auction-bid-price-auction-" + results.lotId).parent().addClass("mt-1");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    );
+};
+
+function auctionBidsHistory(lotId) {
+    let auctionBids = []
+    let indSLots = 0;
+    for (let index in lots) {
+        if (lots[index].lotId == lotId) {
+            auctionBids = lots[index].auctionBids;
+            indSLots = index;
+        }
+    }
+
+
+    const wrapper = document.createElement('div');
+
+    if (auctionBids.length) {
+        let __aux_bidsRows = "";
+        for (let indBid in auctionBids) {
+            const __aux_bid = auctionBids[indBid];
+            let __aux_bidAmount = __aux_bid.amount;
+            if (lots[indSLots].auctionPriceType == 1) {
+                __aux_bidAmount = __aux_bid.amount.toFixed(2);
+            }
+            else {
+                __aux_bidAmount = __aux_bid.amount.toFixed(0);
+            }
+
+            __aux_bidsRows +=
+                `
+                    <tr class="bg-white">
+                        <td class="py-2 text-center">
+                            `+ __aux_bid.bidDate + `
+                        </td>
+                        <td class="py-2 text-center">
+                            `+ __aux_bid.bidTime + `
+                        </td>
+                        <td class="py-2 text-center">
+                            USD <b>`+ __aux_bidAmount + `</b>
+                        </td>
+                    </tr>
+                `;
+        }
+
+        wrapper.innerHTML =
+            `
+                <div class="dataTables_wrapper dt-bootstrap4 no-footer mt-4">
+                    <table class="table dataTable no-footer border-0">
+                        <thead class="bg-secondary text-light">
+                            <tr>
+                                <th class="py-2 text-center">
+                                    <h6 class="m-0">FECHA</h6>
+                                </th>
+                                <th class="py-2 text-center">
+                                    <h6 class="m-0">HORA</h6>
+                                </th>
+                                <th class="py-2 text-center">
+                                    <h6 class="m-0">MONTO</h6>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ` + __aux_bidsRows + `
+                        </tbody>
+                    </table>
+                </div>
+            `;
+    }
+    else {
+        wrapper.innerHTML =
+            `
+            <div class="bg-light p-4">
+                No hay ofertas por el momento.
+            </div>
+        `;
+    }
+
+    swal({
+        title: "ÚLTIMOS PIQUES",
+        content: wrapper,
+        buttons: {
+            cancel: {
+                text: "Cerrar",
+                value: false,
+                visible: true,
+                className: "btn btn-primary",
+                closeModal: true,
+            },
+        }
+    }).then((value) => {
+        $("#button-auction-bid-" + lotId).click();
+    });
+};
+
+function customersFarmsFreights(lotId, lotAddressLatitude, lotAddressLongitude) {
+    let outputFarms = "";
+    let __aux_farms_output = "";
+
+    if (customerFarms.length) {
+        for (let indexFarm in customerFarms) {
+            __aux_farmHTML = customerFarmFreightTemplate;
+            __aux_farmHTML =
+                __aux_farmHTML
+                    .replace(new RegExp("__lot_id__", 'g'), lotId);
+            __aux_farmHTML =
+                __aux_farmHTML
+                    .replace(new RegExp("__lot_addressLatitude__", 'g'), lotAddressLatitude);
+            __aux_farmHTML =
+                __aux_farmHTML
+                    .replace(new RegExp("__lot_addressLongitude__", 'g'), lotAddressLongitude);
+
+            for (let indObj in customerFarms[indexFarm]) {
+                if (__aux_farmHTML.indexOf("__farm_" + indObj + "__") != -1) {
+                    __aux_farmHTML =
+                        __aux_farmHTML
+                            .replace(new RegExp("__farm_" + indObj + "__", 'g'), customerFarms[indexFarm][indObj]);
+                }
+            }
+
+            __aux_farms_output += __aux_farmHTML;
+        }
+
+        outputFarms +=
+            `
+                <div class="row bg-light mb-3">
+                    <div class="col-12 px-4 pt-4">
+                        <div id="carousel-bid-` + lotId + `" class="owl-carousel owl-theme full-width owl-loaded owl-drag">
+                            ` + __aux_farms_output + `
+                        </div>
+                    </div>
+                </div>
+            `;
+    }
+
+    return outputFarms;
+};
+
+function testVideo(lots, indSLots, callback) {
+    const __aux_video = document.createElement("video");
+    __aux_video.setAttribute("src", lots[indSLots].video);
+    __aux_video.addEventListener("canplay", function () {
+        videoFitAndCenter(lots[indSLots].lotId);
+        callback(lots, indSLots);
+    });
+    __aux_video.addEventListener("error", function () {
+        lots[indSLots].video = "https://mercadoagro-app.s3.amazonaws.com/videos/video-unavailable.mp4";
+        $("#video-source-" + lots[indSLots].lotId).attr("src", lots[indSLots].video);
+        $("#video-source-" + lots[indSLots].lotId).parent().load();
+        setTimeout(() => {
+            videoFitAndCenter(lots[indSLots].lotId);
+        }, 500);
+        callback(lots, indSLots);
+    });
+};
+
+function insertLotLoop(lots, indSLots, callback) {
+    if (indSLots < lots.length) {
+        /*testVideo(
+            lots, indSLots,
+            function (lots, indSLots) {*/
+        let __aux_slideHTML = slideTemplate;
+
+        lots[indSLots] = lotsDetailsParamsToHTML(lots[indSLots]);
+
+        for (let indObj in lots[indSLots]) {
+            if (__aux_slideHTML.indexOf("__lot_" + indObj + "__") != -1) {
+                __aux_slideHTML =
+                    __aux_slideHTML
+                        .replace(new RegExp("__lot_" + indObj + "__", 'g'), lots[indSLots][indObj]);
+            }
+        }
+        __aux_auctionPriceType = 1;
+        if ("auctionPriceType" in lots[indSLots]) {
+            __aux_auctionPriceType = lots[indSLots].auctionPriceType;
+        }
+
+        let __aux_lastAuctionPriceFormatted = "0.00";
+        let __aux_lastAuctionPrice1Step = "0.00";
+        let __aux_lastAuctionPrice2Step = "0.00";
+        let __aux_lastAuctionPrice3Step = "0.00";
+        let __aux_salePriceFormatted = "0.00";
+        let __aux_priceUnit = "por bulto";
+
+        let __aux_intermediate_lastPrice = 0;
+        if ("lastPrice" in lots[indSLots] && lots[indSLots].lastPrice) {
+            __aux_intermediate_lastPrice = lots[indSLots].lastPrice;
+        }
+
+        let __aux_intermediate_stepPrice = 5;
+        if ("stepPrice" in lots[indSLots] && lots[indSLots].stepPrice) {
+            __aux_intermediate_stepPrice = lots[indSLots].stepPrice;
+        }
+        else {
+            if (__aux_auctionPriceType == 1) {
+                __aux_intermediate_stepPrice = 0.01
+            }
+        }
+
+        __aux_lastAuctionPriceFormatted = (__aux_intermediate_lastPrice).toFixed(0);
+        __aux_lastAuctionPrice1Step = (__aux_intermediate_lastPrice + 1 * __aux_intermediate_stepPrice).toFixed(0);
+        __aux_lastAuctionPrice2Step = (__aux_intermediate_lastPrice + 2 * __aux_intermediate_stepPrice).toFixed(0);
+        __aux_lastAuctionPrice3Step = (__aux_intermediate_lastPrice + 3 * __aux_intermediate_stepPrice).toFixed(0);
+        __aux_salePriceFormatted = (lots[indSLots].salePrice).toFixed(0);
+
+        if (__aux_auctionPriceType == 1) {
+            __aux_lastAuctionPriceFormatted = (__aux_intermediate_lastPrice).toFixed(2);
+            __aux_lastAuctionPrice1Step = (__aux_intermediate_lastPrice + 1 * __aux_intermediate_stepPrice).toFixed(2);
+            __aux_lastAuctionPrice2Step = (__aux_intermediate_lastPrice + 2 * __aux_intermediate_stepPrice).toFixed(2);
+            __aux_lastAuctionPrice3Step = (__aux_intermediate_lastPrice + 3 * __aux_intermediate_stepPrice).toFixed(2);
+            __aux_salePriceFormatted = (lots[indSLots].salePrice).toFixed(2);
+            __aux_priceUnit = "por kilo";
+        }
+
+
+        __aux_slideHTML =
+            __aux_slideHTML
+                .replace(new RegExp("__lot_lastPriceAuction_formatted__", 'g'), __aux_lastAuctionPriceFormatted);
+        __aux_slideHTML =
+            __aux_slideHTML
+                .replace(new RegExp("__lot_lastAuctionPrice1Step__", 'g'), __aux_lastAuctionPrice1Step);
+        __aux_slideHTML =
+            __aux_slideHTML
+                .replace(new RegExp("__lot_lastAuctionPrice2Step__", 'g'), __aux_lastAuctionPrice2Step);
+        __aux_slideHTML =
+            __aux_slideHTML
+                .replace(new RegExp("__lot_lastAuctionPrice3Step__", 'g'), __aux_lastAuctionPrice3Step);
+        __aux_slideHTML =
+            __aux_slideHTML
+                .replace(new RegExp("__lot_salePrice_formatted__", 'g'), __aux_salePriceFormatted);
+        __aux_slideHTML =
+            __aux_slideHTML
+                .replace(new RegExp("__lot_priceUnits__", 'g'), __aux_priceUnit);
+
+        __aux_slideHTML =
+            __aux_slideHTML
+                .replace(
+                    new RegExp("__lot_totalQuantitySideBar__", 'g'),
+                    `
+                            <i class="mdi mdi-cow mt-5 icon-md"></i>
+                            <h4>
+                                ` + lots[indSLots].totalQuantity + `
+                            </h4>
+                        `
+                );
+
+        if ('ageArray' in lots[indSLots] && lots[indSLots].ageArray.length) {
+            if (lots[indSLots].ageArray[0].ageUnit == 5) {
+                const __more_ages = (lots[indSLots].ageArray.length > 1 ? " ..." : "");
+                __aux_slideHTML =
+                    __aux_slideHTML
+                        .replace(
+                            new RegExp("__lot_agesString__", 'g'),
+                            `
+                                    <i class="mdi mdi-tooth mt-5 icon-md"></i>
+                                    <h4>
+                                        ` + lots[indSLots].ageArray[0].teethName + `
+                                    </h4>
+                                `
+                        );
+            }
+            else {
+                __aux_slideHTML =
+                    __aux_slideHTML
+                        .replace(
+                            new RegExp("__lot_agesString__", 'g'),
+                            `
+                                    <div class="mb-0 mt-3">
+                                        <i class="mdi mdi-calendar mt-5 icon-md"></i>
+                                        <h4 class="mt-1">
+                                            ` + lots[indSLots].ageArray[0].quantity + " " + lots[indSLots].ageArray[0].ageUnitName + `
+                                        </h4>
+                                    </div>
+                                `
+                        );
+            }
+
+
+        }
+        else {
+            __aux_slideHTML = __aux_slideHTML.replace(new RegExp("__lot_agesString__", 'g'), "");
+        }
+
+        if (lots[indSLots].auctionAvg == lots[indSLots].auctionAvgOld) {
+            __aux_slideHTML =
+                __aux_slideHTML
+                    .replace(new RegExp(
+                        "__lot_auctionAvgPercentage__", 'g'),
+                        "<span class='text-primary'>=</span>"
+                    );
+
+        }
+
+        if (lots[indSLots].auctionAvg < lots[indSLots].auctionAvgOld) {
+            __aux_slideHTML =
+                __aux_slideHTML
+                    .replace(new RegExp(
+                        "__lot_auctionAvgPercentage__", 'g'),
+                        `
+                                <i class='mdi mdi-arrow-down text-danger'></i>
+                                <span class='text-danger'>
+                                    ` + Math.round((1 - lots[indSLots].auctionAvg / lots[indSLots].auctionAvgOld) * 100) + `%
+                                </span>
+                            `
+                    );
+        }
+
+        if (lots[indSLots].auctionAvg > lots[indSLots].auctionAvgOld) {
+            __aux_slideHTML =
+                __aux_slideHTML
+                    .replace(
+                        new RegExp("__lot_auctionAvgPercentage__", 'g'),
+                        `
+                                <i class='mdi mdi-arrow-up text-success'></i>
+                                <span class='text-success'>
+                                    ` + Math.round((1 - lots[indSLots].auctionAvgOld / lots[indSLots].auctionAvg) * 100) + `%
+                                </span>
+                            `
+                    );
+        }
+
+        __aux_slideHTML =
+            __aux_slideHTML
+                .replace(
+                    new RegExp("__farms_freightsForLot__", 'g'),
+                    customersFarmsFreights(lots[indSLots].lotId, lots[indSLots].addressLatitude, lots[indSLots].addressLongitude)
+                );
+
+        $("#fsvs-body").append(__aux_slideHTML);
+
+        insertLotLoop(lots, indSLots + 1, callback);
+        /*}
+    );*/
+    }
+    else {
+        callback();
+    }
+};
+
+function includeSlidesInFsvs() {
+    if (lots && lots.length) {
+        insertLotLoop(
+            lots, 0,
+            function () {
+                initializeActionsAndDisplays();
+            }
+        );
+    }
+};
+
+function initFsvs() {
+
+    if ($.fn.fsvs) {
+        slider = $.fn.fsvs({
+            speed: 1000,
+            pagination: false,
+            paginationTemplate: '',
+            nthClasses: false,
+            afterSlide: function (index) {
+                for (indVid in lots) {
+                    if (index != indVid) {
+                        $("#video-source-" + lots[indVid].lotId).attr("src", "");
+                        $("#video-source-" + lots[indVid].lotId).parent().load();
+                    }
+                }
+                if (
+                    index + 1 < lots.length && (index + 1) in lots && lots[index + 1].lotId &&
+                    $("#video-source-" + lots[index + 1].lotId).attr("src") != lots[index + 1].video
+                ) {
+                    $("#video-source-" + lots[index + 1].lotId).attr("src", lots[index + 1].video);
+                    $("#video-source-" + lots[index + 1].lotId).parent().load();
+                }
+                if (
+                    index - 1 > 0 && (index - 1) in lots && lots[index - 1].lotId &&
+                    $("#video-source-" + lots[index - 1].lotId).attr("src") != lots[index - 1].video
+                ) {
+                    $("#video-source-" + lots[index - 1].lotId).attr("src", lots[index - 1].video);
+                    $("#video-source-" + lots[index - 1].lotId).parent().load();
+                }
+
+                if (index in lots) {
+                    $("#google-map-bottom-desc-" + lots[index].lotId).stop().animate({ height: "0", width: "0" });
+                    $("#google-map-bottom-desc-text-" + lots[index].lotId).hide();
+                    $("#google-map-under-desc-text-" + lots[index].lotId).show();
+                    $("#map-closed-icon-" + lots[index].lotId).css("background-image", "url(https://mercadoagro-app.s3.amazonaws.com/images/home/maps-icon.png)");
+                }
+
+                $("[id^='lot-chat-'].open").removeClass("open");
+                $("[id^='lot-detail-'].open").removeClass("open");
+                $("[id^='auction-bid-'].open").removeClass("open");
+                $("[id^='share-contact-'].open").removeClass("open");
+                $("[id^='video-source-']").css("z-index", 1);
+                $("[id^='iconbar-overlay-']").css("z-index", 999);
+                $("[id^='bottom-overlay-']").css("z-index", 999);
+                $("[id^='iconbar-overlay-']").show();
+                $("[id^='bottom-overlay-']").show();
+                $(".topbar-overlay-video").show();
+            },
+            beforeSlide: function (index) {
+                if (index + 1 < lots.length && (index + 1) in lots && lots[index + 1].lotId) {
+                    $("#iconbar-overlay-" + lots[index + 1].lotId).fadeOut("slow");
+                    $("#bottom-overlay-" + lots[index + 1].lotId).fadeOut("slow");
+                }
+                if (index - 1 > 0 && (index - 1) in lots && lots[index - 1].lotId) {
+                    $("#iconbar-overlay-" + lots[index - 1].lotId).fadeOut("slow");
+                    $("#bottom-overlay-" + lots[index - 1].lotId).fadeOut("slow");
+                }
+
+                if (index in lots && lots[index].lotId && lots[index].video &&
+                    $("#video-source-" + lots[index].lotId).attr("src") != lots[index].video
+                ) {
+                    $("#video-source-" + lots[index].lotId).attr("src", lots[index].video);
+                    $("#video-source-" + lots[index].lotId).parent().load();
+                }
+
+                if (index in lots) {
+                    $("#google-map-bottom-desc-" + lots[index].lotId).stop().animate({ height: "0", width: "0" });
+                    $("#google-map-bottom-desc-text-" + lots[index].lotId).hide();
+                    $("#google-map-under-desc-text-" + lots[index].lotId).show();
+                    $("#map-closed-icon-" + lots[index].lotId).css("background-image", "url(https://mercadoagro-app.s3.amazonaws.com/images/home/maps-icon.png)");
+                }
+
+
+                $("[id^='lot-chat-'].open").removeClass("open");
+                $("[id^='lot-detail-'].open").removeClass("open");
+                $("[id^='auction-bid-'].open").removeClass("open");
+                $("[id^='share-contact-'].open").removeClass("open");
+                $("[id^='video-source-']").css("z-index", 1);
+                $("[id^='iconbar-overlay-']").css("z-index", 999);
+                $("[id^='bottom-overlay-']").css("z-index", 999);
+                $("[id^='iconbar-overlay-']").show();
+                $("[id^='bottom-overlay-']").show();
+                $(".topbar-overlay-video").show();
+            },
+        });
+    }
+
+    var sectionHeight = $('#fsvs-body > .slide:eq(0)').height();
+    $('#fsvs-body > .slide').each(function () {
+        var section = $(this),
+            item = $('.item', section),
+            demo = $('.demo', section),
+            itemHeight = item.outerHeight(),
+            demoHeight = demo.outerHeight();
+        item.css({
+            marginTop: ((sectionHeight - itemHeight) / 2) + 'px'
+        });
+        demo.css({
+            marginTop: ((sectionHeight - demoHeight) / 2) + 'px'
+        });
+
+    });
+};
+
+window.addEventListener('load', function () {
+
+    includeSlidesInFsvs();
+
+    initFsvs();
+
+    setInterval(() => {
+        if (lots && lots.length) {
+            for (let indSLots in lots) {
+
+                videoFitAndCenter(lots[indSLots].lotId);
+            }
+        }
+    }, 3000);
+});

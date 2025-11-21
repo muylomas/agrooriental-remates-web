@@ -1,0 +1,52 @@
+
+extends ./home-baseHTML.pug
+
+block content 
+  link(href='/home/styles.css?ver=1', rel='stylesheet', type='text/css')
+  link(rel='stylesheet', href='/vendors/jquery_toast/jquery.toast.min.css')
+
+  script.
+    var lots = !{JSON.stringify(lots)};
+    var userId = #{userId};
+    var startDates = {};
+    var endDates = {};
+    var activeAuctionBids = !{JSON.stringify(activeAuctionBids)};
+
+  #fsvs-body
+    script. 
+      const lotsObjectArray = [];
+      
+    each lot, lotIndex in lots
+      section.slide.cf(id="lote-" + lot.lotId)
+        .content-wrapper.d-flex.align-items-center.full-video-bg.p-0.m-0
+          video.cattle-video(preload="auto", playsinline, autoplay="autoplay", loop, muted, onclick="clickOnCattleVideo(" + lot.lotId + ")")
+            source(id="video-source-" + lot.lotId, type="video/mp4", src= [0,1].includes(lotIndex) ? lot.video : "")
+          
+          include home-feed-includes/bottom-video-description.pug
+
+          include home-feed-includes/right-icon-vertical-bar.pug
+          
+        include home-feed-includes/sales-agents-contact.pug
+
+        include home-feed-includes/lots-chat.pug
+
+        include home-feed-includes/auction-bid.pug
+                        
+  include home-feed-includes/search.pug
+  
+  include home-feed-includes/header.pug
+
+  include home-feed-includes/lots-details.pug
+  
+  script(src='/sweetalert.min.js')
+  script(src='/vendors/jquery_toast/jquery.toast.min.js')
+  script(src='/home/scripts.js')
+  script(src='/home/slider-scripts.js')
+  script(src='/home/search-scripts.js')
+  script(src='/home/chat-scripts.js')
+  script(src='/home/auctions.js')      
+  script(src='/home/countdowns.js')
+  script(src='/home/toast_manager.js')
+  script(src='/home/maps.js?version=1')
+  script(src='https://maps.google.com/maps/api/js?key=AIzaSyBpSkP-tvO14Rgji6jzW_-xICmNwoVngf0&libraries=marker,places&loading=async', type='text/javascript')
+    

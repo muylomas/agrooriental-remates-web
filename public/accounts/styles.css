@@ -1,0 +1,62 @@
+.desktop-only {
+    display: flex;
+}
+
+.mobile-only {
+    display: flex;
+}
+
+@media screen and (min-width: 600px) {
+    .mobile-only {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .desktop-only {
+        display: none;
+    }
+}
+
+select {
+    appearance: auto !important;
+}
+
+.row {
+    --bs-gutter-x: 0 !important;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.balance-header {
+    background: rgb(34, 48, 195);
+    background: -moz-linear-gradient(145deg, rgba(34, 48, 195, 1) 0%, rgba(34, 193, 195, 1) 100%);
+    background: -webkit-linear-gradient(145deg, rgba(34, 48, 195, 1) 0%, rgba(34, 193, 195, 1) 100%);
+    background: linear-gradient(145deg, rgba(34, 48, 195, 1) 0%, rgba(34, 193, 195, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#2230c3", endColorstr="#22c1c3", GradientType=1);
+}
+
+.balance-header .user-profile-icon {
+    margin: auto;
+    background-image: url("https://mercadoagro-backoffice.s3.amazonaws.com/images/customers/no-profile-img.png?ver=2024-04-11");
+    background-color: #ffffff;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    border-radius: 50%;
+    width: 35px;
+}
+
+.balance-header a {
+    font-size: 15px;
+}
+
+.nav-tabs .nav-item .nav-link.active {
+    border-color: #ffffff;
+}
+
+.lot-detail-wrapper {
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}

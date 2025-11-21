@@ -1,0 +1,87 @@
+.bottom-overlay-video(id="bottom-overlay-" + lot.lotId)
+  .row.p-3
+    .col-9.position-relative
+      p.text-white(id="google-map-bottom-desc-text-" + lot.lotId)
+        | #{lot.farmName} - #{lot.addressLocationName}, #{lot.addressStateName}
+        
+      .google-map-container(id="google-map-bottom-desc-" + lot.lotId)
+      
+      .map-closed-icon.position-absolute.bottom-0(id="map-closed-icon-" + lot.lotId, onclick="expandMap(" + lot.lotId + ")")
+        img.w-100(src='https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png')
+      
+      script.
+        var googleMapMarker_#{lot.lotId} = null;
+        var map_#{lot.lotId} = null;
+        var googleMapMarker_#{lot.lotId} = null;
+        var infoWindow_#{lot.lotId} = null;
+        window.addEventListener('load', function () {
+          map_#{lot.lotId} = 
+            create_map(
+              #{lot.addressLatitude}, 
+              #{lot.addressLongitude}, 
+              "google-map-bottom-desc-#{lot.lotId}"
+            );
+
+          update_marker_position(
+            map_#{lot.lotId}, 
+            #{lot.addressLatitude}, 
+            #{lot.addressLongitude}, 
+            "LOTE #{lot.lotId}", 
+            infoWindow_#{lot.lotId}, 
+            googleMapMarker_#{lot.lotId}
+          );
+        });
+  .bottom-lot-data.row.p-3.pt-0(id="lot-detail-description-" + lot.lotId)
+    .col-9
+      .countdown-container.d-flex.flex-wrap.justify-content-xl-between(id="bottom-countdown-container-" + lot.lotId)
+        .d-flex.flex-grow-1.align-items-left.justify-content-left.justify-content-md-left
+          .countdown-day-container.d-flex.flex-column.justify-content-around
+            h2.mb-0.d-inline-block.text-center.p-2
+              span.text-white(id="countdown-days-" + lot.lotId) --
+          .d-flex.flex-column.justify-content-around
+            h2.mb-0.d-inline-block.text-center.p-2
+              span.text-white(id="countdown-hours-" + lot.lotId) --
+          .d-flex.flex-column.justify-content-around
+            h2.mb-0.d-inline-block.text-center.p-2
+              span.text-white :
+          .d-flex.flex-column.justify-content-around
+            h2.mb-0.d-inline-block.text-center.p-2
+              span.text-white(id="countdown-mins-" + lot.lotId) --
+          .d-flex.flex-column.justify-content-around
+            h2.mb-0.d-inline-block.text-center.p-2
+              span.text-white :
+          .d-flex.flex-column.justify-content-around
+            h2.mb-0.d-inline-block.text-center.p-2
+              span.text-white(id="countdown-secs-" + lot.lotId) --
+              
+      script.  
+        startDates[#{lot.lotId}] = Date.parse('#{lot.auctionStartString}');
+        endDates[#{lot.lotId}] = Date.parse('#{lot.auctionEndString}');
+
+      h2.text-white.mt-3.mb-3
+        small #{lot.currency} 
+        if(lot.active == 1)
+          span(id="last-auction-bid-price-" + lot.lotId) #{lot.auctionPriceType == 1 ? lot.lastPrice.toFixed(2) : lot.lastPrice.toFixed(0)} 
+        else 
+          if(lot.lastPriceAuction)
+            span(id="last-auction-bid-price-" + lot.lotId) #{lot.auctionPriceType == 1 ? lot.lastPriceAuction.toFixed(2) : lot.lastPriceAuction.toFixed(0)} 
+          else 
+            span(id="last-auction-bid-price-" + lot.lotId) -.-- 
+        span.text-small
+          if(lot.auctionPriceType == 1)
+            | por kilo
+          else 
+            | por bulto
+
+      h3.my-2.text-white
+        | #{lot.totalQuantity} #{lot.type}
+      if(lot.explanations)
+        p.text-white.lot-description
+          | #{lot.explanations}
+          br
+          br
+    .col-3
+  .button-auction-bid.row.p-3.pt-0(id="button-auction-bid-" + lot.lotId)
+    .col-12
+      button.bid-action-button.btn.btn-warning.btn-lg.text-dark.w-100
+        | Quiero el lote

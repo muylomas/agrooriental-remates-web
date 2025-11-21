@@ -1,0 +1,56 @@
+#cattle-new-form .tab {
+    display: none
+}
+
+.all-steps>.step {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #4d83ff;
+    border: none;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.5
+}
+
+.all-steps>.step.active {
+    opacity: 1
+}
+
+.all-steps>.step.finish {
+    background-color: #71c016
+}
+
+#cattle-new-form .thanks-message {
+    display: none
+}
+
+#cattle-new-form #thank-you-message>div {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#cattle-new-form #thank-you-message>div>div>i {
+    font-size: 8rem;
+}
+
+.loading {
+    background: rgba(0, 0, 0, 0.3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.media-cattle-video-container {
+    background-image: url(https://mercadoagro-backoffice.s3.amazonaws.com/videos/no-video-img.png?ver=2024-04-11);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+#total-quantity {
+    font-size: 2rem !important;
+}

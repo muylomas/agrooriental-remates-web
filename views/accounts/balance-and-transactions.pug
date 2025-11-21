@@ -1,0 +1,57 @@
+extends ../baseAppHTML
+
+block content 
+  link(href='/accounts/styles.css?ver=1', rel='stylesheet', type='text/css')
+  
+  .content-wrapper.p-0.m-0.bg-white
+       
+    include balance-and-transactions-includes/header.pug
+
+    ul#transactions-tabs.nav.nav-tabs.w-100.justify-content-between.p-0.px-3.mb-3(role='tablist')
+      each accountTabItem in accountTabs
+        li.nav-item.text-center
+          a.nav-link.text-uppercase.border-primary(id=accountTabItem.key + "-tab", class=accountTabItem.active ? "active" : "", data-toggle='tab', href='#' + accountTabItem.key, role='tab', aria-controls=accountTabItem.active) 
+            | #{accountTabItem.name}
+            mark.bg-primary.text-white.ml-1.d-none(id="countTab-" + accountTabItem.key)
+
+    .tab-content.p-3.px-4.border-0
+      each accountTabItem in accountTabs
+        .tab-pane.fade(class=accountTabItem.active? "show active": "", id=accountTabItem.key, role='tabpanel', aria-labelledby=accountTabItem.key + '-tab')      
+          - let isEmptyTab = true;
+          - let countTabItems = 0;
+          each transaction in transactions
+            if(transaction.transactionKey == accountTabItem.key || (transaction.paymentsInAdvanceId && accountTabItem.key == "advances"))
+              - isEmptyTab = false;
+              - ++countTabItems;
+              .row.mb-4.align-items-center(onclick="openTransaction('" + transaction.lotId + "')")
+                .col-8
+                  h5.text-left.text-truncate.lh-normal.mb-2(class=transaction.statusId != 10 ? "text-muted" : "")
+                    | #{transaction.totalQuantity} #{transaction.type} 
+                  p.text-uppercase.text-truncate.mb-1(class=transaction.statusId != 10 ? "text-warning" : "text-success")
+                    b #{transaction.statusName} 
+                    span.text-muted | 
+                    small.text-muted LOTE ##{transaction.lotId}
+                  small.text-muted.mb-0
+                    i.mdi.mdi-calendar-today.me-1
+                    | #{transaction.totalDate}
+                .col-4.text-end
+                  h5.fw-normal.text-truncate(class=transaction.statusId != 10 ? "text-muted" : "")
+                    small
+                      | #{transaction.currencyName} 
+                    | #{transaction.total.toFixed(transaction.auctionPriceType ? 2 : 0).toString().replace(".",",").replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+
+          if(isEmptyTab)
+            .m-3.p-3.bg-light.text-center  
+              | #{accountTabItem.empty}
+          else 
+            script.
+              $(document).ready(function () {
+                $("#countTab-#{accountTabItem.key}").html(#{countTabItems});
+                $("#countTab-#{accountTabItem.key}").removeClass("d-none");
+              });
+
+          
+              
+  include common-scripts.pug
+
+  script(src='/accounts/scripts.js?ver=1')

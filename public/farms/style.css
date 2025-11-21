@@ -1,0 +1,29 @@
+.farms-list-table tr,
+.farms-list-table td {
+    font-size: 12px;
+}
+
+.farms-list-table td.icon-cell {
+    font-size: 18px !important;
+}
+
+.farms-list-table th {
+    font-size: 14px !important;
+    padding: 10px !important;
+}
+
+.farms-list-table td.image-cel {
+    width: 40px;
+    background: white;
+}
+
+.farms-list-table td.image-cel .image-container {
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    background-position: center !important;
+    border-radius: 0;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    margin: auto;
+}

@@ -1,0 +1,29 @@
+.content-wrapper {
+    background-color: #ffffff;
+}
+
+.customer-profile-image {
+    border-radius: 50%;
+    width: 75px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #ffffff;
+    background-image: url(https://mercadoagro-backoffice.s3.amazonaws.com/images/customers/no-profile-img.png);
+}
+
+.society-profile-image,
+.farm-profile-image {
+    border-radius: 50%;
+    width: 45px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #ffffff;
+    background-image: url(https://mercadoagro-backoffice.s3.amazonaws.com/images/societies/no-profile-img.png);
+}
+
+.farm-profile-image {
+    width: 30px;
+    background-image: url(https://mercadoagro-backoffice.s3.amazonaws.com/images/farms/no-profile-img.png);
+}

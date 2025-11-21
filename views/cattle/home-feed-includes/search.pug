@@ -1,0 +1,36 @@
+link(href='/home/styles-search.css?ver=1', rel='stylesheet', type='text/css')
+
+.search-overlay-video
+  .form-group.mt-4.mb-3
+    .input-group
+      .input-group-prepend
+        button#search-overlay-video-close.btn.btn-inverse-light.btn-fw.text-dark.bg-white.border-0.h-100(type="button")
+          span.icon-md
+            i.mdi.mdi-chevron-left
+      .input-group-prepend
+        span.input-group-text.py-0.h-100
+          i.mdi.mdi-magnify
+      input#search-input-text.form-control.input-group-text.border-0(type='search', onsearch="callForLotsInBounds()")
+      .input-group-append
+        button#search-btn.btn.btn-inverse-light.btn-fw.text-danger.bg-white.border-0.h-100(type="button", onclick="callForLotsInBounds()")
+          | Buscar
+
+  .row.mx-1
+    .col-6.px-1
+      button#wintering-0.btn.btn-light.btn-lg.px-2.w-100(type="button", onclick="toggleWintering(0)")
+        | Cría
+    .col-6.px-1
+      button#wintering-1.btn.btn-light.btn-lg.px-2.w-100(type="button", onclick="toggleWintering(1)")
+        | Invernada
+            
+  if(cattleTypesAverages && cattleTypesAverages.length)
+    .categories-scrolling-items.my-3
+      each cattleTypeItem in cattleTypesAverages
+        .categories-scrolling-items__item.mx-2(class=cattleTypeItem.wintering ? "wintering" : "")
+            button.btn.btn-light.btn-lg.px-2(id="search-cattle-type-" + cattleTypeItem.cattleTypeId, type="button", onclick="toggleCategorySelection(" + cattleTypeItem.cattleTypeId + ")")
+              | #{cattleTypeItem.name}
+
+  #google-map-search-container.w-100
+
+script(src='/home/maps-search.js?version=1')
+                      

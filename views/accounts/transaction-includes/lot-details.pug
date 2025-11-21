@@ -1,0 +1,345 @@
+if(transaction.lotId)
+  - var __aux_totalQuantity = lot.totalQuantity ? lot.totalQuantity : 1;
+  .lot-detail(id="lot-detail-" + lot.lotId)
+    .lot-detail-wrapper
+      .row
+        .col-md-12
+          .card.border-0
+            .card-body.pt-0
+              .row
+                .col-md-5
+                  h3.mt-2.mb-2.mb-0.text-muted
+                    | #{__aux_totalQuantity} #{lot.type}
+                  h4.text-muted.text-truncate
+                    small 
+                      | #{lot.farmName}
+                  h5.text-muted.text-truncate
+                    | #{lot.addressLocationName}, #{lot.addressStateName}
+                  h6.mb-3.text-muted 
+                    | LOTE ##{lot.lotId}
+                    
+                  .row 
+                    .col-sm-6.mb-sm-0.mb-2
+                      h4.d-inline #{lot.rating} 
+                      h3.d-inline.ml-1
+                        each item in [1,2,3,4,5,6]
+                          if(lot.ratingId < item)
+                            i.mdi.mdi-star-outline.text-warning
+                          else 
+                            i.mdi.mdi-star.text-warning
+                    .col-sm-3.col-6
+                      h4.mb-0
+                        b #{lot.meanWeight.toFixed(0)} 
+                        small Kg
+                    .col-sm-3.col-6
+                      if('ageArray' in lot && lot.ageArray.length && lot.ageArray[0].ageUnit != 5)        
+                        h4.mb-0
+                          b #{lot.ageArray[0].quantity} 
+                          small #{lot.ageArray[0].ageUnitName}
+                  .row.mb-2 
+                    .col-sm-6
+                    .col-sm-6
+                      if(lot.weighed)
+                        p.m-0.p-0.text-small El peso fue estimado.
+
+                  if(lot.certified)
+                    .row
+                      .col-6
+                        .d-flex.align-items-left
+                          h2
+                            i.mdi.mdi-marker-check.text-success
+                          .pl-2.text-small
+                            | Lote certificado por MercadoAgro
+                      .col-6
+                                
+      if(lot.explanations)
+        .row
+          .col-md-12
+            .card.border-0
+              .card-body.pt-0
+                h6.mb-3.pb-2.border-bottom Descripción
+                p.text-muted
+                  | #{lot.explanations}  
+
+                if(lot.typeReproductiveStatus)
+                  p 
+                    b Diagnóstico de preñez: 
+                    | #{lot.reproductiveStatus}
+                    if(lot.pregnancyDiagnosis)
+                        | &nbsp;(#{lot.pregnancyDiagnosis.toLowerCase()})
+                    if(lot.birthSeason)
+                      | , a parir en #{lot.birthSeason}.
+                    else 
+                      | .
+                  
+      if('breedsArray' in lot && lot.breedsArray.length)
+        .row.d-sm-none.d-flex
+          .col-md-12
+            .card.border-0
+              .card-body.pt-0
+                .table-responsive
+                  table.table.table-striped
+                    thead
+                      tr
+                        th 
+                          if(lot.breedsArray.length == 1)
+                            | Raza
+                          else 
+                            | Razas
+                        th.text-center Cant.
+                    tbody
+                      each breedItem in lot.breedsArray
+                        tr 
+                          td
+                            | #{breedItem.breedName}
+                            if(breedItem.crossBreedName)
+                              |   &nbsp;x #{breedItem.crossBreedName}
+                          td.text-center
+                            | #{breedItem.quantity} 
+                            small (#{Math.floor(100 * breedItem.quantity/ __aux_totalQuantity)}%)
+
+      if('ageArray' in lot && lot.ageArray.length && lot.ageArray[0].ageUnit == 5)
+        .row.d-sm-none.d-flex
+          .col-md-12
+            .card.border-0
+              .card-body.pt-0
+                .table-responsive
+                  table.table.table-striped
+                    thead
+                      tr
+                        th Dentición
+                        th.text-center Cant.
+                    tbody
+                      each ageItem in lot.ageArray
+                        if(ageItem.teethName)
+                          tr 
+                            td
+                              | #{ageItem.teethName}
+                            td.text-center
+                              | #{ageItem.quantity} 
+                              small (#{Math.floor(100 * ageItem.quantity/ __aux_totalQuantity)}%)
+                            
+      - var __aux_wcc_count =  lot.typeWeaned + 2 * lot.typeCaped + lot.typeCalves;
+      if(__aux_wcc_count > 0)
+        .row
+          .col-md-12
+            .card.border-0
+              .card-body.pt-0 
+                .row  
+                  each itemWCC in lot.wcc
+                    if(itemWCC.enabled)
+                      .align-items-center(class="col-" + Math.floor(12/__aux_wcc_count))
+                        div.text-center
+                          h5.text-truncate
+                            small.text-muted
+                              | #{itemWCC.name}
+                          h2.text-truncate.text-muted.mt-3.mb-0.lh-normal
+                            span(style="word-spacing: -1px;letter-spacing: -2px;") #{itemWCC.quantity} 
+                          p.text-truncate.text-muted.mb-2.lh-normal
+                            | (#{Math.round(100 * itemWCC.quantity / __aux_totalQuantity)}%)
+      .row
+        .col-md-12
+          .card.border-0
+            .card-body.pt-0
+              .row
+                .col-3.align-items-center
+                  div.text-center
+                    h5.text-truncate
+                      small.text-muted
+                        | Mochos
+                    h2.text-truncate.text-muted.mt-3.mb-0.lh-normal
+                      span(style="word-spacing: -1px;letter-spacing: -2px;") #{lot.mochos} 
+                    p.text-truncate.text-muted.mt-0.mb-2.lh-normal
+                      if(Math.round(100 * lot.mochos / __aux_totalQuantity) > 0)
+                        | (#{Math.round(100 * lot.mochos / __aux_totalQuantity)}%)
+                .col-3.align-items-center
+                  div.text-center
+                    h5.text-truncate 
+                      small.text-muted
+                        | Astados
+                    h2.text-truncate.text-muted.mt-3.mb-0.lh-normal
+                      span(style="word-spacing: -1px;letter-spacing: -2px;") #{lot.astados} 
+                    p.text-truncate.text-muted.mt-0.mb-2.lh-normal
+                      if(Math.round(100 * lot.astados / __aux_totalQuantity) > 0)
+                        | (#{Math.round(100 * lot.astados / __aux_totalQuantity)}%)
+                .col-3.align-items-center
+                  div.text-center
+                    h5.text-truncate 
+                      small.text-muted
+                        | Mochados
+                    h2.text-truncate.text-muted.mt-3.mb-0.lh-normal
+                      span(style="word-spacing: -1px;letter-spacing: -2px;") #{lot.mochados} 
+                    p.text-truncate.text-muted.mt-0.mb-2.lh-normal
+                      if(Math.round(100 * lot.mochados / __aux_totalQuantity) > 0)
+                        | (#{Math.round(100 * lot.mochados / __aux_totalQuantity)}%)
+                .col-3.align-items-center
+                  div.text-center
+                    h5.text-truncate 
+                      small.text-muted
+                        | Tocos
+                    h2.text-truncate.text-muted.mt-3.mb-0.lh-normal
+                      span(style="word-spacing: -1px;letter-spacing: -2px;") #{lot.tocos} 
+                    p.text-truncate.text-muted.mt-0.mb-2.lh-normal
+                      if(Math.round(100 * lot.tocos / __aux_totalQuantity) > 0)
+                        | (#{Math.round(100 * lot.tocos / __aux_totalQuantity)}%)
+              .row.pt-3.mt-2.border-top
+                .col-6
+                  div
+                    h5 
+                      small.text-muted
+                        | Trat. Nutricional
+                    h4.text-primary.m-0.mt-2
+                      | #{lot.feeding}
+                    p.m-0.text-primary
+                      if(lot.ration)
+                        small Saben comer ración
+                      else
+                        small No saben comer ración
+                .col-6
+                  .text-right
+                    h5.text-truncate
+                      small.text-muted
+                        | Zona de garrapata
+                    h5.py-2
+                      if(lot.tick == 1)
+                        mark.bg-warning.text-white.p-2
+                          b SI
+                      else 
+                        mark.bg-success.text-white.p-2
+                          b NO
+                    h5.text-truncate.mt-3
+                      small.text-muted
+                        | Conoce Mio-Mio
+                    h5.py-2
+                      if(lot.mio == 1)
+                        mark.bg-success.text-white.p-2
+                          b SI
+                      else 
+                        mark.bg-warning.text-white.p-2
+                          b NO
+                      
+      if(!lot.weighed)
+        .row
+          .col-md-12
+            .card.border-0
+              .card-body.pt-0
+                h6.mb-3.pb-2.border-bottom Pesada - #{lot.weightDateFormated}
+
+                .row
+                  .col-3.align-items-center
+                    div.text-center
+                      h5.text-truncate
+                        small.text-muted
+                          | Cantidad
+                      h2.text-truncate.text-primary.mt-3.mb-2.lh-normal
+                        span(style="word-spacing: -1px;letter-spacing: -2px;") #{lot.weightedPercentage} 
+                        span.text-small %
+                  .col-3.align-items-center
+                    div.text-center
+                      h5.text-truncate
+                        small.text-muted
+                          | Peso Min.
+                      h2.text-truncate.text-primary.mt-3.mb-2.lh-normal
+                        span(style="word-spacing: -1px;letter-spacing: -2px;") #{lot.weightMin} 
+                        span.text-small Kg
+                  .col-3.align-items-center
+                    div.text-center
+                      h5.text-truncate
+                        small.text-muted
+                          | Peso Máx.
+                      h2.text-truncate.text-primary.mt-3.mb-2.lh-normal
+                        span(style="word-spacing: -1px;letter-spacing: -2px;") #{lot.weightMax} 
+                        span.text-small Kg
+                  .col-3.align-items-center
+                    div.text-center
+                      h5.text-truncate
+                        small.text-muted
+                          | Promedio
+                      h2.text-truncate.text-primary.mt-3.mb-2.lh-normal
+                        span(style="word-spacing: -1px;letter-spacing: -2px;") #{lot.weightMean} 
+                        span.text-small Kg
+
+                if(lot.weightConfinement)
+                  p La pesada se realizó con #{lot.weightConfinement} horas de encierro.
+                
+                if(lot.weightComment)
+                  .row
+                    .col-12.mt-3
+                      h5
+                        small.text-muted
+                          | Obs. pesada
+                      p.text-primary
+                        | #{lot.weightComment}
+
+      .row
+        .col-md-12
+          .card.border-0
+            .card-body.pt-0
+              h6.mb-3.pb-2.border-bottom Informe de Revisación
+              .row
+                .col-12
+                  h5
+                    small.text-muted
+                      | Estado Corporal
+                  h3.text-dark.m-0
+                    | #{lot.bodyStatus.toFixed(1)} 
+                    each item in [1,2,3,4,5]
+                      if(lot.bodyStatus > item - 0.6 && lot.bodyStatus < item)
+                        i.mdi.mdi-star-half.text-warning
+                      else 
+                        if(lot.bodyStatus < item)
+                          i.mdi.mdi-star-outline.text-warning
+                      if(lot.bodyStatus >= item) 
+                        i.mdi.mdi-star.text-warning
+              if(lot.health)
+                .row
+                  .col-12.mt-3
+                    h5
+                      small.text-muted
+                        | Obs. sanitarias
+                    p.text-primary
+                      | #{lot.health}
+                      
+      .row 
+        .col-md-12
+          .card.border-0
+            .card-body.pt-0
+              h6.mb-3.pb-2.border-bottom Ubicación
+              .d-flex.align-items-center
+                a(href="/establecimientos/perfil/" + lot.farmId, target="_blank")
+                  img.img-sm.rounded-circle(src=lot.farmImageFinal, alt=lot.farmName)
+                .ms-3
+                  p.m-0.p-0(style="font-size:15px;")
+                    | #{lot.farmName}
+                  .text-muted.font-weight-normal(style="font-size:12px;")
+                    .mdi.mdi-map-marker.text-mute
+                      | &nbsp;#{lot.addressLocationName}, #{lot.addressStateName}
+                      
+              #google-map-lot-detail.w-100.mt-4(style="height:300px")
+
+              if(lot.addressLatitude && lot.addressLongitude)
+                input(type="hidden", name="lot-addressLatitude", value=lot.addressLatitude)
+                input(type="hidden", name="lot-addressLongitude", value=lot.addressLongitude)
+                input(type="hidden", name="addressLatitude", value=lot.addressLatitude)
+                input(type="hidden", name="addressLongitude", value=lot.addressLongitude)
+                input(type="hidden", name="autocomplete-marker-label", value=lot.farmName)
+                script.
+                  var infoWindow_lotDetail = null;
+                  var googleMapMarker_lotDetail = null;
+                  window.addEventListener('load', function () {
+                    map_lotDetail = 
+                      create_map(
+                        #{lot.addressLatitude}, 
+                        #{lot.addressLongitude}, 
+                        "google-map-lot-detail"
+                      );
+
+                    update_marker_position(
+                      map_lotDetail, 
+                      #{lot.addressLatitude}, 
+                      #{lot.addressLongitude}, 
+                      "LOTE #{lot.lotId}", 
+                      infoWindow_lotDetail, 
+                      googleMapMarker_lotDetail
+                    );
+                  });

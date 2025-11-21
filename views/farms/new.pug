@@ -1,0 +1,190 @@
+extends ../baseHTML
+
+block content
+  link(rel='stylesheet', href='/upload-profile-image/style.css?version=1')
+  link(rel='stylesheet', href='/farms/style.css?version=1')
+  
+  .main-panel
+    .content-wrapper
+        .row
+          .col-md-12
+            .card
+              .card-body
+                if(error.msj)
+                  #error-message.row
+                    .col-md-12.grid-margin
+                      .card.border-0(class= error.type == "success" ? "bg-success" : "bg-danger")
+                        .card-body.py-3.px-4.d-flex.align-items-center.justify-content-between.flex-wrap
+                          p.mb-0.text-white.font-weight-medium #{error.msj}
+
+                          .d-flex
+                            if(error.type == "success" && error.farm)
+                              a.btn.btn-light.mr-2(href="/establecimientos/perfil/" + error.farm, target='_blank') Ver establecimiento
+
+                            button#error-close.btn.border-0.p-0
+                              i.mdi.mdi-close.text-white
+
+                form#farm-create-form.my-4(method="post", enctype="multipart/form-data", action='/establecimientos/nuevo/crear')
+                  .row
+                    .col-md-2.mt-2
+                      .card
+                        .card-body.p-0
+                          .media.w-100
+                            - let __aux_prod_image = 'background-image:url(' + (farm.imageToUploadUrl ? farm.imageToUploadUrl : "https://mercadoagro-backoffice.s3.amazonaws.com/images/farms/no-profile-img.png") + ')'
+                            #uploader-image-container(style=__aux_prod_image)
+                              img(src="https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png", width="100%", onclick="fireFileInputFromImg()")
+                              if(farm.imageToUploadUrl)
+                                input#image-to-upload-url(type="hidden", name="imageToUploadUrl", value=farm.imageToUploadUrl)
+                              else 
+                                input#image-to-upload-url(type="hidden", name="imageToUploadUrl", value="")
+
+                              input#uploader-image(type="file", name="imageToUpload", hidden, value="")
+                              input#file-name-to-upload(type='hidden', name='fileName', value="")
+                              label#uploader-image-label.btn.btn-danger(for="uploader-image") 
+                                i.mdi.mdi-upload.btn-icon-prepend
+
+                    .col-md-6.stretch-card
+                      .card.border-0
+                        .card-body.px-2.pt-2 
+                          h6 Datos básicos
+                          .row
+                            .col-sm-12
+                              input.form-control.mb-2(type='text', name="name", placeholder='Nombre del establecimiento', value=farm.name)
+                          .row 
+                            .col-sm-6
+                              select.form-control.mb-2.mr-sm-2(name="typeId")
+                                option(value="") Tipo de establecimiento
+                                each fType in farmsTypes
+                                  if(fType.id == farm.typeId)
+                                    option(value=fType.id, selected="selected") #{fType.name}
+                                  else
+                                    option(value=fType.id) #{fType.name}
+                            .col-sm-6
+                              select.form-control.mb-2.mr-sm-2(name="exploitationId")
+                                option(value="") Tipo de explotación
+                                each fExploitation in farmsExploitations
+                                  if(fExploitation.id == farm.exploitationId)
+                                    option(value=fExploitation.id, selected="selected") #{fExploitation.name}
+                                  else
+                                    option(value=fExploitation.id) #{fExploitation.name}
+
+                          .row 
+                            .col-sm-4
+                              h6.p-0.m-0(style="line-height:40px;") Condición:   
+                            .col-sm-4
+                              .form-check.form-check-flat.form-check-primary
+                                label.form-check-label
+                                  | Propio
+                                  if(farm.farmOwner == "1")
+                                    input.form-check-input(type='checkbox',name='farmOwner',value="1", checked="checked")
+                                  else
+                                    input.form-check-input(type='checkbox',name='farmOwner',value="1")
+                                  i.input-helper
+                            .col-sm-4
+                              .form-check.form-check-flat.form-check-primary
+                                label.form-check-label
+                                  | Alquilado
+                                  if(farm.farmRented == "1")
+                                    input.form-check-input(type='checkbox',name='farmRented',value="1", checked="checked")
+                                  else
+                                    input.form-check-input(type='checkbox',name='farmRented',value="1")
+                                  i.input-helper
+                          .row 
+                            .col-sm-6
+                              input.form-control.mb-2(type='number', name="surface", placeholder='Superficie (en hectáreas)', value=farm.surface)
+                            .col-sm-6
+                              input.form-control.mb-2(type='text', name="dicose", placeholder='DICOSE', value=farm.dicose)
+
+                          h6.mt-3 Teléfono    
+                          .row 
+                            .col-sm-12.mb-2 
+                              .form-inline
+                                .w-20.pr-sm-2
+                                  select#phone-country.form-control.w-100(name="phoneCountry", onchange="hideShowAreacode()")
+                                    - var __aux_phoneCountry = farm.phoneCountry ?  farm.phoneCountry : 1;
+                                    each itemCountry in countries
+                                      if(itemCountry.id == __aux_phoneCountry)
+                                        option(value=itemCountry.id, selected="selected") #{itemCountry.name}
+                                      else 
+                                        option(value=itemCountry.id) #{itemCountry.name}        
+                                #phone-areacode.w-20.pr-sm-2(class=farm.phoneCountry == 2 ?  "": "d-none")
+                                  input.form-control.w-100(type='number', name="phoneAreacode", placeholder='Código de área', value=farm.phoneAreacode)
+                                .w-40.pr-sm-2
+                                  input.form-control.w-100(type='number', name="phoneNumber", placeholder='Número', value=farm.phoneNumber)
+                                .w-20
+                                  input.form-control.w-100(type='number', name="phoneIntern", placeholder='Interno', value=farm.phoneIntern)
+                            
+                          h6.mt-3 Sociedades
+                          #societies-in-farm
+                          .row 
+                            .col-sm-12
+                              .form-group
+                                .input-group
+                                  input#societies-search-input.form-control(type='text' placeholder="Buscar sociedad" aria-label="Buscar sociedad")
+                                  button#societies-search-input-clear.btn.btn-link.btn-fw(type="button",style="position: absolute;right: 62px;top: 2px;display:none") Borrar
+                                  .input-group-append
+                                    button#societies-search-button.btn.btn-sm.btn-primary(type='button') Buscar
+                                p#societies-search-warning.text-secondary.text-danger.mt-2(style="display:none")
+                                  | Ingresá al menos 3 caracteres para realizar la búsqueda
+                                p#societies-search-noresult.text-secondary.text-danger.mt-2.pl-2(style="display:none")
+                                  | No hay resultados
+                                  a.btn.btn-success.ml-2(href="/sociedades/nueva", target="_blank")
+                                    | Crear sociedad
+                                  
+                                #societies-search-results.table-responsive
+                                
+                              
+                              if(farm.societies.length)
+                                script.
+                                  var societiesInFarm = !{JSON.stringify(farm.societies)};
+                              else 
+                                script.
+                                  var societiesInFarm = [];
+                                  
+                          .row.mt-4
+                            .col-md-12
+                              button.farm-submit.btn.btn-primary.mr-2(type='submit') Crear establecimiento
+                                  
+                    .col-md-4.stretch-card
+                      .card.border-0
+                        .card-body.px-2.pt-2  
+                          h6 Dirección  
+                          .row 
+                            .col-sm-12  
+                              input#autocomplete_address.form-control.w-100(type='text', name="addressStreet", placeholder='Dirección', value=farm.addressStreet)
+                              input(type="hidden", name="autocomplete-marker-label", value=farm.name)
+                              input(type="hidden", name="addressLocation", value=farm.addressLocation)
+                              input(type="hidden", name="addressState", value=farm.addressState)
+                              input(type="hidden", name="addressCountry", value=farm.addressCountry)
+                              input(type="hidden", name="addressZipCode", value=farm.addressZipCode)
+
+                          h6.mt-4 Instrucciones 
+                          .row.mt-2
+                            .col-sm-12
+                              textarea.form-control.py-3.px-4.w-100(cols="20", rows="2", name='addressInstructions', placeholder="Instrucciones para llegar al establecimiento", aria-label="Instrucciones para llegar al establecimiento", value=farm.addressInstructions)
+                                | #{farm.addressInstructions}
+
+                          h6.mt-4 Coordenadas de mapa
+                          .row 
+                            .col-sm-12.mb-2 
+                              input.form-control.w-100(type='text', name="addressLatitude", placeholder='Latitud', value=farm.addressLatitude)
+                          .row 
+                            .col-sm-12 
+                              input.form-control.w-100(type='text', name="addressLongitude", placeholder='Longitud', value=farm.addressLongitude)
+                          
+                          #googleMap.w-100.mt-4(style="height:300px")
+                              
+    footer.footer
+      .d-sm-flex.justify-content-center.justify-content-sm-between
+        span.text-muted.text-center.text-sm-left.d-block.d-sm-inline-block
+          a(href='/', target='_blank') MercadoAgro
+        span.float-none.float-sm-right.d-block.mt-1.mt-sm-0.text-center
+          i.mdi.mdi-heart.text-danger
+
+  script(src='/upload-profile-image/scripts.js?version=1')
+  script(src='/societies/search-api.js?version=1')
+  script(src='/address/phone.js?version=1')
+  script(src='/errors/actions.js?version=1')
+  script(src='/farms/scripts.js?version=1')
+  script(src='/maps.js?version=1')
+  script(src='https://maps.google.com/maps/api/js?key=AIzaSyBpSkP-tvO14Rgji6jzW_-xICmNwoVngf0&loading=async&libraries=places' type='text/javascript')

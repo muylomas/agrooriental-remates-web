@@ -1,0 +1,152 @@
+.auction-bid(id="auction-bid-" + lot.lotId)
+    .auction-bid-bg
+    .auction-bid-container
+        .auction-bid-wrapper
+            .row
+                .col-md-12
+                    .card.border-0
+                        .card-body
+                            .row
+                                .col-6.p-0.m-0
+                                    h5
+                                        small.text-muted(id="auction-bid-status-" + lot.lotId)
+                                    h2.text-primary
+                                        small #{lot.currency} 
+                                        if(lot.active == 1)
+                                            span(id="last-auction-bid-price-auction-" + lot.lotId) #{lot.auctionPriceType == 1 ? lot.lastPrice.toFixed(2) : lot.lastPrice.toFixed(0)} 
+                                        else 
+                                            if(lot.lastPriceAuction)
+                                                span(id="last-auction-bid-price-auction-" + lot.lotId) #{lot.auctionPriceType == 1 ? lot.lastPriceAuction.toFixed(2) : lot.lastPriceAuction.toFixed(0)} 
+                                            else 
+                                                span(id="last-auction-bid-price-auction-" + lot.lotId) -.-- 
+                                        span.text-small
+                                            if(lot.auctionPriceType == 1)
+                                                | por kilo
+                                            else 
+                                                | por bulto
+                                .col-6.m-0
+                                    .mt-2(id="category-media-value-container-" + lot.lotId)
+                                        h5
+                                            small.text-muted
+                                                | Promedio de cat.
+                                        mark.bg-dark.text-white(style="font-size: 18px")
+                                            | USD 
+                                            b #{lot.auctionAvg} 
+                                            small
+                                                if(lot.auctionAvg == lot.auctionAvgOld)
+                                                    span.text-primary =
+                                                if(lot.auctionAvg < lot.auctionAvgOld)
+                                                    i.mdi.mdi-arrow-down.text-danger
+                                                    span.text-danger 
+                                                        | #{Math.round((1-lot.auctionAvg/lot.auctionAvgOld) *100)}%
+                                                if(lot.auctionAvg > lot.auctionAvgOld)
+                                                    i.mdi.mdi-arrow-up.text-success
+                                                    span.text-success 
+                                                        | #{Math.round((1-lot.auctionAvgOld/lot.auctionAvg) *100)}%
+
+                            .row.mb-3
+                                .col-12.p-0.m-0
+                                    p.text-primary
+                                        | Forma de pago: #{lot.paymentTermName}
+                            
+
+                            if("farms" in customer && customer.farms.length)
+                                if(customer.farms.length > 1)
+                                    h6 Fletes
+                                else 
+                                    h6 Flete
+
+                                each farmItem in customer.farms
+                                    .row.mb-3(id="customer-farm" + farmItem.id + "-" + lot.lotId)
+                                        .col-5
+                                            h5.m-0.p-0
+                                                | #{farmItem.name}
+                                            p.text-muted.font-weight-normal.text-small.m-0.p-0
+                                                | #{farmItem.state}
+                                        .col-7.text-left(id="customer-farm" + farmItem.id + "-" + lot.lotId + "-freight")
+
+                                        script.
+                                            window.addEventListener('load', function () {
+                                                freightCalc(
+                                                    #{farmItem.id},
+                                                    #{lot.addressLatitude},
+                                                    #{lot.addressLongitude},
+                                                    #{farmItem.latitude},
+                                                    #{farmItem.longitude},
+                                                    function (farmId, distanceText, distanceKm, durationText) {
+                                                        setTimeout(() => {
+                                                            $("#customer-farm#{farmItem.id}-#{lot.lotId}-freight").html(
+                                                                `
+                                                                    <h5 class="m-0 p-0 text-primary">
+                                                                        $ ` + (distanceKm * 407.96).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + `
+                                                                    </h5>
+                                                                    <div class="text-primary font-weight-normal text-small m-0 p-0">
+                                                                        <div class="mdi mdi-ruler" style="display: contents">
+                                                                            <span class="text-muted">` + distanceText + `</span>
+                                                                        </div>
+                                                                        <div class="mdi mdi-timelapse" style="display: contents">
+                                                                            <span class="text-muted">` + durationText + `</span>
+                                                                        </div>
+                                                                    </div>
+                                                                `
+                                                            );
+                                                        }, "1000");
+
+                                                    }
+                                                );
+                                            });
+
+                            if(lot.active == 1)
+                                .mt-4(id="bid-auction-actions-container-" + lot.lotId)
+                                    .row
+                                        .col-6.text-center(style="padding-left: 0;")
+                                            button.bid-action-button.btn.btn-warning.text-dark.w-100.h-100(id="auction-bid-button-x1-" + lot.lotId, onclick="javascript:auctionBidByStep(" + lot.lotId + ",1)", style="line-height: 1.3rem;")
+                                                | Ofertar #{lot.auctionPriceType == 1 ? (lot.lastPrice + lot.stepPrice).toFixed(2) : (lot.lastPrice + lot.stepPrice).toFixed(0)}
+                                        .col-6.text-center(style="padding-right: 0;")
+                                            button.bid-action-button.btn.btn-warning.text-dark.w-100.h-100(id="auction-bid-button-x2-" + lot.lotId, onclick="javascript:auctionBidByStep(" + lot.lotId + ",2)", style="line-height: 1.3rem;")
+                                                | Ofertar #{lot.auctionPriceType == 1 ? (lot.lastPrice + 2 * lot.stepPrice).toFixed(2) : (lot.lastPrice + 2 * lot.stepPrice).toFixed(0)}
+                                        
+                                    .row.mt-4
+                                        .col-12.p-0.m-0
+                                            .d-flex.align-items-left.justify-content-left.justify-content-md-left
+                                                .d-flex.flex-column.justify-content-around
+                                                    button.btn.btn-icon.btn-danger(onclick="auctionBidAddToPrice(" + lot.lotId + ", -1)")
+                                                        i.mdi.mdi-minus
+                                                .d-flex.flex-column.justify-content-around
+                                                    if(lot.auctionPriceType == 1)
+                                                        input.form-control.text-center.p-2.h-100(id="auction-bid-price-" + lot.lotId, type="number", onchange="auctionBidPriceChanged(" + lot.lotId + ")", name="auctionBidPrice", placeholder="0.00", step=lot.stepPrice.toFixed(2), value=(lot.lastPrice + 3 * lot.stepPrice).toFixed(2))
+                                                    else 
+                                                        input.form-control.text-center.p-2.h-100(id="auction-bid-price-" + lot.lotId, type="number", onchange="auctionBidPriceChanged(" + lot.lotId + ")", name="auctionBidPrice", placeholder="0", step=lot.stepPrice.toFixed(0), value=(lot.lastPrice + 3 * lot.stepPrice).toFixed(0))
+                                                .d-flex.flex-column.justify-content-around
+                                                    button.btn.btn-icon.btn-primary(onclick="auctionBidAddToPrice(" + lot.lotId + ", 1)")
+                                                        i.mdi.mdi-plus
+                                                .d-flex.flex-column.justify-content-around.w-100(style="margin-left:20px")
+                                                    button.bid-action-button.btn.btn-warning.text-dark.h-100(onclick="javascript:auctionBidCustom(" + lot.lotId + ")")
+                                                        | Ofertar
+                                        
+                                    .row.mt-5
+                                        .col-12.p-0.m-0
+                                            h5
+                                                small.text-muted
+                                                    | Compra inmediata
+                                                    
+                                            h2.text-primary
+                                                small 
+                                                    | #{lot.currency} 
+                                                if(lot.auctionPriceType == 1)
+                                                    span 
+                                                        | #{lot.salePrice.toFixed(2)} 
+                                                    span.text-small
+                                                        | por kilo
+                                                else 
+                                                    span 
+                                                        | #{lot.salePrice.toFixed(0)} 
+                                                    span.text-small
+                                                        | por bulto
+
+                                            button.btn.btn-primary.btn-lg.font-weight-medium.w-100.mb-2(id="buy-action-button-" + lot.lotId, onclick='javascript:buyInmediatelly(' + lot.lotId + ')')
+                                                | Comprar ya
+
+                                            p.text-primary
+                                                | Forma de pago: #{lot.paymentTermName}
+    

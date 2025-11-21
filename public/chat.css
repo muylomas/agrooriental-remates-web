@@ -1,0 +1,139 @@
+.chat-body {
+  /*I ripped this image from the WhatsApp apk*/
+  /*This is WhatsApp's official BK color
+    background: #ECE5DD;*/
+  font-family: "Helvetica Neue", Helvetica;
+  padding: 0 0 20px 0;
+}
+
+.chat-container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.chat-msg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: hidden;
+}
+
+.chat-msg .chat-bubble {
+  float: left;
+  max-width: 75%;
+  width: auto;
+  height: auto;
+  display: block;
+  background: #ebebeb;
+  border-radius: 5px;
+  position: relative;
+  margin: 10px 0 3px 25px;
+  box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.chat-msg .chat-bubble.chat-alt {
+  margin: 10px 25px 3px 0px;
+  background: #DCF8C6;
+  float: right;
+}
+
+.chat-msg .chat-bubble.chat-request-connect {
+  margin: 10px 25px 3px 0px;
+  background: #002aff;
+  float: right;
+}
+
+.chat-msg .chat-bubble.chat-follow {
+  margin: 2px 0 3px 25px;
+}
+
+.chat-msg .chat-bubble.chat-altfollow {
+  margin: 2px 25px 3px 0px;
+  background: #DCF8C6;
+  float: right;
+}
+
+.chat-msg .chat-bubble .chat-txt {
+  padding: 8px 0 8px 0;
+  width: 100%;
+}
+
+.chat-msg .chat-bubble .chat-txt .chat-name {
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-table;
+  padding: 0 0 0 15px;
+  margin: 0 0 4px 0;
+  color: #3498db;
+}
+
+.chat-msg .chat-bubble .chat-txt .chat-name span {
+  font-weight: normal;
+  color: #b3b3b3;
+  overflow: hidden;
+}
+
+.chat-msg .chat-bubble .chat-txt .chat-name.chat-alt {
+  color: #2ecc51;
+}
+
+.chat-msg .chat-bubble .chat-txt .chat-message {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0 15px 0 15px;
+  color: #2b2b2b;
+  display: table;
+}
+
+.chat-msg .chat-bubble .chat-txt .chat-timestamp {
+  font-size: 11px;
+  margin: auto;
+  padding: 0 15px 2px 15px;
+  width: 100%;
+  text-align: right;
+  display: table;
+  /*float: right;
+  position: relative;*/
+  text-transform: uppercase;
+  color: #999;
+}
+
+.chat-msg .chat-bubble .chat-bubble-arrow {
+  position: absolute;
+  float: left;
+  left: -11px;
+  top: 0px;
+}
+
+.chat-msg .chat-bubble .chat-bubble-arrow.chat-alt {
+  bottom: 20px;
+  left: auto;
+  right: 4px;
+  float: right;
+}
+
+.chat-msg .chat-bubble .chat-bubble-arrow:after {
+  content: "";
+  position: absolute;
+  border-top: 15px solid #ebebeb;
+  border-left: 15px solid transparent;
+  border-radius: 4px 0 0 0px;
+  width: 0;
+  height: 0;
+}
+
+.chat-msg .chat-bubble .chat-bubble-arrow.chat-alt:after {
+  border-top: 15px solid #DCF8C6;
+  transform: scaleX(-1);
+}
+
+@media only screen and (max-width: 450px) {
+  .container {
+    width: 100%;
+  }
+
+  .chat-timestamp {
+    display: none;
+    color: red;
+  }
+}

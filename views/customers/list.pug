@@ -1,0 +1,78 @@
+extends ../baseHTML
+
+block content
+
+  link(rel='stylesheet', href='/customers/style.css?version=1')
+
+  .main-panel
+    .content-wrapper
+      if(searchTerm)
+        .row
+          .col-md-12.grid-margin
+            .card.bg-success.border-0
+              .card-body.py-3.px-4.d-flex.align-items-center.justify-content-between.flex-wrap
+                p.mb-0.text-white 
+                  | Resultado de búsqueda: 
+                  span.font-weight-medium  "#{searchTerm}"
+
+                d-flex
+                  a.btn.btn-light.mr-2(href="/personas") Borrar
+
+      .card
+        .card-body
+          .row.mb-2
+            .col-md-12
+              .card.border-0
+                .card-body.d-flex.align-items-center.justify-content-between.flex-wrap.p-0
+                  .d-flex
+                  .d-flex
+                    a.btn.btn-primary.text-white(href="/personas/nuevo") 
+                      i.mdi.mdi-account-plus
+
+          .row
+            .col-md-12.grid-margin.stretch-card
+              .table-responsive
+                .dataTables_wrapper.dt-bootstrap4.no-footer
+                  .row
+                    .col-sm-12
+                      table.table.dataTable.no-footer.customers-list-table
+                        thead
+                          tr
+                            th
+                            th.text-center Nombre
+                            th.text-center Email 
+                            th.text-center Tipo 
+                        tbody
+                          each customerItem in customers
+                            tr(role="role", class=index%2 ? 'odd': 'even')
+                              td.p-1.image-cel.text-center
+                                - var __aux_img_src = "background:url(" + (customerItem.image ? customerItem.image : "https://mercadoagro-backoffice.s3.amazonaws.com/images/customers/no-profile-img.png") + ")";
+                                a(href="/personas/perfil/" + customerItem.id, target="_blank")
+                                  .image-container(style=__aux_img_src, alt=customerItem.name + " " + customerItem.surname)
+                              td.p-1.pl-3 #{customerItem.name + " " + customerItem.surname}
+                              td.p-1.pl-3 #{customerItem.email}
+                              td.p-1.text-center #{customerItem.type}
+
+                  if(customers.length)
+                    .row.mt-3
+                      .col-sm-12.col-md-5
+                        #order-listing_info.dataTables_info(role='status', aria-live='polite') 
+                          | Mostrando #{(page-1)*length+1} a #{(page-1)*length+ customers.length}
+                      .col-sm-12.col-md-7
+                        #order-listing_paginate.dataTables_paginate.paging_simple_numbers
+                          ul.pagination
+                            if(page > 1)
+                              li#order-listing_previous.paginate_button.page-item.previous
+                                a.page-link(href='/personas/p/' + (page-1) + '/l/' + length + (searchTerm ? '/s/' + searchTerm : ""), aria-controls='order-listing', data-dt-idx='0', tabindex='0') Anterior
+                            li.paginate_button.page-item.active
+                              a.page-link(href='/personas/p/' + page + '/l/' + length + (searchTerm ? '/s/' + searchTerm : ""), aria-controls='order-listing', data-dt-idx='1', tabindex='0') #{page}
+                            if(customers.length >= length)
+                              li#order-listing_next.paginate_button.page-item.next
+                                a.page-link(href='/personas/p/' + (page+1) + '/l/' + length + (searchTerm ? '/s/' + searchTerm : ""), aria-controls='order-listing', data-dt-idx='2', tabindex='0') Siguiente
+                      
+    footer.footer
+      .d-sm-flex.justify-content-center.justify-content-sm-between
+        span.text-muted.text-center.text-sm-left.d-block.d-sm-inline-block
+          a(href='/', target='_blank') MercadoAgro
+        span.float-none.float-sm-right.d-block.mt-1.mt-sm-0.text-center
+          i.mdi.mdi-heart.text-danger

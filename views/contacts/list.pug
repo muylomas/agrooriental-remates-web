@@ -1,0 +1,54 @@
+extends ../baseHTML
+
+block content
+    .main-panel
+      .content-wrapper
+        .card
+          .card-body
+            .row
+              .col-md-12.grid-margin.stretch-card
+                .table-responsive
+                  .dataTables_wrapper.dt-bootstrap4.no-footer
+                    .row
+                      .col-sm-12
+                        table.table.dataTable.no-footer
+                          thead
+                            tr
+                              th id
+                              th Nombre
+                              th Empresa
+                              th Email
+
+                          tbody
+                            each contact,index in contacts
+                              tr(role="role", class=index%2 ? 'odd': 'even', onclick="window.location.href = '/contacts/profile/" + contact.contactId + "';", style="cursor:pointer")
+                                td #{contact.contactId}
+                                td #{contact.contactName} #{contact.contactSurname}
+                                td #{contact.companyName}
+                                td #{contact.contactEmail}
+
+                    if(contacts.length)
+                      .row
+                        .col-sm-12.col-md-5
+                          #order-listing_info.dataTables_info(role='status', aria-live='polite') 
+                            | Showing #{(page-1)*length+1} to #{(page-1)*length+contacts.length} of #{suites} suites
+                        .col-sm-12.col-md-7
+                          #order-listing_paginate.dataTables_paginate.paging_simple_numbers
+                            ul.pagination
+                              if(page > 1)
+                                li#order-listing_previous.paginate_button.page-item.previous
+                                  a.page-link(href='/contacts/p/' + (page-1) + '/from/' + from + '/l/' + length, aria-controls='order-listing', data-dt-idx='0', tabindex='0') Previous
+                              li.paginate_button.page-item.active
+                                a.page-link(href='/contacts/p/' + page + '/from/' + from + '/l/' + length, aria-controls='order-listing', data-dt-idx='1', tabindex='0') #{page}
+                              if(contacts.length >= length)
+                                li#order-listing_next.paginate_button.page-item.next
+                                  a.page-link(href='/contacts/p/' + (page+1) + '/from/' + from + '/l/' + length, aria-controls='order-listing', data-dt-idx='2', tabindex='0') Next
+                        
+      // content-wrapper ends
+      // partial:partials/_footer
+      footer.footer
+        .d-sm-flex.justify-content-center.justify-content-sm-between
+          span.text-muted.text-center.text-sm-left.d-block.d-sm-inline-block
+            a(href='/', target='_blank') MercadoAgro
+          span.float-none.float-sm-right.d-block.mt-1.mt-sm-0.text-center
+            i.mdi.mdi-heart.text-danger
