@@ -96,7 +96,7 @@ router.post('/', function (req, res, next) {
                         /*
                         aws_sms_sender.sms_sender(
                             {
-                                Message: phoneCodeNumber + " es tu código de verificación de Mercadoagro.",
+                                Message: phoneCodeNumber + " es tu código de verificación de Agro Oriental.",
                                 PhoneNumber: "+598" + parseInt(req.body.phoneNumber, 10),
                             },
                             function () {
