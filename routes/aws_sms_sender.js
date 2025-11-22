@@ -9,7 +9,7 @@ const awsConfigEnv = fromIni({
 
 Common.prototype.sms_sender = function (params, callback) {
     console.log("================ sms_sender ================");
-    const snsClient = new SNSClient({ region: "us-east-1", credentials: awsConfigEnv });
+    const snsClient = new SNSClient({ region: "us-west-1", credentials: awsConfigEnv });
 
     snsClient.send(
         new PublishCommand(params),
