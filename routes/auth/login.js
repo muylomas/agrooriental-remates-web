@@ -72,9 +72,9 @@ router.post('/', function (req, res, next) {
                                     }
                                     else {
                                         if (__aux_enableSMS == 1) {
-                                            console.log("================================");
+                                            console.log("================ phoneCodeNumber ================");
                                             console.log(phoneCodeNumber);
-                                            console.log("================================");
+                                            console.log("================ phoneCodeNumber ================");
                                             aws_sms_sender.sms_sender(
                                                 {
                                                     Message: phoneCodeNumber + " es tu código de verificación de Agro Oriental.",

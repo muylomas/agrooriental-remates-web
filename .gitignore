@@ -108,3 +108,4 @@ dist
 **/sessions/
 **/node_modules/
 **/uploads/
+aws_credentials.ini
