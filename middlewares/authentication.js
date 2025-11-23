@@ -1,7 +1,7 @@
 const connection = require('../routes/connection_db');
 
 exports.authProcc = function (req, res, next) {
-
+  console.log("================ authProcc ================");
   if (!("session" in req)) {
     req.session = {
       userid: false,
