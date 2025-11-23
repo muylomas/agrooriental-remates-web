@@ -13,6 +13,13 @@ exports.authProcc = function (req, res, next) {
     req.sessionID = "undefined";
   }
 
+  console.log(`
+      SELECT 
+        id AS id,
+        invitation AS invitation
+      FROM customers 
+      WHERE session = 
+    `, req.sessionID);
   connection.query(
     `
       SELECT 
@@ -43,6 +50,7 @@ exports.authProcc = function (req, res, next) {
           next();
       }
       else {
+        console.log("results.length: ", results.length);
         if (results.length) {
           if (results.length > 1) {
             connection.query(
