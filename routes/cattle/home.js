@@ -279,7 +279,8 @@ Common.prototype.getViewParams = function (user, callback) {
                                                                 function (replyCattleTypesAverages) {
                                                                     indexParams.cattleTypesAverages = replyCattleTypesAverages;
                                                                     callback(
-                                                                        'cattle/home-feed',
+                                                                        //'cattle/home-feed',
+                                                                        'cattle/remate',
                                                                         indexParams,
                                                                         "render"
                                                                     );

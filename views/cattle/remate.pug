@@ -1,0 +1,27 @@
+extends ../baseAppHTML
+
+block content 
+  link(href='/cattle/sell-styles.css?ver=1', rel='stylesheet', type='text/css')
+
+  script(src='https://s3.amazonaws.com/rewo/backoffice/js/jquery.min.js')
+  script(src='https://s3.amazonaws.com/rewo/backoffice/js/jquery-ui.min.js')
+
+  .content-wrapper.p-0.m-0.bg-white
+       
+    include sell-includes/header.pug
+
+    .row  
+      .col-md-4.grid-margin.stretch-card
+        .card.border-0
+          .card-body.px-2
+            .px-3 
+              include remate-includes/main-tab-content.pug
+     
+  script(src='https://s3.amazonaws.com/rewo/backoffice/vendors/base/vendor.bundle.base.js')
+  script(src='https://s3.amazonaws.com/rewo/backoffice/vendors/datatables.net/jquery.dataTables.js')
+  script(src='https://s3.amazonaws.com/rewo/backoffice/vendors/datatables.net-bs4/dataTables.bootstrap4.js')
+
+  script(src='https://s3.amazonaws.com/rewo/backoffice/js/off-canvas.js')
+  script(src='https://s3.amazonaws.com/rewo/backoffice/js/hoverable-collapse.js')
+  script(src='https://s3.amazonaws.com/rewo/backoffice/js/template.js')
+  script(src='/cattle/sell-scripts.js?ver=1')

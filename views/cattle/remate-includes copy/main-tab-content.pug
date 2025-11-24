@@ -1,0 +1,17 @@
+
+#review.tab-pane.fade
+  each lotItem in lots
+    .row.mb-2.align-items-center(id="saved-lot-" + lotItem.lotId)
+      .col-12
+        .card
+          img.card-img-top(src="https://demo.bootstrapdash.com/majestic-admin-pro/themes/assets/images/samples/300x300/2.jpg" alt="Card image cap")
+          .card-body
+            h4.card-title.mt-3
+              | Card title that wraps to a new line
+            p.card-text
+              | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum hic officia animi quod iure, vel aliquam quia recusandae accusantium quo impedit labore, eligendi ipsam, fugit tempora, explicabo deleniti minus iste!
+
+
+  if(!lots.length)
+    .m-3.p-3.bg-light.text-center  
+      | No hay lotes a espera de revisión de Agro Oriental.
