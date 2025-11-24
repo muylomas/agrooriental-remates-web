@@ -53,8 +53,10 @@ app.use(function (req, res, next) {
     else if (req.subdomains.length) {
       res.redirect('https://' + req.subdomains.reverse().join(".") + '.com.uy' + req.url);
     }
-    else if (req.headers.host.indexOf("54.183.80.127") != -1)
-      res.redirect('https://54.183.80.127' + req.url);
+    else if (req.headers.host.indexOf("54.183.80.127") != -1) {
+      //res.redirect('https://54.183.80.127' + req.url);
+      next();
+    }
     else
       next();
   }
@@ -119,7 +121,7 @@ const sessionMiddleware = session({
   secret: 'LoktOOtNBvuFajNrBnx4',
   cookie: {
     maxAge: (new Date(Date.now() + (24 * 60 * 60))).getTime(),
-    domain: '.54.183.80.127',
+    domain: '54.183.80.127',
   },
   resave: false,
   name: "mercadoagroApp",
