@@ -1,4 +1,4 @@
-.full-video-bg {
+/*.full-video-bg {
     background: url("https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png");
     background-size: cover;
     background-position: center;
@@ -8,7 +8,7 @@
 .cattle-video {
     position: fixed;
     z-index: 10;
-}
+}*/
 
 .content-overlay-video {
     position: absolute;
