@@ -262,9 +262,6 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
                         console.log(err);
                     }
                     else if (results.length) {
-
-                        console.log("After sql lots length: ", results.length);
-
                         for (let index in results) {
                             if (!lotsIds.includes(results[index].lotId)) {
                                 let __aux_lot = results[index];

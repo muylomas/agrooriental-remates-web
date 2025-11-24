@@ -247,7 +247,6 @@ Common.prototype.getViewParams = function (user, callback) {
                 "",
                 "",
                 function (returnLots, returnLotsIds) {
-                    console.log("Lots length: ", returnLots.length);
                     indexParams.lotsIds = returnLotsIds;
                     indexParams.lots = returnLots;
                     indexParams.activeAuctionBids = [];
