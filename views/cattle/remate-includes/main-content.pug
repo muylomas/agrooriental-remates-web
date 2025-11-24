@@ -6,7 +6,7 @@
       each lotItem in lots
         .col-xl-3.col-lg-3.col-md-3.col-sm-6.col-12
           .card(id="lot-" + lotItem.lotId)
-            img.card-img-top(src=lotItem.imagesArray[0] alt="Lote " + lotItem.lotId)
+            .card-img-top(style="background-image:url(" + lotItem.imagesArray[0] + ");height: 245px;background-size: cover;" alt="Lote " + lotItem.lotId)
             .card-body.px-3
               .btn.btn-dark.text-uppercase.p-2.m-0 
                 b !{"Lote " + lotItem.lotId}
