@@ -1,0 +1,136 @@
+extends ./baseHTML
+
+block content 
+    link(rel="stylesheet",media="screen",href="/fonts/font-awesome.min.css")
+      
+    .main-panel
+      .content-wrapper
+        .row
+          .col-md-12.grid-margin
+            .row
+              .col-12.col-xl-12.mb-4.mb-xl-0
+                h3.font-weight-bold.pl-3 Hola #{userFirstname}!
+
+        if(activeLots.length)
+          .row.mb-4
+            - let __aux_video_background_image = 'background-image:url(https://mercadoagro-backoffice.s3.amazonaws.com/videos/no-video-img.png);'
+            - let __aux_other_attributes = "background-repeat: no-repeat; background-position: center; background-size: contain;"
+            each lotItem in activeLots
+              .col-md-4 
+                .card 
+                  .card-body.p-0
+                    .media
+                      a(href="/ganado/lote/publicacion/" + lotItem.lotId, target="_blank")
+                        video#cattle-video.w-100(muted, style=__aux_other_attributes + __aux_video_background_image, src=lotItem.video)
+                    .p-4
+                      h5 #{lotItem.totalQuantity} #{lotItem.type}
+                      p.text-muted #{lotItem.breed}
+                      .text-muted.mt-2(style="font-size:14px;")
+                        .mdi.mdi-weight.text-mute
+                          | &ensp; #{lotItem.meanWeight.toFixed(0)} Kg
+                      .text-muted.mt-4(style="font-size:14px;")
+                        .mdi.mdi-map-marker.text-mute
+                          | &ensp; #{lotItem.addressLocationName}, #{lotItem.addressStateName}
+        .row
+          .col-md-2.mb-4.stretch-card.transparent
+            .card.b-none.bg-dark(style={"height":"150px","border-radius":"20px","overflow":"hidden","color":"white"})
+              a.card-body(href="/ganado", style={"background-size":"cover","background-position":"center","background-image":"url(https://mercadoagro-backoffice.s3.amazonaws.com/images/home/cattle-lots.jpg)"})
+                label.badge.badge-dark(style={"font-size":"14px;"}) Lotes
+          .col-md-2.mb-4.mb-lg-0.stretch-card.transparent
+            .card.b-none.bg-primary(style={"height":"150px","border-radius":"20px","overflow":"hidden","color":"white"})
+              a.card-body(href="/personas/s/productor", style={"background-size":"cover","background-position":"center","background-image":"url(https://mercadoagro-backoffice.s3.amazonaws.com/images/home/producers.jpg)"})
+                label.badge.badge-primary(style={"font-size":"14px;"}) Productores
+          .col-md-2.mb-4.mb-lg-0.stretch-card.transparent
+            .card.b-none.bg-warning(style={"height":"150px","border-radius":"20px","overflow":"hidden","color":"white"})
+              a.card-body(href="/establecimientos", style={"background-size":"cover","background-position":"center","background-image":"url(https://mercadoagro-backoffice.s3.amazonaws.com/images/home/rural-society.jpg)"})
+                label.badge.badge-warning(style={"font-size":"14px;"}) 
+                  | Establecimientos
+          .col-md-2.mb-4.mb-lg-0.stretch-card.transparent
+            .card.b-none(style={"height":"150px","border-radius":"20px","overflow":"hidden","background":"#7978E9","color":"white"})
+              a.card-body(href="/", style={"background-size":"cover","background-position":"center","background-image":"url(https://mercadoagro-backoffice.s3.amazonaws.com/images/home/auctions.jpg)"})
+                label.badge.badge-primary(style={"background":"#7978E9", "font-size":"14px;"}) Remates
+          .col-md-2.mb-4.stretch-card.transparent
+            .card.b-none.bg-success(style={"height":"150px","border-radius":"20px","overflow":"hidden","color":"white"})
+              a.card-body(href="/", style={"background-size":"cover","background-position":"center","background-image":"url(https://mercadoagro-backoffice.s3.amazonaws.com/images/home/sales.jpg)"})
+                label.badge.badge-success(style={"font-size":"14px;"}) Ventas
+          .col-md-2.mb-4.stretch-card.transparent
+            .card.b-none.bg-success(style={"height":"150px","border-radius":"20px","overflow":"hidden","color":"white"})
+              a.card-body(href="/", style={"background-size":"cover","background-position":"center","background-image":"url(https://mercadoagro-backoffice.s3.amazonaws.com/images/home/logistics.jpg)"})
+                label.badge.badge-danger(style={"font-size":"14px;"}) Logística
+               
+        .row
+          .col-md-6.grid-margin.stretch-card
+            .card
+              .card-body
+                h4.card-title Cotizaciones BROU
+                table.table
+                  thead
+                    tr
+                      th
+                        p
+                      th
+                        p
+                      th.pt-1.pr-0.text-center
+                        .text-small Compra
+                      th.pt-1.pr-0.text-center
+                        .text-small Venta
+                  tbody
+                    each currencyItem in currencyObj
+                      tr
+                        td.p-2.pl-0
+                          .media
+                            - var __aux_company_img = "background-image:url(" + currencyItem.icon + ");border-radius: 50%;width:20px;height:20px;background-size:cover;background-repeat:no-repeat;background-position: center;"
+                            div(style=__aux_company_img)
+                        td.p-2
+                          .d-flex.align-items-center.text-small 
+                            b #{currencyItem.currency}
+                        td.p-2
+                          .text-center.text-small #{currencyItem.buy} 
+                        td.p-2
+                          .text-center.text-small #{currencyItem.sell}
+
+                .mt-5
+                  a.text-small(href="https://www.brou.com.uy/cotizaciones", target="_blank") Fuente www.brou.com.uy 
+
+          .col-md-6.grid-margin.stretch-card
+            .card
+              .card-body
+                h4.card-title Precios de ganado
+                table.table
+                  thead
+                    tr
+                      th
+                      th
+                      th.pt-1.pr-0.text-center
+                        .text-small Precio
+                      th.pt-1.pr-0.text-center
+                        .text-small Unidad
+                  tbody
+                    each cattlePricesItem in cattlePrices
+                      tr
+                        td.p-2.pl-0
+                          .media
+                            - var __aux_company_img = "background-image:url(" + cattlePricesItem.image + ");border-radius: 50%;width:45px;height:45px;background-size:cover;background-repeat:no-repeat;background-position: center;"
+                            div(style=__aux_company_img)
+                        td.p-2
+                          .text-left 
+                            b #{cattlePricesItem.title} 
+                        td.p-2
+                          .text-center #{cattlePricesItem.val} 
+                        td.p-2
+                          .text-center #{cattlePricesItem.unit}
+
+                .mt-5
+                  a.text-small(href="https://acg.com.uy/", target="_blank") Fuente acg.com.uy
+
+          
+
+              
+      footer.footer
+        .d-sm-flex.justify-content-center.justify-content-sm-between
+          span.text-muted.text-center.text-sm-left.d-block.d-sm-inline-block
+            a(href='/', target='_blank') Agro Oriental
+          span.float-none.float-sm-right.d-block.mt-1.mt-sm-0.text-center
+            i.mdi.mdi-heart.text-danger
+    
+    script(src='https://s3.amazonaws.com/muylomas/www/backoffice/vendors/chart.js/Chart.min.js')
