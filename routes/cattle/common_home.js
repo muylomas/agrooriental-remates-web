@@ -42,6 +42,8 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
         userId,
         function (customerFarms) {
 
+            //Force no farms
+            customerFarms = [];
             let customerFarmsFilterString = "";
             if (customerFarms.length) {
                 let customerFarmsFilterArray = [];
@@ -144,119 +146,6 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
 
                 cattleSearchTextString = ["%" + cattleSearchText + "%"];
             }
-
-            console.log(`
-                    SELECT 
-                        cattle_complete.*,
-                        DATE_FORMAT(
-                            cattle_complete.weightDate,
-                            '%d/%m/%Y'
-                        ) AS weightDateFormated,
-                        IF(
-                            cattle_complete.farmImage IS NULL OR cattle_complete.farmImage = "",
-                            "https://mercadoagro-backoffice.s3.amazonaws.com/images/societies/no-profile-img.png",
-                            cattle_complete.farmImage
-                        ) AS farmImageFinal,
-                        DATE_FORMAT(
-                            cattle_complete.auctionStart,
-                            '%Y-%m-%dT%H:%i:%s'
-                        ) AS auctionStartString,
-                        DATE_FORMAT(
-                            cattle_complete.auctionEnd,
-                            '%Y-%m-%dT%H:%i:%s'
-                        ) AS auctionEndString,
-                        IF(
-                            auctions_bids.price IS NULL,
-                            cattle_complete.startPrice,
-                            IF(
-                                cattle_complete.startPrice < auctions_bids.price,
-                                auctions_bids.price,
-                                cattle_complete.startPrice
-                            )
-                        ) AS lastPrice,
-                        auctions_bids.price AS lastPriceAuction,
-                        IF(
-                            auctions_bids.customerId IS NULL,
-                            0,
-                            auctions_bids.customerId
-                        ) AS auctionBidcustomerId,
-                        customers_complete.customerId AS customerId,
-                        IF(
-                            customers_complete.customerImage IS NULL OR customers_complete.customerImage = "",
-                            "https://mercadoagro-backoffice.s3.amazonaws.com/images/customers/no-profile-img.png",
-                            customers_complete.customerImage
-                        ) AS customerImage,
-                        customers_complete.customerName AS customerName,
-                        customers_complete.customerSurname AS customerSurname,
-                        cattle_types.family AS typeFamily,
-                        cattle_types.ageUnit AS typeAgeUnit,
-                        cattle_types.females AS typeFemales,
-                        cattle_types.reproductiveStatus AS typeReproductiveStatus,
-                        cattle_types.weaned AS typeWeaned,
-                        cattle_types.caped AS typeCaped,
-                        cattle_types.calves AS typeCalves,
-                        cattle_totals.quantity AS totalQuantity,
-                        cattle_totals.females AS females,
-                        IF(
-                            cattle_complete.salesagentImage IS NULL OR cattle_complete.salesagentImage = "",
-                            "https://mercadoagro-backoffice.s3.amazonaws.com/images/customers/no-profile-img.png",
-                            cattle_complete.salesagentImage
-                        ) AS salesagentImageSafe,
-                        IF(
-                            cattle_complete.auctionPriceType = 2,
-                            cattle_types_avg.avgPrice_2,
-                            cattle_types_avg.avgPrice_1
-                        ) AS auctionAvg,
-                        IF(
-                            cattle_complete.auctionPriceType = 2,
-                            cattle_types_avg.avgPriceOld_2,
-                            cattle_types_avg.avgPriceOld_1
-                        ) AS auctionAvgOld,
-                        cattle_payment_term.name AS paymentTermName,
-                        users_desks.name AS salesagentDeskName
-                    FROM cattle_complete
-                    LEFT JOIN auctions_bids_max ON auctions_bids_max.lotId = cattle_complete.lotId
-                    LEFT JOIN auctions_bids ON 
-                        auctions_bids.id = auctions_bids_max.auctionBidId AND 
-                        auctions_bids.lotId = cattle_complete.lotId
-                    LEFT JOIN customers_complete ON customers_complete.customerId = auctions_bids.customerId
-                    LEFT JOIN cattle_totals ON cattle_totals.lotId = cattle_complete.lotId
-                    INNER JOIN cattle_types ON cattle_types.id = cattle_complete.typeId
-                    INNER JOIN cattle_types_avg ON cattle_types_avg.cattleTypeId = cattle_complete.typeId
-                    INNER JOIN cattle_payment_term ON cattle_payment_term.id = cattle_complete.paymentTermId
-                    LEFT JOIN cattle_lots_breeds ON cattle_lots_breeds.lotId = cattle_complete.lotId
-                    LEFT JOIN cattle_breeds ON cattle_breeds.id = cattle_lots_breeds.breedId
-                    LEFT JOIN cattle_breeds AS cattle_crossBreeds ON cattle_crossBreeds.id = cattle_lots_breeds.crossBreedId
-                    LEFT JOIN users ON users.id = cattle_complete.salesagentId
-                    LEFT JOIN users_desks ON users_desks.id = users.deskId
-                    WHERE 
-                        cattle_complete.customerId != ? AND
-                        cattle_complete.statusId = 5 AND
-                        (
-                            auctions_bids.price IS NULL OR
-                            auctions_bids.price < cattle_complete.salePrice 
-                        ) AND
-                        cattle_complete.auctionStart < NOW() - INTERVAL 3 HOUR AND
-                        cattle_complete.auctionEnd > NOW() - INTERVAL 3 HOUR 
-                        ` + customerFarmsFilterString + `
-                        ` + latLngQueryString + `
-                        ` + cattleTypesQueryString + `
-                        ` + cattleCaracteristicsQueryString + `
-                        ` + cattleWinteringQueryString + `
-                        ` + cattleSearchTextQueryString + `
-                    GROUP BY cattle_complete.lotId
-                    ORDER BY cattle_complete.lotId ASC
-                `
-            );
-            console.log(
-                [
-                    userId,
-                ]
-                    .concat(customerFarms)
-                    .concat(latLngArray)
-                    .concat(cattleTypesQueryVals)
-                    .concat(cattleSearchTextString)
-            );
 
             connection.query(
                 `
