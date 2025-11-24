@@ -1,12 +1,12 @@
 
 #remate
   each lotItem in lots
-    .row.mb-2.align-items-center(id="lot-" + lotItem.lotId)
+    .row.mb-2.align-items-center.mt-3(id="lot-" + lotItem.lotId)
       .col-12
         .card
           img.card-img-top(src=lotItem.imagesArray[0] alt="Lote " + lotItem.lotId)
           .card-body.px-3
-            .btn.btn-dark.p-2.m-0 
+            .btn.btn-dark.text-uppercase.p-2.m-0 
               b !{"Lote " + lotItem.lotId}
             h4.card-title.mt-3
               | Card title that wraps to a new line
