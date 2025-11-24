@@ -5,10 +5,10 @@
     height: 50vh;
 }
 
-/*.cattle-video {
+.cattle-video {
     position: fixed;
     z-index: 10;
-}*/
+}
 
 .content-overlay-video {
     position: absolute;
