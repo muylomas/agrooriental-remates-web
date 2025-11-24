@@ -28,12 +28,15 @@ select {
     margin-left: 0;
 }
 
-.balance-header {
+/*.balance-header {
     background: rgb(34, 48, 195);
     background: -moz-linear-gradient(145deg, rgba(34, 48, 195, 1) 0%, rgba(34, 193, 195, 1) 100%);
     background: -webkit-linear-gradient(145deg, rgba(34, 48, 195, 1) 0%, rgba(34, 193, 195, 1) 100%);
     background: linear-gradient(145deg, rgba(34, 48, 195, 1) 0%, rgba(34, 193, 195, 1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#2230c3", endColorstr="#22c1c3", GradientType=1);
+}*/
+.balance-header {
+    background: #333333;
 }
 
 .balance-header .user-profile-icon {
