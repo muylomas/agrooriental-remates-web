@@ -4,7 +4,7 @@
     .row.mb-2.align-items-center(id="lot-" + lotItem.lotId)
       .col-12
         .card
-          img.card-img-top(src="https://demo.bootstrapdash.com/majestic-admin-pro/themes/assets/images/samples/300x300/2.jpg" alt="Card image cap")
+          img.card-img-top(src=lotItem.imagesArray[0] alt="Lote " + lotItem.lotId)
           .card-body.px-3
             h4.card-title.mt-3
               | Card title that wraps to a new line
