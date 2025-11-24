@@ -276,7 +276,7 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
                                     encodeURIComponent(
                                         "Hola " + __aux_lot.salesagentName + ", tengo algunas preguntas sobre el lote Nro. " + __aux_lot.lotId +
                                         " de " + __aux_lot.totalQuantity + " " + __aux_lot.type + " " +
-                                        "https://mercado-agro.com/#lote-" + __aux_lot.lotId
+                                        "https://54.183.80.127/#lote-" + __aux_lot.lotId
                                     );
 
                                 __aux_lot.whatsappShare =
@@ -285,7 +285,7 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
                                         " ubicado en " + __aux_lot.addressLocationName + ", " + __aux_lot.addressStateName +
                                         " de " + __aux_lot.totalQuantity + " " + __aux_lot.type + " " +
                                         " ( peso promedio " + __aux_lot.meanWeight.toFixed(0) + " kg) " +
-                                        "https://mercado-agro.com/#lote-" + __aux_lot.lotId
+                                        "https://54.183.80.127/#lote-" + __aux_lot.lotId
                                     );
 
                                 lots.push(__aux_lot);

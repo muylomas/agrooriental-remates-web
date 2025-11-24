@@ -211,7 +211,7 @@ Common.prototype.getViewParams = function (sessionID, lotId, callback) {
                                 encodeURIComponent(
                                     "Hola " + indexParams.lot.salesagentName + ", tengo algunas preguntas sobre el lote Nro. " + indexParams.lot.lotId +
                                     " de " + indexParams.lot.totalQuantity + " " + indexParams.lot.type + " " +
-                                    "https://mercado-agro.com/ganado/lote/publicacion/" + indexParams.lot.lotId
+                                    "https://54.183.80.127/ganado/lote/publicacion/" + indexParams.lot.lotId
                                 );
 
                             indexParams.lot.whatsappShare =
@@ -220,7 +220,7 @@ Common.prototype.getViewParams = function (sessionID, lotId, callback) {
                                     " ubicado en " + indexParams.lot.addressLocationName + ", " + indexParams.lot.addressStateName +
                                     " de " + indexParams.lot.totalQuantity + " " + indexParams.lot.type + " " +
                                     " ( peso promedio " + indexParams.lot.meanWeight.toFixed(0) + " kg) " +
-                                    "https://mercado-agro.com/ganado/lote/publicacion/" + indexParams.lot.lotId
+                                    "https://54.183.80.127/ganado/lote/publicacion/" + indexParams.lot.lotId
                                 );
 
                             breedsArray(

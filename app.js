@@ -53,8 +53,8 @@ app.use(function (req, res, next) {
     else if (req.subdomains.length) {
       res.redirect('https://' + req.subdomains.reverse().join(".") + '.com.uy' + req.url);
     }
-    else if (req.headers.host.indexOf("mercado-agro.com") != -1)
-      res.redirect('https://mercado-agro.com' + req.url);
+    else if (req.headers.host.indexOf("54.183.80.127") != -1)
+      res.redirect('https://54.183.80.127' + req.url);
     else
       next();
   }
@@ -78,7 +78,7 @@ const sslOptions2 = {
 };
 
 const https = require('https').Server(sslOptions, app);
-https.addContext('www.mercado-agro.com', sslOptions2);
+https.addContext('www.54.183.80.127', sslOptions2);
 
 //https = require('https').Server(sslOptions, app);
 
@@ -119,7 +119,7 @@ const sessionMiddleware = session({
   secret: 'LoktOOtNBvuFajNrBnx4',
   cookie: {
     maxAge: (new Date(Date.now() + (24 * 60 * 60))).getTime(),
-    domain: '.mercado-agro.com',
+    domain: '.54.183.80.127',
   },
   resave: false,
   name: "mercadoagroApp",
