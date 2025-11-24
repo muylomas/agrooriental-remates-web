@@ -552,7 +552,7 @@ function updatePasswordAndNotify(userName, email, rewoUserId, notify, callback) 
                         __aux_user_name + ",<br><br>" +
                         "Se reseteó tu contraseña  del sistema de Gestión de REWO.<br><br>" +
                         "La nueva contraseña es: " + newPassword + "<br><br>" +
-                        "Ingresá a <a href='/'>REWO Gestion</a> y actualizá tu contraseña.<br>" +
+                        "Ingresá a <a href='/'>agrooriental.com.uy</a> y actualizá tu contraseña.<br>" +
                         "<br><br>" +
                         "El equipo de REWO";
 
