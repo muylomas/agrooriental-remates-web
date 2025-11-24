@@ -4,22 +4,23 @@
   .col-12
     each lotItem in lots
       .row.portfolio-grid(id="lot-" + lotItem.lotId)
-        .card
-          img.card-img-top(src=lotItem.imagesArray[0] alt="Lote " + lotItem.lotId)
-          .card-body.px-3
-            .btn.btn-dark.text-uppercase.p-2.m-0 
-              b !{"Lote " + lotItem.lotId}
-              
-            h4.card-title.text-uppercase.mt-3.mb-2
-              | LAS BRUJAS FUERZA NUEVA TE
-            p.card-text
-              | Potranca
-              br
-              | (AS Malke Sedutor-TE  Y Devota De Santa Marcia  X Indio Do Boeiro )
-              br
-              | RP: 125
-              br
-              | Cabaña: Las Brujas
+        .col-xl-3.col-lg-3.col-md-3.col-sm-6 col-12
+          .card
+            img.card-img-top(src=lotItem.imagesArray[0] alt="Lote " + lotItem.lotId)
+            .card-body.px-3
+              .btn.btn-dark.text-uppercase.p-2.m-0 
+                b !{"Lote " + lotItem.lotId}
+                
+              h4.card-title.text-uppercase.mt-3.mb-2
+                | LAS BRUJAS FUERZA NUEVA TE
+              p.card-text
+                | Potranca
+                br
+                | (AS Malke Sedutor-TE  Y Devota De Santa Marcia  X Indio Do Boeiro )
+                br
+                | RP: 125
+                br
+                | Cabaña: Las Brujas
 
 
     if(!lots.length)
