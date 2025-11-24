@@ -1,0 +1,30 @@
+.share-contact(id="share-contact-" + lot.lotId)
+    .share-contact-bg
+        .share-contact-wrapper
+            .row
+                .col-md-12
+                    .card.border-0
+                        .card-body
+                            h5
+                                small.text-muted
+                                    | Agente de venta 
+                            .row.mt-2.p-2
+                                .col-2 
+                                    div(style='background:url(' + lot.salesagentImageSafe + ');\
+                                        background-size:cover; background-repeat:no-repeat; border-radius:50%; display: inline-block;\
+                                            width:50px;height:50px;')
+                                        img(src='https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png' alt=lot.salesagentName + " " + lot.salesagentSurname)
+                                .col-10
+                                    h5(style="line-height:50px") 
+                                        | #{lot.salesagentName} #{lot.salesagentSurname}
+                            .row.mt-2
+                                .col-6(style="padding-right:5px;")
+                                    a.btn.btn-success.d-flex.align-items-center(style="height:100%", href='https://wa.me/?text=' + lot.whatsappShare, target="_blank")
+                                        .d-flex.align-items-center(style="margin:auto;") 
+                                            i.mdi.mdi-share-variant.mr-2 
+                                            | Compartir
+                                .col-6(style="padding-left:5px;")
+                                    a.btn.btn-inverse-primary.btn-fw.btn-icon-text.d-flex.align-items-center(href='https://wa.me/' + lot.salesagentPhone + '?text=' + lot.whatsappMessage, target="_blank")
+                                        .d-flex.align-items-center(style="margin:auto;")
+                                            i.mdi.mdi-whatsapp.mr-2 
+                                            | WhatsApp

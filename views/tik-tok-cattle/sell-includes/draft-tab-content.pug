@@ -1,0 +1,26 @@
+- let isEmptySavedDraftsTab = true;
+#saved-drafts.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='saved-drafts-tab')
+  each savedLotsItem in savedLots
+    if(savedLotsItem.salesagentReady == 0)
+      - isEmptySavedDraftsTab = false;
+      .row.mb-2.align-items-center(id="saved-lot-" + savedLotsItem.lotId)
+        .col-12
+          .icon-box-secondary.p-2.text-white.h-auto.w-auto
+            .d-flex.flex-wrap.justify-content-xl-between
+              .d-xl-flex.border-md-right.flex-grow-1.align-items-center.justify-content-left.justify-content-md-center.px-2.item.w-80(onclick="openSavedLot('" + savedLotsItem.lotId + "')")
+                p.text-truncate.text-small.text-left.mb-0
+                  span.text-uppercase #{savedLotsItem.totalQuantity} #{savedLotsItem.type}
+                p.text-truncate.text-small.text-left.mb-0
+                  | #{savedLotsItem.societyName}
+                p.text-truncate.text-small.text-left.mb-0
+                  b.text-uppercase #{savedLotsItem.addressStateName}
+                  | , #{savedLotsItem.farmName}
+                p.text-small.text-left.mb-0
+                  | #{savedLotsItem.lastSavedDate}
+              .d-flex.flex-column.justify-content-around
+                button.btn.btn-danger.btn-icon(type="button", onclick="deleteSavedLotData(this, '" + savedLotsItem.lotId + "')")
+                  i.mdi.mdi-delete
+
+  if(isEmptySavedDraftsTab)
+    .m-3.p-3.bg-light.text-center  
+      | No hay borradores de lotes para continuar editando.

@@ -1,0 +1,121 @@
+extends ./new-baseHTML.pug
+
+block content
+  link(rel='stylesheet', href='/upload-video/style.css?version=1')
+  link(rel='stylesheet', href='/upload-profile-image/style-multiple.css?version=1')
+  link(rel='stylesheet', href='/cattle/multi-step-form.css?version=1')
+  link(rel='stylesheet', href='/cattle/style.css?version=1')
+
+  script.
+    function goBackwards() {
+      window.history.go(-1);
+      return false;
+    };
+
+  .main-panel.w-100
+    .content-wrapper.p-0.vh-100.overflow-hidden.bg-white
+      .h-100.d-flex.flex-column
+        .all-steps.w-100.px-2.pt-4.pb-2.invisible.text-center
+          span.step.step-top-bar
+          |  
+          span.step.step-top-bar
+          |  
+          span.step.step-top-bar
+          |  
+          span.step.step-top-bar
+          |  
+          span.step.step-top-bar
+          |  
+          span.step.step-top-bar
+
+        .row.flex-grow-1(style="overflow-y:scroll")
+          .col-12.h-100
+            form#cattle-new-form.position-relative.bg-white.h-100.my-sm-4.p-2(method="post", enctype="multipart/form-data")
+              input#saved-lot-id(type="hidden", name="savedLotId", value=savedLotId)
+              
+              .tab.h-100.p-3
+                include new-includes/farm-tab.pug
+              .tab.h-100.p-3
+                include new-includes/cattle-tab-1.pug
+              .tab.h-100.p-3
+                include new-includes/cattle-tab-2.pug
+              .tab.h-100.p-3
+                include new-includes/weighed-body-status-tab.pug
+              .tab.h-100.p-3
+                include new-includes/prices-tab.pug
+              .tab.h-100
+                include new-includes/media-tab.pug
+                
+              include new-includes/thank-you-page.pug
+
+        .w-100.bg-white.p-2
+          .row.invisible
+            .col-6.text-left
+              button.btn.btn-secondary(type='button') Volver 
+            .col-6.text-right 
+              button.btn.btn-primary(type='button') Siguiente
+
+      #all-steps.all-steps.w-100.position-absolute.top-0.start-0.bg-white.px-2.pt-4.pb-2.text-center.border-bottom
+        a.position-absolute.start-0.top-50.translate-middle.m-0.p-0.ml-4.pt-2.pl-2(href="javascript:goBackwards()")
+          i.mdi.mdi-arrow-left.icon-md
+        span.step.step-top-bar
+        |  
+        span.step.step-top-bar
+        |  
+        span.step.step-top-bar
+        |  
+        span.step.step-top-bar
+        |  
+        span.step.step-top-bar
+        |  
+        span.step.step-top-bar
+
+      #nextprevious.w-100.position-absolute.bottom-0.start-0.bg-white.p-2.border-top
+        .row.bg-white
+          .col-6.text-left
+            button#prevBtn.btn.btn-secondary(type='button', onclick='nextPrev(-1)') Volver 
+          .col-6.text-right 
+            button#nextBtn.btn.btn-primary(type='button', onclick='nextPrev(1)') Siguiente
+            
+    #waiting-for-api.loading
+      .position-absolute.top-50.start-50.translate-middle
+        .spinner-border.text-white(role="status")
+          span.sr-only.text-white
+            | Loading...
+
+  if("breeds" in lot && lot.breeds)
+    script.
+      var breedArray = !{lot.breeds};
+  else 
+    script.
+      var breedArray = [];
+
+  if(cattleTypes)
+    script. 
+      const cattleTypes = !{JSON.stringify(cattleTypes)};
+  else 
+    script.
+      const cattleTypes = [];
+
+  if("ages" in lot && lot.ages)
+    script.
+      var agesArray = !{lot.ages};
+  else 
+    script.
+      var agesArray = [];
+
+  script.
+    var salesagentsInLot = [];
+    const cattleBreeds = !{JSON.stringify(cattleBreeds)};
+    const cattleTeeths = !{JSON.stringify(cattleTeeths)};
+    const cattleAgeUnits = !{JSON.stringify(cattleAgeUnits)};
+
+
+  script(src='/upload-video/scripts.js?version=1')
+  script(src='/upload-profile-image/scripts-multiple.js?version=1')
+  script(src='/cattle/search-farms.js?version=1')
+  script(src='/cattle/search-sales-agents.js?version=1')
+  script(src='/address/phone.js?version=1')
+  script(src='/errors/actions.js?version=1')
+  script(src='/cattle/multi-step-form.js?version=1')
+  script(src='/cattle/scripts.js?version=1')

@@ -1,0 +1,35 @@
+h6.mt-5 Tratamiento nutricional 
+.row
+  .col-12
+    h6.m-0
+      small 
+        | 
+    select.form-control.mb-0(name="feedingId")
+      each cattleFeedingItem in cattleFeeding
+        if(cattleFeedingItem.id == lot.feedingId)
+          option(value=cattleFeedingItem.id, selected="selected") #{cattleFeedingItem.name}
+        else
+          option(value=cattleFeedingItem.id) #{cattleFeedingItem.name}
+    
+h6.mt-4
+  small 
+    | ¿Saben comer ración?
+.form-group.row.m-0
+  .col-6
+    .form-check 
+      label.form-check-label
+        if(lot.ration == "1")
+          input.form-check-input(type='radio', name='ration', value='')
+        else
+          input.form-check-input(type='radio', name='ration', value='', checked)
+        | No
+        i.input-helper
+  .col-6
+    .form-check
+      label.form-check-label
+        if(lot.ration == "1")
+          input.form-check-input(type='radio', name='ration', value='1', checked)
+        else
+          input.form-check-input(type='radio', name='ration', value='1')
+        | Si
+        i.input-helper

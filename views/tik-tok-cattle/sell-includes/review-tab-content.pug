@@ -1,0 +1,29 @@
+- let isEmptyReviewTab = true;
+#review.tab-pane.fade(role='tabpanel', aria-labelledby='review-tab')
+  each savedLotsItem in savedLots
+    if(savedLotsItem.salesagentReady == 1 && (savedLotsItem.userId == 0 || !savedLotsItem.userId))
+      - isEmptyReviewTab = false;
+      .row.mb-2.align-items-center(id="saved-lot-" + savedLotsItem.lotId)
+        .col-12
+          .icon-box-warning.p-2.h-auto.w-auto(style="background-color:rgba(255, 193, 0, 0.2);")
+            .d-flex.flex-wrap.justify-content-xl-between
+              .d-xl-flex.border-md-right.flex-grow-1.align-items-center.justify-content-left.justify-content-md-center.px-2.item.w-80
+                p.text-truncate.text-small.text-left.mb-0
+                  span.text-uppercase #{savedLotsItem.totalQuantity} #{savedLotsItem.type}
+                p.text-truncate.text-small.text-left.mb-0
+                  | #{savedLotsItem.societyName}
+                p.text-truncate.text-small.text-left.mb-0
+                  b.text-uppercase #{savedLotsItem.addressStateName}
+                  | , #{savedLotsItem.farmName}
+                p.text-small.text-left.mb-0
+                  | #{savedLotsItem.lastSavedDate}
+              .d-flex.flex-column.justify-content-around
+                button.btn.border-0.p-0(id="enable-btn-customer-" + savedLotsItem.lotId, onclick="enableLotApproval(" + savedLotsItem.lotId + ")")
+                  if(true)
+                    i.mdi.mdi-toggle-switch.text-success(style="font-size: 2.5rem;")
+                  else
+                    i.mdi.mdi-toggle-switch-off.text-danger(style="font-size: 2.5rem;")
+
+  if(isEmptyReviewTab)
+    .m-3.p-3.bg-light.text-center  
+      | No hay lotes a espera de revisión de Agro Oriental.

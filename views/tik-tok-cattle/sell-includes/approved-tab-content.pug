@@ -1,0 +1,25 @@
+- let isEmptyApprovedTab = true;
+#approved.tab-pane.fade(role='tabpanel', aria-labelledby='approved-tab')
+  each sellingLotsItem in sellingLots
+    if(["approved","bidded"].includes(sellingLotsItem.statusKey))
+      - isEmptyApprovedTab = false;
+      .row.mb-2.align-items-center(id="saved-lot-" + sellingLotsItem.lotId)
+        .col-12
+          .icon-box-success.text-white.p-2.h-auto.w-auto
+            .d-flex.flex-wrap.justify-content-xl-between
+              .d-xl-flex.border-md-right.flex-grow-1.align-items-center.justify-content-left.justify-content-md-center.px-2.item.w-80
+                p.text-truncate.text-small.text-left.mb-0
+                  span.text-uppercase #{sellingLotsItem.totalQuantity} #{sellingLotsItem.type}
+                p.text-truncate.text-small.text-left.mb-0
+                  | #{sellingLotsItem.societyName}
+                p.text-truncate.text-small.text-left.mb-0
+                  b.text-uppercase #{sellingLotsItem.addressStateName}
+                  | , #{sellingLotsItem.farmName}
+              .d-flex.flex-column.justify-content-around
+                h6.text-center.m-0
+                  small.text-uppercase Lote 
+                h5.text-center.m-0
+                  | #{sellingLotsItem.lotId}
+  if(isEmptyApprovedTab)
+    .m-3.p-3.bg-light.text-center  
+      | No hay lotes aprobados para la venta.

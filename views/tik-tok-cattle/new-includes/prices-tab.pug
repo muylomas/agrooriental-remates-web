@@ -1,0 +1,41 @@
+.row 
+  .col-12
+    h6.mt-3 Precio base de subasta
+    p
+      | Este es el precio en el que se inicia la subasta.
+    .form-group.m-0
+      .input-group
+        .input-group-prepend
+          span.input-group-text.bg-primary.text-white.p-2 USD
+        input#start-price-input.form-control(type="number", step=".01", name="startPrice", placeholder="0.00", min="0", value=lot.startPrice)
+        .input-group-append   
+          span.input-group-text.bg-light.text-dark.p-2.selling-prices-units
+            | por kilo
+.row.mt-5
+  .col-12
+    h6
+      |Precio de venta
+    p
+      | Este es el precio que te gustaría recibir al concretarse la venta.
+    .form-group.m-0
+      .input-group
+        .input-group-prepend
+          span.input-group-text.bg-primary.text-white.p-2 USD
+        input#start-price-input.form-control(type="number", step=".01", name="salePrice", placeholder="0.00", min="0", value=lot.salePrice)
+        .input-group-append   
+          span.input-group-text.bg-light.text-dark.p-2.selling-prices-units
+            | por kilo
+
+.row.mt-5
+  .col-12
+    h6 Forma de pago
+    p
+      | Condición de pago ofrecida a comprador
+    .form-group.m-0
+      select#payment-term-selector.form-control.mb-2.mr-sm-2(name="paymentTermId")
+        each paymentTermItem in cattlePaymentTerms
+          if(paymentTermItem.id == lot.paymentTermId)
+            option(value=paymentTermItem.id, selected="selected") #{paymentTermItem.name}
+          else
+            option(value=paymentTermItem.id) #{paymentTermItem.name}
+

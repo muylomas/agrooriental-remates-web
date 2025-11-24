@@ -1,0 +1,40 @@
+link(rel='stylesheet', href='/chat.min.css')
+
+.lot-chat(id="lot-chat-" + lot.lotId)
+  .lot-chat-wrapper
+    .lot-chat-header.d-flex.justify-content-between.flex-wrap.bg-success.text-white.px-4
+      .d-flex.align-items-center.flex-wrap.py-3
+        h4.m-0 
+          | Lote ##{lot.lotId}
+      .d-flex.justify-content-between.align-items-center.flex-wrap.py-3
+        i.lot-chat-close.mdi.mdi-close.icon-md
+
+    .lot-chat-content
+      .card.border-0
+        .card-body.p-0
+          .row
+            .col-md-12    
+              .chat-body.m-0.p-0
+                .chat-container.w-100
+                  .comments-container-overall(id="comments-container-overall-" + lot.lotId)
+                    .lot-chat-header.d-flex.justify-content-between.flex-wrap.bg-success.text-white.px-4.position-relative.invisible
+                      .d-flex.align-items-center.flex-wrap.py-3
+                        h4.m-0 
+                          | Lote ##{lot.lotId}
+                      .d-flex.justify-content-between.align-items-center.flex-wrap.py-3
+                        i.lot-chat-close.mdi.mdi-close.icon-md
+                    .comments-container(id="comments-container-" + lot.lotId)
+                    .contenteditable-container.d-flex.justify-content-between.flex-wrap.bg-light.w-100.p-4.mt-2.position-relative.invisible
+                      .flex-fill.me-2.chat-edit-container
+                        .chat-edit.bg-white.p-3(id="comment-input-repilca-text-" + lot.lotId, contenteditable="true")
+                      .d-flex.justify-content-between.align-items-end.flex-wrap 
+                        button.chat-send-button.btn.btn-success.btn-rounded.btn-icon(type='button') 
+                          .mdi.mdi-send
+                    
+                  
+                  .contenteditable-container.d-flex.justify-content-between.flex-wrap.bg-light.w-100.p-4
+                    .flex-fill.me-2.chat-edit-container
+                      .chat-edit.bg-white.p-3(id="comment-input-text-" + lot.lotId, contenteditable="true")
+                    .d-flex.justify-content-between.align-items-end.flex-wrap 
+                      button.chat-send-button.btn.btn-success.btn-rounded.btn-icon(type='button', onclick="publishComment(" + lot.lotId + ")") 
+                        .mdi.mdi-send
