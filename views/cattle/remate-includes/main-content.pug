@@ -1,8 +1,9 @@
 
-#remate
-  each lotItem in lots
-    .row.mb-2.align-items-center.mt-3(id="lot-" + lotItem.lotId)
-      .col-12
+
+.row.mb-2.align-items-center.mt-3
+  .col-12
+    each lotItem in lots
+      .row.portfolio-grid(id="lot-" + lotItem.lotId)
         .card
           img.card-img-top(src=lotItem.imagesArray[0] alt="Lote " + lotItem.lotId)
           .card-body.px-3
@@ -21,6 +22,6 @@
               | Cabaña: Las Brujas
 
 
-  if(!lots.length)
-    .m-3.p-3.bg-light.text-center  
-      | No hay lotes a espera de revisión de Agro Oriental.
+    if(!lots.length)
+      .m-3.p-3.bg-light.text-center  
+        | No hay lotes a espera de revisión de Agro Oriental.
