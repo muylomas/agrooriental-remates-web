@@ -47,12 +47,12 @@ const slideTemplate =
                     <div id="bid-auction-actions-container-__lot_lotId__">
                         <div class="row">
                             <div class="col-6 text-center pe-1">
-                                <button class="bid-action-button btn btn-warning text-dark fs-4 w-100 h-100" id="auction-bid-button-x1-__lot_lotId__" onclick="javascript:auctionBidByStep(__lot_lotId__,1)" style="line-height: 1.3rem;">
+                                <button class="bid-action-button btn btn-warning text-dark fs-4 lh-sm w-100 h-100" id="auction-bid-button-x1-__lot_lotId__" onclick="javascript:auctionBidByStep(__lot_lotId__,1)">
                                     Ofertar __lot_lastAuctionPrice1Step__
                                 </button>
                             </div>
                             <div class="col-6 text-center ps-1">
-                                <button class="bid-action-button btn btn-warning text-dark fs-4 w-100 h-100" id="auction-bid-button-x2-__lot_lotId__" onclick="javascript:auctionBidByStep(__lot_lotId__,2)" style="line-height: 1.3rem;">
+                                <button class="bid-action-button btn btn-warning text-dark fs-4 lh-sm w-100 h-100" id="auction-bid-button-x2-__lot_lotId__" onclick="javascript:auctionBidByStep(__lot_lotId__,2)">
                                     Ofertar __lot_lastAuctionPrice2Step__
                                 </button>
                             </div>
@@ -81,7 +81,7 @@ const slideTemplate =
                                         </button>
                                     </div>
                                     <div class="d-flex flex-column justify-content-around ms-2 w-100">
-                                        <button class="bid-action-button btn btn-warning text-dark fs-4 h-100" onclick="javascript:auctionBidCustom(__lot_lotId__)">
+                                        <button class="bid-action-button btn btn-warning text-dark fs-4 lh-sm h-100" onclick="javascript:auctionBidCustom(__lot_lotId__)">
                                             Ofertar
                                         </button>
                                     </div>
