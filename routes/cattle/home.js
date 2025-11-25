@@ -185,8 +185,6 @@ function getCattleTypesAverages(callback) {
 function getCustomerActiveBids(customerId, callback) {
     let activeAuctionBids = [];
 
-    //WHERE customerId = ?
-
     connection.query(
         `
             SELECT 
@@ -206,6 +204,7 @@ function getCustomerActiveBids(customerId, callback) {
             		MAX(auctions_bids.id) AS auctionBidId, 
             		auctions_bids.lotId AS lotId
             	FROM auctions_bids
+                WHERE customerId = ?
             	GROUP BY auctions_bids.lotId
             	) AS auctions_bidsMaxIdForCustomer ON auctions_bidsMaxIdForCustomer.lotId = cattle_complete.lotId
              INNER JOIN auctions_bids AS auctions_bidsMAXForCustomer ON auctions_bidsMAXForCustomer.id = auctions_bidsMaxIdForCustomer.auctionBidId
@@ -260,7 +259,6 @@ Common.prototype.getViewParams = function (user, callback) {
                             getCustomerActiveBids(
                                 user.id,
                                 function (returnActiveAuctionBids) {
-                                    console.log(returnActiveAuctionBids);
                                     indexParams.activeAuctionBids = returnActiveAuctionBids;
                                     breedsArray(
                                         indexParams.lotsIds,
