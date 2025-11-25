@@ -1,7 +1,6 @@
 function changeVideoImageDisplay(lotId) {
     if (
-        !($("#image-" + lotId).is(":hidden")) ||
-        $("#video-" + lotId).is(":hidden")
+        !($("#image-" + lotId).is(":hidden"))
     ) {
         console.log("Caso 1");
         $("#image-" + lotId).hide();
