@@ -12,10 +12,10 @@ const slideTemplate =
                     <div class="btn btn-dark text-uppercase fs-5 p-2 m-0">
                         <b>Lote __lot_lotId__</b>
                     </div>
-                    <h4 class="card-title text-uppercase mt-3 mb-2">
+                    <h4 class="card-title text-uppercase fs-5 mt-3 mb-2">
                         LAS BRUJAS FUERZA NUEVA TE
                     </h4>
-                    <p class="card-text">
+                    <p class="card-text fs-6">
                         Potranca
                         <br>
                         (AS Malke Sedutor-TE  Y Devota De Santa Marcia  X Indio Do Boeiro)
