@@ -8,17 +8,11 @@ block content
 
   .content-wrapper.p-0.m-0.bg-white
        
-    include remate-includes/header.pug
-
-    //include remate-includes/main-content.pug
+    include remate-includes
+    header.pug 
     .row
       .col-12
         #remate-lotes.row.portfolio-grid
-     
-  //link(href='/remate/styles.css?ver=1', rel='stylesheet', type='text/css')
-  //link(href='/vendors/jquery_toast/jquery.toast.min.css', rel='stylesheet', type='text/css')
-  //link(href='/majestic/owlcarousel/assets/owl.carousel.min.css', rel='stylesheet', type='text/css')
-  //link(href='/majestic/owlcarousel/assets/owl.theme.default.min.css', rel='stylesheet', type='text/css')
 
   script.
     var lots = !{JSON.stringify(lots)};

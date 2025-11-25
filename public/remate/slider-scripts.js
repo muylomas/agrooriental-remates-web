@@ -67,55 +67,51 @@ function initializeActionsAndDisplays() {
 
     if (lots && lots.length) {
         for (let indSLots in lots) {
+            const __aux_lotId = lots[indSLots].lotId;
 
-            testVideo(
-                lots, indSLots,
-                function (lotsExtra, indSLotsExtra) {
-                    const __aux_lotId = lots[indSLots].lotId;
+            if (!(__aux_lotId in mapForLot)) {
+                mapForLot[__aux_lotId] = null;
+                googleMapMarkerForLot[__aux_lotId] = null;
+                infoWindowForLot[__aux_lotId] = null;
+            }
 
-                    if (!(__aux_lotId in mapForLot)) {
-                        mapForLot[__aux_lotId] = null;
-                        googleMapMarkerForLot[__aux_lotId] = null;
-                        infoWindowForLot[__aux_lotId] = null;
-                    }
+            mapForLot[__aux_lotId] =
+                create_map(
+                    latLngForLot[__aux_lotId].lat,
+                    latLngForLot[__aux_lotId].lng,
+                    "google-map-bottom-desc-" + __aux_lotId
+                );
 
-                    mapForLot[__aux_lotId] =
-                        create_map(
-                            latLngForLot[__aux_lotId].lat,
-                            latLngForLot[__aux_lotId].lng,
-                            "google-map-bottom-desc-" + __aux_lotId
-                        );
+            update_marker_position(
+                mapForLot[__aux_lotId],
+                latLngForLot[__aux_lotId].lat,
+                latLngForLot[__aux_lotId].lng,
+                "LOTE " + __aux_lotId,
+                infoWindowForLot[__aux_lotId],
+                googleMapMarkerForLot[__aux_lotId]
+            );
 
-                    update_marker_position(
-                        mapForLot[__aux_lotId],
+            if ($("#carousel-bid-" + __aux_lotId).length) {
+                $("#carousel-bid-" + __aux_lotId).owlCarousel({
+                    loop: false,
+                    items: 1,
+                });
+            }
+
+            if (customerFarms.length) {
+
+                for (let indexFarm in customerFarms) {
+
+                    freightCalc(
+                        customerFarms[indexFarm].id,
                         latLngForLot[__aux_lotId].lat,
                         latLngForLot[__aux_lotId].lng,
-                        "LOTE " + __aux_lotId,
-                        infoWindowForLot[__aux_lotId],
-                        googleMapMarkerForLot[__aux_lotId]
-                    );
-
-                    if ($("#carousel-bid-" + __aux_lotId).length) {
-                        $("#carousel-bid-" + __aux_lotId).owlCarousel({
-                            loop: false,
-                            items: 1,
-                        });
-                    }
-
-                    if (customerFarms.length) {
-
-                        for (let indexFarm in customerFarms) {
-
-                            freightCalc(
-                                customerFarms[indexFarm].id,
-                                latLngForLot[__aux_lotId].lat,
-                                latLngForLot[__aux_lotId].lng,
-                                customerFarms[indexFarm].latitude,
-                                customerFarms[indexFarm].longitude,
-                                function (farmId, distanceText, distanceKm, durationText) {
-                                    setTimeout(() => {
-                                        $("#customer-farm" + farmId + "-" + __aux_lotId + "-freight").html(
-                                            `
+                        customerFarms[indexFarm].latitude,
+                        customerFarms[indexFarm].longitude,
+                        function (farmId, distanceText, distanceKm, durationText) {
+                            setTimeout(() => {
+                                $("#customer-farm" + farmId + "-" + __aux_lotId + "-freight").html(
+                                    `
                                         <h5 class="m-0 mb-1 p-0 text-primary">
                                             $ ` + (distanceKm * 407.96).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + `
                                         </h5>
@@ -128,14 +124,12 @@ function initializeActionsAndDisplays() {
                                             </div>
                                         </div>
                                     `
-                                        );
-                                    }, "1000");
-                                }
-                            );
+                                );
+                            }, "1000");
                         }
-                    }
+                    );
                 }
-            );
+            }
         }
     };
 
@@ -294,24 +288,6 @@ function auctionBidsHistory(lotId) {
     });
 };
 
-function testVideo(lots, indSLots, callback) {
-    const __aux_video = document.createElement("video");
-    __aux_video.setAttribute("src", lots[indSLots].video);
-    __aux_video.addEventListener("canplay", function () {
-        videoFitAndCenter(lots[indSLots].lotId);
-        callback(lots, indSLots);
-    });
-    __aux_video.addEventListener("error", function () {
-        lots[indSLots].video = "https://mercadoagro-app.s3.amazonaws.com/videos/video-unavailable.mp4";
-        $("#video-source-" + lots[indSLots].lotId).attr("src", lots[indSLots].video);
-        $("#video-source-" + lots[indSLots].lotId).parent().load();
-        setTimeout(() => {
-            videoFitAndCenter(lots[indSLots].lotId);
-        }, 500);
-        callback(lots, indSLots);
-    });
-};
-
 function insertLotLoop(lots, indSLots, callback) {
     if (indSLots < lots.length) {
         let __aux_slideHTML = slideTemplate;
@@ -329,6 +305,10 @@ function insertLotLoop(lots, indSLots, callback) {
         if ("auctionPriceType" in lots[indSLots]) {
             __aux_auctionPriceType = lots[indSLots].auctionPriceType;
         }
+
+        __aux_slideHTML =
+            __aux_slideHTML
+                .replace(new RegExp("__lot_imagesArray_0__", 'g'), lots[indSLots].imagesArray[0]);
 
         let __aux_lastAuctionPriceFormatted = "0.00";
         let __aux_lastAuctionPrice1Step = "0.00";
