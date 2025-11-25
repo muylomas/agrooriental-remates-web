@@ -75,13 +75,6 @@ function initializeActionsAndDisplays() {
                 infoWindowForLot[__aux_lotId] = null;
             }
 
-            mapForLot[__aux_lotId] =
-                create_map(
-                    latLngForLot[__aux_lotId].lat,
-                    latLngForLot[__aux_lotId].lng,
-                    "google-map-bottom-desc-" + __aux_lotId
-                );
-
             update_marker_position(
                 mapForLot[__aux_lotId],
                 latLngForLot[__aux_lotId].lat,
