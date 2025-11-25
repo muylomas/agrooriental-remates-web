@@ -158,7 +158,6 @@ function auctionBidsHistory(lotId) {
         }
     }
 
-
     const wrapper = document.createElement('div');
 
     if (auctionBids.length) {
