@@ -57,6 +57,14 @@ select {
     overflow: hidden;
 }
 
+.cattle-media-container > .cattle-image {
+    background-size: cover;
+}
+
+.cattle-media-container > button {
+    font-size: 1.5rem !important;
+}
+
 .content-overlay-video {
     position: absolute;
     bottom: 0;
