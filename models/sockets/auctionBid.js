@@ -59,6 +59,7 @@ module.exports = function (socket) {
             "bid" in parameters && parameters.bid &&
             "lotId" in parameters && parameters.lotId
         ) {
+            console.log("socket.id: ", socket.id);
             getUserBySocket(
                 socket.id,
                 function (customerId) {
