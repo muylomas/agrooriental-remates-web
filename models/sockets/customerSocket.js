@@ -4,6 +4,9 @@ const connection = require('../../routes/connection_db');
 
 module.exports = function (socket) {
 
+    console.log("=================== customerSocket ===================");
+    console.log(socket.handshake.headers);
+    console.log(socket);
     if (socket.handshake.headers['sec-fetch-site'] == 'same-origin') {
 
         let cookieParsed = {};
@@ -15,7 +18,7 @@ module.exports = function (socket) {
         ) {
             cookieParsed = cookie.parse(socket.handshake.headers.cookie);
         }
-        console.log("=================== customerSocket ===================");
+
         console.log(cookieParsed);
 
         if (
