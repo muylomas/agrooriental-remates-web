@@ -2,10 +2,10 @@ const slideTemplate =
     `
         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
             <div class="card m-2" id="lot-__lot_lotId__">
-                <div class="card-img-top" style="background-image:url(__lot_imagesArray_0__);height: 245px;background-size: cover;" alt="Lote 25"></div>
+                <div class="card-img-top" style="background-image:url(__lot_imagesArray_0__);height: 245px;background-size: cover;" alt="Lote __lot_lotId__"></div>
                 <div class="card-body px-3">
                     <div class="btn btn-dark text-uppercase p-2 m-0">
-                        <b>Lote 25</b>
+                        <b>Lote __lot_lotId__</b>
                     </div>
                     <h4 class="card-title text-uppercase mt-3 mb-2">
                         LAS BRUJAS FUERZA NUEVA TE
