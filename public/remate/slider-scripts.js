@@ -81,39 +81,6 @@ function initializeActionsAndDisplays() {
                     items: 1,
                 });
             }
-
-            if (customerFarms.length) {
-
-                for (let indexFarm in customerFarms) {
-
-                    freightCalc(
-                        customerFarms[indexFarm].id,
-                        latLngForLot[__aux_lotId].lat,
-                        latLngForLot[__aux_lotId].lng,
-                        customerFarms[indexFarm].latitude,
-                        customerFarms[indexFarm].longitude,
-                        function (farmId, distanceText, distanceKm, durationText) {
-                            setTimeout(() => {
-                                $("#customer-farm" + farmId + "-" + __aux_lotId + "-freight").html(
-                                    `
-                                        <h5 class="m-0 mb-1 p-0 text-primary">
-                                            $ ` + (distanceKm * 407.96).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + `
-                                        </h5>
-                                        <div class="text-primary font-weight-normal text-small m-0 p-0">
-                                            <div class="mdi mdi-ruler" style="display: contents">
-                                                <span class="text-muted">` + distanceText + `</span>
-                                            </div>
-                                            <div class="mdi mdi-timelapse" style="display: contents">
-                                                <span class="text-muted">` + durationText + `</span>
-                                            </div>
-                                        </div>
-                                    `
-                                );
-                            }, "1000");
-                        }
-                    );
-                }
-            }
         }
     };
 
