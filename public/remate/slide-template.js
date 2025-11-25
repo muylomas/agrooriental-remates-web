@@ -8,7 +8,7 @@ const slideTemplate =
                     </video>
                     <div id="image-lot-__lot_lotId__" class="position-absolute top-0 start-0 w-100 h-100" style="background-image:url(__lot_imagesArray_0__);background-size: cover;" alt="Lote __lot_lotId__"></div>
                     
-                    <button id="view-video-__lot_lotId__" type="button" class="btn btn-info btn-rounded btn-icon position-absolute bottom-0 end-0 translate-middle">
+                    <button id="view-video-__lot_lotId__" type="button" class="btn btn-primary btn-rounded btn-icon position-absolute bottom-0 end-0 translate-middle">
                         <i class="mdi mdi-video"></i>
                     </button>
                 </div>
