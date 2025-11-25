@@ -294,49 +294,6 @@ function auctionBidsHistory(lotId) {
     });
 };
 
-function customersFarmsFreights(lotId, lotAddressLatitude, lotAddressLongitude) {
-    let outputFarms = "";
-    let __aux_farms_output = "";
-
-    if (customerFarms.length) {
-        for (let indexFarm in customerFarms) {
-            __aux_farmHTML = customerFarmFreightTemplate;
-            __aux_farmHTML =
-                __aux_farmHTML
-                    .replace(new RegExp("__lot_id__", 'g'), lotId);
-            __aux_farmHTML =
-                __aux_farmHTML
-                    .replace(new RegExp("__lot_addressLatitude__", 'g'), lotAddressLatitude);
-            __aux_farmHTML =
-                __aux_farmHTML
-                    .replace(new RegExp("__lot_addressLongitude__", 'g'), lotAddressLongitude);
-
-            for (let indObj in customerFarms[indexFarm]) {
-                if (__aux_farmHTML.indexOf("__farm_" + indObj + "__") != -1) {
-                    __aux_farmHTML =
-                        __aux_farmHTML
-                            .replace(new RegExp("__farm_" + indObj + "__", 'g'), customerFarms[indexFarm][indObj]);
-                }
-            }
-
-            __aux_farms_output += __aux_farmHTML;
-        }
-
-        outputFarms +=
-            `
-                <div class="row bg-light mb-3">
-                    <div class="col-12 px-4 pt-4">
-                        <div id="carousel-bid-` + lotId + `" class="owl-carousel owl-theme full-width owl-loaded owl-drag">
-                            ` + __aux_farms_output + `
-                        </div>
-                    </div>
-                </div>
-            `;
-    }
-
-    return outputFarms;
-};
-
 function testVideo(lots, indSLots, callback) {
     const __aux_video = document.createElement("video");
     __aux_video.setAttribute("src", lots[indSLots].video);
@@ -517,14 +474,7 @@ function insertLotLoop(lots, indSLots, callback) {
                     );
         }
 
-        __aux_slideHTML =
-            __aux_slideHTML
-                .replace(
-                    new RegExp("__farms_freightsForLot__", 'g'),
-                    customersFarmsFreights(lots[indSLots].lotId, lots[indSLots].addressLatitude, lots[indSLots].addressLongitude)
-                );
-
-        $("#fsvs-body").append(__aux_slideHTML);
+        $("#remate-lotes").append(__aux_slideHTML);
 
         insertLotLoop(lots, indSLots + 1, callback);
         /*}
@@ -546,115 +496,9 @@ function includeSlidesInFsvs() {
     }
 };
 
-function initFsvs() {
-
-    if ($.fn.fsvs) {
-        slider = $.fn.fsvs({
-            speed: 1000,
-            pagination: false,
-            paginationTemplate: '',
-            nthClasses: false,
-            afterSlide: function (index) {
-                for (indVid in lots) {
-                    if (index != indVid) {
-                        $("#video-source-" + lots[indVid].lotId).attr("src", "");
-                        $("#video-source-" + lots[indVid].lotId).parent().load();
-                    }
-                }
-                if (
-                    index + 1 < lots.length && (index + 1) in lots && lots[index + 1].lotId &&
-                    $("#video-source-" + lots[index + 1].lotId).attr("src") != lots[index + 1].video
-                ) {
-                    $("#video-source-" + lots[index + 1].lotId).attr("src", lots[index + 1].video);
-                    $("#video-source-" + lots[index + 1].lotId).parent().load();
-                }
-                if (
-                    index - 1 > 0 && (index - 1) in lots && lots[index - 1].lotId &&
-                    $("#video-source-" + lots[index - 1].lotId).attr("src") != lots[index - 1].video
-                ) {
-                    $("#video-source-" + lots[index - 1].lotId).attr("src", lots[index - 1].video);
-                    $("#video-source-" + lots[index - 1].lotId).parent().load();
-                }
-
-                if (index in lots) {
-                    $("#google-map-bottom-desc-" + lots[index].lotId).stop().animate({ height: "0", width: "0" });
-                    $("#google-map-bottom-desc-text-" + lots[index].lotId).hide();
-                    $("#google-map-under-desc-text-" + lots[index].lotId).show();
-                    $("#map-closed-icon-" + lots[index].lotId).css("background-image", "url(https://mercadoagro-app.s3.amazonaws.com/images/home/maps-icon.png)");
-                }
-
-                $("[id^='lot-chat-'].open").removeClass("open");
-                $("[id^='lot-detail-'].open").removeClass("open");
-                $("[id^='auction-bid-'].open").removeClass("open");
-                $("[id^='share-contact-'].open").removeClass("open");
-                $("[id^='video-source-']").css("z-index", 1);
-                $("[id^='iconbar-overlay-']").css("z-index", 999);
-                $("[id^='bottom-overlay-']").css("z-index", 999);
-                $("[id^='iconbar-overlay-']").show();
-                $("[id^='bottom-overlay-']").show();
-                $(".topbar-overlay-video").show();
-            },
-            beforeSlide: function (index) {
-                if (index + 1 < lots.length && (index + 1) in lots && lots[index + 1].lotId) {
-                    $("#iconbar-overlay-" + lots[index + 1].lotId).fadeOut("slow");
-                    $("#bottom-overlay-" + lots[index + 1].lotId).fadeOut("slow");
-                }
-                if (index - 1 > 0 && (index - 1) in lots && lots[index - 1].lotId) {
-                    $("#iconbar-overlay-" + lots[index - 1].lotId).fadeOut("slow");
-                    $("#bottom-overlay-" + lots[index - 1].lotId).fadeOut("slow");
-                }
-
-                if (index in lots && lots[index].lotId && lots[index].video &&
-                    $("#video-source-" + lots[index].lotId).attr("src") != lots[index].video
-                ) {
-                    $("#video-source-" + lots[index].lotId).attr("src", lots[index].video);
-                    $("#video-source-" + lots[index].lotId).parent().load();
-                }
-
-                if (index in lots) {
-                    $("#google-map-bottom-desc-" + lots[index].lotId).stop().animate({ height: "0", width: "0" });
-                    $("#google-map-bottom-desc-text-" + lots[index].lotId).hide();
-                    $("#google-map-under-desc-text-" + lots[index].lotId).show();
-                    $("#map-closed-icon-" + lots[index].lotId).css("background-image", "url(https://mercadoagro-app.s3.amazonaws.com/images/home/maps-icon.png)");
-                }
-
-
-                $("[id^='lot-chat-'].open").removeClass("open");
-                $("[id^='lot-detail-'].open").removeClass("open");
-                $("[id^='auction-bid-'].open").removeClass("open");
-                $("[id^='share-contact-'].open").removeClass("open");
-                $("[id^='video-source-']").css("z-index", 1);
-                $("[id^='iconbar-overlay-']").css("z-index", 999);
-                $("[id^='bottom-overlay-']").css("z-index", 999);
-                $("[id^='iconbar-overlay-']").show();
-                $("[id^='bottom-overlay-']").show();
-                $(".topbar-overlay-video").show();
-            },
-        });
-    }
-
-    var sectionHeight = $('#fsvs-body > .slide:eq(0)').height();
-    $('#fsvs-body > .slide').each(function () {
-        var section = $(this),
-            item = $('.item', section),
-            demo = $('.demo', section),
-            itemHeight = item.outerHeight(),
-            demoHeight = demo.outerHeight();
-        item.css({
-            marginTop: ((sectionHeight - itemHeight) / 2) + 'px'
-        });
-        demo.css({
-            marginTop: ((sectionHeight - demoHeight) / 2) + 'px'
-        });
-
-    });
-};
-
 window.addEventListener('load', function () {
 
     includeSlidesInFsvs();
-
-    initFsvs();
 
     setInterval(() => {
         if (lots && lots.length) {

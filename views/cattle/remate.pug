@@ -10,13 +10,46 @@ block content
        
     include remate-includes/header.pug
 
-    include remate-includes/main-content.pug
+    //include remate-includes/main-content.pug
+    .row
+      .col-12
+        #remate-lotes.row.portfolio-grid
      
-  script(src='https://s3.amazonaws.com/rewo/backoffice/vendors/base/vendor.bundle.base.js')
-  script(src='https://s3.amazonaws.com/rewo/backoffice/vendors/datatables.net/jquery.dataTables.js')
-  script(src='https://s3.amazonaws.com/rewo/backoffice/vendors/datatables.net-bs4/dataTables.bootstrap4.js')
+  //link(href='/remate/styles.css?ver=1', rel='stylesheet', type='text/css')
+  //link(href='/vendors/jquery_toast/jquery.toast.min.css', rel='stylesheet', type='text/css')
+  //link(href='/majestic/owlcarousel/assets/owl.carousel.min.css', rel='stylesheet', type='text/css')
+  //link(href='/majestic/owlcarousel/assets/owl.theme.default.min.css', rel='stylesheet', type='text/css')
 
-  script(src='https://s3.amazonaws.com/rewo/backoffice/js/off-canvas.js')
-  script(src='https://s3.amazonaws.com/rewo/backoffice/js/hoverable-collapse.js')
-  script(src='https://s3.amazonaws.com/rewo/backoffice/js/template.js')
-  script(src='/cattle/sell-scripts.js?ver=1')
+  script.
+    var lots = !{JSON.stringify(lots)};
+    const userId = #{userId};
+    const activeAuctionBids = !{JSON.stringify(activeAuctionBids)};
+    const customerFarms = !{("farms" in customer && customer.farms.length) ? JSON.stringify(customer.farms) : "[]"};
+    const customerLatLng = !{("farms" in customer && customer.farms.length) ? "{lat: " + customer.farms[0].latitude + ", lng: " + customer.farms[0].longitude + ",}" : "{lat: -32.91738186664808, lng: -55.924416022336466,}"};
+    var startDates = {};
+    var endDates = {};
+    
+    var mapForLot = {};
+    var googleMapMarkerForLot = {};
+    var infoWindowForLot = {};
+    var latLngForLot = {};
+
+    var countdownTimers = {};
+      
+  include home-feed-includes/search.pug
+  include home-feed-includes/averages-by-type.pug
+  include home-feed-includes/header.pug
+  
+  script(src='/sweetalert.min.js')
+  script(src='/vendors/jquery_toast/jquery.toast.min.js')
+  script(src='/majestic/owlcarousel/owl.carousel.min.js')
+  script(src='/remate/slide-template.js')
+  script(src='/remate/slider-lots-details-scripts.js')
+  script(src='/remate/slider-scripts.js')
+  script(src='/remate/scripts.js')
+  script(src='/remate/search-scripts.js')
+  script(src='/remate/chat-scripts.js')
+  script(src='/remate/auctions.js')      
+  script(src='/remate/countdowns.js')
+  script(src='/remate/toast_manager.js')
+  script(src='/remate/maps.js?version=1')
