@@ -179,7 +179,7 @@ app.use('/api/cattle', api_cattle);
 app.use('/api/comments', api_comments);
 
 // mercado-agro Sockets
-const socketIo = require('socket.io')(https);
+const socketIo = require('socket.io')(http);
 app.set('socketapp', socketIo);
 socketIo.on('connect', require('./models/sockets/customerSocket'));
 socketIo.on('connection', require('./models/sockets/disconnection'));
