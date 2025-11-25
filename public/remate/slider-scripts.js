@@ -75,15 +75,6 @@ function initializeActionsAndDisplays() {
                 infoWindowForLot[__aux_lotId] = null;
             }
 
-            update_marker_position(
-                mapForLot[__aux_lotId],
-                latLngForLot[__aux_lotId].lat,
-                latLngForLot[__aux_lotId].lng,
-                "LOTE " + __aux_lotId,
-                infoWindowForLot[__aux_lotId],
-                googleMapMarkerForLot[__aux_lotId]
-            );
-
             if ($("#carousel-bid-" + __aux_lotId).length) {
                 $("#carousel-bid-" + __aux_lotId).owlCarousel({
                     loop: false,
