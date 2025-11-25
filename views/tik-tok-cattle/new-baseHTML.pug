@@ -75,7 +75,7 @@ head
   script(src='https://cdn.socket.io/4.7.4/socket.io.min.js')
   script.
     const socket = io();
-    const socketApp = io('54.183.80.127', {
+    const socketApp = io('54.183.80.127:3000', {
       transports: ['websocket', 'xhr-polling']
     });
     /*
