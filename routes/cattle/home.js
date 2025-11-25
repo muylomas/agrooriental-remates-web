@@ -252,8 +252,6 @@ Common.prototype.getViewParams = function (user, callback) {
                     indexParams.activeAuctionBids = [];
                     indexParams.cattleCaracteristics = common_cattle_home.cattleCaracteristics();
 
-                    console.log(indexParams.lots);
-
                     common_customers.getCustomerById(
                         user.id,
                         function (returnCustomer) {
