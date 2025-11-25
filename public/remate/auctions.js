@@ -12,7 +12,7 @@ function showCustomerWinning(lotId, auctionBidEnd, showAlert, showButton) {
     if (auctionBidEnd) {
         $("#auction-bid-status-" + lotId).html(
             `
-                 <div class="badge badge-success  w-100">
+                 <div class="badge badge-success fs-4 w-100">
                      Felicitaciones!! Estamos procesando tu compra.
                  </div>
              `
@@ -22,7 +22,7 @@ function showCustomerWinning(lotId, auctionBidEnd, showAlert, showButton) {
     else {
         $("#auction-bid-status-" + lotId).html(
             `
-                <div class="badge badge-success  w-100">
+                <div class="badge badge-success fs-4 w-100">
                     Vas ganando!!
                 </div>
             `
@@ -66,7 +66,7 @@ function showCustomerLoosing(lotId, auctionBidEnd, showButton, initialize) {
     if (auctionBidEnd) {
         $("#auction-bid-status-" + lotId).html(
             `
-                 <div class="badge badge-danger  w-100">
+                 <div class="badge badge-danger fs-4 w-100">
                      Este lote ha sido vendido.
                  </div>
              `
@@ -76,7 +76,7 @@ function showCustomerLoosing(lotId, auctionBidEnd, showButton, initialize) {
     else {
         $("#auction-bid-status-" + lotId).html(
             `
-                <div class="badge badge-danger blink_me  w-100">
+                <div class="badge badge-danger blink_me fs-4 w-100">
                     Apurate, vas a perder el lote.
                 </div>
             `

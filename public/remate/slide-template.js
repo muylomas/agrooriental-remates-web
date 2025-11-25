@@ -4,7 +4,7 @@ const slideTemplate =
             <div class="card m-2" id="lot-__lot_lotId__">
                 <div class="card-img-top" style="background-image:url(__lot_imagesArray_0__);height: 245px;background-size: cover;" alt="Lote __lot_lotId__"></div>
                 <div class="card-body px-3">
-                    <div class="btn btn-dark text-uppercase p-2 m-0">
+                    <div class="btn btn-dark text-uppercase fs-5 p-2 m-0">
                         <b>Lote __lot_lotId__</b>
                     </div>
                     <h4 class="card-title text-uppercase mt-3 mb-2">
@@ -47,12 +47,12 @@ const slideTemplate =
                     <div id="bid-auction-actions-container-__lot_lotId__">
                         <div class="row">
                             <div class="col-6 text-center pe-1">
-                                <button class="bid-action-button btn btn-warning text-dark w-100 h-100" id="auction-bid-button-x1-__lot_lotId__" onclick="javascript:auctionBidByStep(__lot_lotId__,1)" style="line-height: 1.3rem;">
+                                <button class="bid-action-button btn btn-warning text-dark fs-4 w-100 h-100" id="auction-bid-button-x1-__lot_lotId__" onclick="javascript:auctionBidByStep(__lot_lotId__,1)" style="line-height: 1.3rem;">
                                     Ofertar __lot_lastAuctionPrice1Step__
                                 </button>
                             </div>
                             <div class="col-6 text-center ps-1">
-                                <button class="bid-action-button btn btn-warning text-dark w-100 h-100" id="auction-bid-button-x2-__lot_lotId__" onclick="javascript:auctionBidByStep(__lot_lotId__,2)" style="line-height: 1.3rem;">
+                                <button class="bid-action-button btn btn-warning text-dark fs-4 w-100 h-100" id="auction-bid-button-x2-__lot_lotId__" onclick="javascript:auctionBidByStep(__lot_lotId__,2)" style="line-height: 1.3rem;">
                                     Ofertar __lot_lastAuctionPrice2Step__
                                 </button>
                             </div>
@@ -66,8 +66,7 @@ const slideTemplate =
                                         </button>
                                     </div>
                                     <div class="d-flex flex-column justify-content-around">
-                                        <input class="form-control text-center p-2 h-100" 
-                                            style="font-size: large;"
+                                        <input class="form-control text-center fs-4 p-2 h-100" 
                                             id="auction-bid-price-__lot_lotId__" 
                                             type="number" 
                                             onchange="auctionBidPriceChanged(__lot_lotId__)" 
@@ -81,7 +80,7 @@ const slideTemplate =
                                             <i class="mdi mdi-plus"></i>
                                         </button>
                                     </div>
-                                    <div class="d-flex flex-column justify-content-around w-100" style="margin-left:20px">
+                                    <div class="d-flex flex-column justify-content-around ml-3 w-100">
                                         <button class="bid-action-button btn btn-warning text-dark h-100" onclick="javascript:auctionBidCustom(__lot_lotId__)">
                                             Ofertar
                                         </button>
