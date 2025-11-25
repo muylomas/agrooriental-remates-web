@@ -7,7 +7,10 @@ module.exports = function (socket) {
     console.log("=================== customerSocket ===================");
     console.log(socket.handshake.headers);
     console.log(socket);
-    if (socket.handshake.headers['sec-fetch-site'] == 'same-origin') {
+    if (
+        socket.handshake.headers['sec-fetch-site'] == 'same-origin' ||
+        socket.handshake.headers.host == '54.183.80.127'
+    ) {
 
         let cookieParsed = {};
         if (
