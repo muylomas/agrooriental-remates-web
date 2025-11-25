@@ -4,9 +4,6 @@ const connection = require('../../routes/connection_db');
 
 module.exports = function (socket) {
 
-    console.log("=================== customerSocket ===================");
-    console.log(socket.handshake.headers);
-    console.log(socket);
     if (
         socket.handshake.headers['sec-fetch-site'] == 'same-origin' ||
         socket.handshake.headers.host == '54.183.80.127'
@@ -22,19 +19,12 @@ module.exports = function (socket) {
             cookieParsed = cookie.parse(socket.handshake.headers.cookie);
         }
 
-        console.log(cookieParsed);
-
         if (
             "agroOrientaApp" in cookieParsed &&
             cookieParsed.agroOrientaApp
         ) {
 
             const agroOrientaAppParsed = cookieParser.signedCookie(cookieParsed.agroOrientaApp, 'LoktOOtNBvuFajNrBnx4');
-
-            console.log(socket.id);
-            console.log(socket.handshake);
-            console.log(socket.rooms);
-            console.log(socket.data);
 
             if (agroOrientaAppParsed) {
                 connection.query(
