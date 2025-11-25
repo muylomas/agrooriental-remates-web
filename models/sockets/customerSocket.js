@@ -15,7 +15,7 @@ module.exports = function (socket) {
         ) {
             cookieParsed = cookie.parse(socket.handshake.headers.cookie);
         }
-
+        console.log("=================== customerSocket ===================");
         console.log(cookieParsed);
 
         if (
