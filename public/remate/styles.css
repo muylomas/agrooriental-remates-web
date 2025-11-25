@@ -5,8 +5,10 @@
     height: 50vh;
 }
 
-.cattle-video {
+.cattle-media-container {
     height: 245px;
+    width: 100%;
+    position: relative;
 }
 
 .content-overlay-video {
