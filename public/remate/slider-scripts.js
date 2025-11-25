@@ -69,12 +69,7 @@ function initializeActionsAndDisplays() {
         for (let indSLots in lots) {
             const __aux_lotId = lots[indSLots].lotId;
 
-            if ($("#carousel-bid-" + __aux_lotId).length) {
-                $("#carousel-bid-" + __aux_lotId).owlCarousel({
-                    loop: false,
-                    items: 1,
-                });
-            }
+            getAuctionBidsForLot(__aux_lotId);
         }
     };
 
