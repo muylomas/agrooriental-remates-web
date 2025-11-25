@@ -2,6 +2,10 @@ const slideTemplate =
     `
         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
             <div class="card m-2" id="lot-__lot_lotId__">
+                <video class="cattle-video translate-middle" preload="auto" playsinline="" autoplay="autoplay" loop="" muted="" onclick="clickOnCattleVideo(__lot_lotId__)">
+                    <source id="video-source-__lot_lotId__" type="video/mp4" src="__lot_video__"
+                    style="z-index: 1;">
+                </video>
                 <div class="card-img-top" style="background-image:url(__lot_imagesArray_0__);height: 245px;background-size: cover;" alt="Lote __lot_lotId__"></div>
                 <div class="card-body px-3">
                     <div class="btn btn-dark text-uppercase fs-5 p-2 m-0">

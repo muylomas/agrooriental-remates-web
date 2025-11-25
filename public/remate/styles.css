@@ -6,8 +6,7 @@
 }
 
 .cattle-video {
-    position: fixed;
-    z-index: 10;
+    height: 245px;
 }
 
 .content-overlay-video {
