@@ -54,6 +54,7 @@ select {
     height: 245px;
     width: 100%;
     position: relative;
+    overflow: hidden;
 }
 
 .content-overlay-video {
