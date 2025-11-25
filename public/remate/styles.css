@@ -57,6 +57,11 @@ select {
     overflow: hidden;
 }
 
+.cattle-media-container > video {
+    height: 100%;
+    width: auto;
+}
+
 .cattle-media-container > .cattle-image {
     background-size: cover;
 }
