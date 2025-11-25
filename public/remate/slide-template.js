@@ -7,7 +7,10 @@ const slideTemplate =
                         <source id="video-__lot_lotId__" type="video/mp4" src="__lot_video__" />
                     </video>
                     <div id="image-lot-__lot_lotId__" class="position-absolute top-0 start-0 w-100 h-100" style="background-image:url(__lot_imagesArray_0__);background-size: cover;" alt="Lote __lot_lotId__"></div>
-                    <i id="view-video-__lot_lotId__" class="mdi mdi-video position-absolute bottom-0 end-0 pb-3 icon-md text-primary translate-middle"></i>
+                    
+                    <button id="view-video-__lot_lotId__" type="button" class="btn btn-info btn-rounded btn-icon position-absolute bottom-0 end-0 translate-middle">
+                        <i class="mdi mdi-video"></i>
+                    </button>
                 </div>
                 <div class="card-body px-3">
                     <div class="btn btn-dark text-uppercase fs-5 p-2 m-0">
