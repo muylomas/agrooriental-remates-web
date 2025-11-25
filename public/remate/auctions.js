@@ -310,7 +310,7 @@ function showBidAlertSuccess(auctionBidEnd) {
                 text: "Cerrar",
                 value: false,
                 visible: true,
-                className: "btn btn-light",
+                className: "btn btn-primary",
                 closeModal: true,
             },
         }
