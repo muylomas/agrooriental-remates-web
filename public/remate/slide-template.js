@@ -80,8 +80,8 @@ const slideTemplate =
                                             <i class="mdi mdi-plus"></i>
                                         </button>
                                     </div>
-                                    <div class="d-flex flex-column justify-content-around ml-3 w-100">
-                                        <button class="bid-action-button btn btn-warning text-dark h-100" onclick="javascript:auctionBidCustom(__lot_lotId__)">
+                                    <div class="d-flex flex-column justify-content-around ms-2 w-100">
+                                        <button class="bid-action-button btn btn-warning text-dark fs-4 h-100" onclick="javascript:auctionBidCustom(__lot_lotId__)">
                                             Ofertar
                                         </button>
                                     </div>
