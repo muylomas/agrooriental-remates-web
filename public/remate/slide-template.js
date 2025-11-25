@@ -57,7 +57,7 @@ const slideTemplate =
                                 </button>
                             </div>
                         </div>
-                        <div class="row mt-4">
+                        <div class="row mt-3">
                             <div class="col-12 p-0 m-0">
                                 <div class="d-flex align-items-left justify-content-left justify-content-md-left">
                                     <div class="d-flex flex-column justify-content-around">
