@@ -16,19 +16,21 @@ module.exports = function (socket) {
             cookieParsed = cookie.parse(socket.handshake.headers.cookie);
         }
 
+        console.log(cookieParsed);
+
         if (
-            "mercadoagroApp" in cookieParsed &&
-            cookieParsed.mercadoagroApp
+            "agroOrientaApp" in cookieParsed &&
+            cookieParsed.agroOrientaApp
         ) {
 
-            const mercadoagroAppParsed = cookieParser.signedCookie(cookieParsed.mercadoagroApp, 'LoktOOtNBvuFajNrBnx4');
+            const agroOrientaAppParsed = cookieParser.signedCookie(cookieParsed.agroOrientaApp, 'LoktOOtNBvuFajNrBnx4');
 
-            //console.log(socket.id);
-            //console.log(socket.handshake);
-            //console.log(socket.rooms);
-            //console.log(socket.data);
+            console.log(socket.id);
+            console.log(socket.handshake);
+            console.log(socket.rooms);
+            console.log(socket.data);
 
-            if (mercadoagroAppParsed) {
+            if (agroOrientaAppParsed) {
                 connection.query(
                     `
                         UPDATE customers SET 
@@ -38,7 +40,7 @@ module.exports = function (socket) {
                     `,
                     [
                         socket.id,
-                        mercadoagroAppParsed,
+                        agroOrientaAppParsed,
                     ],
                     function (err, results) {
                         if (err) {

@@ -124,7 +124,7 @@ const sessionMiddleware = session({
     domain: '54.183.80.127',
   },
   resave: false,
-  name: "mercadoagroApp",
+  name: "agroOrientaApp",
   saveUninitialized: true,
 });
 
