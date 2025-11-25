@@ -69,12 +69,6 @@ function initializeActionsAndDisplays() {
         for (let indSLots in lots) {
             const __aux_lotId = lots[indSLots].lotId;
 
-            if (!(__aux_lotId in mapForLot)) {
-                mapForLot[__aux_lotId] = null;
-                googleMapMarkerForLot[__aux_lotId] = null;
-                infoWindowForLot[__aux_lotId] = null;
-            }
-
             if ($("#carousel-bid-" + __aux_lotId).length) {
                 $("#carousel-bid-" + __aux_lotId).owlCarousel({
                     loop: false,
