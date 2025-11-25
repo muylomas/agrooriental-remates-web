@@ -53,6 +53,8 @@ function isSalePrice(lastBid, salePrice, lotId, callback) {
 
 module.exports = function (socket) {
     socket.on('auctionBidCustomers', (parameters) => {
+        console.log("=================== Models auctionBidCustomers ===================");
+        console.log(parameters);
         if (
             "bid" in parameters && parameters.bid &&
             "lotId" in parameters && parameters.lotId
