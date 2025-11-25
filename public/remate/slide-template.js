@@ -29,7 +29,7 @@ const slideTemplate =
                         </div>
                     </div>
                     <div class="row mb-1">
-                        <div class="col-6 p-0 m-0 position-relative" onclick="auctionBidsHistory(__lot_lotId__)">
+                        <div class="col-12 p-0 m-0 position-relative" onclick="auctionBidsHistory(__lot_lotId__)">
                             <i id="auction-bid-view-history-__lot_lotId__" class="mdi mdi-eye position-absolute top-0 end-0 pt-3 icon-md text-primary translate-middle d-none"></i>
                             <h2 class="text-primary mb-0 mt-1">
                                 <small>__lot_currency__</small>
@@ -41,19 +41,6 @@ const slideTemplate =
                                 </span>
                             </h2>
                             <p class="text-primary">Forma de pago: __lot_paymentTermName__</p>
-                        </div>
-                        <div class="col-6 m-0">
-                            <div id="category-media-value-container-__lot_lotId__">
-                                <h5>
-                                    <small class="text-muted">Promedio de cat.</small>
-                                </h5>
-                                <mark class="bg-dark text-white" style="font-size: 18px">
-                                    USD <b>__lot_auctionAvg__</b>
-                                    <small>
-                                        __lot_auctionAvgPercentage__
-                                    </small>
-                                </mark>
-                            </div>
                         </div>
                     </div>
                     
@@ -100,26 +87,6 @@ const slideTemplate =
                                         </button>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-12 p-0 m-0">
-                                <h5>
-                                    <small class="text-muted">
-                                        Compra inmediata
-                                    </small>
-                                </h5>
-                                <h2 class="text-primary">
-                                    <small>__lot_currency__</small>
-                                    <span>__lot_salePrice_formatted__</span>
-                                    <span class="text-small">__lot_priceUnits__</span>
-                                </h2>
-                                <button class="btn btn-primary btn-lg font-weight-medium w-100 mb-2" id="buy-action-button-__lot_lotId__" onclick="javascript:buyInmediatelly(__lot_lotId__)">
-                                    Comprar ya
-                                </button>
-                                <p class="text-primary">
-                                    Forma de pago: __lot_paymentTermName__
-                                </p>
                             </div>
                         </div>
                     </div>
