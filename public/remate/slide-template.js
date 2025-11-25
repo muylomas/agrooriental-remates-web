@@ -46,12 +46,12 @@ const slideTemplate =
                     
                     <div id="bid-auction-actions-container-__lot_lotId__">
                         <div class="row">
-                            <div class="col-6 text-center pr-1">
+                            <div class="col-6 text-center pe-1">
                                 <button class="bid-action-button btn btn-warning text-dark w-100 h-100" id="auction-bid-button-x1-__lot_lotId__" onclick="javascript:auctionBidByStep(__lot_lotId__,1)" style="line-height: 1.3rem;">
                                     Ofertar __lot_lastAuctionPrice1Step__
                                 </button>
                             </div>
-                            <div class="col-6 text-center pl-1">
+                            <div class="col-6 text-center ps-1">
                                 <button class="bid-action-button btn btn-warning text-dark w-100 h-100" id="auction-bid-button-x2-__lot_lotId__" onclick="javascript:auctionBidByStep(__lot_lotId__,2)" style="line-height: 1.3rem;">
                                     Ofertar __lot_lastAuctionPrice2Step__
                                 </button>
