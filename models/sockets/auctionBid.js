@@ -62,6 +62,7 @@ module.exports = function (socket) {
             getUserBySocket(
                 socket.id,
                 function (customerId) {
+                    console.log("customerId: ", customerId);
                     if (customerId) {
                         connection.query(
                             `
