@@ -4,9 +4,13 @@ function changeVideoImageDisplay(lotId) {
     ) {
         $("#image-" + lotId).hide();
         $("#video-" + lotId).show();
+        $("#view-media-selector-" + lotId + " i").removeClass("mdi-video");
+        $("#view-media-selector-" + lotId + " i").addClass("mdi-camera");
     }
     else {
         $("#image-" + lotId).show();
         $("#video-" + lotId).hide();
+        $("#view-media-selector-" + lotId + " i").removeClass("mdi-camera");
+        $("#view-media-selector-" + lotId + " i").addClass("mdi-video");
     }
 };
