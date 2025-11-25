@@ -61,7 +61,7 @@ select {
     background-size: cover;
 }
 
-.cattle-media-container > button {
+.cattle-media-container > button > i {
     font-size: 1.5rem !important;
 }
 
