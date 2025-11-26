@@ -5,6 +5,7 @@ function changeVideoImageDisplay(lotId) {
         $("#image-" + lotId).hide();
         $("#video-" + lotId).show();
         $("#view-in-youtube-" + lotId).show();
+        $("#view-in-youtube-" + lotId).removeClass("d-none");
         $("#view-media-selector-" + lotId + " i").removeClass("mdi-video");
         $("#view-media-selector-" + lotId + " i").addClass("mdi-camera");
 
