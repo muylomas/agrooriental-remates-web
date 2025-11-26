@@ -22,6 +22,48 @@ const slideTemplate =
                     <div class="btn btn-dark text-uppercase fs-5 p-2 m-0">
                         <b>Lote __lot_lotId__</b>
                     </div>
+                    <div class="countdown-container d-flex flex-wrap justify-content-xl-between" id="bottom-countdown-container-__lot_lotId__">
+                        <div class="d-flex flex-grow-1 align-items-left justify-content-left justify-content-md-left">
+                            <div class="countdown-day-container d-flex flex-column justify-content-around">
+                                <h2 class="mb-0 d-inline-block text-center p-2">
+                                    <span class="text-white" id="countdown-days-__lot_lotId__">
+                                        --
+                                    </span>
+                                </h2>
+                            </div>
+                            <div class="d-flex flex-column justify-content-around">
+                                <h2 class="mb-0 d-inline-block text-center p-2">
+                                    <span class="text-white" id="countdown-hours-__lot_lotId__">
+                                        --
+                                    </span>
+                                </h2>
+                            </div>
+                            <div class="d-flex flex-column justify-content-around">
+                                <h2 class="mb-0 d-inline-block text-center p-2">
+                                    <span class="text-white">:</span>
+                                </h2>
+                            </div>
+                            <div class="d-flex flex-column justify-content-around">
+                                <h2 class="mb-0 d-inline-block text-center p-2">
+                                    <span class="text-white" id="countdown-mins-__lot_lotId__">
+                                        --
+                                    </span>
+                                </h2>
+                            </div>
+                            <div class="d-flex flex-column justify-content-around">
+                                <h2 class="mb-0 d-inline-block text-center p-2">
+                                    <span class="text-white">:</span>
+                                </h2>
+                            </div>
+                            <div class="d-flex flex-column justify-content-around">
+                                <h2 class="mb-0 d-inline-block text-center p-2">
+                                    <span class="text-white" id="countdown-secs-__lot_lotId__">
+                                        --
+                                    </span>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
                     <h4 class="card-title text-uppercase fs-5 mt-3 mb-2">
                         LAS BRUJAS FUERZA NUEVA TE
                     </h4>
