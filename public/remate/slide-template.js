@@ -67,7 +67,7 @@ const slideTemplate =
                         </a>
                     </p>
                     <p class="card-text fs-6 mb-2">
-                        <b>Categoría</b>: __lot_type__</br>
+                        <b>Categoría</b>: <span="text-uppercase">__lot_type__</span></br>
                         <b>RP</b>: __lot_equineRP__</br>
                         <b>Pelo</b>: __lot_equineHair__</br>
                         <b>Nacimiento</b>: __lot_equineBirth__</br>
