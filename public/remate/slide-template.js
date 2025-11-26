@@ -8,7 +8,7 @@ const slideTemplate =
                     </video>
                     <div id="image-__lot_lotId__" class="cattle-image position-absolute top-0 start-0 w-100 h-100" style="background-image:url(__lot_imagesArray_0__);" alt="Lote __lot_lotId__"></div>
                     <div class="position-absolute bottom-0 end-0 pe-2 pb-2 ">
-                        <a id="view-in-youtube-__lot_lotId__" href="https://www.youtube.com/watch?v=9pRCCNSLiVI" type="button" class="btn btn-icon btn-youtube btn-rounded me-3" target="_blank">
+                        <a id="view-in-youtube-__lot_lotId__" href="https://www.youtube.com/watch?v=9pRCCNSLiVI" type="button" class="btn btn-icon btn-youtube btn-rounded me-3 p-2" target="_blank">
                             <i class="mdi mdi-youtube"></i>
                         </a>
                         <button id="view-media-selector-__lot_lotId__" type="button" class="btn btn-primary btn-rounded btn-icon" onclick="javascript:changeVideoImageDisplay(__lot_lotId__,1)">
