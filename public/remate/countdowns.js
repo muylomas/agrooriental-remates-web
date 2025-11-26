@@ -1,4 +1,5 @@
 function generalTimer(lotId) {
+    console.log("==================== generalTimer ====================");
     const totalSeconds = (endDates[lotId] - startDates[lotId]) / 1000;
     const seconds = (endDates[lotId] - Date.now()) / 1000;
     var days = Math.floor(seconds / 24 / 60 / 60);
@@ -21,6 +22,11 @@ function generalTimer(lotId) {
         $('#countdown-days-' + lotId).parent().parent().remove()
     }
 
+    console.log("lotId: ", lotId);
+    console.log("hours: ", pad(hours));
+    console.log("minutes: ", pad(minutes));
+    console.log("remainingSeconds: ", ad(remainingSeconds));
+
     $('#countdown-hours-' + lotId).html(pad(hours));
     $('#countdown-mins-' + lotId).html(pad(minutes));
     $('#countdown-secs-' + lotId).html(pad(remainingSeconds));
@@ -31,6 +37,7 @@ function generalTimer(lotId) {
         $('#countdown-hours-' + lotId).html("--");
         $('#countdown-mins-' + lotId).html("--");
         $('#countdown-secs-' + lotId).html("--");
-        $('#bottom-countdown-container-' + lotId).remove();
+        $('#countdown-container-' + lotId).remove();
     }
+    console.log("==================== generalTimer ====================");
 };
