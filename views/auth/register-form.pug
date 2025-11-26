@@ -2,7 +2,7 @@ extends ../baseAppHTML
 
 block content 
   .content-wrapper.auth.app-full-bg.p-0.m-0
-    .row.w-100
+    .row.position-relative.w-100.h-100 
       .col-lg-4.mx-auto
         img.app-profile-img.w-75.m-5.mb-0(style="max-width: 350px;", src='https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/logos/agrooriental-remates-login-logo-w.png', alt='Agro Oriental')
         .auth-form-transparent.text-left.p-5.text-center
@@ -130,7 +130,7 @@ block content
                 input(type="hidden", name="userId", value=userId)
                 p.text-white 
                   | Te enviamos un SMS a tu teléfono, ingrésalo a continuación.
-                .form-group.row.pt-4  
+                .form-group.row.pt-4
                   .col-3.px-2
                     input.code-input.form-control.text-center.p-2(type='number', name="code1", min="0", max="9")
                   .col-3.px-2
@@ -143,11 +143,10 @@ block content
                 button.btn.btn-block.btn-warning.text-dark.btn-lg.font-weight-medium.w-100(type='submit') 
                   | Verificar
 
-                br
-                br  
-                h4.text-white.mt-5.mb-3.w-100.text-center Ingresar con otra cuenta
-                a.btn.btn-inverse-light.btn-fw.border-white.text-white.btn-lg.font-weight-medium.w-100(href='/ingresar') 
-                  | Ingresar
+                .position-absolute.bottom-0.start-50.translate-middle-x.p-5.w-100  
+                  h4.text-white.mt-5.mb-3.w-100.text-center Ingresar con otra cuenta
+                  a.btn.btn-inverse-light.btn-fw.border-white.text-white.btn-lg.font-weight-medium.w-100(href='/ingresar') 
+                    | Ingresar
             else 
               h4.text-white.mt-5.mb-3.w-100.text-center Ya tenés una cuenta?
               a.btn.btn-inverse-light.btn-fw.border-white.text-white.btn-lg.font-weight-medium.w-100(href='/ingresar') 
