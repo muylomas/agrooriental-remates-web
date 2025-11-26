@@ -32,42 +32,42 @@ const slideTemplate =
                         <div class="countdown-container d-flex justify-content-between align-items-end flex-wrap" id="countdown-container-__lot_lotId__">
                             <div class="d-flex flex-grow-1 align-items-left justify-content-left justify-content-md-left">
                                 <div class="countdown-day-container d-flex flex-column justify-content-around">
-                                    <h2 class="mb-0 d-inline-block text-center p-2">
+                                    <h3 class="mb-0 d-inline-block text-center p-2">
                                         <span class="text-white" id="countdown-days-__lot_lotId__">
                                             --
                                         </span>
-                                    </h2>
+                                    </h3>
                                 </div>
                                 <div class="d-flex flex-column justify-content-around">
-                                    <h2 class="mb-0 d-inline-block text-center p-2">
+                                    <h3 class="mb-0 d-inline-block text-center p-2">
                                         <span class="text-white" id="countdown-hours-__lot_lotId__">
                                             --
                                         </span>
-                                    </h2>
+                                    </h3>
                                 </div>
                                 <div class="d-flex flex-column justify-content-around">
-                                    <h2 class="mb-0 d-inline-block text-center p-2">
+                                    <h3 class="mb-0 d-inline-block text-center p-2">
                                         <span class="text-white">:</span>
-                                    </h2>
+                                    </h3>
                                 </div>
                                 <div class="d-flex flex-column justify-content-around">
-                                    <h2 class="mb-0 d-inline-block text-center p-2">
+                                    <h3 class="mb-0 d-inline-block text-center p-2">
                                         <span class="text-white" id="countdown-mins-__lot_lotId__">
                                             --
                                         </span>
-                                    </h2>
+                                    </h3>
                                 </div>
                                 <div class="d-flex flex-column justify-content-around">
-                                    <h2 class="mb-0 d-inline-block text-center p-2">
+                                    <h3 class="mb-0 d-inline-block text-center p-2">
                                         <span class="text-white">:</span>
-                                    </h2>
+                                    </h3>
                                 </div>
                                 <div class="d-flex flex-column justify-content-around">
-                                    <h2 class="mb-0 d-inline-block text-center p-2">
+                                    <h3 class="mb-0 d-inline-block text-center p-2">
                                         <span class="text-white" id="countdown-secs-__lot_lotId__">
                                             --
                                         </span>
-                                    </h2>
+                                    </h3>
                                 </div>
                             </div>
                         </div>
