@@ -232,23 +232,44 @@ socket.on('auctionBidUpdate', (auctionBidUpdate) => {
 socket.on('auctionBidError', (auctionBidUpdate) => {
     console.log("=============== auctionBidError ===============");
     console.log(auctionBidUpdate);
-    swal({
-        title: "ERROR",
-        text: "No se pudo ingresar la oferta, intentalo nuevamente.",
-        icon: 'warning',
-        buttons: {
-            cancel: {
-                text: "Recargar la página",
-                value: false,
-                visible: true,
-                className: "btn btn-primary",
-                closeModal: true,
-            },
-        }
-    }).then((value) => {
-        window.location.replace("/")
-        swal.close();
-    });
+    if (auctionBidUpdate && "error" in auctionBidUpdate && auctionBidUpdate.error == "1.1") {
+        swal({
+            title: "ERROR",
+            text: "Para .",
+            icon: 'warning',
+            buttons: {
+                cancel: {
+                    text: "Recargar la página",
+                    value: false,
+                    visible: true,
+                    className: "btn btn-primary",
+                    closeModal: true,
+                },
+            }
+        }).then((value) => {
+            window.location.replace("/")
+            swal.close();
+        });
+    }
+    else {
+        swal({
+            title: "ERROR",
+            text: "No se pudo ingresar la oferta, intentalo nuevamente.",
+            icon: 'warning',
+            buttons: {
+                cancel: {
+                    text: "Recargar la página",
+                    value: false,
+                    visible: true,
+                    className: "btn btn-primary",
+                    closeModal: true,
+                },
+            }
+        }).then((value) => {
+            window.location.replace("/")
+            swal.close();
+        });
+    }
     console.log("=============== auctionBidError ===============");
 });
 

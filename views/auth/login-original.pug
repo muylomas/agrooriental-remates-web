@@ -7,6 +7,55 @@ block content
         img.app-profile-img.w-75.m-5.mb-0(style="max-width: 350px;", src='https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/logos/agrooriental-remates-login-logo-w.png', alt='Agro Oriental')
         .auth-form-transparent.text-left.p-5.text-center
           form(method='post', name='loginForm', action='/login')
+            .form-group.row.text-white
+              .col-1
+              .col-5.text-left
+                .form-check.form-check-warning.m-0
+                  label.form-check-label
+                    input.form-check-input(type='radio', name='loginMethodType', value='phone', checked)
+                    i.input-helper
+                    h4 Celular
+              .col-5.text-left
+                .form-check.form-check-warning.m-0
+                  label.form-check-label
+                    input.form-check-input(type='radio', name='loginMethodType', value='email')
+                    i.input-helper
+                    h4 Email
+              .col-1
+              script.
+                $(document).ready(function () {
+                  var rad = document.loginForm.loginMethodType;
+                  var prev = null;
+                  for (var i = 0; i < rad.length; i++) {
+                    rad[i].addEventListener('change', function() {
+                        if (this !== prev) {
+                            prev = this;
+                        }
+                        
+                        showLoginInputsByType(this.value);
+                    });
+                  }
+
+                  showLoginInputsByType("phone");
+                });
+
+                function showLoginInputsByType(type){
+                  switch (type) {
+                    case "phone":
+                      $(".phone-form-input").show();
+                      $(".email-form-input").hide();
+                      break;
+                    case "email":
+                      $(".phone-form-input").hide();
+                      $(".email-form-input").show();
+                      break;
+                    default:
+                      $(".phone-form-input").hide();
+                      $(".email-form-input").show();
+                      break;
+                  }
+                };
+
             .form-group.phone-form-input
               .input-group
                 .input-group-prepend.m-0.p-0

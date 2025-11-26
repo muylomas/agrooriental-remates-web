@@ -163,7 +163,7 @@ module.exports = function (socket) {
                         socket.emit(
                             'auctionBidError',
                             {
-                                error: 1.1,
+                                error: "1.1",
                             },
                         );
                     }
@@ -174,7 +174,7 @@ module.exports = function (socket) {
             socket.emit(
                 'auctionBidError',
                 {
-                    error: 1.0,
+                    error: "1.0",
                 },
             );
         }
