@@ -66,7 +66,8 @@ select {
     background-size: cover;
 }
 
-.cattle-media-container > div > button > i {
+.cattle-media-container > div > button > i,
+.cattle-media-container > div > a > i {
     font-size: 1.5rem !important;
 }
 
