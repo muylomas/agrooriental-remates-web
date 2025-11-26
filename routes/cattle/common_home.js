@@ -217,6 +217,7 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
                         ) AS auctionAvgOld,
                         cattle_payment_term.name AS paymentTermName,
                         users_desks.name AS salesagentDeskName,
+                        cattle_lots_equines.cabin AS equineCabin,
                         cattle_lots_equines.rp AS equineRP,
                         cattle_lots_equines.name AS equineName,
                         cattle_lots_equines.hair AS equineHair,

@@ -71,7 +71,7 @@ const slideTemplate =
                         <b>RP</b>: __lot_equineRP__</br>
                         <b>Pelo</b>: __lot_equineHair__</br>
                         <b>Nacimiento</b>: __lot_equineBirth__</br>
-                        <b>Cabaña</b>: Chimango
+                        <b>Cabaña</b>: __lot_equineCabin__
                     </p>
                     
                     <div class="row mb-1">
