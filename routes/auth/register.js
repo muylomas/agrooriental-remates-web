@@ -87,6 +87,8 @@ router.post('/', function (req, res, next) {
                         invitation = 0
                 `,
                 [
+                    req.body.userName,
+                    req.body.userSurname,
                     req.body.phoneCountry,
                     parseInt(req.body.phoneNumber, 10),
                     phonePassword,
