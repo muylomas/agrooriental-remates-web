@@ -59,16 +59,16 @@ const slideTemplate =
                         </div>
                     </div>
                     <h4 class="card-title text-uppercase fs-5 mt-3 mb-2">
-                        LAS BRUJAS FUERZA NUEVA TE
+                        __lot_equineName__
                     </h4>
                     <p class="card-text fs-6">
-                        Potranca
+                        __lot_type__
                         <br>
-                        (AS Malke Sedutor-TE  Y Devota De Santa Marcia  X Indio Do Boeiro)
+                        (__lot_equineFather__ <b>Y</b> __lot_equineMother__  <b>X</b> __lot_equineMaternalGrandfather__)
                         <br>
-                        RP: 125
+                        <b>RP</b>: __lot_equineRP__
                         <br>
-                        Cabaña: Las Brujas
+                        <b>Cabaña</b>: Chimango
                     </p>
                     
                     <div class="row mb-1">

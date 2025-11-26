@@ -216,7 +216,19 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
                             cattle_types_avg.avgPriceOld_1
                         ) AS auctionAvgOld,
                         cattle_payment_term.name AS paymentTermName,
-                        users_desks.name AS salesagentDeskName
+                        users_desks.name AS salesagentDeskName,
+                        cattle_lots_equines.rp AS equineRP,
+                        cattle_lots_equines.name AS equineName,
+                        cattle_lots_equines.hair AS equineHair,
+                        DATE_FORMAT(
+                            cattle_lots_equines.birth,
+                            '%d/%m/%Y'
+                        ) AS equineBirth,
+                        cattle_lots_equines.father AS equineFather,
+                        cattle_lots_equines.mother AS equineMother,
+                        cattle_lots_equines.maternalGrandfather AS equineMaternalGrandfather,
+                        cattle_lots_equines.aru AS equineARU,
+                        cattle_lots_equines.youtube AS equineYoutube
                     FROM cattle_complete
                     LEFT JOIN auctions_bids_max ON auctions_bids_max.lotId = cattle_complete.lotId
                     LEFT JOIN auctions_bids ON 
@@ -230,6 +242,7 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
                     LEFT JOIN cattle_lots_breeds ON cattle_lots_breeds.lotId = cattle_complete.lotId
                     LEFT JOIN cattle_breeds ON cattle_breeds.id = cattle_lots_breeds.breedId
                     LEFT JOIN cattle_breeds AS cattle_crossBreeds ON cattle_crossBreeds.id = cattle_lots_breeds.crossBreedId
+                    LEFT JOIN cattle_lots_equines ON cattle_lots_equines.lotId = cattle_complete.lotId AND cattle_lots_equines.status = 1
                     LEFT JOIN users ON users.id = cattle_complete.salesagentId
                     LEFT JOIN users_desks ON users_desks.id = users.deskId
                     WHERE 
