@@ -246,7 +246,7 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
                     LEFT JOIN users ON users.id = cattle_complete.salesagentId
                     LEFT JOIN users_desks ON users_desks.id = users.deskId
                     WHERE 
-                        cattle_complete.customerId != ? AND
+                        (cattle_complete.customerId != ? || cattle_complete.customerId = 0) AND
                         cattle_complete.statusId = 5 AND
                         (
                             auctions_bids.price IS NULL OR
