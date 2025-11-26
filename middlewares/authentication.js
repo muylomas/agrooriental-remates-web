@@ -65,6 +65,8 @@ exports.authProcc = function (req, res, next) {
           else {
             if (results[0].invitation || req.url.startsWith('/registro/codigo-verificacion'))
               next();
+            if (req.url.startsWith('/login'))
+              next();
             else
               res.redirect('/registro/codigo-verificacion');
           }
