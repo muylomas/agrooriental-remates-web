@@ -263,6 +263,7 @@ function insertLotLoop(lots, indSLots, callback) {
 
         let __aux_intermediate_stepPrice = 5;
         if ("stepPrice" in lots[indSLots] && lots[indSLots].stepPrice) {
+            console.log("lots[indSLots].stepPrice: ", lots[indSLots].stepPrice);
             __aux_intermediate_stepPrice = lots[indSLots].stepPrice;
         }
         else {
