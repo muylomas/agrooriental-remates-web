@@ -100,16 +100,6 @@ router.post('/', function (req, res, next) {
                         res.redirect('/registro');
                     }
                     else {
-                        /*
-                        aws_sms_sender.sms_sender(
-                            {
-                                Message: phoneCodeNumber + " es tu código de verificación de Agro Oriental.",
-                                PhoneNumber: "+598" + parseInt(req.body.phoneNumber, 10),
-                            },
-                            function () {
-                            }
-                        );*/
-
                         res.render(
                             'auth/register-form',
                             {
@@ -151,13 +141,14 @@ router.post('/', function (req, res, next) {
                         );
                     }
                     else {
-                        res.render(
+                        /*res.render(
                             'auth/register-form',
                             {
                                 verification: "email",
                                 userId: results.insertId,
                             }
-                        );
+                        );*/
+                        res.redirect('/registro/codigo-verificacion');
                     }
                 }
             );
