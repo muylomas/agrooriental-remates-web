@@ -193,11 +193,11 @@ router.post('/codigo-verificacion', function (req, res, next) {
 
         connection.query(
             `
-                    UPDATE customers SET
-                        invitation = 1,
-                        session = ?
-                    WHERE id = ? AND phonePassword = ?
-                `,
+                UPDATE customers SET
+                    invitation = 1,
+                    session = ?
+                WHERE id = ? AND phonePassword = ?
+            `,
             [
                 req.sessionID,
                 req.body.userId,
