@@ -163,11 +163,19 @@ module.exports = function (socket) {
                         socket.emit(
                             'auctionBidError',
                             {
-                                error: 1,
+                                error: 1.1,
                             },
                         );
                     }
                 }
+            );
+        }
+        else {
+            socket.emit(
+                'auctionBidError',
+                {
+                    error: 1.0,
+                },
             );
         }
     });

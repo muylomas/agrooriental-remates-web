@@ -230,6 +230,8 @@ socket.on('auctionBidUpdate', (auctionBidUpdate) => {
 });
 
 socket.on('auctionBidError', (auctionBidUpdate) => {
+    console.log("=============== auctionBidError ===============");
+    console.log(auctionBidUpdate);
     swal({
         title: "ERROR",
         text: "No se pudo ingresar la oferta, intentalo nuevamente.",
@@ -247,6 +249,7 @@ socket.on('auctionBidError', (auctionBidUpdate) => {
         window.location.replace("/")
         swal.close();
     });
+    console.log("=============== auctionBidError ===============");
 });
 
 function updateAuctionBidPrice(auctionBidEnd, lotId, lastAuctionPrice, stepPrice, auctionPriceType, lotParams) {
