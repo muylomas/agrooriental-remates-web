@@ -395,8 +395,6 @@ function insertLotLoop(lots, indSLots, callback) {
 
         $("#remate-lotes").append(__aux_slideHTML);
 
-        changeVideoImageDisplay(lots[indSLots].lotId);
-
         insertLotLoop(lots, indSLots + 1, callback);
     }
     else {
