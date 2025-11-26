@@ -7,27 +7,27 @@ const homeFeed = require('./cattle/home');
 
 router.get('/', function (req, res, next) {
     common_auth.basic(req.sessionID, function (reply) {
-        if (reply.err) {
+        /*if (reply.err) {
             res.render('index-logout', {},);
         }
-        else {
-            homeFeed.getViewParams(
-                reply.user,
-                function (viewURLDir, indexParams, type) {
-                    if (type == "redirect") {
-                        res.redirect(viewURLDir);
-                    }
-                    else {
-                        common_gral.renderSavingSession(
-                            req,
-                            res,
-                            viewURLDir,
-                            indexParams
-                        );
-                    }
+        else {*/
+        homeFeed.getViewParams(
+            reply.user,
+            function (viewURLDir, indexParams, type) {
+                if (type == "redirect") {
+                    res.redirect(viewURLDir);
                 }
-            );
-        }
+                else {
+                    common_gral.renderSavingSession(
+                        req,
+                        res,
+                        viewURLDir,
+                        indexParams
+                    );
+                }
+            }
+        );
+        //}
     });
 });
 
