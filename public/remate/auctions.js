@@ -9,6 +9,7 @@ function getLotParamsById(lotId) {
 };
 
 function showCustomerWinning(lotId, auctionBidEnd, showAlert, showButton) {
+    $("#auction-bid-status-container-" + lotId).removeClass("d-none");
     if (auctionBidEnd) {
         $("#auction-bid-status-" + lotId).html(
             `
@@ -63,6 +64,7 @@ function showCustomerWinning(lotId, auctionBidEnd, showAlert, showButton) {
 };
 
 function showCustomerLoosing(lotId, auctionBidEnd, showButton, initialize) {
+    $("#auction-bid-status-container-" + lotId).removeClass("d-none");
     if (auctionBidEnd) {
         $("#auction-bid-status-" + lotId).html(
             `

@@ -74,7 +74,7 @@ const slideTemplate =
                         <b>Cabaña</b>: __lot_equineCabin__
                     </p>
                     
-                    <div class="row mb-1">
+                    <div id="auction-bid-status-container-__lot_lotId__" class="row mb-1 d-none">
                         <div class="col-12 p-0 m-0">
                             <h5 class="w-100">
                                 <small id="auction-bid-status-__lot_lotId__" class="text-muted w-100">
