@@ -151,4 +151,99 @@ const slideTemplate =
                 </div>
             </div>
         </div>
+
+
+        <footer id="footer" class="footer solid-bg">
+
+		
+			<div class="wf-wrap">
+				<div class="wf-container-footer">
+					<div class="wf-container">
+						<section id="presscore-contact-info-widget-2" class="widget widget_presscore-contact-info-widget wf-cell wf-1-4"><div class="widget-title">Contáctenos</div><ul class="contact-info"><li><span class="color-primary">Teléfono:</span><br>(+598) 2604 3036, (+598) 99 647 561</li><li><span class="color-primary">Dirección:</span><br>Gral. Domingo French 1948, 
+Montevideo, Uruguay.</li><li><span class="color-primary">Horarios:</span><br>Lunes a Viernes: 9:00 hrs. a 18:00 hrs.</li></ul><div class="soc-ico"><p class="assistive-text">Find us on:</p><a title="Facebook page opens in new window" href="https://www.facebook.com/agrooriental.com.uy/" target="_blank" class="facebook"><span class="soc-font-icon"></span><span class="screen-reader-text">Facebook page opens in new window</span></a><a title="Twitter page opens in new window" href="https://twitter.com/agrooriental/" target="_blank" class="twitter"><span class="soc-font-icon"></span><span class="screen-reader-text">Twitter page opens in new window</span></a><a title="Instagram page opens in new window" href="https://www.instagram.com/agro_oriental/" target="_blank" class="instagram"><span class="soc-font-icon"></span><span class="screen-reader-text">Instagram page opens in new window</span></a></div></section><section id="block-3" class="widget widget_block wf-cell wf-1-4">  
+  
+  <div class="
+    mailpoet_form_popup_overlay
+      "></div>
+  <div id="mailpoet_form_4" class="mailpoet_form mailpoet_form_html mailpoet_form_position_ mailpoet_form_animation_ mailpoet_form_tight_container">
+
+    <style type="text/css">
+     #mailpoet_form_4 .mailpoet_form {  }
+#mailpoet_form_4 form { margin-bottom: 0; }
+#mailpoet_form_4 p.mailpoet_form_paragraph { margin-bottom: 10px; }
+#mailpoet_form_4 .mailpoet_column_with_background { padding: 10px; }
+#mailpoet_form_4 .mailpoet_form_column:not(:first-child) { margin-left: 20px; }
+#mailpoet_form_4 .mailpoet_paragraph { line-height: 20px; margin-bottom: 20px; }
+#mailpoet_form_4 .mailpoet_segment_label, #mailpoet_form_4 .mailpoet_text_label, #mailpoet_form_4 .mailpoet_textarea_label, #mailpoet_form_4 .mailpoet_select_label, #mailpoet_form_4 .mailpoet_radio_label, #mailpoet_form_4 .mailpoet_checkbox_label, #mailpoet_form_4 .mailpoet_list_label, #mailpoet_form_4 .mailpoet_date_label { display: block; font-weight: normal; }
+#mailpoet_form_4 .mailpoet_text, #mailpoet_form_4 .mailpoet_textarea, #mailpoet_form_4 .mailpoet_select, #mailpoet_form_4 .mailpoet_date_month, #mailpoet_form_4 .mailpoet_date_day, #mailpoet_form_4 .mailpoet_date_year, #mailpoet_form_4 .mailpoet_date { display: block; }
+#mailpoet_form_4 .mailpoet_text, #mailpoet_form_4 .mailpoet_textarea { width: 200px; }
+#mailpoet_form_4 .mailpoet_checkbox {  }
+#mailpoet_form_4 .mailpoet_submit {  }
+#mailpoet_form_4 .mailpoet_divider {  }
+#mailpoet_form_4 .mailpoet_message {  }
+#mailpoet_form_4 .mailpoet_form_loading { width: 30px; text-align: center; line-height: normal; }
+#mailpoet_form_4 .mailpoet_form_loading > span { width: 5px; height: 5px; background-color: #5b5b5b; }
+#mailpoet_form_4 h2.mailpoet-heading { margin: 0 0 20px 0; }
+#mailpoet_form_4 h1.mailpoet-heading { margin: 0 0 10px; }#mailpoet_form_4{border: 0px solid #000000;border-radius: 2px;text-align: left;}#mailpoet_form_4 form.mailpoet_form {padding: 0px;}#mailpoet_form_4{width: 100%;}#mailpoet_form_4 .mailpoet_message {margin: 0; padding: 0 20px;}
+        #mailpoet_form_4 .mailpoet_validate_success {color: #00d084}
+        #mailpoet_form_4 input.parsley-success {color: #00d084}
+        #mailpoet_form_4 select.parsley-success {color: #00d084}
+        #mailpoet_form_4 textarea.parsley-success {color: #00d084}
+      
+        #mailpoet_form_4 .mailpoet_validate_error {color: #cf2e2e}
+        #mailpoet_form_4 input.parsley-error {color: #cf2e2e}
+        #mailpoet_form_4 select.parsley-error {color: #cf2e2e}
+        #mailpoet_form_4 textarea.textarea.parsley-error {color: #cf2e2e}
+        #mailpoet_form_4 .parsley-errors-list {color: #cf2e2e}
+        #mailpoet_form_4 .parsley-required {color: #cf2e2e}
+        #mailpoet_form_4 .parsley-custom-error-message {color: #cf2e2e}
+      #mailpoet_form_4 .mailpoet_paragraph.last {margin-bottom: 0} @media (max-width: 500px) {#mailpoet_form_4 {background-image: none;}} @media (min-width: 500px) {#mailpoet_form_4 .last .mailpoet_paragraph:last-child {margin-bottom: 0}}  @media (max-width: 500px) {#mailpoet_form_4 .mailpoet_form_column:last-child .mailpoet_paragraph:last-child {margin-bottom: 0}} 
+    </style>
+
+    <form target="_self" method="post" action="https://agrooriental.uy/wp-admin/admin-post.php?action=mailpoet_subscription_form" class="mailpoet_form mailpoet_form_form mailpoet_form_html mailpoet_form_tight_container" novalidate="" data-delay="" data-exit-intent-enabled="" data-font-family="" data-cookie-expiration-time="">
+      <input type="hidden" name="data[form_id]" value="4">
+      <input type="hidden" name="token" value="cfb0c3adf0">
+      <input type="hidden" name="api_version" value="v1">
+      <input type="hidden" name="endpoint" value="subscribers">
+      <input type="hidden" name="mailpoet_method" value="subscribe">
+
+      <label class="mailpoet_hp_email_label" style="display: none !important;">Please leave this field empty<input type="email" name="data[email]"></label><p class="mailpoet_form_paragraph " style="text-align: left"><span style="font-family: Poppins" data-font="Poppins" class="mailpoet-has-font">¡Registrate para recibir información del agro en Uruguay, y mantente al día de nuestros últimos lotes y próximos remates</span></p>
+<div class="mailpoet_paragraph "><label for="form_email_4" class="mailpoet-screen-reader-text" style="font-size: 16px;line-height: 1.2;" data-automation-id="form_email_label">Dirección de correo electrónico  <span class="mailpoet_required">*</span></label><input type="email" autocomplete="email" class="mailpoet_text" id="form_email_4" name="data[form_field_OTY2ZTg2NTUxYTc4X2VtYWls]" title="Dirección de correo electrónico" value="" style="width:100%;box-sizing:border-box;background-color:#ffffff;border-style:solid;border-radius:0px !important;border-width:1px;border-color:#313131;padding:15px;margin: 0 auto 0 0;font-family:'Montserrat';font-size:16px;line-height:1.5;height:auto;" data-automation-id="form_email" placeholder="Dirección de correo electrónico *" data-parsley-required="true" data-parsley-minlength="6" data-parsley-maxlength="150" data-parsley-type-message="This value should be a valid email." data-parsley-errors-container=".mailpoet_error_email_" data-parsley-required-message="This field is required."></div>
+<div class="mailpoet_paragraph last"><input type="submit" class="mailpoet_submit" value="Confirmar suscripción" data-automation-id="subscribe-submit-button" data-font-family="Montserrat" style="width:100%;box-sizing:border-box;background-color:#ffffff;border-style:solid;border-radius:2px !important;border-width:1px;border-color:#313131;padding:15px;margin: 0 auto 0 0;font-family:'Montserrat';font-size:16px;line-height:1.5;height:auto;color:#000000;font-weight:bold;"><span class="mailpoet_form_loading"><span class="mailpoet_bounce1"></span><span class="mailpoet_bounce2"></span><span class="mailpoet_bounce3"></span></span></div>
+
+      <div class="mailpoet_message">
+        <p class="mailpoet_validate_success" style="display:none;">Revisa tu bandeja de entrada o la carpeta de spam para confirmar tu suscripción.
+        </p>
+        <p class="mailpoet_validate_error" style="display:none;">        </p>
+      </div>
+    </form>
+
+      </div>
+
+  </section>					</div><!-- .wf-container -->
+				</div><!-- .wf-container-footer -->
+			</div><!-- .wf-wrap -->
+
+			
+<!-- !Bottom-bar -->
+<div id="bottom-bar" class="logo-left" role="contentinfo">
+    <div class="wf-wrap">
+        <div class="wf-container-bottom">
+
+			<div id="branding-bottom"><a class="" href="https://agrooriental.uy/"><img class=" preload-me" src="https://agrooriental.uy/wp-content/uploads/2020/09/logo_agrooriental-e1601025470942.png" srcset="https://agrooriental.uy/wp-content/uploads/2020/09/logo_agrooriental-e1601025470942.png 120w, https://agrooriental.uy/wp-content/uploads/2020/09/logo_agrooriental-e1601025470942.png 120w" width="120" height="60" sizes="120px" alt="Agrooriental"></a></div>
+                <div class="wf-float-left">
+
+					Desarrollado para Agrooriental. Todos los derechos reservados.
+                </div>
+
+			
+            <div class="wf-float-right">
+
+				
+            </div>
+
+        </div><!-- .wf-container-bottom -->
+    </div><!-- .wf-wrap -->
+</div><!-- #bottom-bar -->
+	</footer>
     `;
