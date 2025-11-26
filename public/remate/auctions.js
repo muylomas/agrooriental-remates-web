@@ -235,19 +235,21 @@ socket.on('auctionBidError', (auctionBidUpdate) => {
     if (auctionBidUpdate && "error" in auctionBidUpdate && auctionBidUpdate.error == "1.1") {
         swal({
             title: "ERROR",
-            text: "Para .",
+            text: "Para ofertar debés ingresar.",
             icon: 'warning',
             buttons: {
                 cancel: {
-                    text: "Recargar la página",
-                    value: false,
+                    text: "Ingresar",
+                    value: true,
                     visible: true,
                     className: "btn btn-primary",
                     closeModal: true,
                 },
             }
         }).then((value) => {
-            window.location.replace("/")
+            if (value) {
+                window.location.replace("/ingresar");
+            }
             swal.close();
         });
     }
@@ -266,11 +268,10 @@ socket.on('auctionBidError', (auctionBidUpdate) => {
                 },
             }
         }).then((value) => {
-            window.location.replace("/")
+            window.location.replace("/");
             swal.close();
         });
     }
-    console.log("=============== auctionBidError ===============");
 });
 
 function updateAuctionBidPrice(auctionBidEnd, lotId, lastAuctionPrice, stepPrice, auctionPriceType, lotParams) {
