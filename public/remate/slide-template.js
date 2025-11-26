@@ -33,6 +33,9 @@ const slideTemplate =
                         <div class="col-12 p-0 m-0">
                             <h5 class="w-100">
                                 <small id="auction-bid-status-__lot_lotId__" class="text-muted w-100">
+                                    <div class="badge fs-4 w-100">
+                                        &nbsp;
+                                    </div>
                                 </small>
                             </h5>
                         </div>
