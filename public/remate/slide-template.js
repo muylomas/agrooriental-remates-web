@@ -66,12 +66,10 @@ const slideTemplate =
                             (__lot_equineFather__ <b>Y</b> __lot_equineMother__  <b>X</b> __lot_equineMaternalGrandfather__)
                         </a>
                     </p>
-                    <p class="card-text text-uppercase fs-6">
-                        <b>__lot_type__</b>
-                    </p>
                     <p class="card-text fs-6 mb-2">
+                        <b>Categoría</b>: __lot_type__</br>
                         <b>RP</b>: __lot_equineRP__</br>
-                        <b>Pelo</b>: __lot_equinePelo__</br>
+                        <b>Pelo</b>: __lot_equineHair__</br>
                         <b>Nacimiento</b>: __lot_equineBirth__</br>
                         <b>Cabaña</b>: Chimango
                     </p>
