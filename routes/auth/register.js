@@ -215,9 +215,9 @@ router.post('/codigo-verificacion', function (req, res, next) {
                     );
                 }
                 else {
-                    const redirectTo = req.session.redirectTo || '/';
+                    //const redirectTo = req.session.redirectTo || '/';
                     delete req.session.redirectTo;
-                    common_gral.redirectSavingSession(req, res, redirectTo);
+                    common_gral.redirectSavingSession(req, res, "/");
                 }
             }
         );

@@ -230,8 +230,6 @@ socket.on('auctionBidUpdate', (auctionBidUpdate) => {
 });
 
 socket.on('auctionBidError', (auctionBidUpdate) => {
-    console.log("=============== auctionBidError ===============");
-    console.log(auctionBidUpdate);
     if (auctionBidUpdate && "error" in auctionBidUpdate && auctionBidUpdate.error == "1.1") {
         swal({
             title: "ERROR",
