@@ -4,7 +4,7 @@ function changeVideoImageDisplay(lotId) {
     ) {
         $("#image-" + lotId).hide();
         $("#video-" + lotId).show();
-        $("#view-in-youtube-" + lotId).hide();
+        $("#view-in-youtube-" + lotId).show();
         $("#view-media-selector-" + lotId + " i").removeClass("mdi-video");
         $("#view-media-selector-" + lotId + " i").addClass("mdi-camera");
 
@@ -12,7 +12,7 @@ function changeVideoImageDisplay(lotId) {
     else {
         $("#image-" + lotId).show();
         $("#video-" + lotId).hide();
-        $("#view-in-youtube-" + lotId).show();
+        $("#view-in-youtube-" + lotId).hide();
         $("#view-media-selector-" + lotId + " i").removeClass("mdi-camera");
         $("#view-media-selector-" + lotId + " i").addClass("mdi-video");
     }
