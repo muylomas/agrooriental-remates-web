@@ -261,9 +261,10 @@ function insertLotLoop(lots, indSLots, callback) {
             __aux_intermediate_lastPrice = lots[indSLots].lastPrice;
         }
 
+        console.log("lotId: ", lots[indSLots].lotId);
+        console.log("lots[indSLots].stepPrice: ", lots[indSLots].stepPrice);
         let __aux_intermediate_stepPrice = 5;
         if ("stepPrice" in lots[indSLots] && lots[indSLots].stepPrice) {
-            console.log("lots[indSLots].stepPrice: ", lots[indSLots].stepPrice);
             __aux_intermediate_stepPrice = lots[indSLots].stepPrice;
         }
         else {
@@ -271,6 +272,8 @@ function insertLotLoop(lots, indSLots, callback) {
                 __aux_intermediate_stepPrice = 0.01
             }
         }
+
+        console.log("__aux_intermediate_stepPrice: ", __aux_intermediate_stepPrice);
 
         __aux_lastAuctionPriceFormatted = (__aux_intermediate_lastPrice).toFixed(0);
         __aux_lastAuctionPrice1Step = (__aux_intermediate_lastPrice + 1 * __aux_intermediate_stepPrice).toFixed(0);
