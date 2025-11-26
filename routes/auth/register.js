@@ -85,7 +85,8 @@ router.post('/', function (req, res, next) {
                         phonePassword = ?,
                         provider = "phone",
                         email = NULL,
-                        invitation = 0
+                        invitation = 0,
+                        session = ?
                 `,
                 [
                     req.body.userName,
@@ -93,6 +94,7 @@ router.post('/', function (req, res, next) {
                     req.body.phoneCountry,
                     parseInt(req.body.phoneNumber, 10),
                     phonePassword,
+                    req.sessionID,
                 ],
                 function (err, results) {
                     if (err) {
