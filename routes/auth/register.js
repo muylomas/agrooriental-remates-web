@@ -84,6 +84,7 @@ router.post('/', function (req, res, next) {
                         phoneNumber = ?,
                         phonePassword = ?,
                         provider = "phone",
+                        email = NULL,
                         invitation = 0
                 `,
                 [
