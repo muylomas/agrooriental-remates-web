@@ -61,7 +61,9 @@ router.post('/', function (req, res, next) {
             (
                 req.body.registerMethodType == "phone" &&
                 "phoneCountry" in req.body && req.body.phoneCountry &&
-                "phoneNumber" in req.body && req.body.phoneNumber && parseInt(req.body.phoneNumber, 10)
+                "phoneNumber" in req.body && req.body.phoneNumber && parseInt(req.body.phoneNumber, 10) &&
+                "userName" in req.body && req.body.userName &&
+                "userSurname" in req.body && req.body.userSurname
             ) || (
                 req.body.registerMethodType == "email" &&
                 "email" in req.body && req.body.email &&
@@ -76,6 +78,8 @@ router.post('/', function (req, res, next) {
             connection.query(
                 `
                     INSERT INTO customers SET
+                        name = ?,
+                        surname = ?,
                         phoneCountry = ?,
                         phoneNumber = ?,
                         phonePassword = ?,
