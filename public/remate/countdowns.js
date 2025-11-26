@@ -25,7 +25,7 @@ function generalTimer(lotId) {
     console.log("lotId: ", lotId);
     console.log("hours: ", pad(hours));
     console.log("minutes: ", pad(minutes));
-    console.log("remainingSeconds: ", ad(remainingSeconds));
+    console.log("remainingSeconds: ", pad(remainingSeconds));
 
     $('#countdown-hours-' + lotId).html(pad(hours));
     $('#countdown-mins-' + lotId).html(pad(minutes));

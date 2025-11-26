@@ -25,6 +25,10 @@ const slideTemplate =
                                 <b>Lote __lot_lotId__</b>
                             </div>
                         </div>
+                        <script>
+                            startDates[__lot_lotId__] = Date.parse('__lot_auctionStartString__');
+                            endDates[__lot_lotId__] = Date.parse('__lot_auctionEndString__');
+                        </script>
                         <div class="countdown-container d-flex justify-content-between align-items-end flex-wrap" id="countdown-container-__lot_lotId__">
                             <div class="d-flex flex-grow-1 align-items-left justify-content-left justify-content-md-left">
                                 <div class="countdown-day-container d-flex flex-column justify-content-around">
