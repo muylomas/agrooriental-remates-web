@@ -61,15 +61,18 @@ const slideTemplate =
                     <h4 class="card-title text-uppercase fs-5 mt-3 m-0">
                         __lot_equineName__
                     </h4>
-                    <a href="__lot_equineARU__" target="_blank" class="mb-2">
-                        (__lot_equineFather__ <b>Y</b> __lot_equineMother__  <b>X</b> __lot_equineMaternalGrandfather__)
-                    </a>
+                    <p class="mb-2">
+                        <a href="__lot_equineARU__" target="_blank" class="">
+                            (__lot_equineFather__ <b>Y</b> __lot_equineMother__  <b>X</b> __lot_equineMaternalGrandfather__)
+                        </a>
+                    </p>
                     <p class="card-text text-uppercase fs-6">
                         <b>__lot_type__</b>
                     </p>
                     <p class="card-text fs-6 mb-2">
-                        <b>RP</b>: __lot_equineRP__
-                        <br>
+                        <b>RP</b>: __lot_equineRP__</br>
+                        <b>Pelo</b>: __lot_equinePelo__</br>
+                        <b>Nacimiento</b>: __lot_equineBirth__</br>
                         <b>Cabaña</b>: Chimango
                     </p>
                     
