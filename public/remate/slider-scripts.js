@@ -397,7 +397,7 @@ function insertLotLoop(lots, indSLots, callback) {
         $("#remate-lotes").append(__aux_slideHTML);
 
         if (!lots[indSLots].video)
-            $("#image-" + lots[indSLots].lotId).hide();
+            $("#view-media-selector-" + lots[indSLots].lotId).hide();
 
         insertLotLoop(lots, indSLots + 1, callback);
     }
