@@ -1,14 +1,26 @@
+function findIndexByLotId(lotId) {
+    let result = { found: false, id: 0 };
+    for (let index in lots) {
+        if (lots[index].lotId == lotId) {
+            result = { found: true, id: index };
+        }
+    }
+
+    return result;
+};
+
 function changeVideoImageDisplay(lotId) {
     if (
         !($("#image-" + lotId).is(":hidden"))
     ) {
         $("#image-" + lotId).hide();
 
-        if (lotId in lots && lots[lotId].video) {
+        const indexById = findIndexByLotId(lotId);
+        if (indexById.found && lotId in lots && lots[indexById.id].video) {
             $("#cattle-media-container-" + lotId).prepend(
                 `
                     <video id="video-`+ lotId + `" class="position-absolute top-50 start-50 translate-middle" preload="auto" playsinline="" autoplay="autoplay" loop="" muted="">
-                        <source id="video-source-`+ lotId + `" type="video/mp4" src="` + lots[lotId].video + `"/>
+                        <source id="video-source-`+ lotId + `" type="video/mp4" src="` + lots[indexById.id].video + `"/>
                     </video>
                 `
             );
