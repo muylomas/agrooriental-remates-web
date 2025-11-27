@@ -1,6 +1,6 @@
 const slideTemplate =
     `
-        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+        <div id="lote-__lot_lotId__" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
             <div class="card m-2" id="lot-__lot_lotId__">
                 <div id="cattle-media-container-__lot_lotId__" class="cattle-media-container position-relative overflow-hidden w-100">
                     <img class="w-100" src="https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/cattle/equines-pixel.png">
@@ -61,7 +61,7 @@ const slideTemplate =
                     </h4>
                     <p class="mb-2">
                         <a href="__lot_equineARU__" target="_blank" class="">
-                            __lot_equineFather__ <b>Y</b> __lot_equineMother__  <b>X</b> __lot_equineMaternalGrandfather__
+                            __lot_equineFather__ <b>Y</b> __lot_equineMother__  <b>
                         </a>
                     </p>
                     <p class="card-text fs-6 mb-2">
