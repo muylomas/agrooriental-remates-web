@@ -408,6 +408,10 @@ function insertLotLoop(lots, indSLots, callback) {
     }
 };
 
+function openYoutubeLink(link) {
+    window.open(link, '_blank');
+};
+
 function includeSlidesInFsvs() {
     if (lots && lots.length) {
         insertLotLoop(
