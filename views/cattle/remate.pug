@@ -9,6 +9,14 @@ block content
   .content-wrapper.p-0.m-0.bg-white
        
     include remate-includes/header.pug 
+    
+    .row 
+      .col-12.position-relative
+        img.w-100(src="https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/banners/chimango-11-12-2025.jpg")
+        .position-absolute.top-0.end-0.pe-2.pt-2
+            button.btn.btn-warning.btn-rounded.btn-icon(type="button")
+              i.mdi.mdi-information-outline
+
     .row
       .col-12
         #remate-lotes.row.portfolio-grid
