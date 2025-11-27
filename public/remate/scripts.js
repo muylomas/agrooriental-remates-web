@@ -46,18 +46,20 @@ function auctionBidsHistory() {
     wrapper.innerHTML =
         `
             <div class="text-start" style="max-height: 70vh;overflow: scroll;">
+
                 <h4>
+                    <b>Cabaña Chimango</b>
+                </h4>
+                <h5>
                     <b>Fecha</b>: 11/12/2025, 19:00hs
-                </h4>
-                <h4>
+                </h5>
+                <h5>
                     <b>Ubicación</b>: Centro Las Lechuzas, Rincón de Pando
-                </h4>
-                <h4>
+                </h5>
+                <h5 class="mb-3">
                     <b>Modalidad</b>: Presencial
                 </h4>
-                <h4 class="mb-3">
-                    <b>Cabaña</b>: Chimango
-                </h4>
+
                 <h4> Comercialización </h4>
                 <ul>
                     <li>
