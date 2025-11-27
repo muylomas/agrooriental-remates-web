@@ -61,7 +61,7 @@ const slideTemplate =
                     </h4>
                     <p class="mb-2">
                         <a href="__lot_equineARU__" target="_blank" class="">
-                            __lot_equineFather__ <b>Y</b> __lot_equineMother__  <b>
+                            __lot_equineFather__ <b>Y</b> __lot_equineMother__
                         </a>
                     </p>
                     <p class="card-text fs-6 mb-2">
