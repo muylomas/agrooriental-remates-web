@@ -41,7 +41,7 @@ function changeVideoImageDisplay(lotId) {
     }
 };
 
-function auctionBidsHistory() {
+function auctionInfo() {
     const wrapper = document.createElement('div');
     wrapper.innerHTML =
         `
