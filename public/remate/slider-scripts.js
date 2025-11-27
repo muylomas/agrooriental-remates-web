@@ -393,7 +393,11 @@ function insertLotLoop(lots, indSLots, callback) {
                     );
         }
 
+
         $("#remate-lotes").append(__aux_slideHTML);
+
+        if (!lots[indSLots].video)
+            $("#image-" + lotId).hide();
 
         insertLotLoop(lots, indSLots + 1, callback);
     }
