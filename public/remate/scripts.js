@@ -45,7 +45,7 @@ function auctionBidsHistory() {
     const wrapper = document.createElement('div');
     wrapper.innerHTML =
         `
-            <div class="text-start" style="max-height: 80vh;overflow: scroll;">
+            <div class="text-start" style="max-height: 70vh;overflow: scroll;">
                 <p>
                     <b>Fecha</b>: 11/12/2025, 19:00hs
                 </p>
