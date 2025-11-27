@@ -5,7 +5,7 @@ const slideTemplate =
                 <div id="cattle-media-container-__lot_lotId__" class="cattle-media-container">
                     <div id="image-__lot_lotId__" class="cattle-image position-absolute top-0 start-0 w-100 h-100" style="background-image:url(__lot_imagesArray_0__);" alt="Lote __lot_lotId__"></div>
                     <div class="position-absolute bottom-0 end-0 pe-2 pb-2 ">
-                        <a id="view-in-youtube-__lot_lotId__" href="https://www.youtube.com/watch?v=9pRCCNSLiVI" type="button" 
+                        <a id="view-in-youtube-__lot_lotId__" href="__lot_equineYoutube__" type="button" 
                             class="btn btn-icon btn-youtube btn-rounded me-3 p-2 d-none" 
                             target="_blank">
                                 <i class="mdi mdi-youtube"></i>
