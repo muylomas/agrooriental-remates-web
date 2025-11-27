@@ -79,6 +79,7 @@ exports.authProcc = function (req, res, next) {
             "/reset-password",
             "/auth/",
             "/ganado/lote/publicacion/",
+            "/.well-known/acme-challenge"
           ];
 
           let exclude_urls_status = false;

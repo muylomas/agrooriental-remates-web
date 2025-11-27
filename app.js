@@ -54,8 +54,7 @@ app.use(function (req, res, next) {
       res.redirect('https://' + req.subdomains.reverse().join(".") + '.agrooriental.uy' + req.url);
     }
     else if (req.headers.host.indexOf("equinos.agrooriental.uy") != -1) {
-      //res.redirect('https://equinos.agrooriental.uy' + req.url);
-      next();
+      res.redirect('https://equinos.agrooriental.uy' + req.url);
     }
     else
       next();
