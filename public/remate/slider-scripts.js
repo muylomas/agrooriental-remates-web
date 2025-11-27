@@ -398,6 +398,8 @@ function insertLotLoop(lots, indSLots, callback) {
 
         if (!lots[indSLots].video)
             $("#view-media-selector-" + lots[indSLots].lotId).hide();
+        if (!lots[indSLots].equineYoutube)
+            $("#view-in-youtube-" + lots[indSLots].lotId).remove();
 
         insertLotLoop(lots, indSLots + 1, callback);
     }
