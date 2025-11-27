@@ -72,8 +72,6 @@ const sslOptions = {
 
 const https = require('https').Server(sslOptions, app);
 
-//https = require('https').Server(sslOptions, app);
-
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
@@ -169,7 +167,7 @@ app.use('/api/cattle', api_cattle);
 app.use('/api/comments', api_comments);
 
 // mercado-agro Sockets
-const socketIo = require('socket.io')(http);
+const socketIo = require('socket.io')(https);
 app.set('socketapp', socketIo);
 socketIo.on('connect', require('./models/sockets/customerSocket'));
 socketIo.on('connection', require('./models/sockets/disconnection'));
@@ -214,7 +212,7 @@ app.use(function (err, req, res, next) {
   });
 });
 
-http.listen(3000, function () {
+https.listen(3000, function () {
   console.log('listening on *:3000');
 });
 
