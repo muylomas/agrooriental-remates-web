@@ -63,23 +63,14 @@ app.use(function (req, res, next) {
 
 const fs = require("fs");
 const sslOptions = {
-  ca: fs.readFileSync('/etc/ssl/chain.pem'),
-  key: fs.readFileSync('/etc/ssl/privkey.pem'),
-  cert: fs.readFileSync('/etc/ssl/cert.pem'),
-  requestCert: false,
-  rejectUnauthorized: false
-};
-
-const sslOptions2 = {
-  ca: fs.readFileSync('/etc/ssl/www_chain.pem'),
-  key: fs.readFileSync('/etc/ssl/www_privkey.pem'),
-  cert: fs.readFileSync('/etc/ssl/www_cert.pem'),
+  ca: fs.readFileSync('/etc/ssl/equinos_chain.pem'),
+  key: fs.readFileSync('/etc/ssl/equinos_privkey.pem'),
+  cert: fs.readFileSync('/etc/ssl/equinos_cert.pem'),
   requestCert: false,
   rejectUnauthorized: false
 };
 
 const https = require('https').Server(sslOptions, app);
-https.addContext('www.equinos.agrooriental.uy', sslOptions2);
 
 //https = require('https').Server(sslOptions, app);
 
