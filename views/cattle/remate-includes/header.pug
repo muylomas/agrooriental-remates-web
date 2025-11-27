@@ -7,13 +7,13 @@
           - __aux_style = customer.customerImage ? 'background-image:url(' + customer.customerImage + ');' : "";
         .user-profile-icon(style=__aux_style, onclick="window.location.href = '/usuario/perfil'")
           img.w-100(src='https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png')
-        //ul#header-nav-tabs.nav.nav-tabs.border-0(role='tablist')
+        ul#header-nav-tabs.nav.nav-tabs.border-0(role='tablist')
           li.nav-item.ml-2
-            a.nav-link.text-white.pt-2(href='/')  
-              b Comprar
-          li.nav-item.ml-2
+            a.nav-link.text-white.pt-2(href='javascript:auctionBidsHistory()')  
+              b Información y Condiciones
+          //li.nav-item.ml-2
             a.nav-link.active.text-white.pt-2(data-toggle='tab', role='tab', aria-controls='', aria-selected='true')
               b Vender
-          li.nav-item.ml-2
+          //li.nav-item.ml-2
             a.nav-link.text-white.pt-2(href='/cuentas/')  
               b Cuenta
