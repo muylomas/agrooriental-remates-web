@@ -50,13 +50,6 @@ select {
     border-color: #ffffff;
 }
 
-.cattle-media-container {
-    height: 245px;
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-}
-
 .cattle-media-container > video {
     height: 100%;
     width: auto;
