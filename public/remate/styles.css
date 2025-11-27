@@ -390,7 +390,7 @@ input[id^="auction-bid-price-"] {
     margin-right: 1.5rem !important;
 }
 
-.countdown-container h3 {
+.countdown-container h4 {
     background: rgba(255, 0, 0, 1);
 }
 

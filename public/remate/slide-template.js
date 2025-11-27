@@ -27,32 +27,32 @@ const slideTemplate =
                             endDates[__lot_lotId__] = Date.parse('__lot_auctionEndString__');
                         </script>
                         <div class="countdown-container d-flex justify-content-between align-items-end flex-wrap" id="countdown-container-__lot_lotId__">
-                            <h3 class="mb-0 d-inline-block text-center p-2 me-2">
+                            <h4 class="mb-0 d-inline-block text-center p-2 me-2">
                                 <span class="text-white" id="countdown-days-__lot_lotId__">
                                     --
                                 </span>
-                            </h3>
-                            <h3 class="mb-0 d-inline-block text-center p-2">
+                            </h4>
+                            <h4 class="mb-0 d-inline-block text-center p-2">
                                 <span class="text-white" id="countdown-hours-__lot_lotId__">
                                     --
                                 </span>
-                            </h3>
-                            <h3 class="mb-0 d-inline-block text-center p-2">
+                            </h4>
+                            <h4 class="mb-0 d-inline-block text-center p-2">
                                 <span class="text-white">:</span>
-                            </h3>
-                            <h3 class="mb-0 d-inline-block text-center p-2">
+                            </h4>
+                            <h4 class="mb-0 d-inline-block text-center p-2">
                                 <span class="text-white" id="countdown-mins-__lot_lotId__">
                                     --
                                 </span>
-                            </h3>
-                            <h3 class="mb-0 d-inline-block text-center p-2">
+                            </h4>
+                            <h4 class="mb-0 d-inline-block text-center p-2">
                                 <span class="text-white">:</span>
-                            </h3>
-                            <h3 class="mb-0 d-inline-block text-center p-2">
+                            </h4>
+                            <h4 class="mb-0 d-inline-block text-center p-2">
                                 <span class="text-white" id="countdown-secs-__lot_lotId__">
                                     --
                                 </span>
-                            </h3>
+                            </h4>
                         </div>
                     </div>
                     <h4 class="card-title text-uppercase fs-5 mt-3 m-0">
