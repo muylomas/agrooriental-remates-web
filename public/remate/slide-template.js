@@ -16,7 +16,7 @@ const slideTemplate =
                     </div>
                 </div>
                 <div class="card-body px-3">
-                    <div class="d-flex justify-content-between flex-wrap">
+                    <div class="d-flex justify-content-between flex-wrap align-items-center">
                         <div class="d-flex align-items-end flex-wrap">
                             <div class="btn btn-dark text-uppercase fs-5 p-2 m-0">
                                 <b>Lote __lot_subId__</b>
