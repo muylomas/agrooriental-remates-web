@@ -6,7 +6,7 @@ module.exports = function (socket) {
 
     if (
         socket.handshake.headers['sec-fetch-site'] == 'same-origin' ||
-        socket.handshake.headers.host == '54.183.80.127'
+        socket.handshake.headers.host == 'equinos.agrooriental.uy'
     ) {
 
         let cookieParsed = {};

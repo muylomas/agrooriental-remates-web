@@ -53,8 +53,8 @@ app.use(function (req, res, next) {
     else if (req.subdomains.length) {
       res.redirect('https://' + req.subdomains.reverse().join(".") + '.com.uy' + req.url);
     }
-    else if (req.headers.host.indexOf("54.183.80.127") != -1) {
-      //res.redirect('https://54.183.80.127' + req.url);
+    else if (req.headers.host.indexOf("equinos.agrooriental.uy") != -1) {
+      //res.redirect('https://equinos.agrooriental.uy' + req.url);
       next();
     }
     else
@@ -80,7 +80,7 @@ const sslOptions2 = {
 };
 
 const https = require('https').Server(sslOptions, app);
-https.addContext('www.54.183.80.127', sslOptions2);
+https.addContext('www.equinos.agrooriental.uy', sslOptions2);
 
 //https = require('https').Server(sslOptions, app);
 
@@ -121,7 +121,7 @@ const sessionMiddleware = session({
   secret: 'LoktOOtNBvuFajNrBnx4',
   cookie: {
     maxAge: (new Date(Date.now() + (24 * 60 * 60))).getTime(),
-    domain: '54.183.80.127',
+    domain: 'equinos.agrooriental.uy',
   },
   resave: false,
   name: "agroOrientaApp",
