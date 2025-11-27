@@ -49,7 +49,7 @@ html.fsvs.home-page
     script(src='https://cdn.socket.io/4.7.4/socket.io.min.js')
     script.
       const socket = io();
-      const socketGestion = io('gestion.agrooriental.uy', {
+      const socketGestion = io('gestion.agrooriental.uy:3000', {
         transports: ['websocket', 'xhr-polling']
       });
       
