@@ -27,7 +27,7 @@ function getUserBySocket(socketId, callback) {
     );
 }
 
-function isSalePrice(bid, lotId, callback) {
+function isBidOk(bid, lotId, callback) {
     let reply = { error: true, msg: "Pique no válido" };
     connection.query(
         `
@@ -60,7 +60,7 @@ function isSalePrice(bid, lotId, callback) {
     );
 }
 
-function isBidOk(bid, salePrice, lotId, callback) {
+function isSalePrice(bid, salePrice, lotId, callback) {
     if (salePrice <= lastBid) {
         /*connection.query(
             `
@@ -94,7 +94,7 @@ module.exports = function (socket) {
                 socket.id,
                 function (customerId) {
                     if (customerId) {
-                        isSalePrice(
+                        isBidOk(
                             parameters.bid,
                             parameters.lotId,
                             function (bidCheckReply) {
