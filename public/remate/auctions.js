@@ -241,7 +241,6 @@ socket.on('auctionBidError', (auctionBidUpdate) => {
                     value: "login",
                     visible: true,
                     className: "btn btn-primary",
-                    closeModal: true,
                 },
             }
         }).then((value) => {
@@ -263,7 +262,6 @@ socket.on('auctionBidError', (auctionBidUpdate) => {
                     value: "reload",
                     visible: true,
                     className: "btn btn-light",
-                    closeModal: true,
                 },
                 close: {
                     text: "Cerrar",
