@@ -236,11 +236,19 @@ socket.on('auctionBidError', (auctionBidUpdate) => {
             text: "Para ofertar debés ingresar.",
             icon: 'warning',
             buttons: {
+                close_h: {
+                    text: "Cerrar",
+                    value: "close",
+                    visible: false,
+                    className: "btn btn-primary",
+                    closeModal: true,
+                },
                 cancel: {
                     text: "Ingresar",
                     value: "login",
                     visible: true,
                     className: "btn btn-primary",
+                    closeModal: true,
                 },
             }
         }).then((value) => {
@@ -257,6 +265,13 @@ socket.on('auctionBidError', (auctionBidUpdate) => {
             text: auctionBidUpdate.msg,
             icon: 'warning',
             buttons: {
+                close_h: {
+                    text: "Cerrar",
+                    value: "close",
+                    visible: false,
+                    className: "btn btn-primary",
+                    closeModal: true,
+                },
                 cancel: {
                     text: "Recargar la página",
                     value: "reload",
