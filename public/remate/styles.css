@@ -51,8 +51,8 @@ select {
 }
 
 .cattle-media-container > video {
-    height: 100%;
-    width: auto;
+    width: 100%;
+    height: auto;
 }
 
 .cattle-media-container > .cattle-image {
