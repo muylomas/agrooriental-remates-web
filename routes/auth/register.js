@@ -177,6 +177,11 @@ router.post('/codigo-verificacion', function (req, res, next) {
         "userId" in req.body &&
         req.body.userId
     ) {
+        console.log("req.body.code1: ", req.body.code1);
+        console.log("req.body.code2: ", req.body.code2);
+        console.log("req.body.code3: ", req.body.code3);
+        console.log("req.body.code4: ", req.body.code4);
+
         const phonePassword = sha512(
             "phone" +
             req.body.code1 +
