@@ -12,7 +12,7 @@ const slideTemplate =
                             class="btn btn-icon btn-youtube btn-rounded me-3 p-2 h-100 d-none">
                                 <i class="mdi mdi-youtube"></i>
                         </button>
-                        <button id="view-media-selector-__lot_lotId__" type="button" class="btn btn-primary btn-rounded btn-icon" onclick="javascript:changeVideoImageDisplay(__lot_lotId__,1)">
+                        <button id="view-media-selector-__lot_lotId__" type="button" class="btn btn-primary btn-rounded btn-icon" onclick="javascript:changeVideoImageDisplay(__lot_lotId__)">
                             <i class="mdi mdi-video"></i>
                         </button>
                     </div>
