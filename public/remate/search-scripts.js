@@ -49,7 +49,7 @@ function goToLotByIdFromMap(lotId) {
     if (lastLotsSearch.length) {
         lots = lastLotsSearch;
         $("#fsvs-body").html("");
-        includeSlidesInFsvs();
+        insertLotsInPage();
 
         initFsvs();
 
@@ -83,7 +83,7 @@ $(document).ready(function () {
         if (lastLotsSearch.length) {
             lots = lastLotsSearch;
             $("#fsvs-body").html("");
-            includeSlidesInFsvs();
+            insertLotsInPage();
             initFsvs();
             window.history.pushState({ "html": document.html, "pageTitle": document.title }, "", "/");
             lastLotsSearch = [];

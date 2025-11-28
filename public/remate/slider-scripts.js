@@ -412,7 +412,7 @@ function openYoutubeLink(link) {
     window.open(link, '_blank');
 };
 
-function includeSlidesInFsvs() {
+function insertLotsInPage() {
     if (lots && lots.length) {
         insertLotLoop(
             lots, 0,
@@ -424,15 +424,5 @@ function includeSlidesInFsvs() {
 };
 
 window.addEventListener('load', function () {
-
-    includeSlidesInFsvs();
-
-    setInterval(() => {
-        if (lots && lots.length) {
-            for (let indSLots in lots) {
-
-                videoFitAndCenter(lots[indSLots].lotId);
-            }
-        }
-    }, 3000);
+    insertLotsInPage();
 });
