@@ -17,7 +17,7 @@ function changeVideoImageDisplay(lotId) {
 
         const indexById = findIndexByLotId(lotId);
         console.log(indexById);
-        if (indexById.found && lotId in lots && lots[indexById.id].video) {
+        if (indexById.found && indexById.id in lots && lots[indexById.id].video) {
             $("#cattle-media-container-" + lotId).prepend(
                 `
                     <video id="video-`+ lotId + `" class="position-absolute top-50 start-50 translate-middle" preload="auto" playsinline="" autoplay="autoplay" loop="" muted="">
