@@ -32,7 +32,8 @@ function isSalePrice(bid, lotId, callback) {
     connection.query(
         `
             SELECT
-                startPrice, stepPrice
+                startPrice, 
+                stepPrice
             FROM cattle
             WHERE id = ?
         `,
@@ -43,6 +44,7 @@ function isSalePrice(bid, lotId, callback) {
             if (err) {
                 console.log(err);
             }
+
             if (bid < results[0].startPrice) {
                 reply.msg = "El pique debe superar la base de USD " + results[0].startPrice + ". Vuelva a intenarlo!";
             }
