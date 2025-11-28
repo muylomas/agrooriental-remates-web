@@ -16,6 +16,7 @@ function changeVideoImageDisplay(lotId) {
         $("#image-" + lotId).hide();
 
         const indexById = findIndexByLotId(lotId);
+        console.log(indexById);
         if (indexById.found && lotId in lots && lots[indexById.id].video) {
             $("#cattle-media-container-" + lotId).prepend(
                 `
