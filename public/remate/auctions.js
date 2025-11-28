@@ -418,6 +418,7 @@ function showBidAlertWarning(lotId, auctionBidEnd) {
 
 $(document).ready(function () {
     for (let index in activeAuctionBids) {
+        activeAuctionBidsLotIds.push(activeAuctionBids[index].lotId);
         if (activeAuctionBids[index].isWinning) {
             showCustomerWinning(activeAuctionBids[index].lotId, false, false, true);
         }
