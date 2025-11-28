@@ -238,14 +238,15 @@ socket.on('auctionBidError', (auctionBidUpdate) => {
             buttons: {
                 cancel: {
                     text: "Ingresar",
-                    value: true,
+                    value: "login",
                     visible: true,
                     className: "btn btn-primary",
                     closeModal: true,
                 },
             }
         }).then((value) => {
-            if (value) {
+            console.log(value);
+            if (value == "login") {
                 window.location.replace("/ingresar");
             }
             swal.close();
@@ -254,20 +255,29 @@ socket.on('auctionBidError', (auctionBidUpdate) => {
     else {
         swal({
             title: "ERROR",
-            text: "No se pudo ingresar la oferta, intentalo nuevamente.",
+            text: auctionBidUpdate.msg,
             icon: 'warning',
             buttons: {
                 cancel: {
                     text: "Recargar la página",
-                    value: false,
+                    value: "reload",
+                    visible: true,
+                    className: "btn btn-light",
+                    closeModal: true,
+                },
+                close: {
+                    text: "Cerrar",
+                    value: "close",
                     visible: true,
                     className: "btn btn-primary",
                     closeModal: true,
                 },
             }
         }).then((value) => {
-            window.location.replace("/");
-            swal.close();
+            console.log(value);
+            if (value == "reload")
+                window.location.replace("/");
+            //swal.close();
         });
     }
 });
