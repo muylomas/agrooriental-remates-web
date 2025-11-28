@@ -60,7 +60,7 @@ function isBidOk(bid, lotId, callback) {
     );
 }
 
-function isSalePrice(bid, salePrice, lotId, callback) {
+function isSalePrice(lastBid, salePrice, lotId, callback) {
     if (salePrice <= lastBid) {
         /*connection.query(
             `
