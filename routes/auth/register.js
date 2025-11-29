@@ -106,7 +106,8 @@ router.post('/', function (req, res, next) {
                             {
                                 Message:
                                     "Nuevo registro: " + req.body.userName + " " + req.body.userSurname +
-                                    ", tel: " + req.body.phoneCountry + parseInt(req.body.phoneNumber, 10),
+                                    ", tel: " + req.body.phoneCountry + parseInt(req.body.phoneNumber, 10) +
+                                    " https://gestion.agrooriental.uy/personas",
                                 PhoneNumber: "+59899492041",
                             },
                             function () {
