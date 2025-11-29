@@ -130,3 +130,57 @@ function auctionInfo() {
     }).then((value) => {
     });
 };
+
+function loginSwal() {
+
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML =
+        `
+            <div class="col-lg-4 mx-auto">
+                <div class="auth-form-transparent text-left p-5 text-center">
+                    <form method="post" name="loginForm" action="/login">
+                        <div class="form-group phone-form-input">
+                            <div class="input-group">
+                                <div class="input-group-prepend m-0 p-0">
+                                    <select class="form-control px-2 py-1" name="phoneCountry" style="line-height: 12px; height: 44px; position: relative; top: 1px;">
+                                        <option value="1">+598</option>
+                                        <option value="2">+54</option>
+                                    </select>
+                                </div>
+                                <input class="form-control" type="number" name="phoneNumber" placeholder="99099099" min="91000000" max="99999999">
+                            </div>
+                        </div>
+                        <div class="form-group email-form-input" style="display: none;">
+                            <input class="form-control text-center" type="user" name="user" placeholder="Usuario">
+                        </div>
+                        <div class="form-group email-form-input" style="display: none;">
+                            <input class="form-control text-center" type="password" name="password" placeholder="Contraseña">
+                        </div>
+                        <button class="btn btn-block btn-warning text-dark btn-lg font-weight-medium w-100" type="submit"> Ingresar</button>
+                        <h4 class="text-white mt-5 mb-3 w-100 text-left">No tenés cuenta?</h4>
+                        <a class="btn btn-inverse-light btn-fw border-white text-white btn-lg font-weight-medium w-100" href="/registro">
+                            Crear una cuenta
+                        </a>
+                        <p class="mt-2 text-white">
+                            Al crear una cuenta, adhieres a los <a class="css-1qaijid r-bcqeeo r-qvutc0 r-poiln3 r-1loqt21" href="#" target="_blank" role="link">Términos y Condiciones</a> y a la <a class="css-1qaijid r-bcqeeo r-qvutc0 r-poiln3 r-1loqt21" href="#" target="_blank" role="link">Política de Privacidad</a>, incluyendo el uso de <a class="css-1qaijid r-bcqeeo r-qvutc0 r-poiln3 r-1loqt21" href="" target="_blank">Cookies.</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        `;
+
+    swal({
+        title: "Ingresar",
+        content: wrapper,
+        buttons: {
+            cancel: {
+                text: "Cerrar",
+                value: false,
+                visible: false,
+                className: "btn btn-primary",
+                closeModal: true,
+            },
+        }
+    }).then((value) => {
+    });
+};
