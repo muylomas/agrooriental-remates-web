@@ -174,13 +174,8 @@ router.post('/codigo-verificacion', function (req, res, next) {
         "code2" in req.body &&
         "code3" in req.body &&
         "code4" in req.body &&
-        "userId" in req.body &&
-        req.body.userId
+        "userId" in req.body && req.body.userId
     ) {
-        console.log("req.body.code1: ", req.body.code1);
-        console.log("req.body.code2: ", req.body.code2);
-        console.log("req.body.code3: ", req.body.code3);
-        console.log("req.body.code4: ", req.body.code4);
 
         const phonePassword = sha512(
             "phone" +
@@ -189,23 +184,21 @@ router.post('/codigo-verificacion', function (req, res, next) {
             req.body.code3 +
             req.body.code4
         );
-
+        /*
         console.log("======================== codigo-verificacion ========================");
         console.log("phonePassword: ", phonePassword);
         console.log("userId: ", req.body.userId);
         console.log("sessionID: ", req.sessionID);
-
-
+        */
         connection.query(
             `
-                UPDATE customers SET
-                    invitation = 1,
-                    session = ?
-                WHERE id = ? AND phonePassword = ?
+                SELECT id
+                FROM customers 
+                WHERE 
+                    invitation = 1 AND
+                    phonePassword = ?
             `,
             [
-                req.sessionID,
-                req.body.userId,
                 phonePassword,
             ],
             function (err, results) {
@@ -219,22 +212,44 @@ router.post('/codigo-verificacion', function (req, res, next) {
                         }
                     );
                 }
+                else if (results.length) {
+                    connection.query(
+                        `
+                                UPDATE customers SET
+                                    session = ?
+                                WHERE id = ?
+                            `,
+                        [
+                            req.sessionID,
+                            results[0].id,
+                        ],
+                        function (err, results) {
+                            if (err) {
+                                console.log(err);
+                                res.render(
+                                    'auth/register-form',
+                                    {
+                                        verification: "verificacion",
+                                        userId: req.body.userId,
+                                    }
+                                );
+                            }
+                            else {
+                                //const redirectTo = req.session.redirectTo || '/';
+                                delete req.session.redirectTo;
+                                common_gral.redirectSavingSession(req, res, "/");
+                            }
+                        }
+                    );
+                }
                 else {
-                    //const redirectTo = req.session.redirectTo || '/';
-                    delete req.session.redirectTo;
-                    common_gral.redirectSavingSession(req, res, "/");
+                    res.redirect('/registro/codigo-verificacion');
                 }
             }
         );
     }
     else {
-        res.render(
-            'auth/register-form',
-            {
-                verification: false,
-                userId: 0,
-            }
-        );
+        res.redirect('/registro/codigo-verificacion');
     }
 
 });
