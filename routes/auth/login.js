@@ -79,7 +79,7 @@ router.post('/', function (req, res, next) {
                                             console.log("================ phoneCodeNumber ================");
                                             aws_sms_sender.sms_sender(
                                                 {
-                                                    Message: phoneCodeNumber + " es tu código de verificación de Agro Oriental.",
+                                                    Message: phoneCodeNumber + " es tu código de verificación de Agro Oriental https://equinos.agrooriental.uy",
                                                     PhoneNumber: "+598" + parseInt(req.body.phoneNumber, 10),
                                                 },
                                                 function () {
