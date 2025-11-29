@@ -231,7 +231,7 @@ function insertLotLoop(lots, indSLots, callback) {
     if (indSLots < lots.length) {
         let __aux_slideHTML = slideTemplate;
 
-        lots[indSLots] = lotsDetailsParamsToHTML(lots[indSLots]);
+        //lots[indSLots] = lotsDetailsParamsToHTML(lots[indSLots]);
 
         for (let indObj in lots[indSLots]) {
             if (__aux_slideHTML.indexOf("__lot_" + indObj + "__") != -1) {
