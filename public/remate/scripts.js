@@ -172,6 +172,7 @@ function loginSwal() {
     swal({
         title: "Ingresar",
         content: wrapper,
+        background: '#333333',
         buttons: {
             cancel: {
                 text: "Cerrar",
