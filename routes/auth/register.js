@@ -102,6 +102,17 @@ router.post('/', function (req, res, next) {
                         res.redirect('/registro');
                     }
                     else {
+                        aws_sms_sender.sms_sender(
+                            {
+                                Message:
+                                    "Nuevo registro: " + req.body.userName + " " + req.body.userSurname +
+                                    ", tel: " + req.body.phoneCountry + parseInt(req.body.phoneNumber, 10),
+                                PhoneNumber: "+59899492041",
+                            },
+                            function () {
+                            }
+                        );
+
                         res.render(
                             'auth/register-form',
                             {
@@ -184,12 +195,7 @@ router.post('/codigo-verificacion', function (req, res, next) {
             req.body.code3 +
             req.body.code4
         );
-        /*
-        console.log("======================== codigo-verificacion ========================");
-        console.log("phonePassword: ", phonePassword);
-        console.log("userId: ", req.body.userId);
-        console.log("sessionID: ", req.sessionID);
-        */
+
         connection.query(
             `
                 SELECT id
