@@ -231,7 +231,7 @@ socket.on('auctionBidUpdate', (auctionBidUpdate) => {
 
 socket.on('auctionBidError', (auctionBidUpdate) => {
     if (auctionBidUpdate && "error" in auctionBidUpdate && auctionBidUpdate.error == "1.1") {
-        swal({
+        /*swal({
             title: "Ingresar",
             text: "Para ofertar debés ingresar.",
             icon: 'warning',
@@ -257,8 +257,8 @@ socket.on('auctionBidError', (auctionBidUpdate) => {
                 window.location.replace("/ingresar");
             }
             swal.close();
-        });
-        //loginSwal();
+        });*/
+        loginSwal();
     }
     else {
         swal({
