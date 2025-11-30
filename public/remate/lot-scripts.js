@@ -70,7 +70,7 @@ function initializeActionsAndDisplays() {
         for (let indSLots in lots) {
             const __aux_lotId = lots[indSLots].lotId;
 
-            if (lots[indSLots].auctionBids.length) {
+            if ("auctionBids" in lots[indSLots] && lots[indSLots].auctionBids.length) {
                 $("#auction-bid-view-history-" + __aux_lotId).removeClass("d-none");
                 $("#last-auction-bid-price-auction-" + __aux_lotId).parent().removeClass("mt-1");
                 $("#last-auction-bid-price-auction-" + __aux_lotId).parent().addClass("mt-2");
