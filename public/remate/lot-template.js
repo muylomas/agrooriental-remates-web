@@ -116,7 +116,7 @@ const slideTemplate =
                             <div class="col-12 p-0 m-0">
                                 <div class="d-flex align-items-left justify-content-left justify-content-md-left">
                                     <div class="d-flex flex-column justify-content-around">
-                                        <button class="btn btn-icon btn-danger" onclick="auctionBidAddToPrice(__lot_lotId__, -1)">
+                                        <button class="btn btn-icon btn-secondary" onclick="auctionBidAddToPrice(__lot_lotId__, -1)">
                                             <i class="mdi mdi-minus"></i>
                                         </button>
                                     </div>
@@ -131,7 +131,7 @@ const slideTemplate =
                                                 value="__lot_lastAuctionPrice3Step__">
                                     </div>
                                     <div class="d-flex flex-column justify-content-around">
-                                        <button class="btn btn-icon btn-primary" onclick="auctionBidAddToPrice(__lot_lotId__, 1)">
+                                        <button class="btn btn-icon btn-secondary" onclick="auctionBidAddToPrice(__lot_lotId__, 1)">
                                             <i class="mdi mdi-plus"></i>
                                         </button>
                                     </div>
