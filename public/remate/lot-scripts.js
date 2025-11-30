@@ -17,7 +17,7 @@ function initializeActionsAndDisplays() {
             }
             else if ($(this).attr("id").indexOf("auction-") != -1) {
                 $("#auction-bid-" + elementLotId).addClass("open");
-                getAuctionBidsForLot(elementLotId);
+                getAuctionBidsForLot(elementLotId, function () { });
                 $(".topbar-overlay-video").hide();
                 slider.stopSlider();
             }
@@ -65,6 +65,7 @@ function initializeActionsAndDisplays() {
     $("[id^='google-map-bottom-desc-text-']").hide();
     $("[id^='google-map-under-desc-text-']").show();
 
+    /*
     if (lots && lots.length) {
         for (let indSLots in lots) {
             const __aux_lotId = lots[indSLots].lotId;
@@ -72,6 +73,7 @@ function initializeActionsAndDisplays() {
             getAuctionBidsForLot(__aux_lotId);
         }
     };
+    */
 
     countdownTimers = {};
     for (lotIdIndex in startDates) {
@@ -104,7 +106,7 @@ function videoFitAndCenter(lotId) {
     }
 };
 
-function getAuctionBidsForLot(lotId) {
+function getAuctionBidsForLot(lotId, callback) {
     $.post(
         "/api/cattle/lot/auction/bids",
         {
@@ -133,98 +135,105 @@ function getAuctionBidsForLot(lotId) {
                     }
                 }
             }
+
+            callback();
         }
     );
 };
 
 function auctionBidsHistory(lotId) {
-    let auctionBids = []
-    let indSLots = 0;
-    for (let index in lots) {
-        if (lots[index].lotId == lotId) {
-            auctionBids = lots[index].auctionBids;
-            indSLots = index;
-        }
-    }
+    getAuctionBidsForLot(
+        lotId,
+        function () {
+            let auctionBids = []
+            let indSLots = 0;
+            for (let index in lots) {
+                if (lots[index].lotId == lotId) {
+                    auctionBids = lots[index].auctionBids;
+                    indSLots = index;
+                }
+            }
 
-    const wrapper = document.createElement('div');
+            const wrapper = document.createElement('div');
 
-    if (auctionBids.length) {
-        let __aux_bidsRows = "";
-        for (let indBid in auctionBids) {
-            const __aux_bid = auctionBids[indBid];
-            let __aux_bidAmount = __aux_bid.amount;
-            if (lots[indSLots].auctionPriceType == 1) {
-                __aux_bidAmount = __aux_bid.amount.toFixed(2);
+            if (auctionBids.length) {
+                let __aux_bidsRows = "";
+                for (let indBid in auctionBids) {
+                    const __aux_bid = auctionBids[indBid];
+                    let __aux_bidAmount = __aux_bid.amount;
+                    if (lots[indSLots].auctionPriceType == 1) {
+                        __aux_bidAmount = __aux_bid.amount.toFixed(2);
+                    }
+                    else {
+                        __aux_bidAmount = __aux_bid.amount.toFixed(0);
+                    }
+
+                    __aux_bidsRows +=
+                        `
+                            <tr class="bg-white">
+                                <td class="py-2 text-center">
+                                    `+ __aux_bid.bidDate + `
+                                </td>
+                                <td class="py-2 text-center">
+                                    `+ __aux_bid.bidTime + `
+                                </td>
+                                <td class="py-2 text-center">
+                                    USD <b>`+ __aux_bidAmount + `</b>
+                                </td>
+                            </tr>
+                        `;
+                }
+
+                wrapper.innerHTML =
+                    `
+                        <div class="dataTables_wrapper dt-bootstrap4 no-footer mt-4">
+                            <table class="table dataTable no-footer border-0">
+                                <thead class="bg-secondary text-light">
+                                    <tr>
+                                        <th class="py-2 text-center">
+                                            <h6 class="m-0">FECHA</h6>
+                                        </th>
+                                        <th class="py-2 text-center">
+                                            <h6 class="m-0">HORA</h6>
+                                        </th>
+                                        <th class="py-2 text-center">
+                                            <h6 class="m-0">MONTO</h6>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ` + __aux_bidsRows + `
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
             }
             else {
-                __aux_bidAmount = __aux_bid.amount.toFixed(0);
+                wrapper.innerHTML =
+                    `
+                    <div class="bg-light p-4">
+                        No hay ofertas por el momento.
+                    </div>
+                `;
             }
 
-            __aux_bidsRows +=
-                `
-                    <tr class="bg-white">
-                        <td class="py-2 text-center">
-                            `+ __aux_bid.bidDate + `
-                        </td>
-                        <td class="py-2 text-center">
-                            `+ __aux_bid.bidTime + `
-                        </td>
-                        <td class="py-2 text-center">
-                            USD <b>`+ __aux_bidAmount + `</b>
-                        </td>
-                    </tr>
-                `;
+            swal({
+                title: "ÚLTIMOS PIQUES",
+                content: wrapper,
+                buttons: {
+                    cancel: {
+                        text: "Cerrar",
+                        value: false,
+                        visible: true,
+                        className: "btn btn-primary",
+                        closeModal: true,
+                    },
+                }
+            }).then((value) => {
+                $("#button-auction-bid-" + lotId).click();
+            });
         }
-
-        wrapper.innerHTML =
-            `
-                <div class="dataTables_wrapper dt-bootstrap4 no-footer mt-4">
-                    <table class="table dataTable no-footer border-0">
-                        <thead class="bg-secondary text-light">
-                            <tr>
-                                <th class="py-2 text-center">
-                                    <h6 class="m-0">FECHA</h6>
-                                </th>
-                                <th class="py-2 text-center">
-                                    <h6 class="m-0">HORA</h6>
-                                </th>
-                                <th class="py-2 text-center">
-                                    <h6 class="m-0">MONTO</h6>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ` + __aux_bidsRows + `
-                        </tbody>
-                    </table>
-                </div>
-            `;
-    }
-    else {
-        wrapper.innerHTML =
-            `
-            <div class="bg-light p-4">
-                No hay ofertas por el momento.
-            </div>
-        `;
-    }
-
-    swal({
-        title: "ÚLTIMOS PIQUES",
-        content: wrapper,
-        buttons: {
-            cancel: {
-                text: "Cerrar",
-                value: false,
-                visible: true,
-                className: "btn btn-primary",
-                closeModal: true,
-            },
-        }
-    }).then((value) => {
-        $("#button-auction-bid-" + lotId).click();
-    });
+    );
 };
 
 function insertLotLoop(lots, indSLots, callback) {
