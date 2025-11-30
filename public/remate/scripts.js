@@ -144,7 +144,7 @@ function loginSwal() {
                                 <div class="form-group phone-form-input">
                                     <div class="input-group">
                                         <div class="input-group-prepend m-0 p-0">
-                                            <select class="form-control px-2 py-1" name="phoneCountry" style="line-height: 12px; height: 44px; position: relative; top: 1px;">
+                                            <select class="form-control px-2 py-1 h-100" name="phoneCountry"">
                                                 <option value="1">+598</option>
                                                 <option value="2">+54</option>
                                             </select>
