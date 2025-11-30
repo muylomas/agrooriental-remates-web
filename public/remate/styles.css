@@ -25,6 +25,11 @@
     appearance: auto !important;
 }
 
+div.swal-content:has(> div > div.auth) {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
 @media screen and (min-width: 600px) {
     .mobile-only {
         display: none;
