@@ -28,7 +28,7 @@ const slideTemplate =
                             startDates[__lot_lotId__] = Date.parse('__lot_auctionStartString__');
                             endDates[__lot_lotId__] = Date.parse('__lot_auctionEndString__');
                         </script>
-                        <div class="countdown-container d-flex justify-content-between align-items-end flex-wrap" id="countdown-container-__lot_lotId__" onclick="loginSwal()">
+                        <div class="countdown-container d-flex justify-content-between align-items-end flex-wrap" id="countdown-container-__lot_lotId__">
                             <h4 class="mb-0 d-inline-block text-center p-2 me-2">
                                 <span class="text-white" id="countdown-days-__lot_lotId__">
                                     --

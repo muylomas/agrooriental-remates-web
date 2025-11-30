@@ -231,33 +231,6 @@ socket.on('auctionBidUpdate', (auctionBidUpdate) => {
 
 socket.on('auctionBidError', (auctionBidUpdate) => {
     if (auctionBidUpdate && "error" in auctionBidUpdate && auctionBidUpdate.error == "1.1") {
-        /*swal({
-            title: "Ingresar",
-            text: "Para ofertar debés ingresar.",
-            icon: 'warning',
-            buttons: {
-                close_h: {
-                    text: "Cerrar",
-                    value: "close",
-                    visible: false,
-                    className: "btn btn-primary",
-                    closeModal: true,
-                },
-                cancel: {
-                    text: "Ingresar",
-                    value: "login",
-                    visible: true,
-                    className: "btn btn-primary",
-                    closeModal: true,
-                },
-            }
-        }).then((value) => {
-            console.log(value);
-            if (value == "login") {
-                window.location.replace("/ingresar");
-            }
-            swal.close();
-        });*/
         loginSwal();
     }
     else {
