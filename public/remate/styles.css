@@ -6,6 +6,25 @@
     display: flex;
 }
 
+.auth.app-full-bg {
+    background: #333333 none repeat center center !important;
+    background-size: cover;
+    background-position: center;
+}
+
+.auth .app-profile-img {
+    width: 100%;
+    height: auto;
+}
+
+.auth .form-control {
+    color: #ffffff;
+}
+
+.auth .form-control select {
+    appearance: auto !important;
+}
+
 @media screen and (min-width: 600px) {
     .mobile-only {
         display: none;
