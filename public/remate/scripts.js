@@ -141,7 +141,7 @@ function loginSwal() {
                     <div class="col-lg-4 mx-auto">
                         <div class="auth-form-transparent text-left p-5 text-center">
                             <form method="post" name="loginForm" action="/login">
-                                <h3 class="text-white mt-5 mb-3 w-100 text-left">Para ofertar debes tener una cuenta y loguearte</h4>
+                                <h3 class="text-white mb-5 w-100 text-left">Para ofertar debes tener una cuenta y loguearte</h4>
                                 
                                 <input type="hidden" name='loginMethodType' value='phone'>
                                 <div class="form-group phone-form-input">
