@@ -408,7 +408,7 @@ input[id^="auction-bid-price-"] {
 }
 
 .countdown-container h4 {
-    background: rgba(255, 0, 0, 1);
+    background: #4e7b44;
 }
 
 /* Top bar infinite auto scroll */
