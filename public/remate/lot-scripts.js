@@ -65,15 +65,18 @@ function initializeActionsAndDisplays() {
     $("[id^='google-map-bottom-desc-text-']").hide();
     $("[id^='google-map-under-desc-text-']").show();
 
-    /*
+
     if (lots && lots.length) {
         for (let indSLots in lots) {
             const __aux_lotId = lots[indSLots].lotId;
 
-            getAuctionBidsForLot(__aux_lotId);
+            if (lots[indSLots].auctionBids.length) {
+                $("#auction-bid-view-history-" + __aux_lotId).removeClass("d-none");
+                $("#last-auction-bid-price-auction-" + __aux_lotId).parent().removeClass("mt-1");
+                $("#last-auction-bid-price-auction-" + __aux_lotId).parent().addClass("mt-2");
+            }
         }
     };
-    */
 
     countdownTimers = {};
     for (lotIdIndex in startDates) {
