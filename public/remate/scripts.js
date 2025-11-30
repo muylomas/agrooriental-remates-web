@@ -170,12 +170,7 @@ function loginSwal() {
         `;
 
     swal({
-        title: "Ingresar",
         content: wrapper,
-        customClass: {
-            popup: 'my-custom-popup', // Applies 'my-custom-popup' to the modal
-            container: 'my-custom-container' // Applies 'my-custom-container' to the overlay
-        },
         buttons: {
             cancel: {
                 text: "Cerrar",
