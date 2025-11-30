@@ -141,6 +141,7 @@ function loginSwal() {
                     <div class="col-lg-4 mx-auto">
                         <div class="auth-form-transparent text-left p-5 text-center">
                             <form method="post" name="loginForm" action="/login">
+                                <input type="hidden" name='loginMethodType' value='phone'>
                                 <div class="form-group phone-form-input">
                                     <div class="input-group">
                                         <div class="input-group-prepend m-0 p-0">
