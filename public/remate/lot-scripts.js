@@ -65,19 +65,6 @@ function initializeActionsAndDisplays() {
     $("[id^='google-map-bottom-desc-text-']").hide();
     $("[id^='google-map-under-desc-text-']").show();
 
-
-    if (lots && lots.length) {
-        for (let indSLots in lots) {
-            const __aux_lotId = lots[indSLots].lotId;
-
-            if ("auctionBids" in lots[indSLots] && lots[indSLots].auctionBids.length) {
-                $("#auction-bid-view-history-" + __aux_lotId).removeClass("d-none");
-                $("#last-auction-bid-price-auction-" + __aux_lotId).parent().removeClass("mt-1");
-                $("#last-auction-bid-price-auction-" + __aux_lotId).parent().addClass("mt-2");
-            }
-        }
-    };
-
     countdownTimers = {};
     for (lotIdIndex in startDates) {
         countdownTimers[lotIdIndex] = setInterval('generalTimer(' + lotIdIndex + ')', 1000);
@@ -124,16 +111,6 @@ function getAuctionBidsForLot(lotId, callback) {
                     for (let index in lots) {
                         if (lots[index].lotId == results.lotId) {
                             lots[index].auctionBids = results.auctionBids;
-                            if (lots[index].auctionBids.length) {
-                                $("#auction-bid-view-history-" + results.lotId).removeClass("d-none");
-                                $("#last-auction-bid-price-auction-" + results.lotId).parent().removeClass("mt-1");
-                                $("#last-auction-bid-price-auction-" + results.lotId).parent().addClass("mt-2");
-                            }
-                            else {
-                                $("#auction-bid-view-history-" + results.lotId).addClass("d-none");
-                                $("#last-auction-bid-price-auction-" + results.lotId).parent().removeClass("mt-2");
-                                $("#last-auction-bid-price-auction-" + results.lotId).parent().addClass("mt-1");
-                            }
                         }
                     }
                 }
