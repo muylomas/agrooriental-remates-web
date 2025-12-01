@@ -85,11 +85,14 @@ const slideTemplate =
                         <div class="col-12 p-0 m-0 position-relative">
                             <button 
                                 id="auction-bid-view-history-__lot_lotId__"
-                                class="btn btn-warning text-dark lh-sm position-absolute end-0" 
+                                class="btn btn-primary lh-sm position-absolute end-0 d-none" 
                                 onclick="auctionBidsHistory(__lot_lotId__)"
                             >
                                 <b>PIQUES</b>
                             </button>
+                            <h4 class="d-inline-block text-center bg-secondary lh-sm position-absolute end-0 mb-0 p-2" >
+                                <span class="text-white">Sin pre-ofertas</span>
+                            </h4>
                             
                             <h2 class="text-primary mb-0 mt-2">
                                 <small>__lot_currency__</small>
