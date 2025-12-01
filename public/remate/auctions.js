@@ -114,26 +114,24 @@ function showCustomerLoosing(lotId, auctionBidEnd, showButton, initialize) {
     }
 };
 
+let price_was_changed = false;
 function auctionBidPriceChanged(lotId) {
     let __aux_lot = getLotParamsById(lotId);
 
     let __aux_newBid = parseFloat($("#auction-bid-price-" + lotId).val());
 
+    let priceFixedCount = 0;
+    if (__aux_lot.auctionPriceType == 1)
+        priceFixedCount = 2;
+
+    price_was_changed = false;
+
     if (__aux_lot.lastPrice < __aux_newBid) {
-        if (__aux_lot.auctionPriceType == 1) {
-            $("#auction-bid-price-" + lotId).val(__aux_newBid.toFixed(2));
-        }
-        else {
-            $("#auction-bid-price-" + lotId).val(__aux_newBid.toFixed(0));
-        }
+        price_was_changed = true;
+        $("#auction-bid-price-" + lotId).val(__aux_newBid.toFixed(priceFixedCount));
     }
     else {
-        if (__aux_lot.auctionPriceType == 1) {
-            $("#auction-bid-price-" + lotId).val(__aux_lot.lastPrice.toFixed(2));
-        }
-        else {
-            $("#auction-bid-price-" + lotId).val(__aux_lot.lastPrice.toFixed(0));
-        }
+        $("#auction-bid-price-" + lotId).val(__aux_lot.lastPrice.toFixed(priceFixedCount));
     }
 };
 
@@ -142,21 +140,18 @@ function auctionBidAddToPrice(lotId, sign) {
 
     let __aux_newBid = parseFloat($("#auction-bid-price-" + lotId).val()) + __aux_lot.stepPrice * sign;
 
+    let priceFixedCount = 0;
+    if (__aux_lot.auctionPriceType == 1)
+        priceFixedCount = 2;
+
+    price_was_changed = false;
+
     if (__aux_lot.lastPrice < __aux_newBid) {
-        if (__aux_lot.auctionPriceType == 1) {
-            $("#auction-bid-price-" + lotId).val(__aux_newBid.toFixed(2));
-        }
-        else {
-            $("#auction-bid-price-" + lotId).val(__aux_newBid.toFixed(0));
-        }
+        price_was_changed = true;
+        $("#auction-bid-price-" + lotId).val(__aux_newBid.toFixed(priceFixedCount));
     }
     else {
-        if (__aux_lot.auctionPriceType == 1) {
-            $("#auction-bid-price-" + lotId).val(__aux_lot.lastPrice.toFixed(2));
-        }
-        else {
-            $("#auction-bid-price-" + lotId).val(__aux_lot.lastPrice.toFixed(0));
-        }
+        $("#auction-bid-price-" + lotId).val(__aux_lot.lastPrice.toFixed(priceFixedCount));
     }
 };
 
@@ -168,7 +163,27 @@ function auctionBidByStep(lotId, multiplier) {
 }
 
 function auctionBidCustom(lotId) {
-    auctionBid(lotId, parseFloat($("#auction-bid-price-" + lotId).val()));
+    if (price_was_changed) {
+        price_was_changed = false;
+        swal({
+            text: "El precio fue modificado porque era menor que la última oferta.",
+            icon: 'warning',
+            buttons: {
+                cancel: {
+                    text: "Cerrar",
+                    value: false,
+                    visible: true,
+                    className: "btn btn-primary",
+                    closeModal: true,
+                },
+            }
+        }).then((value) => {
+            swal.close();
+        });
+    }
+    else {
+        auctionBid(lotId, parseFloat($("#auction-bid-price-" + lotId).val()));
+    }
 };
 
 function auctionBid(lotId, bidPrice) {
