@@ -82,10 +82,15 @@ const slideTemplate =
                         </div>
                     </div>
                     <div class="row mb-1">
-                        <div class="col-12 p-0 m-0 position-relative" onclick="auctionBidsHistory(__lot_lotId__)">
-                            <i id="auction-bid-view-history-__lot_lotId__" 
-                                class="mdi mdi-eye position-absolute bottom-0 end-0 pt-3 icon-md text-primary translate-middle">
-                            </i>
+                        <div class="col-12 p-0 m-0 position-relative">
+                            <button 
+                                id="auction-bid-view-history-__lot_lotId__"
+                                class="btn btn-warning text-dark fs-5 lh-sm" 
+                                onclick="auctionBidsHistory(__lot_lotId__)"
+                            >
+                                Ver piques
+                            </button>
+                            
                             <h2 class="text-primary mb-0 mt-2">
                                 <small>__lot_currency__</small>
                                 <span id="last-auction-bid-price-auction-__lot_lotId__">
