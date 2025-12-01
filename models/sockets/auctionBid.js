@@ -156,6 +156,10 @@ module.exports = function (socket) {
                                                     else if (results.length) {
                                                         if (results[0].socketId != socket.id) {
                                                             console.log("socket.emit 1");
+                                                            console.log("price: ", parameters.bid);
+                                                            console.log("lotId: ", parameters.lotId);
+                                                            console.log("socket.id: ", socket.id);
+                                                            console.log("results[0].socketId: ", results[0].socketId);
                                                             socket.emit(
                                                                 'auctionBidUpdate',
                                                                 {
