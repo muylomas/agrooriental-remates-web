@@ -98,7 +98,7 @@ const slideTemplate =
                             </h5>
                             
                             <h1 class="text-primary m-0">
-                                <span class="fs-5">__lot_currency__</small>
+                                <span class="fs-5">__lot_currency__</span>
                                 <span id="last-auction-bid-price-auction-__lot_lotId__">
                                     __lot_lastPriceAuction_formatted__
                                 </span>
