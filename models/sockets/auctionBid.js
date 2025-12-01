@@ -61,8 +61,6 @@ function isBidOk(bid, lotId, callback) {
 }
 
 function isSalePrice(lastBid, salePrice, lotId, callback) {
-    console.log("salePrice: ", salePrice);
-    console.log("lastBid: ", lastBid);
     if (salePrice <= lastBid) {
         /*connection.query(
             `
@@ -157,6 +155,7 @@ module.exports = function (socket) {
                                                     }
                                                     else if (results.length) {
                                                         if (results[0].socketId != socket.id) {
+                                                            console.log("socket.emit 1");
                                                             socket.emit(
                                                                 'auctionBidUpdate',
                                                                 {
@@ -185,6 +184,7 @@ module.exports = function (socket) {
                                                                         __aux_newBidMsg,
                                                                     );
 
+                                                                    console.log("socket.emit 2");
                                                                     socket.emit(
                                                                         'auctionBidUpdate',
                                                                         __aux_newBidMsg,
@@ -200,6 +200,8 @@ module.exports = function (socket) {
                                     );
                                 }
                                 else {
+
+                                    console.log("socket.emit 3");
                                     socket.emit(
                                         'auctionBidError',
                                         {
@@ -212,6 +214,8 @@ module.exports = function (socket) {
                         );
                     }
                     else {
+
+                        console.log("socket.emit 4");
                         socket.emit(
                             'auctionBidError',
                             {
@@ -224,6 +228,8 @@ module.exports = function (socket) {
             );
         }
         else {
+
+            console.log("socket.emit 5");
             socket.emit(
                 'auctionBidError',
                 {
