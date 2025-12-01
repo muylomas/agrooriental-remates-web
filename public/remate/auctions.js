@@ -225,7 +225,7 @@ function auctionBidUpdateFunc(auctionBidUpdate) {
             lots[__aux_lot.lotId].lastPrice = auctionBidUpdate.price + __aux_lot.stepPrice;
             lots[__aux_lot.lotId].auctionBidcustomerId = 1;
 
-            updateAuctionBidPrice(auctionBidUpdate.end, __aux_lot);
+            updateAuctionBidPrice(auctionBidUpdate.end, lots[__aux_lot.lotId]);
 
             $("#auction-bid-view-history-" + __aux_lot.lotId).removeClass("d-none");
             $("#auction-bid-no-history-" + __aux_lot.lotId).addClass("d-none");
