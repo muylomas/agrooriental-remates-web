@@ -102,9 +102,6 @@ const slideTemplate =
                                 <span id="last-auction-bid-price-auction-__lot_lotId__">
                                     __lot_lastPriceAuction_formatted__
                                 </span>
-                                <span class="text-small">
-                                    __lot_priceUnits__
-                                </span>
                             </h2>
                             <p class="text-primary">Forma de pago: __lot_paymentTermName__</p>
                         </div>
