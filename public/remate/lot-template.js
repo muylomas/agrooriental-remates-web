@@ -103,7 +103,7 @@ const slideTemplate =
                                     __lot_lastPriceAuction_formatted__
                                 </span>
                             </h2>
-                            <p class="text-primary">Forma de pago: __lot_paymentTermName__</p>
+                            <p class="text-primary">__lot_paymentTermName__</p>
                         </div>
                     </div>
                     
