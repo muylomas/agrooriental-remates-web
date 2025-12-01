@@ -90,7 +90,10 @@ const slideTemplate =
                             >
                                 <b>PIQUES</b>
                             </button>
-                            <h4 class="d-inline-block text-center bg-secondary lh-sm position-absolute end-0 mb-0 p-2" >
+                            <h4 
+                                id="auction-bid-no-history-__lot_lotId__" 
+                                class="d-inline-block text-center bg-secondary lh-sm position-absolute end-0 mb-0 p-2 d-none"
+                            >
                                 <span class="text-white">Sin pre-ofertas</span>
                             </h4>
                             

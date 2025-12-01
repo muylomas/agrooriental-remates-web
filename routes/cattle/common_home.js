@@ -181,16 +181,8 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
                         IF(
                             auctions_bids.customerId IS NULL,
                             0,
-                            auctions_bids.customerId
+                            1
                         ) AS auctionBidcustomerId,
-                        customers_complete.customerId AS customerId,
-                        IF(
-                            customers_complete.customerImage IS NULL OR customers_complete.customerImage = "",
-                            "https://mercadoagro-backoffice.s3.amazonaws.com/images/customers/no-profile-img.png",
-                            customers_complete.customerImage
-                        ) AS customerImage,
-                        customers_complete.customerName AS customerName,
-                        customers_complete.customerSurname AS customerSurname,
                         cattle_types.family AS typeFamily,
                         cattle_types.ageUnit AS typeAgeUnit,
                         cattle_types.females AS typeFemales,
@@ -235,7 +227,6 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
                     LEFT JOIN auctions_bids ON 
                         auctions_bids.id = auctions_bids_max.auctionBidId AND 
                         auctions_bids.lotId = cattle_complete.lotId
-                    LEFT JOIN customers_complete ON customers_complete.customerId = auctions_bids.customerId
                     LEFT JOIN cattle_totals ON cattle_totals.lotId = cattle_complete.lotId
                     INNER JOIN cattle_types ON cattle_types.id = cattle_complete.typeId
                     INNER JOIN cattle_types_avg ON cattle_types_avg.cattleTypeId = cattle_complete.typeId
@@ -286,22 +277,6 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
                                     { name: "Capados", enabled: __aux_lot.typeCaped, quantity: results[0].caped, },
                                     { name: "Enteros", enabled: __aux_lot.typeCaped, quantity: results[0].entire, },
                                 ];
-
-                                __aux_lot.whatsappMessage =
-                                    encodeURIComponent(
-                                        "Hola " + __aux_lot.salesagentName + ", tengo algunas preguntas sobre el lote Nro. " + __aux_lot.lotId +
-                                        " de " + __aux_lot.totalQuantity + " " + __aux_lot.type + " " +
-                                        "https://equinos.agrooriental.uy/#lote-" + __aux_lot.lotId
-                                    );
-
-                                __aux_lot.whatsappShare =
-                                    encodeURIComponent(
-                                        "Te comparto el lote Nro. " + __aux_lot.lotId +
-                                        " ubicado en " + __aux_lot.addressLocationName + ", " + __aux_lot.addressStateName +
-                                        " de " + __aux_lot.totalQuantity + " " + __aux_lot.type + " " +
-                                        " ( peso promedio " + __aux_lot.meanWeight.toFixed(0) + " kg) " +
-                                        "https://equinos.agrooriental.uy/#lote-" + __aux_lot.lotId
-                                    );
 
                                 lots.push(__aux_lot);
                             }
