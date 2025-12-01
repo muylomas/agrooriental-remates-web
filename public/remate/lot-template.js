@@ -85,7 +85,7 @@ const slideTemplate =
                         <div class="col-12 p-0 m-0 position-relative">
                             <button 
                                 id="auction-bid-view-history-__lot_lotId__"
-                                class="btn btn-warning text-dark fs-5 lh-sm" 
+                                class="btn btn-warning text-dark fs-5 lh-sm position-absolute end-0" 
                                 onclick="auctionBidsHistory(__lot_lotId__)"
                             >
                                 Ver piques
