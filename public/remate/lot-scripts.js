@@ -238,10 +238,8 @@ function insertLotLoop(lots, indSLots, callback) {
 
         let __aux_lastAuctionPriceFormatted = "0.00";
         let __aux_lastAuctionPrice1Step = "0.00";
-        let __aux_lastAuctionPrice2Step = "0.00";
-        let __aux_lastAuctionPrice3Step = "0.00";
+        let __aux_lastAuctionPriceMultiStep = "0.00";
         let __aux_salePriceFormatted = "0.00";
-        let __aux_priceUnit = "por bulto";
 
         let __aux_intermediate_lastPrice = 0;
         if ("lastPrice" in lots[indSLots] && lots[indSLots].lastPrice) {
@@ -261,23 +259,13 @@ function insertLotLoop(lots, indSLots, callback) {
         let fixed0Length = 0;
         if (__aux_auctionPriceType == 1) {
             fixed0Length = 2;
-            __aux_priceUnit = "por kilo";
         }
 
         __aux_lastAuctionPriceFormatted = (__aux_intermediate_lastPrice).toFixed(fixed0Length);
         __aux_salePriceFormatted = (lots[indSLots].salePrice).toFixed(fixed0Length);
 
-        if (lots[indSLots].auctionBidcustomerId) {
-            __aux_lastAuctionPrice1Step = (__aux_intermediate_lastPrice + 1 * __aux_intermediate_stepPrice).toFixed(fixed0Length);
-            __aux_lastAuctionPrice2Step = (__aux_intermediate_lastPrice + 2 * __aux_intermediate_stepPrice).toFixed(fixed0Length);
-            __aux_lastAuctionPrice3Step = (__aux_intermediate_lastPrice + 3 * __aux_intermediate_stepPrice).toFixed(fixed0Length);
-        }
-        else {
-            __aux_lastAuctionPrice1Step = (__aux_intermediate_lastPrice).toFixed(fixed0Length);
-            __aux_lastAuctionPrice2Step = (__aux_intermediate_lastPrice + 1 * __aux_intermediate_stepPrice).toFixed(fixed0Length);
-            __aux_lastAuctionPrice3Step = (__aux_intermediate_lastPrice + 2 * __aux_intermediate_stepPrice).toFixed(fixed0Length);
-        }
-
+        __aux_lastAuctionPrice1Step = (__aux_intermediate_lastPrice).toFixed(fixed0Length);
+        __aux_lastAuctionPriceMultiStep = (__aux_intermediate_lastPrice + __aux_intermediate_stepPrice).toFixed(fixed0Length);
 
         __aux_slideHTML =
             __aux_slideHTML
@@ -287,16 +275,10 @@ function insertLotLoop(lots, indSLots, callback) {
                 .replace(new RegExp("__lot_lastAuctionPrice1Step__", 'g'), __aux_lastAuctionPrice1Step);
         __aux_slideHTML =
             __aux_slideHTML
-                .replace(new RegExp("__lot_lastAuctionPrice2Step__", 'g'), __aux_lastAuctionPrice2Step);
-        __aux_slideHTML =
-            __aux_slideHTML
-                .replace(new RegExp("__lot_lastAuctionPrice3Step__", 'g'), __aux_lastAuctionPrice3Step);
+                .replace(new RegExp("__lot_lastAuctionPriceMultiStep__", 'g'), __aux_lastAuctionPriceMultiStep);
         __aux_slideHTML =
             __aux_slideHTML
                 .replace(new RegExp("__lot_salePrice_formatted__", 'g'), __aux_salePriceFormatted);
-        __aux_slideHTML =
-            __aux_slideHTML
-                .replace(new RegExp("__lot_priceUnits__", 'g'), __aux_priceUnit);
 
         __aux_slideHTML =
             __aux_slideHTML
@@ -395,9 +377,13 @@ function insertLotLoop(lots, indSLots, callback) {
 
         if (lots[indSLots].auctionBidcustomerId) {
             $("#auction-bid-view-history-" + lots[indSLots].lotId).removeClass("d-none");
+            $("#auction-bid-button-multiple-" + lots[indSLots].lotId).removeClass("d-none");
+            $("#auction-bid-button-x1-" + lots[indSLots].lotId).addClass("d-none");
         }
         else {
             $("#auction-bid-no-history-" + lots[indSLots].lotId).removeClass("d-none");
+            $("#auction-bid-button-multiple-" + lots[indSLots].lotId).addClass("d-none");
+            $("#auction-bid-button-x1-" + lots[indSLots].lotId).removeClass("d-none");
         }
 
 

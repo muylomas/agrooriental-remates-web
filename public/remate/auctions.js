@@ -277,17 +277,16 @@ function updateAuctionBidPrice(auctionBidEnd, lotId, lastAuctionPrice, stepPrice
     let __aux_newBid = parseFloat($("#auction-bid-price-" + lotId).val());
     let __aux_fixedDigits = auctionPriceType == 1 ? 2 : 0;
 
-    let stepMultiplier = 0;
-    if (lots[indSLots].auctionBidcustomerId)
-        stepMultiplier = 1;
-
-    if (__aux_newBid < lastAuctionPrice + (stepMultiplier + 2) * stepPrice) {
-        $("#auction-bid-price-" + lotId).val((lastAuctionPrice + (stepMultiplier + 2) * stepPrice).toFixed(__aux_fixedDigits));
+    $("#auction-bid-price-" + lotId).val((lastAuctionPrice + stepPrice).toFixed(__aux_fixedDigits));
+    $("#auction-bid-button-x1-" + lotId).html("Ofertar " + (lastAuctionPrice).toFixed(__aux_fixedDigits));
+    if (lots[indSLots].auctionBidcustomerId) {
+        $("#auction-bid-button-multiple-" + lotId).removeClass("d-none");
+        $("#auction-bid-button-x1-" + lotId).addClass("d-none");
     }
-
-    $("#auction-bid-button-x1-" + lotId).html("Ofertar " + (lastAuctionPrice + stepMultiplier * stepPrice).toFixed(__aux_fixedDigits));
-    $("#auction-bid-button-x2-" + lotId).html("Ofertar " + (lastAuctionPrice + (stepMultiplier + 1) * stepPrice).toFixed(__aux_fixedDigits));
-
+    else {
+        $("#auction-bid-button-multiple-" + lotId).addClass("d-none");
+        $("#auction-bid-button-x1-" + lotId).removeClass("d-none");
+    }
 
     $("#last-auction-bid-price-" + lotId).fadeOut(400, function () {
         $(this).html(lastAuctionPrice.toFixed(__aux_fixedDigits) + " ").fadeIn(400);

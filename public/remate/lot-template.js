@@ -108,19 +108,10 @@ const slideTemplate =
                     </div>
                     
                     <div id="bid-auction-actions-container-__lot_lotId__">
-                        <div class="row">
-                            <div class="col-6 text-center pe-1">
-                                <button class="bid-action-button btn btn-warning text-dark fs-5 lh-sm w-100 h-100" id="auction-bid-button-x1-__lot_lotId__" onclick="javascript:auctionBidByStep(__lot_lotId__,1)">
-                                    Ofertar __lot_lastAuctionPrice1Step__
-                                </button>
-                            </div>
-                            <div class="col-6 text-center ps-1">
-                                <button class="bid-action-button btn btn-warning text-dark fs-5 lh-sm w-100 h-100" id="auction-bid-button-x2-__lot_lotId__" onclick="javascript:auctionBidByStep(__lot_lotId__,2)">
-                                    Ofertar __lot_lastAuctionPrice2Step__
-                                </button>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
+                        <button id="auction-bid-button-x1-__lot_lotId__" class="bid-action-button btn btn-warning text-dark fs-5 lh-sm w-100 d-none" onclick="javascript:auctionBidByStep(__lot_lotId__,0)">
+                            Ofertar __lot_lastAuctionPrice1Step__
+                        </button>
+                        <div id="auction-bid-button-multiple-__lot_lotId__" class="row mt-3 d-none">
                             <div class="col-12 p-0 m-0">
                                 <div class="d-flex align-items-left justify-content-left justify-content-md-left">
                                     <div class="d-flex flex-column justify-content-around">
@@ -136,7 +127,7 @@ const slideTemplate =
                                             name="auctionBidPrice"
                                                 placeholder="0.00" 
                                                 step="__lot_stepPrice__" 
-                                                value="__lot_lastAuctionPrice3Step__">
+                                                value="__lot_lastAuctionPriceMultiStep__">
                                     </div>
                                     <div class="d-flex flex-column justify-content-around">
                                         <button class="btn btn-icon btn-secondary" onclick="auctionBidAddToPrice(__lot_lotId__, 1)">
