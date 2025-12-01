@@ -172,6 +172,8 @@ function auctionBidCustom(lotId) {
 };
 
 function auctionBid(lotId, bidPrice) {
+    console.log("lotId: ", lotId);
+    console.log("bidPrice: ", bidPrice);
     socket.emit(
         'auctionBidCustomers',
         {
