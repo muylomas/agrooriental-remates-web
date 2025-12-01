@@ -14,10 +14,11 @@ Common.prototype.sms_sender = function (params, callback) {
         new PublishCommand(params),
     ).then(
         (response) => {
-            callback();
+            callback(false);
         },
         (error) => {
             console.log(error);
+            callback(true);
         }
     );
 };

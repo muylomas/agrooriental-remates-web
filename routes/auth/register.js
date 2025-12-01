@@ -108,7 +108,7 @@ router.post('/', function (req, res, next) {
                                     " https://gestion.agrooriental.uy/personas",
                                 PhoneNumber: "+59899492041",
                             },
-                            function () {
+                            function (error) {
                             }
                         );
 
@@ -153,13 +153,6 @@ router.post('/', function (req, res, next) {
                         );
                     }
                     else {
-                        /*res.render(
-                            'auth/register-form',
-                            {
-                                verification: "email",
-                                userId: results.insertId,
-                            }
-                        );*/
                         res.redirect('/registro/codigo-verificacion');
                     }
                 }

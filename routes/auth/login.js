@@ -80,7 +80,7 @@ router.post('/', function (req, res, next) {
                                                     Message: phoneCodeNumber + " es tu código de verificación de Agro Oriental https://equinos.agrooriental.uy",
                                                     PhoneNumber: "+598" + parseInt(req.body.phoneNumber, 10),
                                                 },
-                                                function () {
+                                                function (error) {
                                                 }
                                             );
                                         }
