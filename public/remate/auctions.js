@@ -24,7 +24,7 @@ function showCustomerWinning(lotId, auctionBidEnd, showAlert, showButton) {
         $("#auction-bid-status-" + lotId).html(
             `
                 <div class="badge fs-4 w-100" style="background: #4e7b44 !important">
-                    Vas ganando!!
+                    Picás en punta!!
                 </div>
             `
         );
