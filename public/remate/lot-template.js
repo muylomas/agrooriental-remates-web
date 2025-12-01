@@ -97,13 +97,13 @@ const slideTemplate =
                                 <span class="text-white">SIN PRE-OFERTAS</span>
                             </h5>
                             
-                            <h2 class="text-primary mb-0 mt-2">
-                                <small>__lot_currency__</small>
+                            <h1 class="text-primary m-0">
+                                <span class="fs-5">__lot_currency__</small>
                                 <span id="last-auction-bid-price-auction-__lot_lotId__">
                                     __lot_lastPriceAuction_formatted__
                                 </span>
                             </h2>
-                            <p class="text-primary">__lot_paymentTermName__</p>
+                            <p class="text-dark">__lot_paymentTermName__</p>
                         </div>
                     </div>
                     
