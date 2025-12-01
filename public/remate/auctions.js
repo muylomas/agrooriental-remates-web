@@ -131,6 +131,8 @@ function auctionBidPriceChanged(lotId) {
     }
     else {
         price_was_changed = true;
+        console.log("========== auctionBidPriceChanged ========== ");
+        console.log("__aux_lot.lastPrice: ", __aux_lot.lastPrice);
         $("#auction-bid-price-" + lotId).val((__aux_lot.lastPrice + __aux_lot.stepPrice).toFixed(priceFixedCount));
     }
 };
@@ -151,6 +153,8 @@ function auctionBidAddToPrice(lotId, sign) {
     }
     else {
         price_was_changed = true;
+        console.log("========== auctionBidAddToPrice ========== ");
+        console.log("__aux_lot.lastPrice: ", __aux_lot.lastPrice);
         $("#auction-bid-price-" + lotId).val((__aux_lot.lastPrice + __aux_lot.stepPrice).toFixed(priceFixedCount));
     }
 };
