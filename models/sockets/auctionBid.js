@@ -102,6 +102,15 @@ module.exports = function (socket) {
                             parameters.lotId,
                             function (bidCheckReply) {
                                 if (!bidCheckReply.error) {
+                                    console.log([
+                                        parameters.bid,
+                                        parameters.lotId,
+                                        customerId,
+                                        socket.id,
+                                        parameters.lotId,
+                                        parameters.lotId,
+                                        parameters.bid,
+                                    ]);
                                     connection.query(
                                         `
                                             INSERT INTO auctions_bids (price, lotId, customerId, userId, socket, status)
@@ -169,7 +178,7 @@ module.exports = function (socket) {
                                                                     price: parameters.bid,
                                                                     lotId: parameters.lotId,
                                                                     socketId: "",
-                                                                    end: true,
+                                                                    end: false,
                                                                 },
                                                             );
                                                         }
