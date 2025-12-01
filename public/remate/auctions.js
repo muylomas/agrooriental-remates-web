@@ -211,6 +211,10 @@ function auctionBidUpdateFunc(auctionBidUpdate) {
             __aux_lot.lastPrice = auctionBidUpdate.price + __aux_lot.stepPrice;
             updateAuctionBidPrice(auctionBidUpdate.end, __aux_lot.lotId, __aux_lot.lastPriceAuction, __aux_lot.stepPrice, __aux_lot.auctionPriceType, __aux_lot);
 
+            lots[__aux_lot.lotId].auctionBidcustomerId = 1;
+            $("#auction-bid-view-history-" + __aux_lot.lotId).removeClass("d-none");
+            $("#auction-bid-no-history-" + __aux_lot.lotId).addClass("d-none");
+
             if (socket.id == auctionBidUpdate.socketId) {
                 showCustomerWinning(__aux_lot.lotId, auctionBidUpdate.end, true, true);
             }
