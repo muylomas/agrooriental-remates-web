@@ -127,11 +127,11 @@ function auctionBidPriceChanged(lotId) {
     price_was_changed = false;
 
     if (__aux_lot.lastPrice < __aux_newBid) {
-        price_was_changed = true;
         $("#auction-bid-price-" + lotId).val(__aux_newBid.toFixed(priceFixedCount));
     }
     else {
-        $("#auction-bid-price-" + lotId).val(__aux_lot.lastPrice.toFixed(priceFixedCount));
+        price_was_changed = true;
+        $("#auction-bid-price-" + lotId).val((__aux_lot.lastPrice + __aux_lot.stepPrice).toFixed(priceFixedCount));
     }
 };
 
@@ -147,11 +147,11 @@ function auctionBidAddToPrice(lotId, sign) {
     price_was_changed = false;
 
     if (__aux_lot.lastPrice < __aux_newBid) {
-        price_was_changed = true;
         $("#auction-bid-price-" + lotId).val(__aux_newBid.toFixed(priceFixedCount));
     }
     else {
-        $("#auction-bid-price-" + lotId).val(__aux_lot.lastPrice.toFixed(priceFixedCount));
+        price_was_changed = true;
+        $("#auction-bid-price-" + lotId).val((__aux_lot.lastPrice + __aux_lot.stepPrice).toFixed(priceFixedCount));
     }
 };
 
