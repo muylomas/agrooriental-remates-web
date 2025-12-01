@@ -258,19 +258,24 @@ function insertLotLoop(lots, indSLots, callback) {
             }
         }
 
-        __aux_lastAuctionPriceFormatted = (__aux_intermediate_lastPrice).toFixed(0);
-        __aux_lastAuctionPrice1Step = (__aux_intermediate_lastPrice + 1 * __aux_intermediate_stepPrice).toFixed(0);
-        __aux_lastAuctionPrice2Step = (__aux_intermediate_lastPrice + 2 * __aux_intermediate_stepPrice).toFixed(0);
-        __aux_lastAuctionPrice3Step = (__aux_intermediate_lastPrice + 3 * __aux_intermediate_stepPrice).toFixed(0);
-        __aux_salePriceFormatted = (lots[indSLots].salePrice).toFixed(0);
-
+        let fixed0Length = 0;
         if (__aux_auctionPriceType == 1) {
-            __aux_lastAuctionPriceFormatted = (__aux_intermediate_lastPrice).toFixed(2);
-            __aux_lastAuctionPrice1Step = (__aux_intermediate_lastPrice + 1 * __aux_intermediate_stepPrice).toFixed(2);
-            __aux_lastAuctionPrice2Step = (__aux_intermediate_lastPrice + 2 * __aux_intermediate_stepPrice).toFixed(2);
-            __aux_lastAuctionPrice3Step = (__aux_intermediate_lastPrice + 3 * __aux_intermediate_stepPrice).toFixed(2);
-            __aux_salePriceFormatted = (lots[indSLots].salePrice).toFixed(2);
+            fixed0Length = 2;
             __aux_priceUnit = "por kilo";
+        }
+
+        __aux_lastAuctionPriceFormatted = (__aux_intermediate_lastPrice).toFixed(fixed0Length);
+        __aux_salePriceFormatted = (lots[indSLots].salePrice).toFixed(fixed0Length);
+
+        if (lots[indSLots].auctionBidcustomerId) {
+            __aux_lastAuctionPrice1Step = (__aux_intermediate_lastPrice + 1 * __aux_intermediate_stepPrice).toFixed(fixed0Length);
+            __aux_lastAuctionPrice2Step = (__aux_intermediate_lastPrice + 2 * __aux_intermediate_stepPrice).toFixed(fixed0Length);
+            __aux_lastAuctionPrice3Step = (__aux_intermediate_lastPrice + 3 * __aux_intermediate_stepPrice).toFixed(fixed0Length);
+        }
+        else {
+            __aux_lastAuctionPrice1Step = (__aux_intermediate_lastPrice).toFixed(fixed0Length);
+            __aux_lastAuctionPrice2Step = (__aux_intermediate_lastPrice + 1 * __aux_intermediate_stepPrice).toFixed(fixed0Length);
+            __aux_lastAuctionPrice3Step = (__aux_intermediate_lastPrice + 2 * __aux_intermediate_stepPrice).toFixed(fixed0Length);
         }
 
 
