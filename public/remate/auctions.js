@@ -146,15 +146,10 @@ function auctionBidAddToPrice(lotId, sign) {
     if (__aux_lot.auctionPriceType == 1)
         priceFixedCount = 2;
 
-    price_was_changed = false;
-
     if (__aux_lot.lastPrice < __aux_newBid) {
         $("#auction-bid-price-" + lotId).val(__aux_newBid.toFixed(priceFixedCount));
     }
     else {
-        price_was_changed = true;
-        console.log("========== auctionBidAddToPrice ========== ");
-        console.log("__aux_lot.lastPrice: ", __aux_lot.lastPrice);
         $("#auction-bid-price-" + lotId).val((__aux_lot.lastPrice + __aux_lot.stepPrice).toFixed(priceFixedCount));
     }
 };
@@ -294,11 +289,11 @@ socket.on('auctionBidError', (auctionBidUpdate) => {
 });
 
 function updateAuctionBidPrice(auctionBidEnd, lotParams) {
-    let __aux_fixedDigits = auctionPriceType == 1 ? 2 : 0;
-
     const lotId = lotParams.lotId;
     const lastAuctionPrice = lotParams.lastPriceAuction;
     const auctionPriceType = lotParams.auctionPriceType;
+
+    let __aux_fixedDigits = auctionPriceType == 1 ? 2 : 0;
 
     $("#auction-bid-price-" + lotId).val((lastAuctionPrice).toFixed(__aux_fixedDigits));
     $("#auction-bid-button-x1-" + lotId).html("Ofertar " + (lastAuctionPrice).toFixed(__aux_fixedDigits));
