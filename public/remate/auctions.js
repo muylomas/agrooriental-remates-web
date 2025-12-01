@@ -222,7 +222,7 @@ function auctionBidUpdateFunc(auctionBidUpdate) {
             __aux_lot.lastPriceAuction != auctionBidUpdate.price
         ) {
             lots[__aux_lot.lotId].lastPriceAuction = auctionBidUpdate.price;
-            lots[__aux_lot.lotId].lastPrice = auctionBidUpdate.price + __aux_lot.stepPrice;
+            lots[__aux_lot.lotId].lastPrice = auctionBidUpdate.price;
             lots[__aux_lot.lotId].auctionBidcustomerId = 1;
 
             updateAuctionBidPrice(auctionBidUpdate.end, lots[__aux_lot.lotId]);
@@ -295,8 +295,8 @@ function updateAuctionBidPrice(auctionBidEnd, lotParams) {
 
     let __aux_fixedDigits = auctionPriceType == 1 ? 2 : 0;
 
-    $("#auction-bid-price-" + lotId).val((lastAuctionPrice).toFixed(__aux_fixedDigits));
-    $("#auction-bid-button-x1-" + lotId).html("Ofertar " + (lastAuctionPrice).toFixed(__aux_fixedDigits));
+    $("#auction-bid-price-" + lotId).val((lastAuctionPrice + lotParams.stepPrice).toFixed(__aux_fixedDigits));
+    $("#auction-bid-button-x1-" + lotId).html("Ofertar " + (lastAuctionPrice + lotParams.stepPrice).toFixed(__aux_fixedDigits));
     if (lots[lotId].auctionBidcustomerId) {
         $("#auction-bid-button-multiple-" + lotId).removeClass("d-none");
         $("#auction-bid-button-x1-" + lotId).addClass("d-none");
