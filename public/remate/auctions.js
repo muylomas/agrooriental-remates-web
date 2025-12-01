@@ -276,12 +276,18 @@ socket.on('auctionBidError', (auctionBidUpdate) => {
 function updateAuctionBidPrice(auctionBidEnd, lotId, lastAuctionPrice, stepPrice, auctionPriceType, lotParams) {
     let __aux_newBid = parseFloat($("#auction-bid-price-" + lotId).val());
     let __aux_fixedDigits = auctionPriceType == 1 ? 2 : 0;
-    if (__aux_newBid < lastAuctionPrice + 3 * stepPrice) {
-        $("#auction-bid-price-" + lotId).val((lastAuctionPrice + 3 * stepPrice).toFixed(__aux_fixedDigits));
+
+    let stepMultiplier = 0;
+    if (lots[indSLots].auctionBidcustomerId)
+        stepMultiplier = 1;
+
+    if (__aux_newBid < lastAuctionPrice + (stepMultiplier + 2) * stepPrice) {
+        $("#auction-bid-price-" + lotId).val((lastAuctionPrice + (stepMultiplier + 2) * stepPrice).toFixed(__aux_fixedDigits));
     }
 
-    $("#auction-bid-button-x1-" + lotId).html("Ofertar " + (lastAuctionPrice + stepPrice).toFixed(__aux_fixedDigits));
-    $("#auction-bid-button-x2-" + lotId).html("Ofertar " + (lastAuctionPrice + 2 * stepPrice).toFixed(__aux_fixedDigits));
+    $("#auction-bid-button-x1-" + lotId).html("Ofertar " + (lastAuctionPrice + stepMultiplier * stepPrice).toFixed(__aux_fixedDigits));
+    $("#auction-bid-button-x2-" + lotId).html("Ofertar " + (lastAuctionPrice + (stepMultiplier + 1) * stepPrice).toFixed(__aux_fixedDigits));
+
 
     $("#last-auction-bid-price-" + lotId).fadeOut(400, function () {
         $(this).html(lastAuctionPrice.toFixed(__aux_fixedDigits) + " ").fadeIn(400);
