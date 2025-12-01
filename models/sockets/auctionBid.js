@@ -61,6 +61,8 @@ function isBidOk(bid, lotId, callback) {
 }
 
 function isSalePrice(lastBid, salePrice, lotId, callback) {
+    console.log("salePrice: ", salePrice);
+    console.log("lastBid: ", lastBid);
     if (salePrice <= lastBid) {
         /*connection.query(
             `
