@@ -86,9 +86,6 @@ function isSalePrice(lastBid, salePrice, lotId, callback) {
 
 module.exports = function (socket) {
     socket.on('auctionBidCustomers', (parameters) => {
-        console.log("---------------- auctionBidCustomers ----------------");
-        console.log("socket.id: ", socket.id);
-        console.log("---------------- auctionBidCustomers ----------------");
         if (
             "bid" in parameters && parameters.bid &&
             "lotId" in parameters && parameters.lotId
@@ -122,19 +119,18 @@ module.exports = function (socket) {
                                                 ? AS socket,
                                                 1 AS status
                                             FROM cattle_complete
+                                            LEFT JOIN auctions_bids_max ON auctions_bids_max.lotId = cattle_complete.lotId
+                                            LEFT JOIN auctions_bids ON auctions_bids.id = auctions_bids_max.auctionBidId
                                             WHERE 
                                                 cattle_complete.lotId = ? AND
                                                 cattle_complete.auctionEnd > NOW() - INTERVAL 3 HOUR AND
-                                                (
-                                                    SELECT IF(MAX(price) IS NULL, 0, MAX(price)) FROM auctions_bids WHERE lotId = ?
-                                                ) < ?;
+                                                IF(auctions_bids.price IS NULL, 0, auctions_bids.price) < ?;
                                         `,
                                         [
                                             parameters.bid,
                                             parameters.lotId,
                                             customerId,
                                             socket.id,
-                                            parameters.lotId,
                                             parameters.lotId,
                                             parameters.bid,
                                         ],
@@ -167,18 +163,13 @@ module.exports = function (socket) {
                                                     }
                                                     else if (results.length) {
                                                         if (results[0].socketId != socket.id) {
-                                                            console.log("socket.emit 1");
-                                                            console.log("price: ", parameters.bid);
-                                                            console.log("lotId: ", parameters.lotId);
-                                                            console.log("socket.id: ", socket.id);
-                                                            console.log("results[0].socketId: ", results[0].socketId);
                                                             socket.emit(
                                                                 'auctionBidUpdate',
                                                                 {
                                                                     price: parameters.bid,
                                                                     lotId: parameters.lotId,
                                                                     socketId: "",
-                                                                    end: false,
+                                                                    end: true,
                                                                 },
                                                             );
                                                         }
@@ -200,7 +191,6 @@ module.exports = function (socket) {
                                                                         __aux_newBidMsg,
                                                                     );
 
-                                                                    console.log("socket.emit 2");
                                                                     socket.emit(
                                                                         'auctionBidUpdate',
                                                                         __aux_newBidMsg,
@@ -216,8 +206,6 @@ module.exports = function (socket) {
                                     );
                                 }
                                 else {
-
-                                    console.log("socket.emit 3");
                                     socket.emit(
                                         'auctionBidError',
                                         {
@@ -230,8 +218,6 @@ module.exports = function (socket) {
                         );
                     }
                     else {
-
-                        console.log("socket.emit 4");
                         socket.emit(
                             'auctionBidError',
                             {
@@ -244,8 +230,6 @@ module.exports = function (socket) {
             );
         }
         else {
-
-            console.log("socket.emit 5");
             socket.emit(
                 'auctionBidError',
                 {
