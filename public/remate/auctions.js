@@ -279,7 +279,7 @@ function updateAuctionBidPrice(auctionBidEnd, lotId, lastAuctionPrice, stepPrice
 
     $("#auction-bid-price-" + lotId).val((lastAuctionPrice + stepPrice).toFixed(__aux_fixedDigits));
     $("#auction-bid-button-x1-" + lotId).html("Ofertar " + (lastAuctionPrice).toFixed(__aux_fixedDigits));
-    if (lots[indSLots].auctionBidcustomerId) {
+    if (lots[lotId].auctionBidcustomerId) {
         $("#auction-bid-button-multiple-" + lotId).removeClass("d-none");
         $("#auction-bid-button-x1-" + lotId).addClass("d-none");
     }
