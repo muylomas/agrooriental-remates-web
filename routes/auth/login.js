@@ -55,7 +55,8 @@ router.post('/', function (req, res, next) {
                             connection.query(
                                 `
                                     UPDATE customers SET
-                                        phonePassword = ?
+                                        phonePassword = ?,
+                                        phoneAdminCode = ""
                                     WHERE
                                         phoneCountry = ? AND
                                         phoneNumber = ?
