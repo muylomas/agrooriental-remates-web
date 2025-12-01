@@ -1,8 +1,9 @@
 function getLotParamsById(lotId) {
-    let __aux_lot = {};
+    let __aux_lot = { lot: {}, index: -1 };
     for (let index in lots) {
         if (lots[index].lotId == lotId) {
-            __aux_lot = lots[index];
+            __aux_lot.lot = lots[index];
+            __aux_lot.index = index;
         }
     }
     return __aux_lot;
@@ -116,7 +117,8 @@ function showCustomerLoosing(lotId, auctionBidEnd, showButton, initialize) {
 
 let price_was_changed = false;
 function auctionBidPriceChanged(lotId) {
-    let __aux_lot = getLotParamsById(lotId);
+    const searchLot = getLotParamsById(lotId);
+    const __aux_lot = searchLot.lot;
 
     let __aux_newBid = parseFloat($("#auction-bid-price-" + lotId).val());
 
@@ -131,14 +133,13 @@ function auctionBidPriceChanged(lotId) {
     }
     else {
         price_was_changed = true;
-        console.log("========== auctionBidPriceChanged ========== ");
-        console.log("__aux_lot.lastPrice: ", __aux_lot.lastPrice);
         $("#auction-bid-price-" + lotId).val((__aux_lot.lastPrice + __aux_lot.stepPrice).toFixed(priceFixedCount));
     }
 };
 
 function auctionBidAddToPrice(lotId, sign) {
-    let __aux_lot = getLotParamsById(lotId);
+    const searchLot = getLotParamsById(lotId);
+    const __aux_lot = searchLot.lot;
 
     let __aux_newBid = parseFloat($("#auction-bid-price-" + lotId).val()) + __aux_lot.stepPrice * sign;
 
@@ -155,7 +156,8 @@ function auctionBidAddToPrice(lotId, sign) {
 };
 
 function auctionBidByStep(lotId, multiplier) {
-    let __aux_lot = getLotParamsById(lotId);
+    const searchLot = getLotParamsById(lotId);
+    const __aux_lot = searchLot.lot;
 
     if (__aux_lot.lotId == lotId)
         auctionBid(lotId, __aux_lot.lastPrice + multiplier * __aux_lot.stepPrice);
@@ -196,7 +198,8 @@ function auctionBid(lotId, bidPrice) {
 };
 
 function buyInmediatelly(lotId) {
-    let __aux_lot = getLotParamsById(lotId);
+    const searchLot = getLotParamsById(lotId);
+    const __aux_lot = searchLot.lot;
 
     if (__aux_lot.lotId == lotId) {
         socket.emit(
@@ -214,18 +217,19 @@ function auctionBidUpdateFunc(auctionBidUpdate) {
         auctionBidUpdate.price &&
         auctionBidUpdate.lotId
     ) {
-
-        let __aux_lot = getLotParamsById(auctionBidUpdate.lotId);
+        const searchLot = getLotParamsById(auctionBidUpdate.lotId);
+        const lotIndex = searchLot.index;
+        const __aux_lot = searchLot.lot;
 
         if (
             __aux_lot.lotId == auctionBidUpdate.lotId &&
             __aux_lot.lastPriceAuction != auctionBidUpdate.price
         ) {
-            lots[__aux_lot.lotId].lastPriceAuction = auctionBidUpdate.price;
-            lots[__aux_lot.lotId].lastPrice = auctionBidUpdate.price;
-            lots[__aux_lot.lotId].auctionBidcustomerId = 1;
+            lots[lotIndex].lastPriceAuction = auctionBidUpdate.price;
+            lots[lotIndex].lastPrice = auctionBidUpdate.price;
+            lots[lotIndex].auctionBidcustomerId = 1;
 
-            updateAuctionBidPrice(auctionBidUpdate.end, lots[__aux_lot.lotId]);
+            updateAuctionBidPrice(auctionBidUpdate.end, lots[lotIndex]);
 
             $("#auction-bid-view-history-" + __aux_lot.lotId).removeClass("d-none");
             $("#auction-bid-no-history-" + __aux_lot.lotId).addClass("d-none");
