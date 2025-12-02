@@ -37,8 +37,8 @@ router.post('/', function (req, res, next) {
                     FROM customers_complete 
                     INNER JOIN customers ON customers.id = customers_complete.customerId
                     WHERE
-                        phoneCountry = ? AND 
-                        phoneNumber = ?
+                        customers_complete.phoneCountry = ? AND 
+                        customers_complete.phoneNumber = ?
                 `,
                 [
                     req.body.phoneCountry,
