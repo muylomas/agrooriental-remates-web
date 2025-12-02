@@ -189,11 +189,11 @@ Common.prototype.getCompleteLot = function (lotId, callback) {
 
                 if (!outputLot.customerImage)
                     outputLot.customerImage =
-                        "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/customers/no-profile-img.png?ver=2024-04-11";
+                        "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/customers/no-profile-img.png";
 
                 if (!outputLot.salesagentImageSafe)
                     outputLot.salesagentImageSafe =
-                        "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/customers/no-profile-img.png?ver=2024-04-11";
+                        "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/customers/no-profile-img.png";
 
                 outputLot.wcc = [
                     { name: "Destetados", enabled: outputLot.typeWeaned, quantity: outputLot.weaning, },

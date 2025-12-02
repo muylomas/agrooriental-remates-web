@@ -41,7 +41,7 @@ select {
 
 .balance-header .user-profile-icon {
     margin: auto;
-    background-image: url("https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/customers/no-profile-img.png?ver=2024-04-11");
+    background-image: url("https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/customers/no-profile-img.png");
     background-color: #ffffff;
     background-size: cover !important;
     background-repeat: no-repeat !important;
