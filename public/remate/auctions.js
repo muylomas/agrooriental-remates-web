@@ -411,7 +411,6 @@ function showBidAlertWarning(lotId, auctionBidEnd) {
                 setTimeout(() => {
                     window.location.href = "#lote-" + automaticAuctionOpenerForlotId;
                     setTimeout(() => {
-                        console.log("pre open auctions controller");
                         $("#button-auction-bid-" + automaticAuctionOpenerForlotId).click();
                     }, 2000);
                 }, 500);
