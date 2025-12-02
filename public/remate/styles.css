@@ -10,7 +10,7 @@
     background: rgb(53, 53, 53) !important;
 }
 
-.loading-gif {
+.loading-image {
     background: url(https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/banners/loading-horse.gif);
     background-blend-mode: multiply;
     background-repeat: none;
