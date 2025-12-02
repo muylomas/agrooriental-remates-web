@@ -28,7 +28,9 @@ function changeVideoImageDisplay(lotId) {
             $("#view-in-youtube-" + lotId).show();
             $("#view-in-youtube-" + lotId).removeClass("d-none");
             $("#view-media-selector-" + lotId + " i").removeClass("mdi-video");
+            $("#view-media-selector-" + lotId).removeClass("btn-danger");
             $("#view-media-selector-" + lotId + " i").addClass("mdi-camera");
+            $("#view-media-selector-" + lotId).addClass("btn-primary");
         }
 
     }
@@ -37,7 +39,9 @@ function changeVideoImageDisplay(lotId) {
         $("#video-" + lotId).remove();
         $("#view-in-youtube-" + lotId).hide();
         $("#view-media-selector-" + lotId + " i").removeClass("mdi-camera");
+        $("#view-media-selector-" + lotId).removeClass("btn-primary");
         $("#view-media-selector-" + lotId + " i").addClass("mdi-video");
+        $("#view-media-selector-" + lotId).addClass("btn-danger");
     }
 };
 
