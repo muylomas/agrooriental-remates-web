@@ -108,7 +108,7 @@ const slideTemplate =
                     </div>
                     
                     <div id="bid-auction-actions-container-__lot_lotId__">
-                        <button id="auction-bid-button-x1-__lot_lotId__" class="bid-action-button btn btn-warning text-dark fs-5 lh-sm w-100 d-none" onclick="javascript:auctionBidByStep(__lot_lotId__,0)">
+                        <button id="auction-bid-button-x1-__lot_lotId__" class="btn bid-action-button fs-5 lh-sm w-100 d-none" onclick="javascript:auctionBidByStep(__lot_lotId__,0)">
                             Ofertar __lot_lastAuctionPrice1Step__
                         </button>
                         <div id="auction-bid-button-multiple-__lot_lotId__" class="row mt-3 d-none">
