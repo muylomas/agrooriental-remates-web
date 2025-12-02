@@ -60,7 +60,7 @@ const slideTemplate =
                     <h4 class="card-title text-uppercase fs-5 mt-3 m-0">
                         __lot_equineName__
                     </h4>
-                    <p class="mb-2">
+                    <p class="text-truncate mb-2">
                         <a href="__lot_equineARU__" target="_blank" class="">
                             __lot_equineFather__ <b>Y</b> __lot_equineMother__
                         </a>
