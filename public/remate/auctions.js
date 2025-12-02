@@ -373,7 +373,7 @@ function showBidAlertSuccess(auctionBidEnd) {
 
 var automaticAuctionOpenerForlotId = false;
 function showBidAlertWarning(lotId, auctionBidEnd) {
-    let __aux_title = "Superaron tu oferta";
+    let __aux_title = "Superaron tu oferta por el lote " + lotId;
     let __aux_description = "Ofertá más que el mejor postor, apurate!!";
     let __aux_confirm = "Ofertar";
 
