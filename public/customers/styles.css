@@ -9,7 +9,7 @@
     background-repeat: no-repeat;
     background-position: center;
     background-color: #ffffff;
-    background-image: url(https://mercadoagro-backoffice.s3.amazonaws.com/images/customers/no-profile-img.png);
+    background-image: url(https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/customers/no-profile-img.png);
 }
 
 .society-profile-image,
@@ -20,10 +20,10 @@
     background-repeat: no-repeat;
     background-position: center;
     background-color: #ffffff;
-    background-image: url(https://mercadoagro-backoffice.s3.amazonaws.com/images/societies/no-profile-img.png);
+    background-image: url(https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/societies/no-profile-img.png);
 }
 
 .farm-profile-image {
     width: 30px;
-    background-image: url(https://mercadoagro-backoffice.s3.amazonaws.com/images/farms/no-profile-img.png);
+    background-image: url(https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/farms/no-profile-img.png);
 }

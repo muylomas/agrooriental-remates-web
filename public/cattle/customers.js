@@ -52,7 +52,7 @@ function insertCustomersInHTML() {
                                     border-radius:50%;
                                     display: inline-block;
                                     width:35px;height:35px;'>
-                                    <img src='https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png' 
+                                    <img src='https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/transparent-pixel.png' 
                                         alt='` + customersArray[index].name + " " + customersArray[index].surname + `'> 
                                 </div>
                             </a>
@@ -126,7 +126,7 @@ function getCustomersFromSearch() {
                                             <div style='background:url(` + results.customers[index].image + `);
                                                 background-size:cover;background-repeat:no-repeat;border-radius:50%;
                                                 display: inline-block;'>
-                                                <img src='https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png' 
+                                                <img src='https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/transparent-pixel.png' 
                                                     alt='` + results.customers[index].name + " " + results.customers[index].surname + `'> 
                                             </div>
                                         </a>

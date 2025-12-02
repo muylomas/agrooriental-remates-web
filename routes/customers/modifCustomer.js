@@ -186,7 +186,7 @@ Common.prototype.uploadProfileImage = function (files, fields, callback) {
         const __aux_filen_relative_path = 'images/customers/profile-images/' + __aux_filename;
 
         aws_s3_uploader.uploadFile(
-            'mercadoagro-backoffice',
+            'agro-oriental-remates',
             __aux_filen_relative_path,
             fileContent,
             'base64',
@@ -204,7 +204,7 @@ Common.prototype.uploadProfileImage = function (files, fields, callback) {
                     callback({
                         error: false,
                         url:
-                            "https://mercadoagro-backoffice.s3.amazonaws.com/" +
+                            "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/" +
                             __aux_filen_relative_path,
                     });
                 }

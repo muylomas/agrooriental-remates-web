@@ -71,7 +71,7 @@ Common.prototype.uploadFile = function (fileName, folder, fields, callback) {
         ) + "." + fileNameExtMime.extension;
 
     S3.uploadFile(
-        "mercadoagro",
+        "agro-oriental-remates",
         folder + __aux_filename,
         fileContent,
         "",
@@ -89,9 +89,9 @@ Common.prototype.uploadFile = function (fileName, folder, fields, callback) {
 
 Common.prototype.randomProductImage = function () {
     var left_side_image_array = [
-        'https://mercadoagro-backoffice.s3.amazonaws.com/images/login/posters/remate-1.jpg',
-        'https://mercadoagro-backoffice.s3.amazonaws.com/images/login/posters/remate-2.jpg',
-        'https://mercadoagro-backoffice.s3.amazonaws.com/images/login/posters/remate-3.jpg',
+        'https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/login/posters/remate-1.jpg',
+        'https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/login/posters/remate-2.jpg',
+        'https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/login/posters/remate-3.jpg',
     ];
     var __index_image_random = Math.floor(Math.random() * left_side_image_array.length);
     return left_side_image_array[__index_image_random] + "?v=" + Math.floor(Math.random() * 1000000);

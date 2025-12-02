@@ -57,10 +57,10 @@ function sendNotifEmail(tableRows, providerName, onlineKey, toName, updateItemCo
 
     commonEmails.email_sender(
         htmlDir,
-        '"Agro Oriental" <logistica@mercadoagro.com>',
+        '"Agro Oriental" <logistica@agrooriental.com.uy>',
         toEmails,
         [
-            'martin@mercadoagro.com',
+            'martin@agrooriental.com.uy',
         ],
         subject,
         hashes

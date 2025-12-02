@@ -574,7 +574,7 @@ Common.prototype.uploadVideo = function (files, fields, callback) {
         const __aux_filen_relative_path = 'videos/cattle/' + __aux_filename;
 
         aws_s3_uploader.uploadFile(
-            'mercadoagro-backoffice',
+            'agro-oriental-remates',
             __aux_filen_relative_path,
             fileContent,
             'base64',
@@ -592,7 +592,7 @@ Common.prototype.uploadVideo = function (files, fields, callback) {
                     callback({
                         error: false,
                         url:
-                            "https://mercadoagro-backoffice.s3.amazonaws.com/" +
+                            "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/" +
                             __aux_filen_relative_path,
                     });
                 }
@@ -620,7 +620,7 @@ Common.prototype.uploadImage = function (filePath, fileName, callback) {
     const __aux_filen_relative_path = 'images/cattle/images/' + __aux_filename;
 
     aws_s3_uploader.uploadFile(
-        'mercadoagro-backoffice',
+        'agro-oriental-remates',
         __aux_filen_relative_path,
         fileContent,
         'base64',
@@ -633,7 +633,7 @@ Common.prototype.uploadImage = function (filePath, fileName, callback) {
             }
             else {
                 callback(
-                    "https://mercadoagro-backoffice.s3.amazonaws.com/" +
+                    "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/" +
                     __aux_filen_relative_path,
                 );
             }

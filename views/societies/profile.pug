@@ -31,9 +31,9 @@ block content
                       .card
                         .card-body.p-0
                           .media.w-100
-                            - let __aux_prod_image = 'background-image:url(' + (society.societyImage ? society.societyImage : "https://mercadoagro-backoffice.s3.amazonaws.com/images/societies/no-profile-img.png") + ')'
+                            - let __aux_prod_image = 'background-image:url(' + (society.societyImage ? society.societyImage : "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/societies/no-profile-img.png") + ')'
                             #uploader-image-container(style=__aux_prod_image)
-                              img(src="https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png", width="100%", onclick="fireFileInputFromImg()")
+                              img(src="https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/transparent-pixel.png", width="100%", onclick="fireFileInputFromImg()")
                               if(society.societyImage)
                                 input#image-to-upload-url(type="hidden", name="imageToUploadUrl", value=society.societyImage)
                               else 

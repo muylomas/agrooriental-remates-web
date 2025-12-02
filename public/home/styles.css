@@ -1,5 +1,5 @@
 .full-video-bg {
-    background: url("https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png");
+    background: url("https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/transparent-pixel.png");
     background-size: cover;
     background-position: center;
     height: 50vh;
@@ -287,7 +287,7 @@
 
 #top-menu .user-profile-icon {
     margin: auto;
-    background-image: url("https://mercadoagro-backoffice.s3.amazonaws.com/images/customers/no-profile-img.png?ver=2024-04-11");
+    background-image: url("https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/customers/no-profile-img.png?ver=2024-04-11");
     background-color: #ffffff;
     background-size: cover !important;
     background-repeat: no-repeat !important;
@@ -313,7 +313,7 @@ input[id^="auction-bid-price-"] {
 }
 
 .map-closed-icon {
-    background-image: url("https://mercadoagro-app.s3.amazonaws.com/images/home/maps-icon.png");
+    background-image: url("https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/home/maps-icon.png");
     background-color: transparent;
     background-size: cover !important;
     background-repeat: no-repeat !important;
@@ -376,7 +376,7 @@ input[id^="auction-bid-price-"] {
 
 .share-contact-salesagent {
     margin: auto;
-    background-image: url("https://mercadoagro-backoffice.s3.amazonaws.com/images/customers/no-profile-img.png?ver=2024-04-11");
+    background-image: url("https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/customers/no-profile-img.png?ver=2024-04-11");
     background-color: #ffffff;
     background-size: cover !important;
     background-repeat: no-repeat !important;

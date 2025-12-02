@@ -99,7 +99,7 @@ Common.prototype.getViewParams = function (sessionID, farmId, callback) {
                                 societies.rut AS societyRut,
                                 IF(
                                     societies.image IS NULL OR societies.image = "",
-                                    "https://mercadoagro-backoffice.s3.amazonaws.com/images/societies/no-profile-img.png",
+                                    "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/societies/no-profile-img.png",
                                     societies.image
                                 ) AS societyImage
                             FROM farms_complete

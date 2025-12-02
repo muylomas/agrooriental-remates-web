@@ -152,7 +152,7 @@ Common.prototype.getViewParams = function (sessionID, lotId, callback) {
                                         ) AS weightDateFormated,
                                         IF(
                                             cattle_complete.farmImage IS NULL OR cattle_complete.farmImage = "",
-                                            "https://mercadoagro-backoffice.s3.amazonaws.com/images/societies/no-profile-img.png",
+                                            "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/societies/no-profile-img.png",
                                             cattle_complete.farmImage
                                         ) AS farmImageFinal,
                                         DATE_FORMAT(
@@ -181,7 +181,7 @@ Common.prototype.getViewParams = function (sessionID, lotId, callback) {
                                         customers_complete.customerId AS customerId,
                                         IF(
                                             customers_complete.customerImage IS NULL OR customers_complete.customerImage = "",
-                                            "https://mercadoagro-backoffice.s3.amazonaws.com/images/customers/no-profile-img.png",
+                                            "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/customers/no-profile-img.png",
                                             customers_complete.customerImage
                                         ) AS customerImage,
                                         customers_complete.customerName AS customerName,
@@ -197,7 +197,7 @@ Common.prototype.getViewParams = function (sessionID, lotId, callback) {
                                         cattle_totals.females AS females,
                                         IF(
                                             cattle_complete.salesagentImage IS NULL OR cattle_complete.salesagentImage = "",
-                                            "https://mercadoagro-backoffice.s3.amazonaws.com/images/customers/no-profile-img.png",
+                                            "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/customers/no-profile-img.png",
                                             cattle_complete.salesagentImage
                                         ) AS salesagentImageSafe,
                                         IF (

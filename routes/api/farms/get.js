@@ -17,7 +17,7 @@ Common.prototype.getByCustomerId = function (sessionID, customerId, callback) {
                         farms_complete.*,
                         IF( 
                             farms_complete.farmImage IS NULL OR farms_complete.farmImage = "",
-                            "https://mercadoagro-backoffice.s3.amazonaws.com/images/farms/no-profile-img.png",
+                            "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/farms/no-profile-img.png",
                             farms_complete.farmImage 
                         ) AS farmImageNotNull
                     FROM farms_complete 

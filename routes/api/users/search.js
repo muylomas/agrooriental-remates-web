@@ -28,7 +28,7 @@ Common.prototype.byString = function (sessionID, userString, userType, callback)
                         users.surname AS surname,
                         IF(
                             users.picture IS NULL OR users.picture = "",
-                            "https://mercadoagro-backoffice.s3.amazonaws.com/images/customers/no-profile-img.png",
+                            "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/customers/no-profile-img.png",
                             users.picture
                         ) AS image
                     FROM users 

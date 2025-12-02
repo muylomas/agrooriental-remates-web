@@ -345,7 +345,7 @@ function testVideo(lots, indSLots, callback) {
         callback(lots, indSLots);
     });
     __aux_video.addEventListener("error", function () {
-        lots[indSLots].video = "https://mercadoagro-app.s3.amazonaws.com/videos/video-unavailable.mp4";
+        lots[indSLots].video = "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/videos/video-unavailable.mp4";
         $("#video-source-" + lots[indSLots].lotId).attr("src", lots[indSLots].video);
         $("#video-source-" + lots[indSLots].lotId).parent().load();
         setTimeout(() => {
@@ -580,7 +580,7 @@ function initFsvs() {
                     $("#google-map-bottom-desc-" + lots[index].lotId).stop().animate({ height: "0", width: "0" });
                     $("#google-map-bottom-desc-text-" + lots[index].lotId).hide();
                     $("#google-map-under-desc-text-" + lots[index].lotId).show();
-                    $("#map-closed-icon-" + lots[index].lotId).css("background-image", "url(https://mercadoagro-app.s3.amazonaws.com/images/home/maps-icon.png)");
+                    $("#map-closed-icon-" + lots[index].lotId).css("background-image", "url(https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/home/maps-icon.png)");
                 }
 
                 $("[id^='lot-chat-'].open").removeClass("open");
@@ -615,7 +615,7 @@ function initFsvs() {
                     $("#google-map-bottom-desc-" + lots[index].lotId).stop().animate({ height: "0", width: "0" });
                     $("#google-map-bottom-desc-text-" + lots[index].lotId).hide();
                     $("#google-map-under-desc-text-" + lots[index].lotId).show();
-                    $("#map-closed-icon-" + lots[index].lotId).css("background-image", "url(https://mercadoagro-app.s3.amazonaws.com/images/home/maps-icon.png)");
+                    $("#map-closed-icon-" + lots[index].lotId).css("background-image", "url(https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/home/maps-icon.png)");
                 }
 
 

@@ -25,7 +25,7 @@ Common.prototype.getViewParams = function (sessionID, callback) {
                         farms_complete.farmName AS farmName,
                         IF( 
                             farms_complete.farmImage IS NULL OR farms_complete.farmImage = "",
-                            "https://mercadoagro-backoffice.s3.amazonaws.com/images/farms/no-profile-img.png",
+                            "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/farms/no-profile-img.png",
                             farms_complete.farmImage 
                         ) AS farmImage,
                         farms_complete.addressLocationName AS farmAddressLocationName,
@@ -34,7 +34,7 @@ Common.prototype.getViewParams = function (sessionID, callback) {
                         societies_complete.societyName AS societyName,
                         IF(
                             societies_complete.societyImage IS NULL OR societies_complete.societyImage = "",
-                            "https://mercadoagro-backoffice.s3.amazonaws.com/images/societies/no-profile-img.png",
+                            "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/societies/no-profile-img.png",
                             societies_complete.societyImage
                         ) AS societyImage,
                         societies_complete.addressLocationName AS societyAddressLocationName,

@@ -27,7 +27,7 @@ Common.prototype.getViewParams = function (sessionID, societyId, callback) {
                                 customers.surname AS customerSurname,
                                 IF(
                                     customers.image IS NULL OR customers.image = "",
-                                    "https://mercadoagro-backoffice.s3.amazonaws.com/images/customers/no-profile-img.png",
+                                    "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/customers/no-profile-img.png",
                                     customers.image
                                 ) AS customerImage,
                                 customers_types.name AS customerType

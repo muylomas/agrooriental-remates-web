@@ -12,7 +12,7 @@ Common.prototype.sendAssignmentNotifications = function () {
             Destination: {
                 ToAddresses: [email]
             },
-            Source: '"Agro Oriental" <noreply@mercadoagro.com.uy>',
+            Source: '"Agro Oriental" <noreply@agrooriental.com.uy.uy>',
             Message: {
                 Subject: {
                     Data: subject

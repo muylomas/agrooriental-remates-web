@@ -57,7 +57,7 @@ Common.prototype.getViewParams = function (sessionID, farmId, callback) {
                                 societies.rut AS societyRut,
                                 IF(
                                     societies.image IS NULL OR societies.image = "",
-                                    "https://mercadoagro-backoffice.s3.amazonaws.com/images/societies/no-profile-img.png",
+                                    "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/societies/no-profile-img.png",
                                     societies.image
                                 ) AS societyImage,
                                 customers_complete.customerId AS customerId,
@@ -65,7 +65,7 @@ Common.prototype.getViewParams = function (sessionID, farmId, callback) {
                                 customers_complete.customerSurname AS customerSurname,
                                 IF(
                                     customers_complete.customerImage IS NULL OR customers_complete.customerImage = "",
-                                    "https://mercadoagro-backoffice.s3.amazonaws.com/images/customers/no-profile-img.png",
+                                    "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/customers/no-profile-img.png",
                                     customers_complete.customerImage
                                 ) AS customerImage,
                                 customers_complete.customerType AS customerType

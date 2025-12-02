@@ -46,7 +46,7 @@ block content
                           each farmItem in farms
                             tr(role="role", class=index%2 ? 'odd': 'even')
                               td.p-1.image-cel.text-center
-                                - var __aux_img_src = "background:url(" + (farmItem.image ? farmItem.image : "https://mercadoagro-backoffice.s3.amazonaws.com/images/farms/no-profile-img.png") + ")";
+                                - var __aux_img_src = "background:url(" + (farmItem.image ? farmItem.image : "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/farms/no-profile-img.png") + ")";
                                 a(href="/establecimientos/perfil/" + farmItem.id, target="_blank")
                                   .image-container(style=__aux_img_src, alt=farmItem.name)
                               td.p-1.pl-3 #{farmItem.name}

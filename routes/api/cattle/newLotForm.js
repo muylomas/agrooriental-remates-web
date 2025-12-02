@@ -222,7 +222,7 @@ function selectFarmsByIds(farmsId, farmsIdString, societiesId, societiesIdString
                     farms_complete.farmName AS name,
                     IF(
                         farms_complete.farmImage IS NULL OR farms_complete.farmImage = "",
-                        "https://mercadoagro-backoffice.s3.amazonaws.com/images/farms/no-profile-img.png",
+                        "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/farms/no-profile-img.png",
                         farms_complete.farmImage
                     ) AS image,
                     societies_complete.societyId AS societyId,

@@ -106,7 +106,7 @@ function sendNotifEmail(params, requestId, companyName, callback) {
 
             commonEmails.email_sender(
                 htmlDir,
-                '"Agro Oriental" <no-reply@mercadoagro.com>',
+                '"Agro Oriental" <no-reply@agrooriental.com.uy>',
                 params[indxMess].users,
                 [],
                 subject,

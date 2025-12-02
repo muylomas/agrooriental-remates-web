@@ -157,7 +157,7 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
                         ) AS weightDateFormated,
                         IF(
                             cattle_complete.farmImage IS NULL OR cattle_complete.farmImage = "",
-                            "https://mercadoagro-backoffice.s3.amazonaws.com/images/societies/no-profile-img.png",
+                            "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/societies/no-profile-img.png",
                             cattle_complete.farmImage
                         ) AS farmImageFinal,
                         DATE_FORMAT(
@@ -194,7 +194,7 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
                         cattle_totals.females AS females,
                         IF(
                             cattle_complete.salesagentImage IS NULL OR cattle_complete.salesagentImage = "",
-                            "https://mercadoagro-backoffice.s3.amazonaws.com/images/customers/no-profile-img.png",
+                            "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/customers/no-profile-img.png",
                             cattle_complete.salesagentImage
                         ) AS salesagentImageSafe,
                         IF(
@@ -299,22 +299,22 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
 Common.prototype.cattleCaracteristics = function () {
     const cattleCaracteristics = [
         {
-            icon: 'https://mercadoagro-app.s3.amazonaws.com/images/home/female-icon.png',
+            icon: 'https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/home/female-icon.png',
         },
         {
-            icon: 'https://mercadoagro-app.s3.amazonaws.com/images/home/male-icon.png',
+            icon: 'https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/home/male-icon.png',
         },
         {
-            icon: 'https://mercadoagro-app.s3.amazonaws.com/images/home/cria-icon.png',
+            icon: 'https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/home/cria-icon.png',
         },
         {
-            icon: 'https://mercadoagro-app.s3.amazonaws.com/images/home/sheep-icon.png',
+            icon: 'https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/home/sheep-icon.png',
         },
         {
-            icon: 'https://mercadoagro-app.s3.amazonaws.com/images/home/star-cow-icon.png',
+            icon: 'https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/home/star-cow-icon.png',
         },
         {
-            icon: 'https://mercadoagro-app.s3.amazonaws.com/images/home/star-sheep-icon.png',
+            icon: 'https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/home/star-sheep-icon.png',
         },
     ];
 
@@ -361,7 +361,7 @@ Common.prototype.cattleImages = function (lotsIds, lots, callback) {
                 // Fill with empty image
                 for (let indexLot in lots) {
                     if (!lots[indexLot].imagesArray.length) {
-                        lots[indexLot].imagesArray.push("https://mercadoagro-backoffice.s3.amazonaws.com/videos/no-video-img.png?ver=2024-04-11");
+                        lots[indexLot].imagesArray.push("https://agro-oriental-remates.s3.us-west-1.amazonaws.com/videos/no-video-img.png?ver=2024-04-11");
                         if (!testVideoThumb) {
                             testVideoThumb = true;
                             Common.prototype.cattleImagesFromVideo(lots[indexLot].video, lots[indexLot].lotId, function () {

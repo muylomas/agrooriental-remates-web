@@ -13,8 +13,8 @@ const slideTemplate =
                                 __lot_addressLocationName__, __lot_addressStateName__
                             </p>
                             <div class="google-map-container" id="google-map-bottom-desc-__lot_lotId__"></div>
-                            <div class="map-closed-icon position-absolute bottom-0" id="map-closed-icon-__lot_lotId__" onclick="expandMap(__lot_lotId__)" style="background-image: url(&quot;https://mercadoagro-app.s3.amazonaws.com/images/home/maps-icon.png&quot;);">
-                                <img class="w-100" src="https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png">
+                            <div class="map-closed-icon position-absolute bottom-0" id="map-closed-icon-__lot_lotId__" onclick="expandMap(__lot_lotId__)" style="background-image: url(&quot;https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/home/maps-icon.png&quot;);">
+                                <img class="w-100" src="https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/transparent-pixel.png">
                             </div>
                             <h5 class="p-0 m-0 ms-5 ps-3 text-white text-truncate" id="google-map-under-desc-text-__lot_lotId__">
                                 __lot_addressLocationName__, __lot_addressStateName__
@@ -107,7 +107,7 @@ const slideTemplate =
                 <div class="iconbar-overlay-video row p-2 pb-5" id="iconbar-overlay-__lot_lotId__" style="z-index: 999; display: flex;">
                     <div class="col-12 text-center pb-5">
                         <div class="share-contact-salesagent mb-3" id="share-contact-salesagent-__lot_lotId__" style="background-image:url(__lot_salesagentImageSafe__);">
-                            <img class="w-100" src="https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png" alt="__lot_salesagentName__ __lot_salesagentSurname__">
+                            <img class="w-100" src="https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/transparent-pixel.png" alt="__lot_salesagentName__ __lot_salesagentSurname__">
                         </div>
                         <div class="iconbar-toggler" id="lot-detail-icons-__lot_lotId__">
                             <i class="mdi mdi-pound mt-5 icon-md"></i>
@@ -147,7 +147,7 @@ const slideTemplate =
                                                         display: inline-block;
                                                         width:50px;
                                                         height:50px;">
-                                                <img src="https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png" 
+                                                <img src="https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/transparent-pixel.png" 
                                                     alt="__lot_salesagentName__ __lot_salesagentSurname__">
                                             </div>
                                             <div class="ms-3">

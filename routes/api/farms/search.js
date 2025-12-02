@@ -25,7 +25,7 @@ Common.prototype.byString = function (sessionID, farmString, callback) {
                         societies_complete.societyRut AS societyRut,
                         IF( 
                             societies_complete.societyImage IS NULL OR societies_complete.societyImage = "",
-                            "https://mercadoagro-backoffice.s3.amazonaws.com/images/societies/no-profile-img.png",
+                            "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/societies/no-profile-img.png",
                             societies_complete.societyImage 
                         ) AS image 
                     FROM farms_complete 

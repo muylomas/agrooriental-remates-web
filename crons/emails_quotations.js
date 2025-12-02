@@ -14,10 +14,10 @@ Common.prototype.quotationsEmails = function () {
             providerId: 0,
             brands: ['3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '14', '15', '16', '17', '18',],
             email: [
-                '"Martín - Agro Oriental" <martin@mercadoagro.com.uy>',
+                '"Martín - Agro Oriental" <martin@agrooriental.com.uy.uy>',
             ],
             cc: [
-                '"Martín - Agro Oriental" <martin@mercadoagro.com.uy>',
+                '"Martín - Agro Oriental" <martin@agrooriental.com.uy.uy>',
             ],
             htmlDir: './resources/emails/html/request_quotation.html',
             salute: "Hola,",
@@ -154,7 +154,7 @@ Common.prototype.quotationsEmails = function () {
 
                             commonEmails.email_sender(
                                 providers_array[indProv].htmlDir,
-                                '"Agro Oriental" <logistica@mercadoagro.com.uy>',
+                                '"Agro Oriental" <logistica@agrooriental.com.uy.uy>',
                                 providers_array[indProv].email,
                                 providers_array[indProv].cc,
                                 providers_array[indProv].subject,
@@ -372,10 +372,10 @@ Common.prototype.sendQuotation = function () {
 
                         commonEmails.email_sender(
                             htmlDir,
-                            '"Cotizaciones Agro Oriental" <cotizaciones@mercadoagro.com>',
+                            '"Cotizaciones Agro Oriental" <cotizaciones@agrooriental.com.uy>',
                             __aux_to_array,
                             [
-                                '"Martín - Agro Oriental" <martin@mercadoagro.com>',
+                                '"Martín - Agro Oriental" <martin@agrooriental.com.uy>',
                             ],
                             subject,
                             hashes

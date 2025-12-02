@@ -61,7 +61,7 @@ Common.prototype.customersFielsIntoArray = function (fields, callback) {
                 customers_complete.customerSurname AS surname,
                 IF(
                     customers_complete.customerImage IS NULL OR customers_complete.customerImage = "",
-                    "https://mercadoagro-backoffice.s3.amazonaws.com/images/customers/no-profile-img.png",
+                    "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/customers/no-profile-img.png",
                     customers_complete.customerImage
                 ) AS image,
                 customers_types.name AS type

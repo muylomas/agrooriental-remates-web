@@ -15,9 +15,9 @@ block content
                   .card
                     .card-body.p-0
                       .media.w-100
-                        - let __aux_prod_image = 'background-image:url(' + (farm.farmImage ? farm.farmImage : "https://mercadoagro-backoffice.s3.amazonaws.com/images/farms/no-profile-img.png") + ')'
+                        - let __aux_prod_image = 'background-image:url(' + (farm.farmImage ? farm.farmImage : "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/farms/no-profile-img.png") + ')'
                         #uploader-image-container(style=__aux_prod_image)
-                          img(src="https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png", width="100%", onclick="fireFileInputFromImg()")
+                          img(src="https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/transparent-pixel.png", width="100%", onclick="fireFileInputFromImg()")
 
                 .col-md-6.stretch-card
                   .card.border-0
@@ -72,7 +72,7 @@ block content
                                         border-radius:50%;\
                                         display: inline-block;\
                                         width:50px;height:50px;')
-                                        img(src='https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png', alt=societyItem.name)
+                                        img(src='https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/transparent-pixel.png', alt=societyItem.name)
                                 .col-7
                                   p.m-0.p-0
                                     | #{societyItem.name}
@@ -92,7 +92,7 @@ block content
                                           border-radius:50%;\
                                           display: inline-block;\
                                           width:35px;height:35px;')
-                                          img(src='https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png', alt=customerItem.name + " " + customerItem.surname)
+                                          img(src='https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/transparent-pixel.png', alt=customerItem.name + " " + customerItem.surname)
                                   .col-7
                                     p.m-0.p-0(style="line-height: 33px;")
                                       | #{customerItem.name}  #{customerItem.surname}

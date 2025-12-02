@@ -185,15 +185,15 @@ Common.prototype.getCompleteLot = function (lotId, callback) {
 
                 if (!outputLot.farmImageFinal)
                     outputLot.farmImageFinal =
-                        "https://mercadoagro-backoffice.s3.amazonaws.com/images/societies/no-profile-img.png";
+                        "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/societies/no-profile-img.png";
 
                 if (!outputLot.customerImage)
                     outputLot.customerImage =
-                        "https://mercadoagro-backoffice.s3.amazonaws.com/images/customers/no-profile-img.png?ver=2024-04-11";
+                        "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/customers/no-profile-img.png?ver=2024-04-11";
 
                 if (!outputLot.salesagentImageSafe)
                     outputLot.salesagentImageSafe =
-                        "https://mercadoagro-backoffice.s3.amazonaws.com/images/customers/no-profile-img.png?ver=2024-04-11";
+                        "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/customers/no-profile-img.png?ver=2024-04-11";
 
                 outputLot.wcc = [
                     { name: "Destetados", enabled: outputLot.typeWeaned, quantity: outputLot.weaning, },
@@ -584,7 +584,7 @@ Common.prototype.farmsFielsIntoArray = function (fields, callback) {
                     farms_complete.farmName AS name,
                     IF(
                         farms_complete.farmImage IS NULL OR farms_complete.farmImage = "",
-                        "https://mercadoagro-backoffice.s3.amazonaws.com/images/farms/no-profile-img.png",
+                        "https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/farms/no-profile-img.png",
                         farms_complete.farmImage
                     ) AS image,
                     societies_complete.societyId AS societyId,

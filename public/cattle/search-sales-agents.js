@@ -41,7 +41,7 @@ function insertSalesAgentsInHTML() {
                                     border-radius:50%;
                                     display: inline-block;
                                     width:35px;height:35px;'>
-                                    <img src='https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png' 
+                                    <img src='https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/transparent-pixel.png' 
                                         alt='` + salesagentsInLot[index].name + " " + salesagentsInLot[index].surname + `'> 
                                 </div>
                             </a>
@@ -99,7 +99,7 @@ function getsalesagentsFromSearch() {
                                             <div style='background:url(` + results.salesagents[index].image + `);
                                                 background-size:cover;background-repeat:no-repeat;border-radius:50%;
                                                 display: inline-block;'>
-                                                <img src='https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png' 
+                                                <img src='https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/transparent-pixel.png' 
                                                     alt='` + results.salesagents[index].name + `'> 
                                             </div>
                                         </a>

@@ -3,13 +3,13 @@ function expandMap(lotId) {
         $("#google-map-bottom-desc-" + lotId).stop().animate({ height: "0", width: "0" });
         $("#google-map-bottom-desc-text-" + lotId).hide();
         $("#google-map-under-desc-text-" + lotId).show();
-        $("#map-closed-icon-" + lotId).css("background-image", "url(https://mercadoagro-app.s3.amazonaws.com/images/home/maps-icon.png)");
+        $("#map-closed-icon-" + lotId).css("background-image", "url(https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/home/maps-icon.png)");
     }
     else {
         $("#google-map-bottom-desc-" + lotId).stop().animate({ height: "150px", width: "100%" });
         $("#google-map-bottom-desc-text-" + lotId).show();
         $("#google-map-under-desc-text-" + lotId).hide();
-        $("#map-closed-icon-" + lotId).css("background-image", "url(https://mercadoagro-app.s3.amazonaws.com/images/home/maps-close-icon.png)");
+        $("#map-closed-icon-" + lotId).css("background-image", "url(https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/home/maps-close-icon.png)");
     }
 }
 

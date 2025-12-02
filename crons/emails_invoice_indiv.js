@@ -50,7 +50,7 @@ function sendNotifEmail(invoicesData, callback) {
     if (toUserEmails.length) {
         commonEmails.email_sender(
             htmlDir,
-            '"Agro Oriental" <facturacion@mercadoagro.com>',
+            '"Agro Oriental" <administracion@agrooriental.com.uy>',
             toUserEmails,
             ccUsers,
             subject,

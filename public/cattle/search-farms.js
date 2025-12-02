@@ -47,7 +47,7 @@ function insertFarmsInHTML() {
                                     border-radius:50%;
                                     display: inline-block;
                                     height:40px;'>
-                                    <img src='https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png' 
+                                    <img src='https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/transparent-pixel.png' 
                                         class="h-100"
                                         alt='` + farmsInLot[index].name + `'> 
                                 </div>
@@ -104,7 +104,7 @@ function getFarmsFromSearch() {
                                             <div style='background:url(` + results.farms[index].image + `);
                                                 background-size:cover;background-repeat:no-repeat;border-radius:50%;
                                                 display: inline-block;'>
-                                                <img src='https://mercadoagro-backoffice.s3.amazonaws.com/images/transparent-pixel.png' 
+                                                <img src='https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/transparent-pixel.png' 
                                                     alt='` + results.farms[index].name + `'> 
                                             </div>
                                         </a>

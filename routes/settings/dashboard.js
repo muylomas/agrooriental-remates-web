@@ -346,7 +346,7 @@ router.post('/create', function (req, res, next) {
                             "username = ?, " +
                             "userId = ?, " +
                             "resetDate = NOW(), " +
-                            "picture = 'https://mercadoagro-backoffice.s3.amazonaws.com/images/logos/icon.png', " +
+                            "picture = 'https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/logos/agrooriental-insta-logo.jpg', " +
                             "date = NOW() ";
 
                         connection.query(sqlQuery,
@@ -558,7 +558,7 @@ function updatePasswordAndNotify(userName, email, rewoUserId, notify, callback) 
 
                     common_gral.sendPlainTextEmail(
                         [__aux_user_email,],
-                        '"Agro Oriental" <noreply@mercadoagro.com.uy>',
+                        '"Agro Oriental" <noreply@agrooriental.com.uy.uy>',
                         "Reseteo de contraseña",
                         __aux_email_content,
                         function (err, result) {
