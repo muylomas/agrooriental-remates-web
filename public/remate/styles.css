@@ -318,9 +318,8 @@ select {
     z-index: 999;
 }
 
-.bottom-overlay-video .bid-action-button,
-.auction-bid .bid-action-button {
-    font-size: large;
+.bid-action-button,
+.bid-action-button-step {
     background: #4e7b44 !important;
     border-color: #4e7b44 !important;
     color: #fff !important;
