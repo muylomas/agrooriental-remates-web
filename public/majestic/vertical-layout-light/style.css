@@ -23217,10 +23217,13 @@ input:focus {
   background: linear-gradient(to right, #7d7979 0%, #000000 100%);
 }
 
-/* Typography */
+/* Typography 
+  OLD: 
+    font-family: "Roboto", sans-serif;
+*/
 body {
+  font-family: Poppins, Helvetica, Arial, Verdana, sans-serif !important;
   font-size: 1rem;
-  font-family: "Roboto", sans-serif;
   font-weight: initial;
   line-height: normal;
   -webkit-font-smoothing: antialiased;
