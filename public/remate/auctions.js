@@ -122,7 +122,7 @@ function showCustomerLoosing(lotId, price, auctionBidEnd, showButton, initialize
         }
     }
 
-    if (showButton) {
+    if (showButton && isLotBidedByCustomer) {
         let goToLotButton =
             `
                 <a href="#lote-` + lotId + `" class="btn btn-danger btn-rounded btn-fw">
@@ -138,16 +138,7 @@ function showCustomerLoosing(lotId, price, auctionBidEnd, showButton, initialize
                 `;
         }
 
-        if ($("#lots-active-bids-button-lot-" + lotId).length) {
-            $("#lots-active-bids-button-lot-" + lotId).html(goToLotButton);
-
-            showBidAlertWarning(lotId, auctionBidEnd);
-        }
-        else if (initialize) {
-            $("#lots-active-bids").append(
-                '<li id="lots-active-bids-button-lot-' + lotId + '" class="nav-item m-1">' + goToLotButton + '</li>'
-            );
-        }
+        showBidAlertWarning(lotId, auctionBidEnd);
     }
 };
 
