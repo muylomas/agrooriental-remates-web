@@ -89,10 +89,6 @@ function isSalePrice(lastBid, salePrice, lotId, callback) {
 };
 
 function sendSMSToLooser(customer, lotId) {
-    console.log("------------------- sendSMSToLooser -------------------");
-    console.log("customer: ", customer);
-    console.log("lotId: ", lotId);
-
     aws_sms_sender.sms_sender(
         {
             Message: "Superaron tu oferta para el lote " + lotId + ". Superala si no querés perderlo https://equinos.agrooriental.uy/#lote-" + lotId,
