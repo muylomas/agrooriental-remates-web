@@ -1,8 +1,3 @@
-
-body {
-  font-family: normal normal normal 16px / 1.6em "Poppins", Helvetica, Arial, Verdana, sans-serif;
-}
-
 .desktop-only {
     display: flex;
 }
