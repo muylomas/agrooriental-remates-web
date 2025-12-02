@@ -1,7 +1,7 @@
 const slideTemplate =
     `
-        <div id="lote-__lot_lotId__" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12 stretch-card" style="background: rgb(53, 53, 53)">
-            <div class="card m-2" id="lot-__lot_lotId__" style="min-width: auto;">
+        <div id="lote-__lot_lotId__" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12 bg-agrooriental stretch-card">
+            <div class="card border-0 m-2" id="lot-__lot_lotId__" style="min-width: auto;">
                 <div id="cattle-media-container-__lot_lotId__" class="cattle-media-container position-relative overflow-hidden w-100">
                     <img class="w-100" src="https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/banners/chimango-video-background.jpg">
                     <div id="image-__lot_lotId__" class="cattle-image position-absolute top-0 start-0 w-100 h-100" style="background-image:url(__lot_imagesArray_0__);" alt="Lote __lot_lotId__"></div>

@@ -6,8 +6,12 @@
     display: flex;
 }
 
+.bg-agrooriental {
+    background: rgb(53, 53, 53) !important;
+}
+
 .auth.app-full-bg {
-    background: #333333 none repeat center center !important;
+    background: rgb(53, 53, 53) none repeat center center !important;
     background-size: cover;
     background-position: center;
 }
