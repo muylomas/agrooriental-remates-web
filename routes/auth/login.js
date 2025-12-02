@@ -30,8 +30,12 @@ router.post('/', function (req, res, next) {
         if (req.body.loginMethodType == "phone") {
             connection.query(
                 `
-                    SELECT id, invitation
-                    FROM customers 
+                    SELECT 
+                        customers_complete.customerId AS id, 
+                        customers.invitation AS invitation, 
+                        customers_complete.phoneCountryCode AS phoneCountryCode
+                    FROM customers_complete 
+                    INNER JOIN customers ON customers.id = customers_complete.customerId
                     WHERE
                         phoneCountry = ? AND 
                         phoneNumber = ?
@@ -48,6 +52,7 @@ router.post('/', function (req, res, next) {
                         if (results.length) {
                             const __aux_userId = results[0].id;
                             const __aux_enableSMS = results[0].invitation;
+                            const __aux_phoneCountryCode = results[0].phoneCountryCode;
 
                             const phoneCodeNumber = common_gral.randomStringNumbers(4);
                             const phonePassword = sha512("phone" + phoneCodeNumber);
@@ -73,13 +78,10 @@ router.post('/', function (req, res, next) {
                                     }
                                     else {
                                         if (__aux_enableSMS == 1) {
-                                            console.log("================ phoneCodeNumber ================");
-                                            console.log(phoneCodeNumber);
-                                            console.log("================ phoneCodeNumber ================");
                                             aws_sms_sender.sms_sender(
                                                 {
                                                     Message: phoneCodeNumber + " es tu código de verificación de Agro Oriental https://equinos.agrooriental.uy",
-                                                    PhoneNumber: "+598" + parseInt(req.body.phoneNumber, 10),
+                                                    PhoneNumber: __aux_phoneCountryCode + parseInt(req.body.phoneNumber, 10),
                                                 },
                                                 function (error) {
                                                 }

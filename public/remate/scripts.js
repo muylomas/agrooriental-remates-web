@@ -152,6 +152,8 @@ function loginSwal() {
                                             <select class="form-control px-2 py-1 h-100" name="phoneCountry"">
                                                 <option value="1">+598</option>
                                                 <option value="2">+54</option>
+                                                <option value="3">+56</option>
+                                                <option value="4">+1</option>
                                             </select>
                                         </div>
                                         <input class="form-control" type="number" name="phoneNumber" placeholder="99099099" min="91000000" max="99999999">
