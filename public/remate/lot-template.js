@@ -1,6 +1,6 @@
 const slideTemplate =
     `
-        <div id="lote-__lot_lotId__" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12 stretch-card">
+        <div id="lote-__lot_lotId__" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12 stretch-card bg-white">
             <div class="card m-2" id="lot-__lot_lotId__" style="min-width: auto;">
                 <div id="cattle-media-container-__lot_lotId__" class="cattle-media-container position-relative overflow-hidden w-100">
                     <img class="w-100" src="https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/banners/chimango-video-background.jpg">
@@ -85,7 +85,7 @@ const slideTemplate =
                         <div class="col-12 p-0 m-0 position-relative">
                             <button 
                                 id="auction-bid-view-history-__lot_lotId__"
-                                class="btn btn-primary lh-sm position-absolute end-0 d-none" 
+                                class="btn btn-dark lh-sm position-absolute end-0 d-none" 
                                 onclick="auctionBidsHistory(__lot_lotId__)"
                             >
                                 <b>PIQUES</b>
@@ -115,7 +115,7 @@ const slideTemplate =
                             <div class="col-12 p-0 m-0">
                                 <div class="d-flex align-items-left justify-content-left justify-content-md-left">
                                     <div class="d-flex flex-column justify-content-around">
-                                        <button class="btn btn-icon btn-secondary" onclick="auctionBidAddToPrice(__lot_lotId__, -1)">
+                                        <button class="btn btn-icon btn-secondary" onclick="auctionBidAddToPrice(__lot_lotId__, -1)" style="background: #4e7b44; color: #fff !important;">
                                             <i class="mdi mdi-minus"></i>
                                         </button>
                                     </div>
@@ -130,7 +130,7 @@ const slideTemplate =
                                                 value="__lot_lastAuctionPriceMultiStep__">
                                     </div>
                                     <div class="d-flex flex-column justify-content-around">
-                                        <button class="btn btn-icon btn-secondary" onclick="auctionBidAddToPrice(__lot_lotId__, 1)">
+                                        <button class="btn btn-icon btn-secondary" onclick="auctionBidAddToPrice(__lot_lotId__, 1)" style="background: #4e7b44; color: #fff !important;">
                                             <i class="mdi mdi-plus"></i>
                                         </button>
                                     </div>
