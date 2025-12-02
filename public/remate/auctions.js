@@ -60,11 +60,10 @@ function showCustomerWinning(lotId, price, auctionBidEnd, showAlert) {
 
 function showCustomerLoosing(lotId, price, auctionBidEnd, showButton) {
     let isLotBidedByCustomer = false;
-
-    if (price) {
-        for (let indAAB in activeAuctionBids) {
-            if (activeAuctionBids[indAAB].lotId == lotId) {
-                isLotBidedByCustomer = true;
+    for (let indAAB in activeAuctionBids) {
+        if (activeAuctionBids[indAAB].lotId == lotId) {
+            isLotBidedByCustomer = true;
+            if (price) {
                 activeAuctionBids[indAAB].isWinning = 0;
                 activeAuctionBids[indAAB].price = price;
             }
