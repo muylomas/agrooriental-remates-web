@@ -142,7 +142,7 @@ function loginSwal() {
         `
             <div class="content-wrapper auth app-full-bg p-0 m-0">
                 <div class="row w-100">
-                    <div class="col-lg-4 mx-auto">
+                    <div class="col-lg-4 mx-auto" style="min-width: 370px;">
                         <div class="auth-form-transparent text-left p-5 text-center">
                             <form method="post" name="loginForm" action="/login">
                                 <h2 class="text-white mb-2 w-100 text-center">Ingresar</h2>
