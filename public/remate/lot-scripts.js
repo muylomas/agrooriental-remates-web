@@ -103,23 +103,35 @@ function getAuctionBidsForLot(lotId, callback) {
             "lotId": lotId,
         },
         function (results) {
+            let __aux_auctionBids = [];
+            let errorOutput = false;
+
             if (typeof results === 'object' && results !== null) {
                 if (
                     "auctionBids" in results &&
                     "lotId" in results && results.lotId
                 ) {
-                    for (let index in lots) {
-                        if (lots[index].lotId == results.lotId) {
-                            lots[index].auctionBids = results.auctionBids;
-                        }
-                    }
+                    __aux_auctionBids = results.auctionBids;
                 }
 
-                callback(results.error);
+                if (results.error) {
+                    errorOutput = true;
+                    if (results.msg) {
+                        errorOutput = results.msg;
+                    }
+                }
             }
             else {
-                callback("error");
+                errorOutput = true;
             }
+
+            for (let index in lots) {
+                if (lots[index].lotId == results.lotId) {
+                    lots[index].auctionBids = __aux_auctionBids;
+                }
+            }
+
+            callback(errorOutput);
         }
     );
 };
