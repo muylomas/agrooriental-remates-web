@@ -193,7 +193,8 @@ function getCustomerActiveBids(customerId, callback) {
                     1,
                     0
                 ) AS isWinning,
-                auctions_bidsMAXForCustomer.*
+                auctions_bidsMAXForCustomer.price,
+                auctions_bidsMAXForCustomer.lotId
             FROM cattle_complete
             INNER JOIN auctions_bids_max ON auctions_bids_max.lotId = cattle_complete.lotId
             INNER JOIN auctions_bids ON 
