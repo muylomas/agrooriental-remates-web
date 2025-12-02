@@ -205,7 +205,7 @@ module.exports = function (socket) {
                                                                     );
 
                                                                     if (lastAuctionCustomer.customerId != customerId) {
-                                                                        sendSMSToLooser(lastAuctionCustomer);
+                                                                        sendSMSToLooser(lastAuctionCustomer, parameters.lotId);
                                                                     }
                                                                 }
                                                             );
