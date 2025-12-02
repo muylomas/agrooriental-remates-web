@@ -13,8 +13,8 @@
 .loading-image {
     background: rgb(53, 53, 53);
     background-image: url(https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/banners/loading-horse.gif);
-    background-blend-mode: multiply;
-    background-repeat: none;
+    background-blend-mode: screen;
+    background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
     max-width: 100px;
