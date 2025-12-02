@@ -422,7 +422,7 @@ function openYoutubeLink(link) {
 
 function insertLotsInPage() {
     if (lots && lots.length) {
-        $("#loading-lots").hide();
+        //$("#loading-lots").hide();
         insertLotLoop(
             lots, 0,
             function () {
