@@ -26,13 +26,22 @@ Common.prototype.auctionBidsByLotId = function (sessionID, lotId, callback) {
 
     common_auth.basic(sessionID, function (reply) {
         if (reply.err) {
-            callback(auctionBids);
+            callback({
+                error: true,
+                auctionBids: [],
+                lotId: lotId,
+                msg: "1.1",
+            });
         }
         else {
             auctions_lots.getAuctionsByLotId(
                 lotId,
                 function (returnauctionBids) {
-                    callback(returnauctionBids);
+                    callback({
+                        error: false,
+                        auctionBids: returnauctionBids,
+                        lotId: lotId,
+                    });
                 }
             );
         }

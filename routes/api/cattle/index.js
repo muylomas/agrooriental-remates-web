@@ -82,6 +82,7 @@ router.post('/lot/auction/bids', function (req, res, next) {
             error: true,
             auctionBids: [],
             lotId: false,
+            msg: "1.0",
         });
     }
 });
