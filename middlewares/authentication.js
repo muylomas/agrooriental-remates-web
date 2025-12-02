@@ -79,7 +79,8 @@ exports.authProcc = function (req, res, next) {
             "/reset-password",
             "/auth/",
             "/ganado/lote/publicacion/",
-            "/.well-known/acme-challenge"
+            "/.well-known/acme-challenge",
+            "/api/cattle/lot/auction/bids",
           ];
 
           let exclude_urls_status = false;
