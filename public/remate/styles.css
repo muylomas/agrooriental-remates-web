@@ -321,6 +321,9 @@ select {
 .bottom-overlay-video .bid-action-button,
 .auction-bid .bid-action-button {
     font-size: large;
+    background: #4e7b44 !important;
+    border-color: #4e7b44 !important;
+    color: #fff !important;
 }
 
 .auction-bid [id^=buy-action-button] {
@@ -463,7 +466,7 @@ input[id^="auction-bid-price-"] {
 }
 
 .blink_me {
-    animation: blinker 3s linear infinite;
+    animation: blinker 2s linear infinite;
 }
 
 @keyframes blinker {

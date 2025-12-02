@@ -108,14 +108,14 @@ const slideTemplate =
                     </div>
                     
                     <div id="bid-auction-actions-container-__lot_lotId__">
-                        <button id="auction-bid-button-x1-__lot_lotId__" class="bid-action-button btn btn-warning text-dark fs-5 lh-sm w-100 d-none" onclick="javascript:auctionBidByStep(__lot_lotId__,0)" style="background: #4e7b44; color: #fff !important;">
+                        <button id="auction-bid-button-x1-__lot_lotId__" class="bid-action-button btn btn-warning text-dark fs-5 lh-sm w-100 d-none" onclick="javascript:auctionBidByStep(__lot_lotId__,0)">
                             Ofertar __lot_lastAuctionPrice1Step__
                         </button>
                         <div id="auction-bid-button-multiple-__lot_lotId__" class="row mt-3 d-none">
                             <div class="col-12 p-0 m-0">
                                 <div class="d-flex align-items-left justify-content-left justify-content-md-left">
                                     <div class="d-flex flex-column justify-content-around">
-                                        <button class="btn btn-icon btn-secondary" onclick="auctionBidAddToPrice(__lot_lotId__, -1)" style="background: #4e7b44; color: #fff !important;">
+                                        <button class="btn btn-icon btn-secondary" onclick="auctionBidAddToPrice(__lot_lotId__, -1)">
                                             <i class="mdi mdi-minus"></i>
                                         </button>
                                     </div>
@@ -130,12 +130,12 @@ const slideTemplate =
                                                 value="__lot_lastAuctionPriceMultiStep__">
                                     </div>
                                     <div class="d-flex flex-column justify-content-around">
-                                        <button class="btn btn-icon btn-secondary" onclick="auctionBidAddToPrice(__lot_lotId__, 1)" style="background: #4e7b44; color: #fff !important;">
+                                        <button class="btn btn-icon btn-secondary" onclick="auctionBidAddToPrice(__lot_lotId__, 1)">
                                             <i class="mdi mdi-plus"></i>
                                         </button>
                                     </div>
                                     <div class="d-flex flex-column justify-content-around ms-2 w-100">
-                                        <button class="bid-action-button btn text-dark fs-5 lh-sm h-100" onclick="javascript:auctionBidCustom(__lot_lotId__)" style="background: #4e7b44; color: #fff !important;">
+                                        <button class="bid-action-button btn text-dark fs-5 lh-sm h-100" onclick="javascript:auctionBidCustom(__lot_lotId__)">
                                             Ofertar
                                         </button>
                                     </div>
