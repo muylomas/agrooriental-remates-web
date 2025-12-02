@@ -427,6 +427,9 @@ function insertLotsInPage() {
             lots, 0,
             function () {
                 initializeActionsAndDisplays();
+                if (window.location.hash !== '') {
+                    window.location.href = window.location.hash;
+                }
             }
         );
     }
