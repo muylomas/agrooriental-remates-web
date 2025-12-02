@@ -9,7 +9,29 @@ function getLotParamsById(lotId) {
     return __aux_lot;
 };
 
-function showCustomerWinning(lotId, auctionBidEnd, showAlert, showButton) {
+function showCustomerWinning(lotId, price, auctionBidEnd, showAlert, showButton) {
+    if (price) {
+        let alreadyIn = false;
+
+        for (let indAAB in activeAuctionBids) {
+            if (activeAuctionBids[indAAB].lotId == lotId) {
+                alreadyIn = true;
+                activeAuctionBids[indAAB].isWinning = 1;
+                activeAuctionBids[indAAB].price = price;
+            }
+        }
+
+        if (!alreadyIn) {
+            activeAuctionBids.push(
+                {
+                    isWinning: 1,
+                    lotId: lotId,
+                    price: price,
+                }
+            );
+        }
+    }
+
     $("#auction-bid-status-container-" + lotId).removeClass("d-none");
     if (auctionBidEnd) {
         $("#auction-bid-status-" + lotId).html(
@@ -64,7 +86,19 @@ function showCustomerWinning(lotId, auctionBidEnd, showAlert, showButton) {
     }
 };
 
-function showCustomerLoosing(lotId, auctionBidEnd, showButton, initialize) {
+function showCustomerLoosing(lotId, price, auctionBidEnd, showButton, initialize) {
+    let isLotBidedByCustomer = false;
+
+    if (price) {
+        for (let indAAB in activeAuctionBids) {
+            if (activeAuctionBids[indAAB].lotId == lotId) {
+                isLotBidedByCustomer = true;
+                activeAuctionBids[indAAB].isWinning = 0;
+                activeAuctionBids[indAAB].price = price;
+            }
+        }
+    }
+
     $("#auction-bid-status-container-" + lotId).removeClass("d-none");
     if (auctionBidEnd) {
         $("#auction-bid-status-" + lotId).html(
@@ -77,13 +111,15 @@ function showCustomerLoosing(lotId, auctionBidEnd, showButton, initialize) {
         $("#category-media-value-container-" + lotId).remove();
     }
     else {
-        $("#auction-bid-status-" + lotId).html(
-            `
-                <div class="badge badge-danger blink_me fs-4 w-100">
-                    Hay un pique nuevo para este lote!!
-                </div>
-            `
-        );
+        if (isLotBidedByCustomer) {
+            $("#auction-bid-status-" + lotId).html(
+                `
+                    <div class="badge badge-danger blink_me fs-4 w-100">
+                        Hay un pique nuevo para este lote!!
+                    </div>
+                `
+            );
+        }
     }
 
     if (showButton) {
@@ -235,10 +271,10 @@ function auctionBidUpdateFunc(auctionBidUpdate) {
             $("#auction-bid-no-history-" + __aux_lot.lotId).addClass("d-none");
 
             if (socket.id == auctionBidUpdate.socketId) {
-                showCustomerWinning(__aux_lot.lotId, auctionBidUpdate.end, true, true);
+                showCustomerWinning(__aux_lot.lotId, __aux_lot.lastPrice, auctionBidUpdate.end, true, true);
             }
             else {
-                showCustomerLoosing(__aux_lot.lotId, auctionBidUpdate.end, true, false);
+                showCustomerLoosing(__aux_lot.lotId, __aux_lot.lastPrice, auctionBidUpdate.end, true, false);
             }
         }
     }
@@ -425,10 +461,10 @@ $(document).ready(function () {
     for (let index in activeAuctionBids) {
         activeAuctionBidsLotIds.push(activeAuctionBids[index].lotId);
         if (activeAuctionBids[index].isWinning) {
-            showCustomerWinning(activeAuctionBids[index].lotId, false, false, true);
+            showCustomerWinning(activeAuctionBids[index].lotId, 0, false, false, true);
         }
         else {
-            showCustomerLoosing(activeAuctionBids[index].lotId, false, true, true);
+            showCustomerLoosing(activeAuctionBids[index].lotId, 0, false, true, true);
         }
     }
 });
