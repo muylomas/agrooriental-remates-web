@@ -68,12 +68,8 @@ router.post('/lot/auction/bids', function (req, res, next) {
         searchProc.auctionBidsByLotId(
             req.sessionID,
             req.body.lotId,
-            function (auctionBids) {
-                res.json({
-                    error: false,
-                    auctionBids: auctionBids,
-                    lotId: req.body.lotId,
-                });
+            function (auctionReply) {
+                res.json(auctionReply);
             }
         );
     }
