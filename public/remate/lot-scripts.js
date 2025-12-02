@@ -103,6 +103,7 @@ function getAuctionBidsForLot(lotId, callback) {
             "lotId": lotId,
         },
         function (results) {
+            console.log(results);
             let __aux_auctionBids = [];
             let errorOutput = false;
 
@@ -140,6 +141,7 @@ function auctionBidsHistory(lotId) {
     getAuctionBidsForLot(
         lotId,
         function (error) {
+            console.log(error);
             if (error == "1.1") {
                 loginSwal();
             }
