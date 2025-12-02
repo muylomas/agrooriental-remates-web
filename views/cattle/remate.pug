@@ -10,17 +10,14 @@ block content
        
     include remate-includes/header.pug 
 
-    .content-wrapper
-      .row.mb-4
-        .col-12.position-relative(style="background:#1a1a1a")
-          img.mobile-only.w-100(src="https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/banners/chimango-11-12-2025.jpg")
-          img.desktop-only.w-50.mx-auto(src="https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/banners/chimango-11-12-2025-desktop.jpg")
-          .position-absolute.top-0.end-0.pe-2.pt-2(onclick="auctionInfo()")
-              i.mdi.mdi-information-outline.icon-md.text-warning
+    .row.mb-4
+      .col-12.position-relative(style="background:#1a1a1a")
+        img.mobile-only.w-100(src="https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/banners/chimango-11-12-2025.jpg")
+        img.desktop-only.w-50.mx-auto(src="https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/banners/chimango-11-12-2025-desktop.jpg")
+        .position-absolute.top-0.end-0.pe-2.pt-2(onclick="auctionInfo()")
+            i.mdi.mdi-information-outline.icon-md.text-warning
 
-    .row
-      .col-12
-        #remate-lotes.row.portfolio-grid
+    .row#remate-lotes.portfolio-grid
 
     footer.bg-dark.text-white.p-4.pt-5
       h4.mb-4
