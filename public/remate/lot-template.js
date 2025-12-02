@@ -130,12 +130,12 @@ const slideTemplate =
                                                 value="__lot_lastAuctionPriceMultiStep__">
                                     </div>
                                     <div class="d-flex flex-column justify-content-around">
-                                        <button class="btn btn-icon btn-secondary" onclick="auctionBidAddToPrice(__lot_lotId__, 1)" style="background: #4e7b44">
+                                        <button class="btn btn-icon btn-secondary" onclick="auctionBidAddToPrice(__lot_lotId__, 1)" style="background: #4e7b44; color: #fff;">
                                             <i class="mdi mdi-plus"></i>
                                         </button>
                                     </div>
                                     <div class="d-flex flex-column justify-content-around ms-2 w-100">
-                                        <button class="bid-action-button btn text-dark fs-5 lh-sm h-100" onclick="javascript:auctionBidCustom(__lot_lotId__)" style="background: #4e7b44">
+                                        <button class="bid-action-button btn text-dark fs-5 lh-sm h-100" onclick="javascript:auctionBidCustom(__lot_lotId__)" style="background: #4e7b44; color: #fff;">
                                             Ofertar
                                         </button>
                                     </div>
