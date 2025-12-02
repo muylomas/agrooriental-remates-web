@@ -433,7 +433,7 @@ function showActiveAuctionBids() {
         $("#only-active-auctions-bids i").removeClass("mdi-toggle-switch-off");
         $("#only-active-auctions-bids i").removeClass("text-danger");
     }
-}
+};
 
 $(document).ready(function () {
     for (let index in activeAuctionBids) {
