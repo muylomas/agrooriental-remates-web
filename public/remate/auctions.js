@@ -379,7 +379,7 @@ function showBidAlertWarning(lotId, auctionBidEnd) {
 
     if (auctionBidEnd) {
         __aux_title = "Se vendió";
-        __aux_description = "Superaron tu oferta y el lote ya no está disponible.";
+        __aux_description = "Superaron tu oferta y el lote " + lotId + " ya no está disponible.";
         __aux_confirm = "Ver";
     }
 
