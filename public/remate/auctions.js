@@ -80,7 +80,7 @@ function showCustomerLoosing(lotId, auctionBidEnd, showButton, initialize) {
         $("#auction-bid-status-" + lotId).html(
             `
                 <div class="badge badge-danger blink_me fs-4 w-100">
-                    Apurate, vas a perder el lote.
+                    Hay un pique nuevo para este lote!!
                 </div>
             `
         );
