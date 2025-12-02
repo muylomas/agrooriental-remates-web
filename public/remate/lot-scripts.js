@@ -72,10 +72,10 @@ function initializeActionsAndDisplays() {
 
     for (let index in activeAuctionBids) {
         if (activeAuctionBids[index].isWinning) {
-            showCustomerWinning(activeAuctionBids[index].lotId, 0, false, false, true);
+            showCustomerWinning(activeAuctionBids[index].lotId, 0, false, false);
         }
         else {
-            showCustomerLoosing(activeAuctionBids[index].lotId, 0, false, true, true);
+            showCustomerLoosing(activeAuctionBids[index].lotId, 0, false, false);
         }
     }
 };
