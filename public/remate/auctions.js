@@ -419,19 +419,25 @@ function showBidAlertWarning(lotId, auctionBidEnd) {
 };
 
 function showActiveAuctionBids() {
-    let customerEnabled = 0;
     if ($("#only-active-auctions-bids i").hasClass("mdi-toggle-switch")) {
         $("#only-active-auctions-bids i").addClass("mdi-toggle-switch-off");
         $("#only-active-auctions-bids i").addClass("text-danger");
         $("#only-active-auctions-bids i").removeClass("mdi-toggle-switch");
         $("#only-active-auctions-bids i").removeClass("text-success");
+
+        $("div[id^='lote-']").removeClass("d-none");
     }
     else {
-        customerEnabled = 1;
         $("#only-active-auctions-bids i").addClass("mdi-toggle-switch");
         $("#only-active-auctions-bids i").addClass("text-success");
         $("#only-active-auctions-bids i").removeClass("mdi-toggle-switch-off");
         $("#only-active-auctions-bids i").removeClass("text-danger");
+
+        $("div[id^='lote-']").addClass("d-none");
+
+        for (let indAAB in activeAuctionBids) {
+            $("#lote-" + activeAuctionBids[indAAB].lotId).removeClass("d-none");
+        }
     }
 };
 
