@@ -159,12 +159,6 @@ function loginSwal() {
                                         <input class="form-control" type="number" name="phoneNumber" placeholder="99099099" min="91000000" max="99999999">
                                     </div>
                                 </div>
-                                <div class="form-group email-form-input" style="display: none;">
-                                    <input class="form-control text-center" type="user" name="user" placeholder="Usuario">
-                                </div>
-                                <div class="form-group email-form-input" style="display: none;">
-                                    <input class="form-control text-center" type="password" name="password" placeholder="Contraseña">
-                                </div>
                                 <button class="btn btn-block btn-warning text-dark btn-lg font-weight-medium w-100" type="submit"> Ingresar</button>
                                 <h4 class="text-white mt-5 mb-3 w-100 text-left">No tenés cuenta?</h4>
                                 <a class="btn btn-inverse-light btn-fw border-white text-white btn-lg font-weight-medium w-100" href="/registro">
