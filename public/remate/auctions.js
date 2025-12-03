@@ -32,6 +32,9 @@ function showCustomerWinning(lotId, price, auctionBidEnd, showAlert) {
         }
     }
 
+    if (activeAuctionBids.length)
+        $("#only-active-auctions-bids").removeClass("d-none");
+
     $("#auction-bid-status-container-" + lotId).removeClass("d-none");
     if (auctionBidEnd) {
         $("#auction-bid-status-" + lotId).html(

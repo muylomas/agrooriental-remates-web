@@ -70,12 +70,16 @@ function initializeActionsAndDisplays() {
         countdownTimers[lotIdIndex] = setInterval('generalTimer(' + lotIdIndex + ')', 1000);
     }
 
-    for (let index in activeAuctionBids) {
-        if (activeAuctionBids[index].isWinning) {
-            showCustomerWinning(activeAuctionBids[index].lotId, 0, false, false);
-        }
-        else {
-            showCustomerLoosing(activeAuctionBids[index].lotId, 0, false, false);
+    if (activeAuctionBids.length) {
+        $("#only-active-auctions-bids").removeClass("d-none");
+
+        for (let index in activeAuctionBids) {
+            if (activeAuctionBids[index].isWinning) {
+                showCustomerWinning(activeAuctionBids[index].lotId, 0, false, false);
+            }
+            else {
+                showCustomerLoosing(activeAuctionBids[index].lotId, 0, false, false);
+            }
         }
     }
 };
