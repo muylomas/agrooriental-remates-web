@@ -185,6 +185,8 @@ function getCattleTypesAverages(callback) {
 function getCustomerActiveBids(customerId, callback) {
     let activeAuctionBids = [];
 
+    // AND cattle_complete.auctionEnd > NOW() - INTERVAL 3 HOUR 
+
     connection.query(
         `
             SELECT 
@@ -213,8 +215,7 @@ function getCustomerActiveBids(customerId, callback) {
             WHERE 
                 cattle_complete.statusId = 5 AND
                 auctions_bids.price < cattle_complete.salePrice AND
-                cattle_complete.auctionStart < NOW() - INTERVAL 3 HOUR AND
-                cattle_complete.auctionEnd > NOW() - INTERVAL 3 HOUR 
+                cattle_complete.auctionStart < NOW() - INTERVAL 3 HOUR 
         `,
         [
             customerId,
