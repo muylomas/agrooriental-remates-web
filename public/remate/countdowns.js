@@ -31,5 +31,6 @@ function generalTimer(lotId) {
         $('#countdown-mins-' + lotId).html("--");
         $('#countdown-secs-' + lotId).html("--");
         $('#countdown-container-' + lotId).remove();
+        $('#countdown-auction-ended-' + lotId).removeClass("d-none");
     }
 };

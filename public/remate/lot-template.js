@@ -55,6 +55,11 @@ const slideTemplate =
                                     --
                                 </span>
                             </h4>
+                            <h4 id="countdown-auction-ended-__lot_lotId__" class="mb-0 d-inline-block text-center p-2 d-none">
+                                <span class="text-white">
+                                    Finalizada
+                                </span>
+                            </h4>
                         </div>
                     </div>
                     <h4 class="card-title text-uppercase fs-5 mt-3 m-0">
