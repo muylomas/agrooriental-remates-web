@@ -1,4 +1,7 @@
 function generalTimer(lotId) {
+    if (lotId == 64) {
+        console.log("=================================== generalTimer 64 ===================================");
+    }
     const seconds = (endDates[lotId] - Date.now()) / 1000;
     var days = Math.floor(seconds / 24 / 60 / 60);
     var hoursLeft = Math.floor((seconds) - (days * 86400));
@@ -25,6 +28,10 @@ function generalTimer(lotId) {
     $('#countdown-secs-' + lotId).html(pad(remainingSeconds));
 
     if (seconds <= 0) {
+
+        if (lotId == 64) {
+            console.log("seconds <= 0");
+        }
         clearInterval(countdownTimers[lotId]);
         /*$('#countdown-days-' + lotId).html("-");
         $('#countdown-hours-' + lotId).html("--");
