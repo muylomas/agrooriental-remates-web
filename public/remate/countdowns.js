@@ -37,7 +37,7 @@ function generalTimer(lotId) {
         $('#countdown-hours-' + lotId).parent().remove();
         $('#countdown-mins-' + lotId).parent().remove();
         $('#countdown-secs-' + lotId).parent().remove();
-        $('.countdown-time-separators-' + lotId).parent().remove();
+        $('.countdown-time-separators-' + lotId).remove();
 
         $('#countdown-auction-ended-' + lotId).removeClass("d-none");
     }
