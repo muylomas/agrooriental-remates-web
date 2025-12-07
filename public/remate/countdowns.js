@@ -27,16 +27,18 @@ function generalTimer(lotId) {
 
     if (seconds <= 0) {
         clearInterval(countdownTimers[lotId]);
-        /*$('#countdown-days-' + lotId).html("-");
+        $('#countdown-days-' + lotId).html("-");
         $('#countdown-hours-' + lotId).html("--");
         $('#countdown-mins-' + lotId).html("--");
         $('#countdown-secs-' + lotId).html("--");
-        $('#countdown-container-' + lotId).remove();*/
+        //$('#countdown-container-' + lotId).remove();
 
         $('#countdown-days-' + lotId).parent().remove();
         $('#countdown-hours-' + lotId).parent().remove();
         $('#countdown-mins-' + lotId).parent().remove();
         $('#countdown-secs-' + lotId).parent().remove();
+        $('.countdown-time-separators-' + lotId).parent().remove();
+
         $('#countdown-auction-ended-' + lotId).removeClass("d-none");
     }
 };
