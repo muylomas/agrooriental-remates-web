@@ -401,7 +401,7 @@ function insertLotLoop(lots, indSLots, callback) {
         if (!lots[indSLots].equineYoutube)
             $("#view-in-youtube-" + lots[indSLots].lotId).remove();
 
-        if (lots[indSLots].auctionHasEnded) {
+        if (!lots[indSLots].auctionHasEnded) {
             if (lots[indSLots].auctionBidcustomerId) {
                 $("#auction-bid-view-history-" + lots[indSLots].lotId).removeClass("d-none");
                 $("#auction-bid-button-multiple-" + lots[indSLots].lotId).removeClass("d-none");
