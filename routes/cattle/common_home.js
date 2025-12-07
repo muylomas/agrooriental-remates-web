@@ -171,6 +171,11 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
                             '%Y-%m-%dT%H:%i:%s'
                         ) AS auctionEndString,
                         IF(
+                            cattle_complete.auctionEnd > NOW() - INTERVAL 3 HOUR,
+                            0,
+                            1
+                        ) auctionHasEnded,   
+                        IF(
                             auctions_bids.price IS NULL,
                             cattle_complete.startPrice,
                             IF(

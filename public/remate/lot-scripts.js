@@ -401,17 +401,18 @@ function insertLotLoop(lots, indSLots, callback) {
         if (!lots[indSLots].equineYoutube)
             $("#view-in-youtube-" + lots[indSLots].lotId).remove();
 
-        if (lots[indSLots].auctionBidcustomerId) {
-            $("#auction-bid-view-history-" + lots[indSLots].lotId).removeClass("d-none");
-            $("#auction-bid-button-multiple-" + lots[indSLots].lotId).removeClass("d-none");
-            $("#auction-bid-button-x1-" + lots[indSLots].lotId).addClass("d-none");
+        if (lots[indSLots].auctionHasEnded) {
+            if (lots[indSLots].auctionBidcustomerId) {
+                $("#auction-bid-view-history-" + lots[indSLots].lotId).removeClass("d-none");
+                $("#auction-bid-button-multiple-" + lots[indSLots].lotId).removeClass("d-none");
+                $("#auction-bid-button-x1-" + lots[indSLots].lotId).addClass("d-none");
+            }
+            else {
+                $("#auction-bid-no-history-" + lots[indSLots].lotId).removeClass("d-none");
+                $("#auction-bid-button-multiple-" + lots[indSLots].lotId).addClass("d-none");
+                $("#auction-bid-button-x1-" + lots[indSLots].lotId).removeClass("d-none");
+            }
         }
-        else {
-            $("#auction-bid-no-history-" + lots[indSLots].lotId).removeClass("d-none");
-            $("#auction-bid-button-multiple-" + lots[indSLots].lotId).addClass("d-none");
-            $("#auction-bid-button-x1-" + lots[indSLots].lotId).removeClass("d-none");
-        }
-
 
         insertLotLoop(lots, indSLots + 1, callback);
     }
