@@ -33,10 +33,10 @@ function generalTimer(lotId) {
         $('#countdown-secs-' + lotId).html("--");
         $('#countdown-container-' + lotId).remove();*/
 
-        /*$('#countdown-days-' + lotId).remove();
-        $('#countdown-hours-' + lotId).remove();
-        $('#countdown-mins-' + lotId).remove();
-        $('#countdown-secs-' + lotId).remove();*/
+        $('#countdown-days-' + lotId).parent().remove();
+        $('#countdown-hours-' + lotId).parent().remove();
+        $('#countdown-mins-' + lotId).parent().remove();
+        $('#countdown-secs-' + lotId).parent().remove();
         $('#countdown-auction-ended-' + lotId).removeClass("d-none");
     }
 };
