@@ -18,27 +18,25 @@ function generalTimer(lotId) {
         $('#countdown-days-' + lotId).html(daysNumber + "<small>d</small>");
     }
     else {
-        $('#countdown-days-' + lotId).parent().parent().remove()
+        $('#countdown-days-' + lotId).parent().remove()
     }
 
     $('#countdown-hours-' + lotId).html(pad(hours));
     $('#countdown-mins-' + lotId).html(pad(minutes));
     $('#countdown-secs-' + lotId).html(pad(remainingSeconds));
 
-    if (lotId != 64) {
-        if (seconds <= 0) {
-            clearInterval(countdownTimers[lotId]);
-            /*$('#countdown-days-' + lotId).html("-");
-            $('#countdown-hours-' + lotId).html("--");
-            $('#countdown-mins-' + lotId).html("--");
-            $('#countdown-secs-' + lotId).html("--");
-            $('#countdown-container-' + lotId).remove();*/
+    if (seconds <= 0) {
+        clearInterval(countdownTimers[lotId]);
+        /*$('#countdown-days-' + lotId).html("-");
+        $('#countdown-hours-' + lotId).html("--");
+        $('#countdown-mins-' + lotId).html("--");
+        $('#countdown-secs-' + lotId).html("--");
+        $('#countdown-container-' + lotId).remove();*/
 
-            /*$('#countdown-days-' + lotId).remove();
-            $('#countdown-hours-' + lotId).remove();
-            $('#countdown-mins-' + lotId).remove();
-            $('#countdown-secs-' + lotId).remove();*/
-            $('#countdown-auction-ended-' + lotId).removeClass("d-none");
-        }
+        /*$('#countdown-days-' + lotId).remove();
+        $('#countdown-hours-' + lotId).remove();
+        $('#countdown-mins-' + lotId).remove();
+        $('#countdown-secs-' + lotId).remove();*/
+        $('#countdown-auction-ended-' + lotId).removeClass("d-none");
     }
 };
