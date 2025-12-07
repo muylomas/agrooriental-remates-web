@@ -367,7 +367,7 @@ Common.prototype.cattleImages = function (lotsIds, lots, callback) {
                 // Fill with empty image
                 for (let indexLot in lots) {
                     if (!lots[indexLot].imagesArray.length) {
-                        lots[indexLot].imagesArray.push("https://agro-oriental-remates.s3.us-west-1.amazonaws.com/videos/no-video-img.png?ver=2024-04-11");
+                        lots[indexLot].imagesArray.push("https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/transparent-pixel.png");
                         if (!testVideoThumb) {
                             testVideoThumb = true;
                             Common.prototype.cattleImagesFromVideo(lots[indexLot].video, lots[indexLot].lotId, function () {
