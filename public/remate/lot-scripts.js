@@ -145,13 +145,13 @@ function auctionBidsHistory(lotId) {
     if (!(lotId in auctionBidsHistoryRunning) || !auctionBidsHistoryRunning[lotId]) {
         auctionBidsHistoryRunning[lotId] = true;
         $("#auction-bid-spinner-" + lotId).removeClass("d-none");
-        $("#auction-bid-label-" + lotId).addClass("d-none");
+        //$("#auction-bid-label-" + lotId).addClass("d-none");
         getAuctionBidsForLot(
             lotId,
             function (error) {
                 auctionBidsHistoryRunning[lotId] = false;
                 $("#auction-bid-spinner-" + lotId).addClass("d-none");
-                $("#auction-bid-label-" + lotId).removeClass("d-none");
+                //$("#auction-bid-label-" + lotId).removeClass("d-none");
 
                 if (error == "1.1") {
                     loginSwal();
