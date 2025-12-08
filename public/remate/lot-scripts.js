@@ -141,105 +141,114 @@ function getAuctionBidsForLot(lotId, callback) {
     );
 };
 
+var auctionBidsHistoryRunning = {};
 function auctionBidsHistory(lotId) {
-    getAuctionBidsForLot(
-        lotId,
-        function (error) {
-            console.log(error);
-            if (error == "1.1") {
-                loginSwal();
-            }
-            else {
-                let auctionBids = []
-                let indSLots = 0;
-                for (let index in lots) {
-                    if (lots[index].lotId == lotId) {
-                        auctionBids = lots[index].auctionBids;
-                        indSLots = index;
-                    }
-                }
+    if (!(lotId in auctionBidsHistoryRunning) || !auctionBidsHistoryRunning[lotId]) {
+        auctionBidsHistoryRunning[lotId] = true;
+        $("#auction-bid-spinner" + lotId).removeClass("d-none");
+        $("#auction-bid-label" + lotId).addClass("d-none");
+        getAuctionBidsForLot(
+            lotId,
+            function (error) {
+                auctionBidsHistoryRunning[lotId] = false;
+                $("#auction-bid-spinner" + lotId).addClass("d-none");
+                $("#auction-bid-label" + lotId).removeClass("d-none");
 
-                const wrapper = document.createElement('div');
-
-                if (auctionBids.length) {
-                    let __aux_bidsRows = "";
-                    for (let indBid in auctionBids) {
-                        const __aux_bid = auctionBids[indBid];
-                        let __aux_bidAmount = __aux_bid.amount;
-                        if (lots[indSLots].auctionPriceType == 1) {
-                            __aux_bidAmount = __aux_bid.amount.toFixed(2);
-                        }
-                        else {
-                            __aux_bidAmount = __aux_bid.amount.toFixed(0);
-                        }
-
-                        __aux_bidsRows +=
-                            `
-                                <tr class="bg-white">
-                                    <td class="py-2 text-center">
-                                        `+ __aux_bid.bidDate + `
-                                    </td>
-                                    <td class="py-2 text-center">
-                                        `+ __aux_bid.bidTime + `
-                                    </td>
-                                    <td class="py-2 text-center">
-                                        USD <b>`+ __aux_bidAmount + `</b>
-                                    </td>
-                                </tr>
-                            `;
-                    }
-
-                    wrapper.innerHTML =
-                        `
-                            <div class="dataTables_wrapper dt-bootstrap4 no-footer mt-4">
-                                <table class="table dataTable no-footer border-0">
-                                    <thead class="bg-secondary text-light">
-                                        <tr>
-                                            <th class="py-2 text-center">
-                                                <h6 class="m-0">FECHA</h6>
-                                            </th>
-                                            <th class="py-2 text-center">
-                                                <h6 class="m-0">HORA</h6>
-                                            </th>
-                                            <th class="py-2 text-center">
-                                                <h6 class="m-0">MONTO</h6>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        ` + __aux_bidsRows + `
-                                    </tbody>
-                                </table>
-                            </div>
-                        `;
+                if (error == "1.1") {
+                    loginSwal();
                 }
                 else {
-                    wrapper.innerHTML =
-                        `
-                        <div class="bg-light p-4">
-                            No hay ofertas por el momento.
-                        </div>
-                    `;
-                }
-
-                swal({
-                    title: "ÚLTIMOS PIQUES",
-                    content: wrapper,
-                    buttons: {
-                        cancel: {
-                            text: "Cerrar",
-                            value: false,
-                            visible: true,
-                            className: "btn btn-primary",
-                            closeModal: true,
-                        },
+                    let auctionBids = []
+                    let indSLots = 0;
+                    for (let index in lots) {
+                        if (lots[index].lotId == lotId) {
+                            auctionBids = lots[index].auctionBids;
+                            indSLots = index;
+                        }
                     }
-                }).then((value) => {
-                    $("#button-auction-bid-" + lotId).click();
-                });
+
+                    const wrapper = document.createElement('div');
+
+                    if (auctionBids.length) {
+                        let __aux_bidsRows = "";
+                        for (let indBid in auctionBids) {
+                            const __aux_bid = auctionBids[indBid];
+                            let __aux_bidAmount = __aux_bid.amount;
+                            if (lots[indSLots].auctionPriceType == 1) {
+                                __aux_bidAmount = __aux_bid.amount.toFixed(2);
+                            }
+                            else {
+                                __aux_bidAmount = __aux_bid.amount.toFixed(0);
+                            }
+
+                            __aux_bidsRows +=
+                                `
+                                    <tr class="bg-white">
+                                        <td class="py-2 text-center">
+                                            `+ __aux_bid.bidDate + `
+                                        </td>
+                                        <td class="py-2 text-center">
+                                            `+ __aux_bid.bidTime + `
+                                        </td>
+                                        <td class="py-2 text-center">
+                                            USD <b>`+ __aux_bidAmount + `</b>
+                                        </td>
+                                    </tr>
+                                `;
+                        }
+
+                        wrapper.innerHTML =
+                            `
+                                <div class="dataTables_wrapper dt-bootstrap4 no-footer mt-4">
+                                    <table class="table dataTable no-footer border-0">
+                                        <thead class="bg-secondary text-light">
+                                            <tr>
+                                                <th class="py-2 text-center">
+                                                    <h6 class="m-0">FECHA</h6>
+                                                </th>
+                                                <th class="py-2 text-center">
+                                                    <h6 class="m-0">HORA</h6>
+                                                </th>
+                                                <th class="py-2 text-center">
+                                                    <h6 class="m-0">MONTO</h6>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            ` + __aux_bidsRows + `
+                                        </tbody>
+                                    </table>
+                                </div>
+                            `;
+                    }
+                    else {
+                        wrapper.innerHTML =
+                            `
+                            <div class="bg-light p-4">
+                                No hay ofertas por el momento.
+                            </div>
+                        `;
+                    }
+
+                    swal({
+                        title: "ÚLTIMOS PIQUES",
+                        content: wrapper,
+                        buttons: {
+                            cancel: {
+                                text: "Cerrar",
+                                value: false,
+                                visible: true,
+                                className: "btn btn-primary",
+                                closeModal: true,
+                            },
+                        }
+                    }).then((value) => {
+                        $("#button-auction-bid-" + lotId).click();
+                    });
+                }
             }
-        }
-    );
+        );
+    }
 };
 
 function insertLotLoop(lots, indSLots, callback) {

@@ -93,8 +93,10 @@ const slideTemplate =
                                 class="btn btn-dark lh-sm position-absolute end-0 d-none" 
                                 onclick="auctionBidsHistory(__lot_lotId__)"
                             >
-                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                <b>PIQUES</b>
+                                <span id="auction-bid-spinner-__lot_lotId__"  class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                <span id="auction-bid-label-__lot_lotId__">
+                                    <b>PIQUES</b>
+                                </span>
                             </button>
                             <h5 
                                 id="auction-bid-no-history-__lot_lotId__" 
