@@ -198,11 +198,15 @@ function auctionBid(lotId, bidPrice) {
         const wrapper = document.createElement('div');
         wrapper.innerHTML =
             `
-                <div class="cattle-media-container position-relative overflow-hidden w-100">
+                <div class="auction-bid-confirm cattle-media-container position-relative overflow-hidden w-100">
                     <img class="w-100" src="https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/banners/chimango-video-background.jpg">
                     <div class="cattle-image position-absolute top-0 start-0 w-100 h-100" style="background-image:url(` + searchedLot.lot.imagesArray[0] + `);" 
                         alt="Lote ` + lotId + ` - ` + searchedLot.lot.equineName + `"></div>
-                    <div class="position-absolute bottom-0 start-50 translate-middle-x mb-4">
+                    <div class="position-absolute top-0 start-50 translate-middle-x mt-4 w-100">
+                        <h4 class="text-white">CONFIRMAR PIQUE</h4>
+                    </div>
+
+                    <div class="position-absolute bottom-0 start-50 translate-middle-x mb-4 w-100">
                         <button class="btn btn-light fs-5 lh-sm" onclick="closeComfirmSwal()">
                             Cancelar
                         </button>

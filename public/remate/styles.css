@@ -40,7 +40,8 @@
     appearance: auto !important;
 }
 
-div.swal-content:has(> div > div.auth) {
+div.swal-content:has(> div > div.auth),
+div.swal-content:has(> div > div.auction-bid-confirm) {
   padding: 0 !important;
   margin: 0 !important;
 }
