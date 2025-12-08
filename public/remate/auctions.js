@@ -211,7 +211,7 @@ function auctionBid(lotId, bidPrice) {
                             Cancelar
                         </button>
                         <button class="bid-action-button btn fs-5 lh-sm" onclick="auctionBidFinal(` + lotId + `,` + bidPrice + `)">
-                            Ofertar
+                            Ofertar ` + bidPrice + `
                         </button>
                     </div>
                 </div>
