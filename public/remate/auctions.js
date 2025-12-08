@@ -165,7 +165,7 @@ function auctionBidByStep(lotId, multiplier) {
 }
 
 function auctionBidCustom(lotId) {
-    if (price_was_changed) {
+    /*if (price_was_changed) {
         price_was_changed = false;
         swal({
             text: "El precio fue modificado porque era menor que la última oferta.",
@@ -185,7 +185,9 @@ function auctionBidCustom(lotId) {
     }
     else {
         auctionBid(lotId, parseFloat($("#auction-bid-price-" + lotId).val()));
-    }
+    }*/
+
+    auctionBid(lotId, parseFloat($("#auction-bid-price-" + lotId).val()));
 };
 
 function closeComfirmSwal() {
