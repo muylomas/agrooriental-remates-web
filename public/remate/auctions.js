@@ -198,7 +198,7 @@ function auctionBid(lotId, bidPrice) {
                     <img class="w-100" src="https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/banners/chimango-video-background.jpg">
                     <div class="cattle-image position-absolute top-0 start-0 w-100 h-100" style="background-image:url(` + searchedLot.lot.imagesArray[0] + `);" 
                         alt="Lote ` + lotId + ` - ` + searchedLot.lot.equineName + `"></div>
-                    <div class="position-absolute bottom-0 start-50 translate-middle-x">
+                    <div class="position-absolute bottom-0 start-50 translate-middle-x mb-4">
                         <button class="btn btn-light fs-5 lh-sm">
                             Cancelar
                         </button>
@@ -211,6 +211,15 @@ function auctionBid(lotId, bidPrice) {
         swal({
             ttitle: "CONFIRMAR PIQUE",
             content: wrapper,
+            buttons: {
+                cancel: {
+                    text: "Cerrar",
+                    value: false,
+                    visible: false,
+                    className: "btn btn-primary",
+                    closeModal: true,
+                },
+            }
         }).then((value) => {
             swal.close();
         });
