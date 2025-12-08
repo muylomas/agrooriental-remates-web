@@ -215,6 +215,7 @@ function auctionBid(lotId, bidPrice) {
                         </button>
                     </div>
                 </div>
+                <div class="bid-action-button p-2 w-100"></div>
             `;
     swal({
         ttitle: "CONFIRMAR PIQUE",
