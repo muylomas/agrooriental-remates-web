@@ -188,6 +188,10 @@ function auctionBidCustom(lotId) {
     }
 };
 
+function fjdklafjfkjf() {
+    swal.close();
+};
+
 function auctionBid(lotId, bidPrice) {
     if (lotId == 63) {
         const searchedLot = getLotParamsById(lotId);
@@ -199,7 +203,7 @@ function auctionBid(lotId, bidPrice) {
                     <div class="cattle-image position-absolute top-0 start-0 w-100 h-100" style="background-image:url(` + searchedLot.lot.imagesArray[0] + `);" 
                         alt="Lote ` + lotId + ` - ` + searchedLot.lot.equineName + `"></div>
                     <div class="position-absolute bottom-0 start-50 translate-middle-x mb-4">
-                        <button class="btn btn-light fs-5 lh-sm">
+                        <button class="btn btn-light fs-5 lh-sm" onclick="fjdklafjfkjf()">
                             Cancelar
                         </button>
                         <button class="bid-action-button btn fs-5 lh-sm">
