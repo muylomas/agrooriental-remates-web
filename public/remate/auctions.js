@@ -188,7 +188,7 @@ function auctionBidCustom(lotId) {
     }
 };
 
-function fjdklafjfkjf() {
+function closeComfirmSwal() {
     swal.close();
 };
 
@@ -203,10 +203,10 @@ function auctionBid(lotId, bidPrice) {
                     <div class="cattle-image position-absolute top-0 start-0 w-100 h-100" style="background-image:url(` + searchedLot.lot.imagesArray[0] + `);" 
                         alt="Lote ` + lotId + ` - ` + searchedLot.lot.equineName + `"></div>
                     <div class="position-absolute bottom-0 start-50 translate-middle-x mb-4">
-                        <button class="btn btn-light fs-5 lh-sm" onclick="fjdklafjfkjf()">
+                        <button class="btn btn-light fs-5 lh-sm" onclick="closeComfirmSwal()">
                             Cancelar
                         </button>
-                        <button class="bid-action-button btn fs-5 lh-sm">
+                        <button class="bid-action-button btn fs-5 lh-sm" onclick="auctionBidFinal(` + lotId + `,` + bidPrice + `)">
                             Ofertar
                         </button>
                     </div>
@@ -237,6 +237,16 @@ function auctionBid(lotId, bidPrice) {
             }
         );
     }
+};
+
+function auctionBidFinal(lotId, bidPrice) {
+    socket.emit(
+        'auctionBidCustomers',
+        {
+            bid: bidPrice,
+            lotId: lotId,
+        }
+    );
 };
 
 function buyInmediatelly(lotId) {
