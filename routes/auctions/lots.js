@@ -37,7 +37,7 @@ Common.prototype.getAuctionsByLotId = function (lotId, callback) {
             WHERE 
                 auctions_bids.lotId = ? AND
                 auctions_bids.status = 1
-            ORDER BY auctions_bids.created_at DESC
+            ORDER BY auctions_bids.created_at DESC, auctions_bids.id DESC
             LIMIT 0, 5
         `,
         [
