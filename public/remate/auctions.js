@@ -199,7 +199,7 @@ function auctionBid(lotId, bidPrice) {
     wrapper.innerHTML =
         `
                 <div class="bid-action-button w-100">
-                    <h4 class="p-3">CONFIRMAR PIQUE</h4>
+                    <h4 class="p-3 m-0">CONFIRMAR PIQUE</h4>
                 </div>
                 <div class="auction-bid-confirm cattle-media-container position-relative overflow-hidden w-100">
                     <img class="w-100" src="https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/banners/chimango-video-background.jpg">
