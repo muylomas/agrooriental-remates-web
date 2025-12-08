@@ -193,11 +193,11 @@ function closeComfirmSwal() {
 };
 
 function auctionBid(lotId, bidPrice) {
-    if (lotId == 63) {
-        const searchedLot = getLotParamsById(lotId);
-        const wrapper = document.createElement('div');
-        wrapper.innerHTML =
-            `
+    //if (lotId == 63) {
+    const searchedLot = getLotParamsById(lotId);
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML =
+        `
                 <div class="bid-action-button w-100">
                     <h4 class=" p-2">CONFIRMAR PIQUE</h4>
                 </div>
@@ -219,21 +219,21 @@ function auctionBid(lotId, bidPrice) {
                     </div>
                 </div>
             `;
-        swal({
-            ttitle: "CONFIRMAR PIQUE",
-            content: wrapper,
-            buttons: {
-                cancel: {
-                    text: "Cerrar",
-                    value: false,
-                    visible: false,
-                    className: "btn btn-primary",
-                    closeModal: true,
-                },
-            }
-        }).then((value) => {
-            swal.close();
-        });
+    swal({
+        ttitle: "CONFIRMAR PIQUE",
+        content: wrapper,
+        buttons: {
+            cancel: {
+                text: "Cerrar",
+                value: false,
+                visible: false,
+                className: "btn btn-primary",
+                closeModal: true,
+            },
+        }
+    }).then((value) => {
+        swal.close();
+    });/*
     }
     else {
         socket.emit(
@@ -243,10 +243,11 @@ function auctionBid(lotId, bidPrice) {
                 lotId: lotId,
             }
         );
-    }
+    }*/
 };
 
 function auctionBidFinal(lotId, bidPrice) {
+    swal.close();
     socket.emit(
         'auctionBidCustomers',
         {
