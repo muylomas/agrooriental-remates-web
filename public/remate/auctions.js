@@ -196,8 +196,8 @@ function auctionBid(lotId, bidPrice) {
             `
                 <div class="cattle-media-container position-relative overflow-hidden w-100">
                     <img class="w-100" src="https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/banners/chimango-video-background.jpg">
-                    <div class="cattle-image position-absolute top-0 start-0 w-100 h-100" style="background-image:url(` + searchedLot.imagesArray[0] + `);" 
-                        alt="Lote ` + lotId + ` - ` + searchedLot.equineName + `"></div>
+                    <div class="cattle-image position-absolute top-0 start-0 w-100 h-100" style="background-image:url(` + searchedLot.lot.imagesArray[0] + `);" 
+                        alt="Lote ` + lotId + ` - ` + searchedLot.lot.equineName + `"></div>
                     <div class="position-absolute bottom-0 start-50 translate-middle-x">
                         <button class="btn btn-light fs-5 lh-sm">
                             Cancelar
