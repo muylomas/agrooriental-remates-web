@@ -189,13 +189,66 @@ function auctionBidCustom(lotId) {
 };
 
 function auctionBid(lotId, bidPrice) {
-    socket.emit(
+    if (lotId == 63) {
+        const searchedLot = getLotParamsById(lotId);
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML =
+            `
+                <div class="cattle-media-container position-relative overflow-hidden w-100">
+                    <img class="w-100" src="https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/banners/chimango-video-background.jpg">
+                    <div class="cattle-image position-absolute top-0 start-0 w-100 h-100" style="background-image:url(` + searchedLot.imagesArray[0] + `);" 
+                        alt="Lote ` + lotId + ` - ` + searchedLot.equineName + `"></div>
+                    <div class="position-absolute bottom-0 start-50 translate-middle-x">
+                        <button class="btn btn-light fs-5 lh-sm">
+                            Cancelar
+                        </button>
+                        <button class="bid-action-button btn fs-5 lh-sm">
+                            Ofertar
+                        </button>
+                    </div>
+                </div>
+            `;
+        swal({
+            ttitle: "CONFIRMAR PIQUE",
+            content: wrapper,
+        }).then((value) => {
+            swal.close();
+        });
+    }
+    else {
+        socket.emit(
+            'auctionBidCustomers',
+            {
+                bid: bidPrice,
+                lotId: lotId,
+            }
+        );
+    }
+};
+
+function auctionBid(lotId, bidPrice) {
+    swal({
+        text: "El precio fue modificado porque era menor que la última oferta.",
+        icon: 'warning',
+        buttons: {
+            cancel: {
+                text: "Cerrar",
+                value: false,
+                visible: true,
+                className: "btn btn-primary",
+                closeModal: true,
+            },
+        }
+    }).then((value) => {
+        swal.close();
+    });
+    /*socket.emit(
         'auctionBidCustomers',
         {
             bid: bidPrice,
             lotId: lotId,
         }
-    );
+    );*/
 };
 
 function buyInmediatelly(lotId) {

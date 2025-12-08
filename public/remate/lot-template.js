@@ -4,7 +4,11 @@ const slideTemplate =
             <div class="card border-0 m-2" id="lot-__lot_lotId__" style="min-width: auto; min-width: -webkit-fill-available;">
                 <div id="cattle-media-container-__lot_lotId__" class="cattle-media-container position-relative overflow-hidden w-100">
                     <img class="w-100" src="https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/banners/chimango-video-background.jpg">
-                    <div id="image-__lot_lotId__" class="cattle-image position-absolute top-0 start-0 w-100 h-100" style="background-image:url(__lot_imagesArray_0__);" alt="Lote __lot_lotId__"></div>
+                    <div id="image-__lot_lotId__" 
+                        class="cattle-image position-absolute top-0 start-0 w-100 h-100" 
+                        style="background-image:url(__lot_imagesArray_0__);" 
+                        alt="Lote __lot_lotId__ - __lot_equineName__">
+                    </div>
                     <div class="position-absolute bottom-0 end-0 pe-2 pb-2 ">
                         <button id="view-in-youtube-__lot_lotId__" 
                             type="button"
@@ -145,7 +149,7 @@ const slideTemplate =
                                         </button>
                                     </div>
                                     <div class="d-flex flex-column justify-content-around ms-2 w-100">
-                                        <button class="bid-action-button btn text-dark fs-5 lh-sm h-100" onclick="javascript:auctionBidCustom(__lot_lotId__)">
+                                        <button class="bid-action-button btn fs-5 lh-sm h-100" onclick="javascript:auctionBidCustom(__lot_lotId__)">
                                             Ofertar
                                         </button>
                                     </div>
