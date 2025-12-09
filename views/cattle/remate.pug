@@ -19,17 +19,12 @@ block content
 
     #remate-lotes.row.portfolio-grid
       #filtros-remate.d-none
-        card.border-0d-flex.align-items-center.text-white.m-4
+        card.border-0.d-flex.align-items-center.text-white.m-4
           h4.m-0.me-3
             | Lote:
           input.form-control.text-center.fs-4.p-2(type="number", name="filtro-lot-id", value="" style="width: 70px;")
           button.btn.bid-action-button.fs-5(onclick="goToLotById()") 
             | Ir 
-
-        card.border-0.m-2.text-white
-          | Lote
-          input.form-control.text-center.fs-4.p-2(type="number", name="filtro-lot-id", value="")
-          button.btn.btn-primary Ir
 
       #loading-lots.pt-5.pb-3.m-0
         h3.text-center.text-white Buscando lotes del remate...
