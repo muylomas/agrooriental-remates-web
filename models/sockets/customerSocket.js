@@ -30,7 +30,8 @@ module.exports = function (socket) {
                 connection.query(
                     `
                         UPDATE customers SET 
-                            socketId = ?
+                            socketId = ?,
+                            socketActive = 1
                         WHERE 
                             session = ?;
                     `,
