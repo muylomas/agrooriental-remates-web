@@ -436,9 +436,17 @@ function openYoutubeLink(link) {
     window.open(link, '_blank');
 };
 
+function goToLotById() {
+    if ($("[name='filtro-lot-id']").val()) {
+        window.location.href = "#" + $("[name='filtro-lot-id']").val();
+    }
+};
+
 function insertLotsInPage() {
     if (lots && lots.length) {
         $("#loading-lots").hide();
+        $("#filtros-remate").removeClass("d-none");
+
         insertLotLoop(
             lots, 0,
             function () {
