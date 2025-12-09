@@ -6,10 +6,10 @@ block content
       .col-lg-4.mx-auto
         img.app-profile-img.w-75.m-5.mb-0(style="max-width: 350px;", src='https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/logos/agrooriental-remates-login-logo-w.png', alt='Agro Oriental')
         
-        .bg-danger.text-white.my-3
-          | Problemas de registros: el cliente ya está registrado o los datos fueron incorrectos. Intentalo de nuevo!
-        
         .auth-form-transparent.text-left.p-5.text-center
+          h4.bg-danger.text-white.text-left.mb-4.p-3
+            | El cliente ya está registrado o los datos son incorrectos. Intentalo nuevamente!
+
           if(!verification)
             form(method='post', name="registerForm", action='/registro')
               .form-group.row.text-white.d-none
