@@ -438,7 +438,7 @@ function openYoutubeLink(link) {
 
 function goToLotById() {
     if ($("[name='filtro-lot-id']").val()) {
-        window.location.href = "#" + $("[name='filtro-lot-id']").val();
+        window.location.href = "#lote-" + $("[name='filtro-lot-id']").val();
     }
 };
 
