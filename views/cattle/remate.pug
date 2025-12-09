@@ -18,6 +18,13 @@ block content
             i.mdi.mdi-information-outline.icon-md.text-warning
 
     #remate-lotes.row.portfolio-grid
+      #filtros-remate.d-none 
+        .row
+          .col-12 
+            | Lote
+            input(type="number", name="filtro-lot-id", value="")
+            button.btn.btn-primary Ir
+
       #loading-lots.pt-5.pb-3.m-0
         h3.text-center.text-white Buscando lotes del remate...
         .loading-image.mx-auto
