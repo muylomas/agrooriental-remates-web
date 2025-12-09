@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const connection = require('../connection_db');
 const common_gral = require('../common_gral');
+const common_auth = require('./common');
 const sha512 = require('js-sha512');
 
 const aws_sms_sender = require('../aws_sms_sender');
@@ -10,6 +11,16 @@ const aws_sms_sender = require('../aws_sms_sender');
 router.get('/', function (req, res, next) {
     res.render(
         'auth/register-form',
+        {
+            verification: false,
+            userId: 0,
+        }
+    );
+});
+
+router.get('/error', function (req, res, next) {
+    res.render(
+        'auth/register-form-w-errors',
         {
             verification: false,
             userId: 0,
@@ -75,50 +86,60 @@ router.post('/', function (req, res, next) {
         const phonePassword = sha512("phone" + phoneCodeNumber);
 
         if (req.body.registerMethodType == "phone") {
-            connection.query(
-                `
-                    INSERT INTO customers SET
-                        name = ?,
-                        surname = ?,
-                        phoneCountry = ?,
-                        phoneNumber = ?,
-                        phonePassword = ?,
-                        provider = "phone",
-                        email = NULL,
-                        invitation = 0
-                `,
-                [
-                    req.body.userName,
-                    req.body.userSurname,
-                    req.body.phoneCountry,
-                    parseInt(req.body.phoneNumber, 10),
-                    phonePassword,
-                ],
-                function (err, results) {
-                    if (err) {
-                        console.log(err);
-                        res.redirect('/registro');
+            common_auth.verifyPhoneAvailability(
+                req.body.phoneNumber,
+                function (availability) {
+                    if (availability) {
+                        connection.query(
+                            `
+                                INSERT INTO customers SET
+                                    name = ?,
+                                    surname = ?,
+                                    phoneCountry = ?,
+                                    phoneNumber = ?,
+                                    phonePassword = ?,
+                                    provider = "phone",
+                                    email = NULL,
+                                    invitation = 0
+                            `,
+                            [
+                                req.body.userName,
+                                req.body.userSurname,
+                                req.body.phoneCountry,
+                                parseInt(req.body.phoneNumber, 10),
+                                phonePassword,
+                            ],
+                            function (err, results) {
+                                if (err) {
+                                    console.log(err);
+                                    res.redirect('/registro/error');
+                                }
+                                else {
+                                    aws_sms_sender.sms_sender(
+                                        {
+                                            Message:
+                                                "Nuevo registro: " + req.body.userName + " " + req.body.userSurname +
+                                                ", tel: " + req.body.phoneCountry + parseInt(req.body.phoneNumber, 10) +
+                                                " https://gestion.agrooriental.uy/personas",
+                                            PhoneNumber: "+59899492041",
+                                        },
+                                        function (error) {
+                                        }
+                                    );
+
+                                    res.render(
+                                        'auth/register-form',
+                                        {
+                                            verification: "phone",
+                                            userId: results.insertId,
+                                        }
+                                    );
+                                }
+                            }
+                        );
                     }
                     else {
-                        aws_sms_sender.sms_sender(
-                            {
-                                Message:
-                                    "Nuevo registro: " + req.body.userName + " " + req.body.userSurname +
-                                    ", tel: " + req.body.phoneCountry + parseInt(req.body.phoneNumber, 10) +
-                                    " https://gestion.agrooriental.uy/personas",
-                                PhoneNumber: "+59899492041",
-                            },
-                            function (error) {
-                            }
-                        );
-
-                        res.render(
-                            'auth/register-form',
-                            {
-                                verification: "phone",
-                                userId: results.insertId,
-                            }
-                        );
+                        res.redirect('/registro/error');
                     }
                 }
             );
@@ -144,13 +165,7 @@ router.post('/', function (req, res, next) {
                 ],
                 function (err, results) {
                     if (err) {
-                        res.render(
-                            'auth/register-form',
-                            {
-                                verification: false,
-                                userId: 0,
-                            }
-                        );
+                        res.redirect('/registro/error');
                     }
                     else {
                         res.redirect('/registro/codigo-verificacion');
@@ -160,13 +175,7 @@ router.post('/', function (req, res, next) {
         }
     }
     else {
-        res.render(
-            'auth/register-form',
-            {
-                verification: false,
-                userId: 0,
-            }
-        );
+        res.redirect('/registro/error');
     }
 });
 

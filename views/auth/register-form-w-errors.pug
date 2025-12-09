@@ -1,0 +1,161 @@
+extends ../baseAppHTML
+
+block content 
+  .content-wrapper.auth.app-full-bg.p-0.m-0
+    .row.position-relative.w-100.h-100 
+      .col-lg-4.mx-auto
+        img.app-profile-img.w-75.m-5.mb-0(style="max-width: 350px;", src='https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/logos/agrooriental-remates-login-logo-w.png', alt='Agro Oriental')
+        
+        .bg-danger.text-white.my-3
+          | Problemas de registros: el cliente ya está registrado o los datos fueron incorrectos. Intentalo de nuevo!
+        
+        .auth-form-transparent.text-left.p-5.text-center
+          if(!verification)
+            form(method='post', name="registerForm", action='/registro')
+              .form-group.row.text-white.d-none
+                .col-1
+                .col-5.text-left
+                  .form-check.form-check-warning.m-0
+                    label.form-check-label
+                      input.form-check-input(type='radio', name='registerMethodType', value='phone', checked)
+                      i.input-helper
+                      h4 Celular
+                .col-5.text-left
+                  .form-check.form-check-warning.m-0
+                    label.form-check-label
+                      input.form-check-input(type='radio', name='registerMethodType', value='email')
+                      i.input-helper
+                      h4 Email
+                .col-1
+                
+              script.
+                $(document).ready(function () {
+                  var rad = document.registerForm.registerMethodType;
+                  var prev = null;
+                  for (var i = 0; i < rad.length; i++) {
+                    rad[i].addEventListener('change', function() {
+                        if (this !== prev) {
+                            prev = this;
+                        }
+                        
+                        showRegisterInputsByType(this.value);
+                    });
+                  }
+
+                  showRegisterInputsByType("phone");
+                });
+
+                function showRegisterInputsByType(type){
+                  switch (type) {
+                    case "phone":
+                      $(".phone-form-input").show();
+                      $(".email-form-input").hide();
+                      break;
+                    case "email":
+                      $(".phone-form-input").hide();
+                      $(".email-form-input").show();
+                      break;
+                    default:
+                      $(".phone-form-input").hide();
+                      $(".email-form-input").show();
+                      break;
+                  }
+                };
+              
+
+              .form-group.row.text-white
+                .col-12.text-left
+                  input.form-control.text-left(type='text', name="userName", placeholder='Nombre')
+              
+              .form-group.row.text-white
+                .col-12.text-left
+                  input.form-control.text-left(type='text', name="userSurname", placeholder='Apellido')
+
+              .form-group.phone-form-input
+                .input-group
+                  .input-group-prepend.m-0.p-0
+                    select.form-control.px-2.py-1(name="phoneCountry", style="line-height: 12px; height: 44px; position: relative; top: 1px;")
+                      option(value="1") +598
+                      option(value="2") +54
+                      option(value="3") +56
+                      option(value="4") +1
+                  input.form-control(type="number", name="phoneNumber", placeholder="99099099", min="91000000", max="99999999")
+                        
+              .form-group.email-form-input
+                input.form-control.text-center(type='email', name="email", placeholder='mi@email.com')
+              .form-group.email-form-input
+                input.form-control.text-center(type='password', name="password", placeholder='Contraseña')
+              button.btn.btn-block.btn-agrooriental.text-dark.btn-lg.font-weight-medium.w-100(type='submit') 
+                | Crear cuenta
+                  
+            h4.text-white.mt-5.mb-3.w-100.text-center Ya tenés una cuenta?
+            a.btn.btn-inverse-light.btn-fw.border-white.text-white.btn-lg.font-weight-medium.w-100(href='/ingresar') 
+              | Ingresar
+
+          else 
+            if(verification && userId)
+              script.
+                $(document).ready(function () {
+                  const inputElements = [...document.querySelectorAll('input.code-input')]
+
+                  inputElements.forEach((ele,index)=>{
+                    ele.addEventListener('keydown',(e)=>{
+                      // if the keycode is backspace & the current field is empty
+                      // focus the input before the current. Then the event happens
+                      // which will clear the "before" input box.
+                      if(e.keyCode === 8 && e.target.value==='') inputElements[Math.max(0,index-1)].focus()
+                    })
+                    ele.addEventListener('input',(e)=>{
+                      // take the first character of the input
+                      // this actually breaks if you input an emoji like 👨‍👩‍👧‍👦....
+                      // but I'm willing to overlook insane security code practices.
+                      const [first,...rest] = e.target.value
+                      e.target.value = first ?? '' // first will be undefined when backspace was entered, so set the input to ""
+                      const lastInputBox = index===inputElements.length-1
+                      const didInsertContent = first!==undefined
+                      if(didInsertContent && !lastInputBox) {
+                        // continue to input the rest of the string
+                        inputElements[index+1].focus()
+                        inputElements[index+1].value = rest.join('')
+                        inputElements[index+1].dispatchEvent(new Event('input'))
+                      }
+                    })
+                  });
+                });
+
+
+                // mini example on how to pull the data on submit of the form
+                function onSubmit(e){
+                  e.preventDefault()
+                  const code = inputElements.map(({value})=>value).join('')
+                  console.log(code)
+                }
+
+              h4.text-white.mt-5.mb-3.w-100.text-center Ingresá el código de invitación
+              form(method='post', action='/registro/codigo-verificacion')
+                input(type="hidden", name="userId", value=userId)
+                p.text-white 
+                  | Te enviamos un SMS a tu teléfono, ingrésalo a continuación.
+                .form-group.row.pt-4
+                  .col-3.px-2
+                    input.code-input.form-control.text-center.p-2(type='number', name="code1", min="0", max="9")
+                  .col-3.px-2
+                    input.code-input.form-control.text-center.p-2(type='number', name="code2", min="0", max="9")
+                  .col-3.px-2
+                    input.code-input.form-control.text-center.p-2(type='number', name="code3", min="0", max="9")
+                  .col-3.px-2
+                    input.code-input.form-control.text-center.p-2(type='number', name="code4", min="0", max="9")
+                
+                button.btn.btn-block.btn-agrooriental.text-dark.btn-lg.font-weight-medium.w-100(type='submit') 
+                  | Verificar
+
+                .position-absolute.bottom-0.start-50.translate-middle-x.p-5.w-100  
+                  h4.text-white.mt-5.mb-3.w-100.text-center Ingresar con otra cuenta
+                  a.btn.btn-inverse-light.btn-fw.border-white.text-white.btn-lg.font-weight-medium.w-100(href='/ingresar') 
+                    | Ingresar
+            else 
+              h4.text-white.mt-5.mb-3.w-100.text-center Ya tenés una cuenta?
+              a.btn.btn-inverse-light.btn-fw.border-white.text-white.btn-lg.font-weight-medium.w-100(href='/ingresar') 
+                | Ingresar
+
+

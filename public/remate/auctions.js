@@ -165,28 +165,6 @@ function auctionBidByStep(lotId, multiplier) {
 }
 
 function auctionBidCustom(lotId) {
-    /*if (price_was_changed) {
-        price_was_changed = false;
-        swal({
-            text: "El precio fue modificado porque era menor que la última oferta.",
-            icon: 'warning',
-            buttons: {
-                cancel: {
-                    text: "Cerrar",
-                    value: false,
-                    visible: true,
-                    className: "btn btn-primary",
-                    closeModal: true,
-                },
-            }
-        }).then((value) => {
-            swal.close();
-        });
-    }
-    else {
-        auctionBid(lotId, parseFloat($("#auction-bid-price-" + lotId).val()));
-    }*/
-
     auctionBid(lotId, parseFloat($("#auction-bid-price-" + lotId).val()));
 };
 
