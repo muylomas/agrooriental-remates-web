@@ -69,10 +69,19 @@ block content
               .d-flex.align-items-center.align-items-end.flex-wrap
                 .form-group.m-0
                   input.form-control(type="text", name="companyName", placeholder="", value=customer.companyName)
-                  
+
+    .row
+      .col-md-12
+        .card.border-0
+          .card-body
+            .d-flex.justify-content-between.flex-wrap
+              .d-flex.align-items-center.flex-wrap
+              .d-flex.align-items-center.align-items-end.flex-wrap
+                button.btn.btn-primary(type='button')
+                  | Actualizar perfil         
 
                               
-    .row
+    .row.mt-4
       .col-md-12
         .card.border-0
           .card-body
@@ -80,7 +89,7 @@ block content
               .d-flex.align-items-center.flex-wrap
                 p.m-0 Cerrar sesión?
               .d-flex.align-items-center.align-items-end.flex-wrap
-                form.my-4(method="post" action='/logout')
+                form(method="post" action='/logout')
                   button.btn.btn-light(type='submit')
                     | Salir
     
