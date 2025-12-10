@@ -42,11 +42,11 @@ block content
       .col-md-12
         .card.border-0
           .card-body.pt-0
-            h5.mb-3 Datos para el remate
+            h5.fw-bold Datos para el remate
 
             .d-flex.justify-content-between.flex-wrap
               .d-flex.align-items-center.flex-wrap
-                | Tipo de documento
+                p.m-0 Tipo de documento
               .d-flex.align-items-center.align-items-end.flex-wrap
                 .form-group.m-0
                   select.form-control.m-0(name="nidTypeId")
@@ -55,6 +55,13 @@ block content
                         option(value=customersNidTypeItem.id, selected="selected") #{customersNidTypeItem.name}
                       else
                         option(value=customersNidTypeItem.id) #{customersNidTypeItem.name}
+
+            .d-flex.justify-content-between.flex-wrap
+              .d-flex.align-items-center.flex-wrap
+                p.m-0 Número de documento
+              .d-flex.align-items-center.align-items-end.flex-wrap
+                .form-group.m-0
+                  input.form-control(type="text", name="mid", placeholder="", value=customer. nid)
                   
 
                               
