@@ -44,16 +44,17 @@ block content
           .card-body.pt-0
             h5.mb-3 Datos para el remate
 
-            d-flex.justify-content-between.flex-wrap
+            .d-flex.justify-content-between.flex-wrap
               .d-flex.align-items-center.flex-wrap
                 | Tipo de documento
               .d-flex.align-items-center.align-items-end.flex-wrap
-                select(name="nidTypeId")
-                  each customersNidTypeItem in customersNidTypes
-                    if(customersNidTypeItem.id == customer.nidTypeId)
-                      option(value=customersNidTypeItem.id, selected="selected") #{customersNidTypeItem.name}
-                    else
-                      option(value=customersNidTypeItem.id) #{customersNidTypeItem.name}
+                .form-group.m-0
+                  select.form-control.m-0(name="nidTypeId")
+                    each customersNidTypeItem in customersNidTypes
+                      if(customersNidTypeItem.id == customer.nidTypeId)
+                        option(value=customersNidTypeItem.id, selected="selected") #{customersNidTypeItem.name}
+                      else
+                        option(value=customersNidTypeItem.id) #{customersNidTypeItem.name}
                   
 
                               
