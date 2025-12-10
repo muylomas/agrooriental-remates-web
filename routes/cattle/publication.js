@@ -38,7 +38,7 @@ function breedsArray(lotId, callback) {
             callback(__aux_breedsArray, __aux_total_quantity, __aux_total_females);
         }
     );
-}
+};
 
 function ageArray(lotId, callback) {
     let __aux_ageArray = [];
@@ -71,7 +71,7 @@ function ageArray(lotId, callback) {
             callback(__aux_ageArray);
         }
     );
-}
+};
 
 function cattleImages(lotId, callback) {
     connection.query(
@@ -99,7 +99,7 @@ function cattleImages(lotId, callback) {
             callback(images);
         }
     );
-}
+};
 
 function Common() { }
 

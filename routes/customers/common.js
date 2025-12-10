@@ -24,6 +24,27 @@ Common.prototype.getCustomersTypes = function (callback) {
     );
 };
 
+Common.prototype.getCustomersNidTypes = function (callback) {
+    customersTypes = [];
+
+    connection.query(
+        `
+            SELECT *
+            FROM customers_nid_types
+        `,
+        function (err, results) {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                customersTypes = results;
+            }
+
+            callback(customersTypes);
+        }
+    );
+};
+
 function getViewStaticData(viewParams, callback) {
     addresses.getCountries(
         function (returnCountries) {

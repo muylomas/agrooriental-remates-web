@@ -8,11 +8,8 @@ block content
       .col-md-12
         .card.border-0
           .card-body
-            d-flex.justify-content-between.flex-wrap
-              .d-flex.align-items-center.flex-wrap
-                a(href="javascript:goBackwards()") 
-                  i.mdi.mdi-arrow-left.icon-md
-
+            a(href="javascript:goBackwards()") 
+              i.mdi.mdi-arrow-left.icon-md
     .row
       .col-md-12
         .card.border-0
@@ -38,24 +35,39 @@ block content
                         | Apellido
                     input.form-control(type="text", name="surname", placeholder="Apellido", value=customer.customerSurname)
 
-    .row
-      .col-md-12
-        .card.border-0
-          .card-body.pt-0
-            h5.mb-3 Datos para el remate
-
-            d-flex.justify-content-between.flex-wrap
-              .d-flex.align-items-center.flex-wrap
-                | Tipo de documento
-              .d-flex.align-items-center.align-items-end.flex-wrap
-                select#type-selector.form-control.m-0(name="typeId", onchange="updateOnType()")
-                  each customersNidTypeItem in customersNidTypes
-                    if(customersNidTypeItem.id == customer.nidTypeId)
-                      option(value=customersNidTypeItem.id, selected="selected") #{customersNidTypeItem.name}
-                    else
-                      option(value=customersNidTypeItem.id) #{customersNidTypeItem.name}
-                  
-
+    if(customer.societiesLength)
+      .row
+        .col-md-12
+          .card.border-0
+            .card-body.pt-0
+              h5.mb-3 Sociedades
+              each societyItem in customer.societies
+                .row.mb-3
+                  .col-md-12
+                    .media
+                      - var __aux_societyProfileImage = societyItem.image ? "background-image:url(" + societyItem.image + ")" : "";
+                      .society-profile-image(style=__aux_societyProfileImage)
+                        img.w-100(src="https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/transparent-pixel.png")
+                      .media-body.pl-4
+                        p.p-0.m-0
+                          b #{societyItem.name}
+                        each farmItem in societyItem.farms
+                          .media.mt-2
+                            - var __aux_farmProfileImage = farmItem.image ? "background-image:url(" + farmItem.image + ")" : "";
+                            .farm-profile-image(style=__aux_farmProfileImage)
+                              img.w-100(src="https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/transparent-pixel.png")
+                            .media-body.pl-4
+                                p.p-0.m-0
+                                  | #{farmItem.name}
+                                p.p-0.m-0
+                                  small
+                                    if(farmItem.location && farmItem.state)
+                                      | #{farmItem.location}, #{farmItem.state}
+                                    else 
+                                      if(farmItem.location)
+                                        | #{farmItem.location}
+                                      else 
+                                        | #{farmItem.state}
                               
     .row
       .col-md-12
