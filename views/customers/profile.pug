@@ -49,9 +49,9 @@ block content
                 p.m-0 Tipo de doc.
               .d-flex.align-items-center.align-items-end.flex-wrap
                 .form-group.m-0
-                  select.form-control.m-0(name="nidTypeId")
+                  select#nid-type-id.form-control.m-0(name="nidTypeId", onchange="updateOnNidType()")
                     each customersNidTypeItem in customersNidTypes
-                      if(customersNidTypeItem.id == customer.nidTypeId)
+                      if(customersNidTypeItem.id == customer.nidTypeId || (!customer.nidTypeId && customersNidTypeItem.id == 1))
                         option(value=customersNidTypeItem.id, selected="selected") #{customersNidTypeItem.name}
                       else
                         option(value=customersNidTypeItem.id) #{customersNidTypeItem.name}
@@ -61,14 +61,14 @@ block content
                 p.m-0 Número de doc.
               .d-flex.align-items-center.align-items-end.flex-wrap
                 .form-group.m-0
-                  input.form-control(type="text", name="nid", placeholder="", value=customer. nid)
+                  input.form-control(type="text", name="nid", placeholder="", value=customer.nid)
 
-            .d-flex.justify-content-between.flex-wrap
+            #company-name-container.d-flex.justify-content-between.flex-wrap(class=(!customer.nidTypeId || customer.nidTypeId == 1 ? 'd-none' : '')
               .d-flex.align-items-center.flex-wrap
                 p.m-0 Razón social
               .d-flex.align-items-center.align-items-end.flex-wrap
                 .form-group.m-0
-                  input.form-control(type="text", name="companyName", placeholder="", value=customer. companyName)
+                  input.form-control(type="text", name="companyName", placeholder="", value=customer.companyName)
                   
 
                               
@@ -81,7 +81,7 @@ block content
                 p.m-0 Cerrar sesión?
               .d-flex.align-items-center.align-items-end.flex-wrap
                 form.my-4(method="post" action='/logout')
-                  button.btn.btn-danger(type='submit')
+                  button.btn.btn-light(type='submit')
                     | Salir
     
   script(src="/customers/scripts.js")
