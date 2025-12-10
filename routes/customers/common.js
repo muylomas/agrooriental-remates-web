@@ -25,7 +25,7 @@ Common.prototype.getCustomersTypes = function (callback) {
 };
 
 Common.prototype.getCustomersNidTypes = function (callback) {
-    customersTypes = [];
+    customersNidTypes = [];
 
     connection.query(
         `
@@ -37,10 +37,10 @@ Common.prototype.getCustomersNidTypes = function (callback) {
                 console.log(err);
             }
             else {
-                customersTypes = results;
+                customersNidTypes = results;
             }
 
-            callback(customersTypes);
+            callback(customersNidTypes);
         }
     );
 };

@@ -48,7 +48,7 @@ block content
               .d-flex.align-items-center.flex-wrap
                 | Tipo de documento
               .d-flex.align-items-center.align-items-end.flex-wrap
-                select#type-selector.form-control.m-0(name="typeId", onchange="updateOnType()")
+                select(name="nidTypeId")
                   each customersNidTypeItem in customersNidTypes
                     if(customersNidTypeItem.id == customer.nidTypeId)
                       option(value=customersNidTypeItem.id, selected="selected") #{customersNidTypeItem.name}
