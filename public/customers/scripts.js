@@ -27,7 +27,7 @@ function updateProfile() {
         {
             name: $("[name='name']").val(),
             surname: $("[name='surname']").val(),
-            nidTypeId: $("[name='nidTypeId']").val(),
+            nidTypeId: parseInt($("[name='nidTypeId']").val()),
             nid: $("[name='nid']").val(),
             companyName: $("[name='companyName']").val(),
         },
