@@ -86,8 +86,12 @@ block content
             .d-flex.justify-content-between.flex-wrap
               .d-flex.align-items-center.flex-wrap
               .d-flex.align-items-center.align-items-end.flex-wrap
-                button.btn.btn-primary(type='button')
-                  | Actualizar perfil         
+                button.btn.btn-primary(type='button', onclick="updateProfile()")
+                  #updating-profile-spinner.float-start.pe-2.d-none
+                    span.spinner-border.spinner-border-sm(role="status" aria-hidden="true")
+                    span
+                      | Actualizar perfil
+                                  
 
                               
     .row
