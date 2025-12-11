@@ -1,7 +1,7 @@
 extends ../baseAppHTML
 
 block content 
-  link(href='/customers/styles.css?ver=1', rel='stylesheet', type='text/css')
+  link(href='/customers/styles.css', rel='stylesheet', type='text/css')
 
   .content-wrapper.p-0.m-0
     .row
@@ -43,8 +43,8 @@ block content
         .card.border-0
           .card-body.py-0
             h5.fw-bold Datos para el remate
-            p 
-              | Indicar la CI o el RUT y la razón social a nombre de quien realizará la compra en el remate. 
+            p#auction-data-description
+              | Indicá la CI o el RUT y la razón social  nombre de quien realizará la compra en el remate. 
               | Este puede cohincidir o no con los datos del usuario, que pre-ofertó o pica durante el remate.
 
             .d-flex.justify-content-between.flex-wrap.mb-2
@@ -66,9 +66,13 @@ block content
                 .form-group.m-0
                   input.form-control(type="text", name="nid", placeholder="", value=customer.nid)
 
-            #company-name-container.d-flex.justify-content-between.flex-wrap(class=(!customer.nidTypeId || customer.nidTypeId == 1 ? 'd-none' : ''))
+            #company-name-container.d-flex.justify-content-between.flex-wrap
               .d-flex.align-items-center.flex-wrap
-                p.m-0 Razón social
+                p#label-company-name.m-0 
+                  if(!customer.nidTypeId || customer.nidTypeId == 1)
+                    | Nombre
+                  else 
+                    | Razón social
               .d-flex.align-items-center.align-items-end.flex-wrap
                 .form-group.m-0
                   input.form-control(type="text", name="companyName", placeholder="", value=customer.companyName)

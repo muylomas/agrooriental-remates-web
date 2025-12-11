@@ -27,3 +27,8 @@
     width: 30px;
     background-image: url(https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/farms/no-profile-img.png);
 }
+
+#auction-data-description {
+    font-size: 12px;
+    line-height: normal;
+}

@@ -5,9 +5,9 @@ function goBackwards() {
 
 function updateOnNidType() {
     if ($("#nid-type-id").val() == 1) {
-        $("#company-name-container").addClass("d-none");
+        $("#label-company-name").hmtl("Nombre");
     }
     else {
-        $("#company-name-container").removeClass("d-none");
+        $("#label-company-name").hmtl("Razón social");
     }
 };
