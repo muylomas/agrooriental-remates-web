@@ -75,7 +75,7 @@ block content
                     | Razón social
               .d-flex.align-items-center.align-items-end.flex-wrap
                 .form-group.m-0
-                  input.form-control(type="text", name="companyName", placeholder="", value=customer.companyName)
+                  input.form-control(type="text", name="companyName", placeholder="", value=(!customer.nidTypeId || customer.nidTypeId == 1) ? (customer.customerName + " " + customer.customerSurname) : customer.companyName)
 
     .row.mb-5
       .col-md-12
