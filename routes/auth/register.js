@@ -203,10 +203,12 @@ router.post('/codigo-verificacion', function (req, res, next) {
                 FROM customers 
                 WHERE 
                     invitation = 1 AND
-                    phonePassword = ?
+                    phonePassword = ? AND
+                    sessionPhone = ?
             `,
             [
                 phonePassword,
+                req.sessionID,
             ],
             function (err, results) {
                 if (err) {

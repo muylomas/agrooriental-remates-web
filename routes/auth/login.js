@@ -61,6 +61,7 @@ router.post('/', function (req, res, next) {
                                 `
                                     UPDATE customers SET
                                         phonePassword = ?,
+                                        sessionPhone = ?,
                                         phoneAdminCode = ""
                                     WHERE
                                         phoneCountry = ? AND
@@ -68,6 +69,7 @@ router.post('/', function (req, res, next) {
                                 `,
                                 [
                                     phonePassword,
+                                    req.sessionID,
                                     req.body.phoneCountry,
                                     parseInt(req.body.phoneNumber, 10),
                                 ],
