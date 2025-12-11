@@ -15,4 +15,11 @@ router.get('/search/:customerString', function (req, res, next) {
     );
 });
 
+router.post('/profile/update', function (req, res, next) {
+    res.json({
+        error: 0,
+        customers: customers,
+    });
+});
+
 module.exports = router;
