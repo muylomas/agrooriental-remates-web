@@ -206,7 +206,7 @@ router.post('/codigo-verificacion', function (req, res, next) {
                 WHERE 
                     invitation = 1 AND
                     phonePassword = ? AND
-                    (sessionPhone = ? || sessionPhone = "1001001)
+                    (sessionPhone = ? || sessionPhone = "1001001")
             `,
             [
                 phonePassword,
