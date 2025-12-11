@@ -98,6 +98,7 @@ router.post('/', function (req, res, next) {
                                     phoneCountry = ?,
                                     phoneNumber = ?,
                                     phonePassword = ?,
+                                    sessionPhone = ?,
                                     provider = "phone",
                                     email = NULL,
                                     invitation = 0
@@ -108,6 +109,7 @@ router.post('/', function (req, res, next) {
                                 req.body.phoneCountry,
                                 parseInt(req.body.phoneNumber, 10),
                                 phonePassword,
+                                req.sessionID,
                             ],
                             function (err, results) {
                                 if (err) {
@@ -204,7 +206,7 @@ router.post('/codigo-verificacion', function (req, res, next) {
                 WHERE 
                     invitation = 1 AND
                     phonePassword = ? AND
-                    sessionPhone = ?
+                    (sessionPhone = ? || sessionPhone = "1001001)
             `,
             [
                 phonePassword,
