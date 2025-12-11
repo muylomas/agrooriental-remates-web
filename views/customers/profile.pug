@@ -31,14 +31,8 @@ block content
                         small.text-muted
                           | REF: ##{customer.customerId}
                   .media-body.pl-4
-                    h6
-                      small.text-muted
-                        | Nombre
-                    input.form-control(type="text", name="name", placeholder="Nombres", value=customer.customerName)
-                    h6.mt-3
-                      small.text-muted
-                        | Apellido
-                    input.form-control(type="text", name="surname", placeholder="Apellido", value=customer.customerSurname)
+                    input.form-control.mb-2(type="text", name="name", placeholder="Nombres", value=customer.customerName)
+                    input.form-control(type="text", name="surname", placeholder="Apellidos", value=customer.customerSurname)
 
     .row.mb-4
       .col-md-12
