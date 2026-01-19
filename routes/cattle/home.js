@@ -243,7 +243,7 @@ Common.prototype.getViewParams = function (user, callback) {
             let indexParams = returnIndexParams;
 
             common_auctions.activeAuctions(function (returnAcutions) {
-                indexParams.auctions = returnLotsIds;
+                indexParams.auctions = returnAcutions;
 
                 common_cattle_home.getLots(
                     user.id,
