@@ -2,6 +2,7 @@ const connection = require('../connection_db');
 const common_cattle = require('./common');
 const common_cattle_home = require('./common_home');
 const common_customers = require('../customers/common');
+const common_auctions = require('../auctions/common');
 
 function breedsArray(lotsIds, indexParams, callback) {
     let __aux_lotsIds_query_string = Array(lotsIds.length).fill("?");
@@ -241,66 +242,70 @@ Common.prototype.getViewParams = function (user, callback) {
         function (returnIndexParams) {
             let indexParams = returnIndexParams;
 
-            common_cattle_home.getLots(
-                user.id,
-                [],
-                [],
-                [],
-                "",
-                "",
-                function (returnLots, returnLotsIds) {
-                    indexParams.lotsIds = returnLotsIds;
-                    indexParams.lots = returnLots;
-                    indexParams.activeAuctionBids = [];
-                    indexParams.cattleCaracteristics = common_cattle_home.cattleCaracteristics();
+            common_auctions.activeAuctions(function (returnAcutions) {
+                indexParams.auctions = returnLotsIds;
 
-                    common_customers.getCustomerById(
-                        user.id,
-                        function (returnCustomer) {
-                            indexParams.customer = returnCustomer;
-                            getCustomerActiveBids(
-                                user.id,
-                                function (returnActiveAuctionBids) {
-                                    indexParams.activeAuctionBids = returnActiveAuctionBids;
-                                    breedsArray(
-                                        indexParams.lotsIds,
-                                        indexParams,
-                                        function (returnIndexParamsBreeds) {
-                                            indexParams = returnIndexParamsBreeds;
-                                            ageArray(
-                                                indexParams.lotsIds,
-                                                indexParams,
-                                                function (returnIndexParamsAges) {
-                                                    indexParams = returnIndexParamsAges;
-                                                    cattleImages(
-                                                        indexParams.lotsIds,
-                                                        indexParams,
-                                                        function (returnIndexParamsImages) {
-                                                            indexParams = returnIndexParamsImages;
-                                                            getCattleTypesAverages(
-                                                                function (replyCattleTypesAverages) {
-                                                                    indexParams.cattleTypesAverages = replyCattleTypesAverages;
-                                                                    callback(
-                                                                        //'cattle/home-feed',
-                                                                        'cattle/remate',
-                                                                        indexParams,
-                                                                        "render"
-                                                                    );
-                                                                }
-                                                            );
-                                                        }
-                                                    );
-                                                }
-                                            );
-                                        }
-                                    );
-                                }
-                            );
-                        }
-                    );
-                }
+                common_cattle_home.getLots(
+                    user.id,
+                    [],
+                    [],
+                    [],
+                    "",
+                    "",
+                    function (returnLots, returnLotsIds) {
+                        indexParams.lotsIds = returnLotsIds;
+                        indexParams.lots = returnLots;
+                        indexParams.activeAuctionBids = [];
+                        indexParams.cattleCaracteristics = common_cattle_home.cattleCaracteristics();
 
-            );
+                        common_customers.getCustomerById(
+                            user.id,
+                            function (returnCustomer) {
+                                indexParams.customer = returnCustomer;
+                                getCustomerActiveBids(
+                                    user.id,
+                                    function (returnActiveAuctionBids) {
+                                        indexParams.activeAuctionBids = returnActiveAuctionBids;
+                                        breedsArray(
+                                            indexParams.lotsIds,
+                                            indexParams,
+                                            function (returnIndexParamsBreeds) {
+                                                indexParams = returnIndexParamsBreeds;
+                                                ageArray(
+                                                    indexParams.lotsIds,
+                                                    indexParams,
+                                                    function (returnIndexParamsAges) {
+                                                        indexParams = returnIndexParamsAges;
+                                                        cattleImages(
+                                                            indexParams.lotsIds,
+                                                            indexParams,
+                                                            function (returnIndexParamsImages) {
+                                                                indexParams = returnIndexParamsImages;
+                                                                getCattleTypesAverages(
+                                                                    function (replyCattleTypesAverages) {
+                                                                        indexParams.cattleTypesAverages = replyCattleTypesAverages;
+                                                                        callback(
+                                                                            //'cattle/home-feed',
+                                                                            'cattle/remate',
+                                                                            indexParams,
+                                                                            "render"
+                                                                        );
+                                                                    }
+                                                                );
+                                                            }
+                                                        );
+                                                    }
+                                                );
+                                            }
+                                        );
+                                    }
+                                );
+                            }
+                        );
+                    }
+
+                );
+            });
         }
     );
 };

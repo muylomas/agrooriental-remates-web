@@ -230,6 +230,7 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
                         cattle_lots_equines.aru AS equineARU,
                         cattle_lots_equines.youtube AS equineYoutube
                     FROM cattle_complete
+                    LEFT JOIN auctions ON auctions.id = users.deskId
                     LEFT JOIN auctions_bids_max ON auctions_bids_max.lotId = cattle_complete.lotId
                     LEFT JOIN auctions_bids ON 
                         auctions_bids.id = auctions_bids_max.auctionBidId AND 
@@ -247,6 +248,7 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
                     WHERE 
                         (cattle_complete.customerId != ? || cattle_complete.customerId = 0) AND
                         cattle_complete.statusId = 5 AND
+                        cattle_complete.auctionId = 1 AND
                         (
                             auctions_bids.price IS NULL OR
                             auctions_bids.price < cattle_complete.salePrice 
