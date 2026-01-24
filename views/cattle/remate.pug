@@ -7,10 +7,10 @@ block content
   script(src='https://code.jquery.com/ui/1.14.1/jquery-ui.min.js')
 
   .content-wrapper.bg-agrooriental.p-0.m-0
-       
-    include remate-includes/header.pug 
-
+  
     each auctionItem in auctions
+      include remate-includes/header.pug 
+      
       .row.mb-2
         .col-12.position-relative(style="background:#1a1a1a")
           img.mobile-only.w-100(src=auctionItem.bannerMobile)
