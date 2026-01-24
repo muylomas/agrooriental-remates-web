@@ -414,33 +414,35 @@ function processImages(images, index, results, callback) {
 };
 
 Common.prototype.cattleImagesFromVideo = function (lotVideo, lotId, callback) {
-    ffmpeg(lotVideo)
-        .on('end', function () {
-            images = [
-                {
-                    path: './routes/cattle/uploads/' + 'thumbnail-lot' + lotId + '-1.png',
-                    name: 'thumbnail-lot' + lotId + '-1.png',
-                }, {
-                    path: './routes/cattle/uploads/' + 'thumbnail-lot' + lotId + '-2.png',
-                    name: 'thumbnail-lot' + lotId + '-2.png',
-                }, {
-                    path: './routes/cattle/uploads/' + 'thumbnail-lot' + lotId + '-3.png',
-                    name: 'thumbnail-lot' + lotId + '-3.png',
-                },
-            ];
-            processImages(images, 0, [], function (lotImagesArrayS3) {
-                modifLot.insertLotImages(lotId, lotImagesArrayS3, 0, function () {
-                    callback();
+    if (lotVideo) {
+        ffmpeg(lotVideo)
+            .on('end', function () {
+                images = [
+                    {
+                        path: './routes/cattle/uploads/' + 'thumbnail-lot' + lotId + '-1.png',
+                        name: 'thumbnail-lot' + lotId + '-1.png',
+                    }, {
+                        path: './routes/cattle/uploads/' + 'thumbnail-lot' + lotId + '-2.png',
+                        name: 'thumbnail-lot' + lotId + '-2.png',
+                    }, {
+                        path: './routes/cattle/uploads/' + 'thumbnail-lot' + lotId + '-3.png',
+                        name: 'thumbnail-lot' + lotId + '-3.png',
+                    },
+                ];
+                processImages(images, 0, [], function (lotImagesArrayS3) {
+                    modifLot.insertLotImages(lotId, lotImagesArrayS3, 0, function () {
+                        callback();
+                    });
                 });
-            });
-        })
-        .screenshots(
-            {
-                count: 3,
-                filename: 'thumbnail-lot' + lotId + '-%i.png',
-                folder: './routes/cattle/uploads'
-            }
-        );
+            })
+            .screenshots(
+                {
+                    count: 3,
+                    filename: 'thumbnail-lot' + lotId + '-%i.png',
+                    folder: './routes/cattle/uploads'
+                }
+            );
+    }
 };
 
 
