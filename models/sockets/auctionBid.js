@@ -155,7 +155,8 @@ module.exports = function (socket) {
                                                             cattle_complete.startPrice,
                                                             auctions_bids.price
                                                         ) AS price,
-                                                        cattle_complete.salePrice AS salePrice
+                                                        cattle_complete.salePrice AS salePrice,
+                                                        cattle_complete.subId AS subId
                                                     FROM auctions_bids_max
                                                     INNER JOIN auctions_bids ON auctions_bids.id = auctions_bids_max.auctionBidId
                                                     LEFT JOIN cattle_complete ON cattle_complete.lotId = auctions_bids_max.lotId
@@ -205,7 +206,7 @@ module.exports = function (socket) {
                                                                     );
 
                                                                     if (lastAuctionCustomer.customerId != customerId) {
-                                                                        sendSMSToLooser(lastAuctionCustomer, parameters.lotId);
+                                                                        sendSMSToLooser(lastAuctionCustomer, results[0].subId);
                                                                     }
                                                                 }
                                                             );
