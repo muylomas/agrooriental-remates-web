@@ -76,7 +76,7 @@ function showCustomerLoosing(lotId, price, auctionBidEnd, showButton) {
     $("#auction-bid-status-container-" + lotId).removeClass("d-none");
 
     console.log("lotId: ", lotId);
-    if (auctionBidEnd || lotId == 71) {
+    if (auctionBidEnd || parseInt(lotId) == 71) {
         $("#auction-bid-status-" + lotId).html(
             `
                  <div class="badge badge-warning fs-4 w-100">
