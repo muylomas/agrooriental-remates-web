@@ -462,7 +462,7 @@ function showActiveAuctionBids() {
 $(document).ready(function () {
     for (let index in activeAuctionBids) {
         activeAuctionBidsLotIds.push(activeAuctionBids[index].lotId);
-        if (activeAuctionBids[index].isWinning) {
+        if (activeAuctionBids[index].isWinning && activeAuctionBids[index].lotId != 71) {
             showCustomerWinning(activeAuctionBids[index].lotId, 0, false, false);
         }
         else {
