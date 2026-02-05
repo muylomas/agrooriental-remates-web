@@ -467,7 +467,7 @@ function showActiveAuctionBids() {
         $("#only-active-auctions-bids i").removeClass("mdi-toggle-switch");
         $("#only-active-auctions-bids i").removeClass("text-success");
 
-        $("div[id^='lote-']").removeClass("d-none");
+        $("div[id^='lot-']").removeClass("d-none");
     }
     else {
         $("#only-active-auctions-bids i").addClass("mdi-toggle-switch");
