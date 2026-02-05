@@ -76,12 +76,11 @@ function showCustomerLoosing(lotId, price, auctionBidEnd, showButton) {
     $("#auction-bid-status-container-" + lotId).removeClass("d-none");
 
     if (auctionBidEnd || parseInt(lotId) == 71) {
-        console.log("lotId: ", lotId);
         $("#auction-bid-status-" + lotId).html(
             `
-                 <div class="badge badge-warning fs-6 w-100">
+                 <div class="badge badge-light fs-6 text-dark w-100">
                     Detectamos problemas en la red
-                    <a href="/" class="btn btn-warning btn-rounded btn-fw ms-2 fs-6 p-2">
+                    <a href="/" class="btn btn-warning btn-fw border-dark ms-2 fs-6 text-dark p-2">
                         <i class="mdi mdi-alarm mdi mdi-reload fs-4"></i>
                         Recargar
                     </a>
@@ -465,6 +464,4 @@ $(document).ready(function () {
             showCustomerLoosing(activeAuctionBids[index].lotId, 0, false, false);
         }
     }
-
-    showCustomerLoosing(71, 0, false, false);
 });
