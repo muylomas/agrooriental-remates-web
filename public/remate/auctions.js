@@ -475,10 +475,10 @@ function showActiveAuctionBids() {
         $("#only-active-auctions-bids i").removeClass("mdi-toggle-switch-off");
         $("#only-active-auctions-bids i").removeClass("text-danger");
 
-        $("div[id^='lote-']").addClass("d-none");
+        $("div[id^='lot-']").addClass("d-none");
 
         for (let indAAB in activeAuctionBids) {
-            $("#lote-" + activeAuctionBids[indAAB].lotId).removeClass("d-none");
+            $("#lot-" + activeAuctionBids[indAAB].lotId).removeClass("d-none");
         }
     }
 };
