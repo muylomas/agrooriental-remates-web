@@ -40,7 +40,7 @@ function showCustomerWinning(lotId, price, auctionBidEnd, showAlert) {
         $("#auction-bid-status-" + lotId).html(
             `
                  <div class="badge badge-success fs-4 w-100">
-                     Felicitaciones!! Estamos procesando tu compra.
+                     Felicitaciones!! Estamos procesando tu oferta
                  </div>
              `
         );
@@ -79,10 +79,11 @@ function showCustomerLoosing(lotId, price, auctionBidEnd, showButton) {
         console.log("lotId: ", lotId);
         $("#auction-bid-status-" + lotId).html(
             `
-                 <div class="badge badge-warning fs-4 w-100">
+                 <div class="badge badge-warning fs-6 w-100">
                     Detectamos problemas en la red
-                    <a href="/" class="btn btn-warning btn-rounded btn-fw ml-2">
-                        Recargar <i class="mdi mdi-alarm" style="font-size: 0.875rem;"></i>
+                    <a href="/" class="btn btn-warning btn-rounded btn-fw ms-2 fs-6 p-2">
+                        <i class="mdi mdi-alarm mdi mdi-reload fs-4"></i>
+                        Recargar
                     </a>
                  </div>
             `
