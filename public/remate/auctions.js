@@ -74,15 +74,17 @@ function showCustomerLoosing(lotId, price, auctionBidEnd, showButton) {
     }
 
     $("#auction-bid-status-container-" + lotId).removeClass("d-none");
-    if (auctionBidEnd) {
+    if (auctionBidEnd || lotId == 71) {
         $("#auction-bid-status-" + lotId).html(
             `
-                 <div class="badge badge-danger fs-4 w-100">
-                     Este lote ha sido vendido.
+                 <div class="badge badge-warning fs-4 w-100">
+                    Detectamos problemas en la red
+                    <a href="/" class="btn btn-warning btn-rounded btn-fw ml-2">
+                        Recargar <i class="mdi mdi-alarm" style="font-size: 0.875rem;"></i>
+                    </a>
                  </div>
-             `
+            `
         );
-        $("#category-media-value-container-" + lotId).remove();
     }
     else {
         if (isLotBidedByCustomer) {
@@ -103,16 +105,8 @@ function showCustomerLoosing(lotId, price, auctionBidEnd, showButton) {
                     #` + lotId + ` <i class="mdi mdi-alarm" style="font-size: 0.875rem;"></i>
                 </a>
             `;
-        if (auctionBidEnd) {
-            goToLotButton =
-                `
-                    <a href="#lote-` + lotId + `" class="btn btn-secondary btn-rounded btn-fw">
-                        #` + lotId + ` <i class="mdi mdi-close" style="font-size: 0.875rem;"></i>
-                    </a>
-                `;
-        }
 
-        showBidAlertWarning(lotId, auctionBidEnd);
+        showBidAlertWarning(lotId);
     }
 };
 
@@ -412,17 +406,10 @@ function showBidAlertSuccess(auctionBidEnd) {
     });
 };
 
-var automaticAuctionOpenerForlotId = false;
-function showBidAlertWarning(lotId, auctionBidEnd) {
+function showBidAlertWarning(lotId) {
     let __aux_title = "Superaron tu oferta por el lote " + lotId;
     let __aux_description = "Ofertá más que el mejor postor, apurate!!";
     let __aux_confirm = "Ofertar";
-
-    if (auctionBidEnd) {
-        __aux_title = "Se vendió";
-        __aux_description = "Superaron tu oferta y el lote " + lotId + " ya no está disponible.";
-        __aux_confirm = "Ver";
-    }
 
     swal({
         title: __aux_title,
@@ -445,18 +432,7 @@ function showBidAlertWarning(lotId, auctionBidEnd) {
             },
         }
     }).then((value) => {
-        automaticAuctionOpenerForlotId = lotId;
         swal.close();
-        if (value) {
-            if (!auctionBidEnd) {
-                setTimeout(() => {
-                    window.location.href = "#lote-" + automaticAuctionOpenerForlotId;
-                    setTimeout(() => {
-                        $("#button-auction-bid-" + automaticAuctionOpenerForlotId).click();
-                    }, 2000);
-                }, 500);
-            }
-        }
     });
 };
 
