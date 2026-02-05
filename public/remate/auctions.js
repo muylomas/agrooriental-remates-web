@@ -74,6 +74,8 @@ function showCustomerLoosing(lotId, price, auctionBidEnd, showButton) {
     }
 
     $("#auction-bid-status-container-" + lotId).removeClass("d-none");
+
+    console.log("lotId: ", lotId);
     if (auctionBidEnd || lotId == 71) {
         $("#auction-bid-status-" + lotId).html(
             `
@@ -460,10 +462,10 @@ function showActiveAuctionBids() {
 };
 
 $(document).ready(function () {
+    showCustomerLoosing(a71, 0, false, false);
     for (let index in activeAuctionBids) {
         activeAuctionBidsLotIds.push(activeAuctionBids[index].lotId);
-        console.log("lotId: ", activeAuctionBids[index].lotId);
-        if (activeAuctionBids[index].isWinning && activeAuctionBids[index].lotId != 71) {
+        if (activeAuctionBids[index].isWinning) {
             showCustomerWinning(activeAuctionBids[index].lotId, 0, false, false);
         }
         else {
