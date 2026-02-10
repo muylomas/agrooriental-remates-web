@@ -1,7 +1,7 @@
 // New type of multiple (Pool) connections
 var rds_conf = {
     connectionLimit: 15,
-    host: "remates.cbg6iam029qt.us-west-1.rds.amazonaws.com",
+    host: "agrooriental.cbg6iam029qt.us-west-1.rds.amazonaws.com",
     database: "remates",
     user: "admin",
     password: "9sNvD-*VW8xr%",
