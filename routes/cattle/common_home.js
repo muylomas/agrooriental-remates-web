@@ -258,8 +258,7 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
                         (
                             auctions_bids.price IS NULL OR
                             auctions_bids.price < cattle_complete.salePrice 
-                        ) AND
-                        cattle_complete.auctionStart < NOW() - INTERVAL 3 HOUR 
+                        ) 
                         ` + customerFarmsFilterString + `
                         ` + latLngQueryString + `
                         ` + cattleTypesQueryString + `
