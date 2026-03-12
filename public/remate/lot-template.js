@@ -61,12 +61,12 @@ const lotTemplate =
                             </h4>
                             <h4 id="countdown-auction-ended-__lot_lotId__" class="mb-0 d-inline-block text-center p-2 d-none">
                                 <span class="text-white">
-                                    FINALIZADA
+                                    Finalizada
                                 </span>
                             </h4>
                             <h4 id="countdown-auction-not-started-__lot_lotId__" class="mb-0 d-inline-block text-center p-2 d-none">
                                 <span class="text-white">
-                                    EMPIEZA EL __lot_lotAuctionStart__
+                                    Comienza el __lot_lotAuctionStart__
                                 </span>
                             </h4>
                         </div>
