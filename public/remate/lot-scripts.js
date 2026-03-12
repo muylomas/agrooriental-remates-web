@@ -250,7 +250,7 @@ function auctionBidsHistory(lotId) {
 
 function insertLotLoop(lots, indSLots, callback) {
     if (indSLots < lots.length) {
-        let __aux_slideHTML = slideTemplate;
+        let __aux_slideHTML = lotTemplate;
 
         for (let indObj in lots[indSLots]) {
             if (__aux_slideHTML.indexOf("__lot_" + indObj + "__") != -1) {
@@ -401,6 +401,9 @@ function insertLotLoop(lots, indSLots, callback) {
 
 
         $("#remate-lotes").append(__aux_slideHTML);
+
+        if (!lots[indSLots].lotAuctionStarted)
+            $('#countdown-auction-ended-' + lots[indSLots].lotId).removeClass("d-none");
 
         if (!lots[indSLots].video)
             $("#view-media-selector-" + lots[indSLots].lotId).hide();

@@ -1,4 +1,4 @@
-const slideTemplate =
+const lotTemplate =
     `
         <div id="lote-__lot_subId__" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12 bg-agrooriental stretch-card">
             <div class="card border-0 m-2" id="lot-__lot_lotId__" style="min-width: auto; min-width: -webkit-fill-available;">
@@ -61,7 +61,12 @@ const slideTemplate =
                             </h4>
                             <h4 id="countdown-auction-ended-__lot_lotId__" class="mb-0 d-inline-block text-center p-2 d-none">
                                 <span class="text-white">
-                                    Finalizada
+                                    FINALIZADA
+                                </span>
+                            </h4>
+                            <h4 id="countdown-auction-not-started-__lot_lotId__" class="mb-0 d-inline-block text-center p-2 d-none">
+                                <span class="text-white">
+                                    EMPIEZA EL __lot_lotAuctionStart__
                                 </span>
                             </h4>
                         </div>

@@ -228,7 +228,13 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
                         cattle_lots_equines.mother AS equineMother,
                         cattle_lots_equines.maternalGrandfather AS equineMaternalGrandfather,
                         cattle_lots_equines.aru AS equineARU,
-                        cattle_lots_equines.youtube AS equineYoutube
+                        cattle_lots_equines.youtube AS equineYoutube,
+                        IF(
+                            cattle_complete.auctionStart < NOW() - INTERVAL 3 HOUR,
+                            1,
+                            0
+                        ) AS lotAuctionStarted,
+                        DATE_FORMAT( cattle_complete.auctionStart, '%d/%m/%Y' ) AS lotAuctionStart
                     FROM cattle_complete
                     LEFT JOIN auctions ON auctions.id = cattle_complete.auctionId
                     LEFT JOIN auctions_bids_max ON auctions_bids_max.lotId = cattle_complete.lotId
