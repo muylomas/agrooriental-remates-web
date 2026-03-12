@@ -413,7 +413,7 @@ function insertLotLoop(lots, indSLots, callback) {
             $('#countdown-mins-' + lots[indSLots].lotId).parent().remove();
             $('#countdown-secs-' + lots[indSLots].lotId).parent().remove();
             $('.countdown-time-separators-' + lots[indSLots].lotId).remove();
-            $('#countdown-auction-ended-' + lots[indSLots].lotId).removeClass("d-none");
+            $('#countdown-auction-not-started-' + lots[indSLots].lotId).removeClass("d-none");
         }
 
         if (!lots[indSLots].video)
