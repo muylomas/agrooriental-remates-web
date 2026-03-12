@@ -402,8 +402,19 @@ function insertLotLoop(lots, indSLots, callback) {
 
         $("#remate-lotes").append(__aux_slideHTML);
 
-        if (!lots[indSLots].lotAuctionStarted)
+        if (!lots[indSLots].lotAuctionStarted) {
+            $('#countdown-days-' + lotId).html("-");
+            $('#countdown-hours-' + lotId).html("--");
+            $('#countdown-mins-' + lotId).html("--");
+            $('#countdown-secs-' + lotId).html("--");
+
+            $('#countdown-days-' + lotId).parent().remove();
+            $('#countdown-hours-' + lotId).parent().remove();
+            $('#countdown-mins-' + lotId).parent().remove();
+            $('#countdown-secs-' + lotId).parent().remove();
+            $('.countdown-time-separators-' + lotId).remove();
             $('#countdown-auction-ended-' + lots[indSLots].lotId).removeClass("d-none");
+        }
 
         if (!lots[indSLots].video)
             $("#view-media-selector-" + lots[indSLots].lotId).hide();
