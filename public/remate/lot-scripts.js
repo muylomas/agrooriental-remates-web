@@ -403,16 +403,16 @@ function insertLotLoop(lots, indSLots, callback) {
         $("#remate-lotes").append(__aux_slideHTML);
 
         if (!lots[indSLots].lotAuctionStarted) {
-            $('#countdown-days-' + lotId).html("-");
-            $('#countdown-hours-' + lotId).html("--");
-            $('#countdown-mins-' + lotId).html("--");
-            $('#countdown-secs-' + lotId).html("--");
+            $('#countdown-days-' + lots[indSLots].lotId).html("-");
+            $('#countdown-hours-' + lots[indSLots].lotId).html("--");
+            $('#countdown-mins-' + lots[indSLots].lotId).html("--");
+            $('#countdown-secs-' + lots[indSLots].lotId).html("--");
 
-            $('#countdown-days-' + lotId).parent().remove();
-            $('#countdown-hours-' + lotId).parent().remove();
-            $('#countdown-mins-' + lotId).parent().remove();
-            $('#countdown-secs-' + lotId).parent().remove();
-            $('.countdown-time-separators-' + lotId).remove();
+            $('#countdown-days-' + lots[indSLots].lotId).parent().remove();
+            $('#countdown-hours-' + lots[indSLots].lotId).parent().remove();
+            $('#countdown-mins-' + lots[indSLots].lotId).parent().remove();
+            $('#countdown-secs-' + lots[indSLots].lotId).parent().remove();
+            $('.countdown-time-separators-' + lots[indSLots].lotId).remove();
             $('#countdown-auction-ended-' + lots[indSLots].lotId).removeClass("d-none");
         }
 
