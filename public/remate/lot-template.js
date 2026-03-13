@@ -5,7 +5,7 @@ const lotTemplate =
                 <div id="cattle-media-container-__lot_lotId__" class="cattle-media-container position-relative overflow-hidden w-100">
                     <img class="w-100" src="__lot_videoBackground__">
                     <div id="image-__lot_lotId__" 
-                        title="Lote __lot_subId__ - __lot_equineName__"
+                        title="LOTE __lot_subId__ - __lot_equineName__"
                         class="cattle-image position-absolute top-0 start-0 w-100 h-100" 
                         style="background-image:url(__lot_imagesArray_0__);" 
                         alt="Lote __lot_lotId__ - __lot_equineName__">
@@ -26,7 +26,7 @@ const lotTemplate =
                     <div class="d-flex justify-content-between flex-wrap align-items-center">
                         <div class="d-flex align-items-end flex-wrap">
                             <div class="btn btn-dark text-uppercase fs-5 p-2 m-0">
-                                <b>Lote __lot_subId__</b>
+                                <b>LOTE __lot_subId__</b>
                             </div>
                         </div>
                         <script>
