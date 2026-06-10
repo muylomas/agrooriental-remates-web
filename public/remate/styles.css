@@ -96,6 +96,7 @@ select {
 }
 
 .cattle-media-container > .cattle-image {
+    background-position: center;
     background-size: cover;
 }
 
