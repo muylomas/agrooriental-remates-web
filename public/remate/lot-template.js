@@ -83,7 +83,7 @@ const lotTemplate =
                     <p class="card-text fs-6 mb-2">
                         <b>Categoría</b>: <span="text-uppercase">__lot_type__</span></br>
                         <b>RP</b>: __lot_equineRP__</br>
-                        <b>Alzada</b>: __lot_equineHeight__</br>
+                        <span id="lot-params-height-__lot_lotId__"><b>Alzada</b>: __lot_equineHeight__</br></span>
                         <b>Pelo</b>: __lot_equineHair__</br>
                         <b>Nacimiento</b>: __lot_equineBirth__</br>
                         <b>Cabaña</b>: __lot_equineCabin__

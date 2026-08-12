@@ -425,6 +425,10 @@ function insertLotLoop(lots, indSLots, callback) {
             }
         }
 
+        if (!lots[indSLots].equineHeight) {
+            $('#lot-params-height-' + lots[indSLots].lotId).remove();
+        }
+
         if (!lots[indSLots].lotAuctionStarted) {
             $("#auction-bid-button-x1-" + lots[indSLots].lotId).addClass("d-none");
             $("#auction-bid-button-multiple-" + lots[indSLots].lotId).addClass("d-none");
