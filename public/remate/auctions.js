@@ -343,16 +343,9 @@ function updateAuctionBidPrice(auctionBidEnd, lotParams) {
         $(this).html(lastAuctionPrice.toFixed(__aux_fixedDigits) + " ").fadeIn(400);
     });
 
-    if (__aux_fixedDigits) {
-        $("#last-auction-bid-price-auction-" + lotId).fadeOut(400, function () {
-            $(this).html(lastAuctionPrice.toFixed(__aux_fixedDigits) + " ").fadeIn(400);
-        });
-    }
-    else {
-        $("#last-auction-bid-price-auction-" + lotId).fadeOut(400, function () {
-            $(this).html(" ").fadeIn(400);
-        });
-    }
+    $("#last-auction-bid-price-auction-" + lotId).fadeOut(400, function () {
+        $(this).html(lastAuctionPrice.toFixed(__aux_fixedDigits) + " ").fadeIn(400);
+    });
 
     let __aux_amount = lotParams.auctionPriceType == 1 ? lastAuctionPrice.toFixed(2) : lastAuctionPrice.toFixed(0);
     let __aux_bid_type = lotParams.auctionPriceType == 1 ? "por kilo" : "por bulto";
