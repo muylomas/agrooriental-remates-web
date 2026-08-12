@@ -429,6 +429,10 @@ function insertLotLoop(lots, indSLots, callback) {
             $('#lot-params-height-' + lots[indSLots].lotId).remove();
         }
 
+        if (!__aux_intermediate_lastPrice) {
+            $('#last-auction-bid-price-auction-' + lots[indSLots].lotId).html("---");
+        }
+
         if (!lots[indSLots].lotAuctionStarted) {
             $("#auction-bid-button-x1-" + lots[indSLots].lotId).addClass("d-none");
             $("#auction-bid-button-multiple-" + lots[indSLots].lotId).addClass("d-none");
