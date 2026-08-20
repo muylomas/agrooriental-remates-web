@@ -247,41 +247,28 @@ Common.prototype.getViewParams = function (allback) {
         "",
         function (returnLots, returnLotsIds) {
             indexParams.lots = returnLots;
-
-            common_customers.getCustomerById(
-                user.id,
-                function (returnCustomer) {
-                    indexParams.customer = returnCustomer;
-                    getCustomerActiveBids(
-                        user.id,
-                        function (returnActiveAuctionBids) {
-                            indexParams.activeAuctionBids = returnActiveAuctionBids;
-                            breedsArray(
+            breedsArray(
+                returnLotsIds,
+                indexParams,
+                function (returnIndexParamsBreeds) {
+                    indexParams = returnIndexParamsBreeds;
+                    ageArray(
+                        returnLotsIds,
+                        indexParams,
+                        function (returnIndexParamsAges) {
+                            indexParams = returnIndexParamsAges;
+                            cattleImages(
                                 returnLotsIds,
                                 indexParams,
-                                function (returnIndexParamsBreeds) {
-                                    indexParams = returnIndexParamsBreeds;
-                                    ageArray(
-                                        returnLotsIds,
-                                        indexParams,
-                                        function (returnIndexParamsAges) {
-                                            indexParams = returnIndexParamsAges;
-                                            cattleImages(
-                                                returnLotsIds,
+                                function (returnIndexParamsImages) {
+                                    indexParams = returnIndexParamsImages;
+                                    getCattleTypesAverages(
+                                        function (replyCattleTypesAverages) {
+                                            indexParams.cattleTypesAverages = replyCattleTypesAverages;
+                                            callback(
+                                                'criollosparaganar/remate',
                                                 indexParams,
-                                                function (returnIndexParamsImages) {
-                                                    indexParams = returnIndexParamsImages;
-                                                    getCattleTypesAverages(
-                                                        function (replyCattleTypesAverages) {
-                                                            indexParams.cattleTypesAverages = replyCattleTypesAverages;
-                                                            callback(
-                                                                'criollosparaganar/remate',
-                                                                indexParams,
-                                                                "render"
-                                                            );
-                                                        }
-                                                    );
-                                                }
+                                                "render"
                                             );
                                         }
                                     );
@@ -291,6 +278,7 @@ Common.prototype.getViewParams = function (allback) {
                     );
                 }
             );
+
         }
     );
 };
