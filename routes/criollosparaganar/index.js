@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const common_gral = require('../common_gral');
 const common_auth = require('../common_auth');
 const auctions = require('./auctions');
 
