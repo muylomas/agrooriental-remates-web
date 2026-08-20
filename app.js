@@ -17,6 +17,8 @@ const web_register = require('./routes/auth/register');
 const web_resetPass = require('./routes/change-password');
 const web_logout = require('./routes/logout');
 
+const web_criollosparaganar = require('./routes/criollosparaganar');
+
 // Controlled development
 const web_customers = require('./routes/customers');
 const web_societies = require('./routes/societies');
@@ -154,6 +156,8 @@ app.use('/ingresar', web_login);
 app.use('/registro', web_register);
 app.use('/reset-password', web_resetPass);
 app.use('/logout', web_logout);
+
+app.use('/criollosparaganar', web_criollosparaganar);
 
 //API
 app.use('/api/accounts', api_accounts);

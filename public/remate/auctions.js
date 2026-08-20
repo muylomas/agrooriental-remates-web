@@ -162,7 +162,6 @@ function closeComfirmSwal() {
 };
 
 function auctionBid(lotId, bidPrice) {
-    //if (lotId == 63) {
     const searchedLot = getLotParamsById(lotId);
     const wrapper = document.createElement('div');
     wrapper.innerHTML =
@@ -200,17 +199,7 @@ function auctionBid(lotId, bidPrice) {
         }
     }).then((value) => {
         swal.close();
-    });/*
-    }
-    else {
-        socket.emit(
-            'auctionBidCustomers',
-            {
-                bid: bidPrice,
-                lotId: lotId,
-            }
-        );
-    }*/
+    });
 };
 
 function auctionBidFinal(lotId, bidPrice) {

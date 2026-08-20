@@ -1,0 +1,144 @@
+html
+  head
+  body
+    if(lots.length)
+      #lotes.tab-pane.fade.in.active
+        .row
+          .col-xs-12
+            #lotes.lots.content-with-filter
+              .hideable_tab.lots-heading
+                h2 Lotes Inscriptos
+                .filter-groups.lots-heading-filter-groups
+                  .filter-group-item(data-filter='category')
+                    .dropdown.dropdown-categories.content-filter
+                      button#dropdownMenuCategory.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                        span.dropdown-toggle-inner
+                          span.dropdown-default-value.mr-2
+                            | Categor&iacute;as
+                          span.caret-img
+                            img(src='https://api.clicrural.com/assets/images/down-arrow.png')
+                      ul.dropdown-menu.filter-list(aria-labelledby='dropdownMenuCategory')
+                        li(data-category='all')
+                          a(href='#') Todos
+                        li(data-category='Potra')
+                          a(href='#')
+                            | Potra
+                        li(data-category='Potro')
+                          a(href='#')
+                            | Potro
+                          
+
+              ul.lots-list.results-list.list-unstyled.content-list
+                each lotItem in lots
+                  li.lots-list-item.results-list-item(id="div-item-" + lotItem.lotId, data-title='1', data-lot-id=lotItem.lotId)
+                    .lot-card-item
+                      .lot-card-item-media.view.image-hover-1.no-margin
+                        #ribbon-lote-preofertas-379175.lot-card-item-tag.bg-info
+                          .row
+                            .col-md-12
+                              span#user_status_379175
+                            .col-md-12
+                              span#text-lote-preofertas-379175 A&uacute;n no tiene ofertas
+                              span#text-lote-comprador-preofertas-379175
+                              span#value-lote-preofertas-379175.value-lote-preofertas
+                            .col-md-6
+                          span#span-subtitle-379175.lot-card-timer.fs-xs-80-.span-subtitle-grupo-CPGMelo.animate__animated.animate__slow.animate__bounceIn Finaliza en 2 d&iacute;as 23 horas 
+                        .lot-card-item-number-badge.badge-with-timer
+                          span.label.label-primary
+                            | Lote #{lotItem.lotId}
+                          span.label.label-danger.label-buy-now
+                            | Compralo ahora por 
+                            b U$S #{lotItem.equineName}
+                        .product-container
+                          a.auctions_new_lote_link_changeable.a_image(href='https://equinos.agrooriental.uy/#lote-'+lotItem.lotId, data-href='https://equinos.agrooriental.uy/#lote-'+lotItem.lotId)
+                            img.lte_img.img-responsive.full-width(src=lotItem.imagesArray[0], data-src=lotItem.imagesArray[0])
+                      .lot-card-item-content
+                        h4.lot-card-item-title
+                          | #{lotItem.equineName}
+                        .lot-info
+                          p.lote-rp
+                            b RP
+                            | : #{lotItem.equineRP}
+                          p.lote-categoria
+                            b #{lotItem.type}
+                          p
+                            b Alzada: 
+                            | #{lotItem.equineHeight}
+                          p
+                            b Pelo: 
+                            | #{lotItem.equineHair}
+                          p
+                            b Pelo: 
+                            | #{lotItem.equineHair}
+                          p
+                            b F. Nacimiento: 
+                            | #{lotItem.equineBirth}
+                          p
+                            b Cabaña: 
+                            | #{lotItem.equineCabin}
+
+                        table.table-arbol
+                          tbody
+                            tr
+                              td(rowspan='2')  TRABUCO LA INVERNADA
+                              td  PONCHO E&acute; LANA LA INVERNADA
+                            tr
+                              td  NAZARENA LA INVERNADA
+                            tr
+                              td(rowspan='2')  MENSAJERA DEL CEIBAL
+                              td  CHINCHE LA INVERNADA
+                            tr
+                              td  QUERENDONA CUARTEADOR
+                      .card-footer.card-prefooter.lot-card-item-footer
+                        .lot-card-item-footer-top
+                          .lot-card-item-footer-heading
+                            h5.mt0.text-primary.lot-card-item-footer-title.hidden Ofertas en U$S
+                            p.p-base.hidden Precio base: U$S 120
+                        input#precio-base-379175(type='hidden', value='120')
+                        #fecha-cierre-379175.fecha-cierre-grupo.fecha-cierre-grupo--CPGMelo
+                          .fecha-cierre-grupo__icon
+                          .fecha-cierre-grupo__content
+                            span.fecha-cierre-grupo__fecha
+                              b Fecha de cierre:
+                              |  
+                              span.fecha-cierre-grupo__fecha-value 22 de Agosto de 2026 a las 17:00hs.
+                        .row.m0.form-inputs
+                          .col-xs-12
+                            input#moneda-puja-379175(value='U$S', type='hidden')
+                            #alert-puja-379175
+                          .col-xs-12.mp0
+                            .bg-white.input-ofertas.hidden
+                              .rural-form-control-price-wrapper.with-custom-input
+                                .rural-custom-input-step
+                                  label(for='input-oferta-379175') Su oferta: (18 cuotas)
+                                  button.btn-number.rural-custom-input-step-minus(type='button', data-type='minus')
+                                    span &minus;
+                                  .rural-custom-input-step-value(data-value='120', data-currency='U$S')
+                                    input#input-oferta-379175.form-control.input-text.qty.text(type='text', disabled='', value='120', data-initial-value='120', data-precio-inicial='120', data-moneda='U$S', data-step='10.00', step='10.00', data-prev-oferta='0', oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');", autocomplete='off')
+                                  button.btn-number.rural-custom-input-step-plus(type='button', data-type='plus')
+                                    span +
+                          .col-xs-12.hidden.mp0
+                            #form-programada-379175.bg-white.panel-pujas-programadas.panel-ofertas.form-programada.hidden(data-enabled='0', data-mdr='1', data-toggle='tooltip', data-placement='top', title='', data-original-title='La información de esta puja está encriptada, es confidencial y anónima, no será accesible para el rematador en ningún momento de la subasta')
+                              button.btn.btn-toggle-programada(type='button', data-toggle='collapse', data-target='#form-programada-collapse-379175', aria-expanded='false', aria-controls='form-programada-collapse-379175')
+                                i.fa.fa-lock(aria-hidden='true')
+                                |  Programar puja hasta: 
+                                i.fa.fa-chevron-right
+                              #form-programada-collapse-379175.collapse
+                                label.form-programada-title.sr-only(for='input-oferta-programada-379175') Programar puja hasta: 
+                                .custom-input-programada
+                                  input#input-oferta-programada-379175.form-control.form-control-programada.form-control-programada-range(tabindex='-1', aria-label='Puja programada', value='', type='text')
+                                #form-control-price-programada-379175.form-control-price-programada
+                                  .form-control-price-programada-input
+                                    label.form-control-label.sr-only(for='input-range-programada-379175') Aumentar puja programada
+                                    .form-programada-range-wrapper
+                                      #input-range-programada-min-379175.form-programada-range-value
+                                        | 140
+                                      input#input-range-programada-379175(type='range', min='140', max='320', value='140', step='10.00', data-lot-id='379175')
+                                      #input-range-programada-max-379175.form-programada-range-value
+                                        | 320
+                          .col-xs-12.mp0
+                            a.full-width.btn-block.btn.btn-default.text-uppercase.text-center.btn-programa-puja-login(data-toggle='modal', data-target='#modal-login', href='#') Iniciar sesi&oacute;n para ofertar
+                            a#section-oferta-btn-379175.hidden.full-width.btn-block.btn.btn-default.text-uppercase.text-center.btn-grupo-CPGMelo.btn-programa-puja.btn-programa-puja-379175(class='btn-programa-puja-U$S', onclick='ofertarPorLoteModal(379175)') Enviar oferta
+                      .lot-card-item-link
+                        a.auctions_new_lote_link_changeable.btn.btn-primary(href='https://criollosparaganar.com/remate/lote/379175', data-href='https://www.clicrural.com.uy/remate/lote/379175') M&aacute;s info
+                
