@@ -266,6 +266,16 @@ html
                               li.lots-list-item.results-list-item(id="div-item-" + lotItem.lotId, data-title='1', data-lot-id=lotItem.lotId)
                                 .lot-card-item
                                   .lot-card-item-media.view.image-hover-1.no-margin
+                                    #ribbon-lote-preofertas-379224.lot-card-item-tag.status-success.bg-success
+                                      .row
+                                        .col-md-12
+                                          span#user_status_379224
+                                        .col-md-12
+                                          span#text-lote-preofertas-379224(data-user-bid='false') Pre-oferta
+                                          span#text-lote-comprador-preofertas-379224
+                                          span#value-lote-preofertas-379224.value-lote-preofertas por U$S 100
+                                        .col-md-6
+                                    span#span-subtitle-379224.lot-card-timer.fs-xs-80-.span-subtitle-grupo-CPGSalto.animate__animated.animate__slow.animate__bounceIn Finaliza en 9 d&iacute;as 17 horas 
                                     #ribbon-lote-preofertas-379175.lot-card-item-tag.bg-info
                                       .row
                                         .col-md-12
@@ -364,10 +374,7 @@ html
                                                   #input-range-programada-max-379175.form-programada-range-value
                                                     | 320
                                       .col-xs-12.mp0
-                                        a.full-width.btn-block.btn.btn-default.text-uppercase.text-center.btn-programa-puja-login(data-toggle='modal', data-target='#modal-login', href='#') Iniciar sesi&oacute;n para ofertar
-                                        a#section-oferta-btn-379175.hidden.full-width.btn-block.btn.btn-default.text-uppercase.text-center.btn-grupo-CPGMelo.btn-programa-puja.btn-programa-puja-379175(class='btn-programa-puja-U$S', onclick='ofertarPorLoteModal(379175)') Enviar oferta
-                                  .lot-card-item-link
-                                    a.auctions_new_lote_link_changeable.btn.btn-primary(href='https://criollosparaganar.com/remate/lote/379175', data-href='https://www.clicrural.com.uy/remate/lote/379175') M&aacute;s info
+                                        a#section-oferta-btn-379175.full-width.btn-block.btn.btn-default.text-uppercase.text-center.btn-grupo-CPGMelo.btn-programa-puja.btn-programa-puja-379175(class='btn-programa-puja-U$S', href="https://equinos.agrooreintal.uy/#lote-" + lotItem.lotId, target="_blank") Enviar oferta
 
     script(type='text/javascript').
       var lang = 'es';
