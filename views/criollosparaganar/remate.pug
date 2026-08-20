@@ -234,14 +234,14 @@ html
                                   .lot-card-item-media.view.image-hover-1.no-margin
                                     if("lastPrice" in lotItem && lotItem.lastPrice && lotItem.auctionBidcustomerId)
                                       .lot-card-item-tag.status-success.bg-success
-                                        a.row.text-dark(href='https://equinos.agrooriental.uy/#lote-'+lotItem.subId, target="_blank")
+                                        a.row.text-dark(href='https://equinos.agrooriental.uy/#lote-'+lotItem.subId, target="_blank", style="color:black;")
                                           .col-md-12
                                             span(data-user-bid='false') Pre-oferta 
                                             span.value-lote-preofertas por U$S #{lotItem.lastPrice}
                                           .col-md-6
                                     else
                                       .lot-card-item-tag.bg-info
-                                        a.row.text-dark(href='https://equinos.agrooriental.uy/#lote-'+lotItem.subId, target="_blank")
+                                        a.row.text-dark(href='https://equinos.agrooriental.uy/#lote-'+lotItem.subId, target="_blank", style="color:black;")
                                           .col-md-12
                                             span A&uacute;n no tiene ofertas
                                           .col-md-6
