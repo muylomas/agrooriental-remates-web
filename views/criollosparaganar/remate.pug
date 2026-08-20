@@ -288,9 +288,9 @@ html
                                         span#span-subtitle-379175.lot-card-timer.fs-xs-80-.span-subtitle-grupo-CPGMelo.animate__animated.animate__slow.animate__bounceIn Finaliza en 2 d&iacute;as 23 horas 
                                     .lot-card-item-number-badge.badge-with-timer
                                       span.label.label-primary
-                                        | Lote #{lotItem.lotId}
+                                        | Lote #{lotItem.subId}
                                     .product-container
-                                      a.auctions_new_lote_link_changeable.a_image(href='https://equinos.agrooriental.uy/#lote-'+lotItem.lotId, target="_blank")
+                                      a.auctions_new_lote_link_changeable.a_image(href='https://equinos.agrooriental.uy/#lote-'+lotItem.subId, target="_blank")
                                         img.lte_img.img-responsive.full-width(src=lotItem.imagesArray[0], data-src=lotItem.imagesArray[0])
                                   .lot-card-item-content
                                     h4.lot-card-item-title
@@ -340,7 +340,7 @@ html
                                           span.fecha-cierre-grupo__fecha-value 2 de Agosto de 2026 a las 18:00hs.
                                     .row.m0.form-inputs
                                       .col-xs-12.mp0
-                                        a#section-oferta-btn-379175.full-width.btn-block.btn.btn-default.text-uppercase.text-center.btn-grupo-CPGMelo.btn-programa-puja.btn-programa-puja-379175(class='btn-programa-puja-U$S', href="https://equinos.agrooriental.uy/#lote-" + lotItem.lotId, target="_blank") Enviar oferta
+                                        a#section-oferta-btn-379175.full-width.btn-block.btn.btn-default.text-uppercase.text-center.btn-grupo-CPGMelo.btn-programa-puja.btn-programa-puja-379175(class='btn-programa-puja-U$S', href="https://equinos.agrooriental.uy/#lote-" + lotItem.subId, target="_blank") Enviar oferta
 
     script(type='text/javascript').
       var lang = 'es';
