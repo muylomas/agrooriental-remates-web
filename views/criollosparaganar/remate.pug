@@ -235,22 +235,6 @@ html
       .container
         if(lots.length)
           #auction-show-30574.auction-show.auction-show--type-one
-            ul.nav.nav-pills.nav-pills-shop.mt20
-              li.nav-pill-info
-                a.scrollable_inline(data-toggle='pill', data-target='#info')
-                  i.fa.fa-fw.fa-info
-                  |  Informaci&oacute;n
-              li.nav-pill-livestock.active
-                a.scrollable_inline(data-toggle='pill', data-target='#lotes')
-                  i.fa.fa-fw.fa-list
-                  |  Lotes
-              li.nav-pill-catalogue
-                a.scrollable_inline(data-toggle='pill', data-target='#catalogo')
-                  i.fa.fa-fw.fa-file-pdf-o
-                  |  Cat&aacute;logo
-              li.nav-pill-catalogue-download
-                a.nav_pills_dct_uy(href='https://ftp.rural-server.com/remates/catalogos/QmCt9UZKt3QpDlxX.pdf', download='')
-                  i.fa.fa-fw.fa-download
             .panel.with-nav-tabs.panel-default
               .panel-body
                 .row.tab-content(style='margin-right: 0px; margin-left: 0px; ')
@@ -267,7 +251,7 @@ html
                                 .lot-card-item
                                   .lot-card-item-media.view.image-hover-1.no-margin
                                     if("lastPrice" in lotItem && lotItem.lastPrice && lotItem.auctionBidcustomerId)
-                                      #ribbon-lote-preofertas-379224.lot-card-item-tag.status-success.bg-success
+                                      a#ribbon-lote-preofertas-379224.lot-card-item-tag.status-success.bg-success(href='https://equinos.agrooriental.uy/#lote-'+lotItem.subId, target="_blank")
                                         .row
                                           .col-md-12
                                             span#user_status_379224
@@ -275,9 +259,8 @@ html
                                             span#text-lote-preofertas-379224(data-user-bid='false') Pre-oferta 
                                             span#value-lote-preofertas-379224.value-lote-preofertas por U$S #{lotItem.lastPrice}
                                           .col-md-6
-                                        span#span-subtitle-379224.lot-card-timer.fs-xs-80-.span-subtitle-grupo-CPGSalto.animate__animated.animate__slow.animate__bounceIn Finaliza en 9 d&iacute;as 17 horas 
                                     else
-                                      #ribbon-lote-preofertas-379175.lot-card-item-tag.bg-info
+                                      a#ribbon-lote-preofertas-379175.lot-card-item-tag.bg-info(href='https://equinos.agrooriental.uy/#lote-'+lotItem.subId, target="_blank")
                                         .row
                                           .col-md-12
                                             span#user_status_379175
@@ -285,7 +268,6 @@ html
                                             span#text-lote-preofertas-379175 A&uacute;n no tiene ofertas
                                             span#value-lote-preofertas-379175.value-lote-preofertas
                                           .col-md-6
-                                        span#span-subtitle-379175.lot-card-timer.fs-xs-80-.span-subtitle-grupo-CPGMelo.animate__animated.animate__slow.animate__bounceIn Finaliza en 2 d&iacute;as 23 horas 
                                     .lot-card-item-number-badge.badge-with-timer
                                       span.label.label-primary
                                         | Lote #{lotItem.subId}
