@@ -253,132 +253,9 @@ html
               li.nav-pill-catalogue-download
                 a.nav_pills_dct_uy(href='https://ftp.rural-server.com/remates/catalogos/QmCt9UZKt3QpDlxX.pdf', download='')
                   i.fa.fa-fw.fa-download
-              // if (!empty($remate['r_contacto'])) { ?>
-              // <li class="nav-pill-contact"><a class="scrollable_inline nav_pills_cnt_
-              // " data-toggle="pill" data-target="#contact"><i class="fa fa-fw fa-envelope-o"></i> </a></li>
-              // }
-              li.hidden.nav-pill-map
-                a.scrollable_inline(data-toggle='pill', data-target='#map', onclick='re_initialize_map()')
-                  i.fa.fa-fw.fa-map-marker
-                  |  Mapa
             .panel.with-nav-tabs.panel-default
               .panel-body
                 .row.tab-content(style='margin-right: 0px; margin-left: 0px; ')
-                  // -------- INFO --------
-                  #info.tab-pane.fade
-                    .hideable_tab.heading.mb20.hidden
-                      h2.nav_pills_info_uy
-                    .row
-                      .col-md-4(align='center')
-                        img.img.img-responsive(data-toggle='modal', data-target='#modal-portada', src='https://multimedia.rural.com.uy/images/img-404.jpg', data-src='https://ftp.rural-server.com/remates/images/HSAwsTzBBcJRYCGQ.png', style='padding: 0px; cursor: pointer;')
-                        #modal-portada.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
-                          .modal-dialog(style='min-width: 70%;')
-                            .modal-content
-                              .modal-header
-                                button.close(type='button', data-dismiss='modal', aria-label='Close')
-                                  span(aria-hidden='true') &times;
-                              .modal-body
-                                img.img-responsive.img-related(src='https://ftp.rural-server.com/remates/images/HSAwsTzBBcJRYCGQ.png')
-                        p
-                          em.em_change_hmeimg_size_uy
-                        hr
-                        .box.well
-                          .profile-usertitle-title.text-center COMPART&Iacute; ESTE REMATE
-                          #st-1.sharethis-inline-share-buttons.st-center.st-inline-share-buttons.st-animated
-                            .st-total
-                              span.st-label 163
-                              span.st-shares
-                                | Shares
-                            .st-btn.st-first.st-remove-label(data-network='facebook', style='display: none;')
-                              img(alt='facebook sharing button', src='https://platform-cdn.sharethis.com/img/facebook.svg')
-                            .st-btn.st-remove-label(data-network='twitter', style='display: none;')
-                              img(alt='twitter sharing button', src='https://platform-cdn.sharethis.com/img/twitter.svg')
-                            .st-btn.st-remove-label(data-network='whatsapp', style='display: none;')
-                              img(alt='whatsapp sharing button', src='https://platform-cdn.sharethis.com/img/whatsapp.svg')
-                            .st-btn.st-last.st-remove-label(data-network='email', style='display: none;')
-                              img(alt='email sharing button', src='https://platform-cdn.sharethis.com/img/email.svg')
-                          script(type='text/javascript', src='//platform-api.sharethis.com/js/sharethis.js#property=5aa5c3152c87d4001337dae1&product=inline-share-buttons', async='async')
-                      .col-md-8
-                        .tab-pane-info-inner
-                          .showable_tab.page-header(style='margin-top:0px;')
-                            h2.nav_pills_info_uy
-                          .row
-                            .col-sm-12
-                              .panel-information
-                                .panel-information-item.panel-information-item-nombre
-                                  .panel-information-item-heading
-                                    .panel-information-item-icon-wrapper
-                                      svg.panel-information-item-icon
-                                        use(xlink:href='#mdi-gavel')
-                                    h3.panel-information-item-title.tbl_name_uy
-                                  .panel-information-item-content
-                                    p
-                                      | 7&ordm; Edici&oacute;n - Criollos para ganar
-                                .panel-information-item.panel-information-item-fecha
-                                  .panel-information-item-heading
-                                    .panel-information-item-icon-wrapper
-                                      svg.panel-information-item-icon
-                                        use(xlink:href='#mdi-calendar')
-                                    h3.panel-information-item-title.tbl_date_uy
-                                  .panel-information-item-content
-                                    p
-                                      | 29 de Agosto de 2026
-                                .panel-information-item.panel-information-item-hora
-                                  .panel-information-item-heading
-                                    .panel-information-item-icon-wrapper
-                                      svg.panel-information-item-icon
-                                        use(xlink:href='#mdi-clock-outline')
-                                    h3.panel-information-item-title.tbl_hora_uy
-                                  .panel-information-item-content
-                                    p
-                                      | 16:00
-                                .panel-information-item.panel-information-item-ubicacion
-                                  .panel-information-item-heading
-                                    .panel-information-item-icon-wrapper
-                                      svg.panel-information-item-icon
-                                        use(xlink:href='#mdi-location-radius')
-                                    h3.panel-information-item-title.tbl_ubi_uy
-                                  .panel-information-item-content
-                                    p
-                                      | Asociaci&oacute;n Agropecuaria de Salto, Salto, Uruguay
-                                .panel-information-item.panel-information-item-organiza
-                                  .panel-information-item-heading
-                                    .panel-information-item-icon-wrapper
-                                      svg.panel-information-item-icon
-                                        use(xlink:href='#mdi-account-group')
-                                    h3.panel-information-item-title.tbl_org_uy
-                                  .panel-information-item-content
-                                    p
-                                      | Gaston Araujo - Indarte y Cia
-                                .panel-information-item.panel-information-item-financia
-                                  .panel-information-item-heading
-                                    .panel-information-item-icon-wrapper
-                                      svg.panel-information-item-icon
-                                        use(xlink:href='#mdi-invoice-dollar')
-                                    h3.panel-information-item-title.tbl_fin_uy
-                                  .panel-information-item-content
-                                    p
-                                      | Financiaci&oacute;n Propia
-                                .panel-information-item.panel-information-item-empresas
-                                  .panel-information-item-heading
-                                    .panel-information-item-icon-wrapper
-                                      svg.panel-information-item-icon
-                                        use(xlink:href='#mdi-envelope-outline')
-                                    h3.panel-information-item-title.tbl_email_uy
-                                  .panel-information-item-content
-                                    p
-                                      a(href='mailto:criollosparaganar@gmail.com') criollosparaganar@gmail.com
-                                      br
-                                .panel-information-item.panel-information-item-actualizado
-                                  .panel-information-item-heading
-                                    .panel-information-item-icon-wrapper
-                                      svg.panel-information-item-icon
-                                        use(xlink:href='#mdi-update-rounded')
-                                    h3.panel-information-item-title.tbl_lup_uy
-                                  .panel-information-item-content
-                                    p
-                                      | 2026-04-14 11:28:18
-                  // -------- END INFO --------
                   // -------- LOTES --------
                   #lotes.tab-pane.fade.in.active
                     .row
@@ -386,26 +263,7 @@ html
                         #lotes.lots.content-with-filter
                           .hideable_tab.lots-heading
                             h2 Lotes Inscriptos
-                            .filter-groups.lots-heading-filter-groups
-                              .filter-group-item(data-filter='category')
-                                .dropdown.dropdown-categories.content-filter
-                                  button#dropdownMenuCategory.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
-                                    span.dropdown-toggle-inner
-                                      span.dropdown-default-value.mr-2
-                                        | Categor&iacute;as
-                                      span.caret-img
-                                        img(src='https://api.clicrural.com/assets/images/down-arrow.png')
-                                  ul.dropdown-menu.filter-list(aria-labelledby='dropdownMenuCategory')
-                                    li(data-category='all')
-                                      a(href='#') Todos
-                                    li(data-category='Potra')
-                                      a(href='#')
-                                        | Potra
-                                    li(data-category='Potro')
-                                      a(href='#')
-                                        | Potro
-                                      
-
+                            
                           ul.lots-list.results-list.list-unstyled.content-list
                             each lotItem in lots
                               li.lots-list-item.results-list-item(id="div-item-" + lotItem.lotId, data-title='1', data-lot-id=lotItem.lotId)
@@ -424,9 +282,6 @@ html
                                     .lot-card-item-number-badge.badge-with-timer
                                       span.label.label-primary
                                         | Lote #{lotItem.lotId}
-                                      span.label.label-danger.label-buy-now
-                                        | Compralo ahora por 
-                                        b U$S #{lotItem.equineName}
                                     .product-container
                                       a.auctions_new_lote_link_changeable.a_image(href='https://equinos.agrooriental.uy/#lote-'+lotItem.lotId, data-href='https://equinos.agrooriental.uy/#lote-'+lotItem.lotId)
                                         img.lte_img.img-responsive.full-width(src=lotItem.imagesArray[0], data-src=lotItem.imagesArray[0])
