@@ -266,31 +266,31 @@ html
                               li.lots-list-item.results-list-item(id="div-item-" + lotItem.lotId, data-title='1', data-lot-id=lotItem.lotId)
                                 .lot-card-item
                                   .lot-card-item-media.view.image-hover-1.no-margin
-                                    #ribbon-lote-preofertas-379224.lot-card-item-tag.status-success.bg-success
-                                      .row
-                                        .col-md-12
-                                          span#user_status_379224
-                                        .col-md-12
-                                          span#text-lote-preofertas-379224(data-user-bid='false') Pre-oferta
-                                          span#text-lote-comprador-preofertas-379224
-                                          span#value-lote-preofertas-379224.value-lote-preofertas por U$S 100
-                                        .col-md-6
-                                    span#span-subtitle-379224.lot-card-timer.fs-xs-80-.span-subtitle-grupo-CPGSalto.animate__animated.animate__slow.animate__bounceIn Finaliza en 9 d&iacute;as 17 horas 
-                                    #ribbon-lote-preofertas-379175.lot-card-item-tag.bg-info
-                                      .row
-                                        .col-md-12
-                                          span#user_status_379175
-                                        .col-md-12
-                                          span#text-lote-preofertas-379175 A&uacute;n no tiene ofertas
-                                          span#text-lote-comprador-preofertas-379175
-                                          span#value-lote-preofertas-379175.value-lote-preofertas
-                                        .col-md-6
-                                      span#span-subtitle-379175.lot-card-timer.fs-xs-80-.span-subtitle-grupo-CPGMelo.animate__animated.animate__slow.animate__bounceIn Finaliza en 2 d&iacute;as 23 horas 
+                                    if("lastPrice" in lotItem && lotItem.lastPrice)
+                                      #ribbon-lote-preofertas-379224.lot-card-item-tag.status-success.bg-success
+                                        .row
+                                          .col-md-12
+                                            span#user_status_379224
+                                          .col-md-12
+                                            span#text-lote-preofertas-379224(data-user-bid='false') Pre-oferta
+                                            span#value-lote-preofertas-379224.value-lote-preofertas por U$S #{lotItem.lastPrice}
+                                          .col-md-6
+                                        span#span-subtitle-379224.lot-card-timer.fs-xs-80-.span-subtitle-grupo-CPGSalto.animate__animated.animate__slow.animate__bounceIn Finaliza en 9 d&iacute;as 17 horas 
+                                    else
+                                      #ribbon-lote-preofertas-379175.lot-card-item-tag.bg-info
+                                        .row
+                                          .col-md-12
+                                            span#user_status_379175
+                                          .col-md-12
+                                            span#text-lote-preofertas-379175 A&uacute;n no tiene ofertas
+                                            span#value-lote-preofertas-379175.value-lote-preofertas
+                                          .col-md-6
+                                        span#span-subtitle-379175.lot-card-timer.fs-xs-80-.span-subtitle-grupo-CPGMelo.animate__animated.animate__slow.animate__bounceIn Finaliza en 2 d&iacute;as 23 horas 
                                     .lot-card-item-number-badge.badge-with-timer
                                       span.label.label-primary
                                         | Lote #{lotItem.lotId}
                                     .product-container
-                                      a.auctions_new_lote_link_changeable.a_image(href='https://equinos.agrooriental.uy/#lote-'+lotItem.lotId, data-href='https://equinos.agrooriental.uy/#lote-'+lotItem.lotId)
+                                      a.auctions_new_lote_link_changeable.a_image(href='https://equinos.agrooriental.uy/#lote-'+lotItem.lotId, target="_blank")
                                         img.lte_img.img-responsive.full-width(src=lotItem.imagesArray[0], data-src=lotItem.imagesArray[0])
                                   .lot-card-item-content
                                     h4.lot-card-item-title
@@ -374,7 +374,7 @@ html
                                                   #input-range-programada-max-379175.form-programada-range-value
                                                     | 320
                                       .col-xs-12.mp0
-                                        a#section-oferta-btn-379175.full-width.btn-block.btn.btn-default.text-uppercase.text-center.btn-grupo-CPGMelo.btn-programa-puja.btn-programa-puja-379175(class='btn-programa-puja-U$S', href="https://equinos.agrooreintal.uy/#lote-" + lotItem.lotId, target="_blank") Enviar oferta
+                                        a#section-oferta-btn-379175.full-width.btn-block.btn.btn-default.text-uppercase.text-center.btn-grupo-CPGMelo.btn-programa-puja.btn-programa-puja-379175(class='btn-programa-puja-U$S', href="https://equinos.agrooriental.uy/#lote-" + lotItem.lotId, target="_blank") Enviar oferta
 
     script(type='text/javascript').
       var lang = 'es';
