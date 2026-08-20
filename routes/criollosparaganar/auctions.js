@@ -292,10 +292,6 @@ Common.prototype.getViewParams = function (allback) {
                 }
             );
         }
-
-    );
-});
-        }
     );
 };
 
