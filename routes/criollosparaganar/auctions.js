@@ -236,75 +236,65 @@ function getCustomerActiveBids(customerId, callback) {
 
 function Common() { }
 
-Common.prototype.getViewParams = function (user, callback) {
-    common_cattle.getViewParamsTemplate(
-        user,
-        function (returnIndexParams) {
-            let indexParams = returnIndexParams;
+Common.prototype.getViewParams = function (allback) {
+    let indexParams = {}
+    common_cattle_home.getLots(
+        0,
+        [],
+        [],
+        [],
+        "",
+        "",
+        function (returnLots, returnLotsIds) {
+            indexParams.lots = returnLots;
 
-            common_auctions.activeAuctions(function (returnAcutions) {
-                indexParams.auctions = returnAcutions;
+            common_customers.getCustomerById(
+                user.id,
+                function (returnCustomer) {
+                    indexParams.customer = returnCustomer;
+                    getCustomerActiveBids(
+                        user.id,
+                        function (returnActiveAuctionBids) {
+                            indexParams.activeAuctionBids = returnActiveAuctionBids;
+                            breedsArray(
+                                returnLotsIds,
+                                indexParams,
+                                function (returnIndexParamsBreeds) {
+                                    indexParams = returnIndexParamsBreeds;
+                                    ageArray(
+                                        returnLotsIds,
+                                        indexParams,
+                                        function (returnIndexParamsAges) {
+                                            indexParams = returnIndexParamsAges;
+                                            cattleImages(
+                                                returnLotsIds,
+                                                indexParams,
+                                                function (returnIndexParamsImages) {
+                                                    indexParams = returnIndexParamsImages;
+                                                    getCattleTypesAverages(
+                                                        function (replyCattleTypesAverages) {
+                                                            indexParams.cattleTypesAverages = replyCattleTypesAverages;
+                                                            callback(
+                                                                'criollosparaganar/remate',
+                                                                indexParams,
+                                                                "render"
+                                                            );
+                                                        }
+                                                    );
+                                                }
+                                            );
+                                        }
+                                    );
+                                }
+                            );
+                        }
+                    );
+                }
+            );
+        }
 
-                common_cattle_home.getLots(
-                    user.id,
-                    [],
-                    [],
-                    [],
-                    "",
-                    "",
-                    function (returnLots, returnLotsIds) {
-                        indexParams.lotsIds = returnLotsIds;
-                        indexParams.lots = returnLots;
-                        indexParams.activeAuctionBids = [];
-                        indexParams.cattleCaracteristics = common_cattle_home.cattleCaracteristics();
-
-                        common_customers.getCustomerById(
-                            user.id,
-                            function (returnCustomer) {
-                                indexParams.customer = returnCustomer;
-                                getCustomerActiveBids(
-                                    user.id,
-                                    function (returnActiveAuctionBids) {
-                                        indexParams.activeAuctionBids = returnActiveAuctionBids;
-                                        breedsArray(
-                                            indexParams.lotsIds,
-                                            indexParams,
-                                            function (returnIndexParamsBreeds) {
-                                                indexParams = returnIndexParamsBreeds;
-                                                ageArray(
-                                                    indexParams.lotsIds,
-                                                    indexParams,
-                                                    function (returnIndexParamsAges) {
-                                                        indexParams = returnIndexParamsAges;
-                                                        cattleImages(
-                                                            indexParams.lotsIds,
-                                                            indexParams,
-                                                            function (returnIndexParamsImages) {
-                                                                indexParams = returnIndexParamsImages;
-                                                                getCattleTypesAverages(
-                                                                    function (replyCattleTypesAverages) {
-                                                                        indexParams.cattleTypesAverages = replyCattleTypesAverages;
-                                                                        callback(
-                                                                            'cattle/remate',
-                                                                            indexParams,
-                                                                            "render"
-                                                                        );
-                                                                    }
-                                                                );
-                                                            }
-                                                        );
-                                                    }
-                                                );
-                                            }
-                                        );
-                                    }
-                                );
-                            }
-                        );
-                    }
-
-                );
-            });
+    );
+});
         }
     );
 };

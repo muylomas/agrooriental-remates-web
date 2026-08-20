@@ -5,7 +5,6 @@ const auctions = require('./auctions');
 router.get('/:auctionId', function (req, res, next) {
     common_auth.basic(req.sessionID, function (reply) {
         auctions.getViewParams(
-            reply.user,
             function (viewURLDir, indexParams, type) {
                 if (type == "redirect") {
                     res.redirect(viewURLDir);
