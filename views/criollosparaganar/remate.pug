@@ -266,7 +266,7 @@ html
                               li.lots-list-item.results-list-item(id="div-item-" + lotItem.lotId, data-title='1', data-lot-id=lotItem.lotId)
                                 .lot-card-item
                                   .lot-card-item-media.view.image-hover-1.no-margin
-                                    if("lastPrice" in lotItem && lotItem.lastPrice)
+                                    if("lastPrice" in lotItem && lotItem.lastPrice && lotItem.auctionBidcustomerId)
                                       #ribbon-lote-preofertas-379224.lot-card-item-tag.status-success.bg-success
                                         .row
                                           .col-md-12
