@@ -4,7 +4,7 @@ const common_gral = require('../common_gral');
 const common_auth = require('../common_auth');
 const auctions = require('./auctions');
 
-router.get('/', function (req, res, next) {
+router.get('/:searchTerm', function (req, res, next) {
     common_auth.basic(req.sessionID, function (reply) {
         auctions.getViewParams(
             function (viewURLDir, indexParams, type) {
