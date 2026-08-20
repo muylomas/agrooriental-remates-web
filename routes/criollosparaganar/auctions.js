@@ -236,7 +236,7 @@ function getCustomerActiveBids(customerId, callback) {
 
 function Common() { }
 
-Common.prototype.getViewParams = function (allback) {
+Common.prototype.getViewParams = function (callback) {
     let indexParams = {}
     common_cattle_home.getLots(
         0,
