@@ -255,8 +255,6 @@ html
                                       .lot-card-item-tag.status-success.bg-success
                                         a.row.text-dark(href='https://equinos.agrooriental.uy/#lote-'+lotItem.subId, target="_blank")
                                           .col-md-12
-                                            span#user_status_379224
-                                          .col-md-12
                                             span#text-lote-preofertas-379224(data-user-bid='false') Pre-oferta 
                                             span#value-lote-preofertas-379224.value-lote-preofertas por U$S #{lotItem.lastPrice}
                                           .col-md-6
@@ -264,10 +262,7 @@ html
                                       .lot-card-item-tag.bg-info
                                         a.row.text-dark(href='https://equinos.agrooriental.uy/#lote-'+lotItem.subId, target="_blank")
                                           .col-md-12
-                                            span#user_status_379175
-                                          .col-md-12
                                             span#text-lote-preofertas-379175 A&uacute;n no tiene ofertas
-                                            span#value-lote-preofertas-379175.value-lote-preofertas
                                           .col-md-6
                                     .lot-card-item-number-badge.badge-with-timer
                                       span.label.label-primary
@@ -301,8 +296,7 @@ html
                                     .lot-card-item-footer-top
                                       .lot-card-item-footer-heading
                                         h5.mt0.text-primary.lot-card-item-footer-title Ofertas en U$S #{lotItem.lastPrice}
-                                    .fecha-cierre-grupo.fecha-cierre-grupo--CPGMelo
-                                      .fecha-cierre-grupo__icon
+                                    .fecha-cierre-grupo
                                       .fecha-cierre-grupo__content
                                         span.fecha-cierre-grupo__fecha
                                           b Fecha de cierre:
@@ -318,7 +312,6 @@ html
       var apiUrl = 'https://www.api.clicrural.com/api';
       var api_url = 'https://www.api.clicrural.com/api/';
       var company_key = '1262';
-    // Rural JS
     script(src='https://api.clicrural.com//assets/js/ajax.titles.js')
     script(src='https://api.clicrural.com//assets/js/_custom/rural-common.js?v=28')
     script(src='https://api.clicrural.com//assets/js/magnific.popup.js')
