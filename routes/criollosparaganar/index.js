@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const common_auth = require('../common_auth');
 const auctions = require('./auctions');
+
 router.get('/', function (req, res, next) {
     console.log("criollosparaganar 1");
     common_auth.basic(req.sessionID, function (reply) {

@@ -81,6 +81,7 @@ exports.authProcc = function (req, res, next) {
             "/ganado/lote/publicacion/",
             "/.well-known/acme-challenge",
             "/api/cattle/lot/auction/bids",
+            "/criollosparaganar"
           ];
 
           let exclude_urls_status = false;
