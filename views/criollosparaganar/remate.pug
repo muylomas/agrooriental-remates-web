@@ -234,7 +234,7 @@ html
     .wrappper.mt-0
       .container
         if(lots.length)
-          #auction-show-30574.auction-show.auction-show--type-one
+          .auction-show.auction-show--type-one
             .panel.with-nav-tabs.panel-default
               .panel-body
                 .row.tab-content(style='margin-right: 0px; margin-left: 0px; ')
@@ -244,6 +244,8 @@ html
                         #lotes.lots.content-with-filter
                           .hideable_tab.lots-heading
                             h2 Lotes Inscriptos
+                            .filter-groups.lots-heading-filter-groups
+                              a.full-width.btn-block.btn.btn-default.text-uppercase.text-center(class='btn-programa-puja-U$S', href="https://equinos.agrooriental.uy/#lote-" + lotItem.subId, target="_blank") Ofertar
                             
                           ul.lots-list.results-list.list-unstyled.content-list
                             each lotItem in lots
@@ -251,7 +253,7 @@ html
                                 .lot-card-item
                                   .lot-card-item-media.view.image-hover-1.no-margin
                                     if("lastPrice" in lotItem && lotItem.lastPrice && lotItem.auctionBidcustomerId)
-                                      #ribbon-lote-preofertas-379224.lot-card-item-tag.status-success.bg-success
+                                      .lot-card-item-tag.status-success.bg-success
                                         a.row(href='https://equinos.agrooriental.uy/#lote-'+lotItem.subId, target="_blank")
                                           .col-md-12
                                             span#user_status_379224
@@ -260,7 +262,7 @@ html
                                             span#value-lote-preofertas-379224.value-lote-preofertas por U$S #{lotItem.lastPrice}
                                           .col-md-6
                                     else
-                                      #ribbon-lote-preofertas-379175.lot-card-item-tag.bg-info
+                                      .lot-card-item-tag.bg-info
                                         a.row(href='https://equinos.agrooriental.uy/#lote-'+lotItem.subId, target="_blank")
                                           .col-md-12
                                             span#user_status_379175
@@ -300,8 +302,7 @@ html
                                     .lot-card-item-footer-top
                                       .lot-card-item-footer-heading
                                         h5.mt0.text-primary.lot-card-item-footer-title Ofertas en U$S #{lotItem.lastPrice}
-                                    input#precio-base-379175(type='hidden', value='120')
-                                    #fecha-cierre-379175.fecha-cierre-grupo.fecha-cierre-grupo--CPGMelo
+                                    .fecha-cierre-grupo.fecha-cierre-grupo--CPGMelo
                                       .fecha-cierre-grupo__icon
                                       .fecha-cierre-grupo__content
                                         span.fecha-cierre-grupo__fecha
@@ -310,7 +311,7 @@ html
                                           span.fecha-cierre-grupo__fecha-value 2 de Agosto de 2026 a las 18:00hs.
                                     .row.m0.form-inputs
                                       .col-xs-12.mp0
-                                        a#section-oferta-btn-379175.full-width.btn-block.btn.btn-default.text-uppercase.text-center.btn-grupo-CPGMelo.btn-programa-puja.btn-programa-puja-379175(class='btn-programa-puja-U$S', href="https://equinos.agrooriental.uy/#lote-" + lotItem.subId, target="_blank") Ofertar
+                                        a#.full-width.btn-block.btn.btn-default.text-uppercase.text-center.btn-grupo-CPGMelo.btn-programa-puja.btn-programa-puja-379175(class='btn-programa-puja-U$S', href="https://equinos.agrooriental.uy/#lote-" + lotItem.subId, target="_blank") Ofertar
 
     script(type='text/javascript').
       var lang = 'es';
