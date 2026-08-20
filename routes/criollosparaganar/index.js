@@ -21,6 +21,6 @@ router.get('/:auctionId', function (req, res, next) {
             }
         );
     });
-}); x
+});
 
 module.exports = router;
