@@ -110,9 +110,9 @@ const lotTemplate =
                                 <b>PIQUES</b>
                             </span>
                         </button>
-                        <h4
+                        <h5
                             id="auction-bid-no-history-__lot_lotId__"
-                            class="d-inline-block text-center bg-secondary lh-sm mb-0 aoc-piques-btn p-3 d-none"
+                            class="d-inline-block text-center bg-dark lh-sm mb-0 aoc-piques-btn d-none"
                         >
                             <span class="text-white">SIN PRE-OFERTAS</span>
                         </h5>

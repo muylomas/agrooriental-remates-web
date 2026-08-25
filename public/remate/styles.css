@@ -541,14 +541,15 @@ input[id^="auction-bid-price-"] {
 }
 
 /* Botones con más relieve, radio y peso, sin tocar sus colores */
-#remate-lotes .btn {
+/* Escopado a .card para no afectar el botón "Ir" del buscador de lote (#filtros-remate) */
+#remate-lotes .card .btn {
     border-radius: 10px;
     box-shadow: 0 3px 8px rgba(0, 0, 0, .35);
     font-weight: 700;
     transition: transform .1s ease, box-shadow .1s ease;
 }
 
-#remate-lotes .btn:active {
+#remate-lotes .card .btn:active {
     transform: translateY(1px);
     box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
 }
@@ -566,13 +567,6 @@ input[id^="auction-bid-price-"] {
 #remate-lotes .btn.aoc-lot-badge-float:active {
     box-shadow: none !important;
     transform: none !important;
-}
-
-/* Ajuste fino del botón "Ir" en el buscador de lote */
-#filtros-remate .btn.bid-action-button {
-    padding: .5rem 1.25rem;
-    margin-left: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
 }
 
 /* Solo en mobile: botones sobre la imagen (video/foto) un poco más grandes */
@@ -674,8 +668,8 @@ h5.aoc-piques-btn {
 
 .aoc-lot-offer .btn.bid-action-button {
     width: 100%;
-    height: 45px;
-    font-size: 1.35rem;
+    height: 45px !important;
+    font-size: 1.35rem !important;
 }
 
 .aoc-bid-stepper {
