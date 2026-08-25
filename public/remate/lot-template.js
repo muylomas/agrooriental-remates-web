@@ -170,7 +170,7 @@ const lotCarouselTemplate =
                     </div>
                 </div>
                 <div class="card-body px-3">
-                    <h4 class="card-title text-uppercase fs-5 mt-3 m-0">
+                    <h4 class="text-truncate card-title text-uppercase fs-5 mt-3 m-0">
                         __lot_equineName__
                     </h4>
                     <p class="text-truncate mb-2">
