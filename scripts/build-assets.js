@@ -118,15 +118,32 @@ function topLevelNamesIn(source) {
   return names;
 }
 
+// '...', "...", `...` — used to find names Terser could never see as
+// identifiers because they're just text to it: onclick="fn(...)" (whether
+// that's literal HTML in a .pug view, or built by JS via string
+// concatenation), setInterval('fn()', ms) (old-style string-eval'd
+// callback), etc. Terser only ever renames real identifiers, so a
+// declaration invoked this way breaks the instant it's renamed — even when
+// the string lives in the exact same file as the declaration, which is why
+// this has to be checked in addition to (not instead of) cross-file usage.
+const STRING_LITERAL_RE = /'(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*"|`(?:[^`\\]|\\.)*`/g;
+
+function stringLiteralContents(source) {
+  return (source.match(STRING_LITERAL_RE) || []).join(' ');
+}
+
 // Names in `ownSource` that must NOT be renamed: any of its own top-level
-// declarations that also appear (anywhere, as plain text — onclick
-// attributes and JS-built onclick strings included) in `externalSource`,
-// i.e. everything outside this compilation unit.
+// declarations that either (a) appear as plain code anywhere in
+// `externalSource` — everything outside this compilation unit — or (b) turn
+// up inside a string literal ANYWHERE, including this same source. (b)
+// covers onclick="..." / setInterval('...') style stringly-typed calls,
+// which are just as invisible to Terser within one file as across files.
 function reservedNamesFor(ownSource, externalSource) {
   const declared = topLevelNamesIn(ownSource);
   if (!declared.size) return [];
   const externalTokens = new Set(tokenize(externalSource));
-  return [...declared].filter((name) => externalTokens.has(name));
+  const stringTokens = new Set(tokenize(`${stringLiteralContents(ownSource)} ${stringLiteralContents(externalSource)}`));
+  return [...declared].filter((name) => externalTokens.has(name) || stringTokens.has(name));
 }
 
 async function minifyStandalone(absPath) {
