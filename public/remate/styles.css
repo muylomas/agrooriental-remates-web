@@ -639,7 +639,6 @@ input[id^="auction-bid-price-"] {
 
 .aoc-piques-btn {
     font-size: .9rem;
-    padding: .45rem .8rem;
     white-space: nowrap;
     border-radius: 8px;
     order: 1;
@@ -694,7 +693,6 @@ h5.aoc-piques-btn {
     width: 38px;
     padding: .4rem .2rem !important;
     flex: 0 0 auto;
-    font-size: 1rem !important;
 }
 
 /* Botones +/- más cuadrados que redondos */
