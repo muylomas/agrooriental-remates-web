@@ -698,8 +698,8 @@ h5.aoc-piques-btn {
 /* Botones +/- más cuadrados que redondos */
 .aoc-bid-stepper button.bid-action-button-step {
     border-radius: 6px;
-    width: 34px;
-    height: 34px;
+    width: 45px;
+    height: 45px;
     padding: 0 !important;
     flex: 0 0 auto;
 }
