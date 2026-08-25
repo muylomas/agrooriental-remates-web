@@ -1,7 +1,7 @@
 extends ./home-baseHTML.pug
 
 block content 
-  link(href='/remate/styles.css', rel='stylesheet', type='text/css')
+  link(href='/remate/styles.css?ver=2', rel='stylesheet', type='text/css')
   link(href='/vendors/jquery_toast/jquery.toast.min.css', rel='stylesheet', type='text/css')
   script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js')
   script(src='https://code.jquery.com/ui/1.14.1/jquery-ui.min.js')
@@ -19,16 +19,6 @@ block content
             .position-absolute.top-0.end-0.pe-2.pt-2(onclick="auctionInfo()")
                 i.mdi.mdi-information-outline.icon-md.text-warning
 
-        .row.mb-2
-          .col-12
-            #aoc-carousel-wrap.aoc-carousel-wrap.d-none
-              button.aoc-arrow.aoc-prev.btn.btn-dark.btn-rounded.btn-icon(aria-label="Anterior")
-                i.mdi.mdi-chevron-left
-              button.aoc-arrow.aoc-next.btn.btn-dark.btn-rounded.btn-icon(aria-label="Siguiente")
-                i.mdi.mdi-chevron-right
-              #aocTrack.aoc-carousel-track
-              #aocDots.aoc-dots
-
         #remate-lotes.row.portfolio-grid
           #filtros-remate.d-none
             card.border-0.d-flex.align-items-center.text-white.m-4.my-2
@@ -37,13 +27,21 @@ block content
                     h4.m-0.me-3
                       | Lote:
                     input.form-control.text-center.fs-4.p-2(type="number", name="filtro-lot-id", value="" style="width: 70px;")
-                    button.btn.bid-action-button.fs-5(onclick="goToLotById()") 
-                      | Ir 
+                    button.btn.bid-action-button.fs-5(onclick="goToLotById()")
+                      | Ir
                 .d-flex.justify-content-between.align-items-end
                   if(auctionItem.catalog)
                     a.btn.btn-danger.btn-icon-text.p-1(href=auctionItem.catalog, target="_blank")
                       i.mdi.mdi-file-pdf.btn-icon-prepend.mdi-36px
                       | Catálogo
+
+          #aoc-carousel-wrap.aoc-carousel-wrap.d-none
+            button.aoc-arrow.aoc-prev.btn.btn-dark.btn-rounded.btn-icon(aria-label="Anterior")
+              i.mdi.mdi-chevron-left
+            button.aoc-arrow.aoc-next.btn.btn-dark.btn-rounded.btn-icon(aria-label="Siguiente")
+              i.mdi.mdi-chevron-right
+            #aocTrack.aoc-carousel-track
+            #aocDots.aoc-dots
 
         #loading-lots.pt-5.pb-3.m-0
           h3.text-center.text-white Buscando lotes del remate...
@@ -115,9 +113,9 @@ block content
   script(src='/remate/scripts.js')
   script(src='/remate/search-scripts.js')
   script(src='/remate/chat-scripts.js')
-  script(src='/remate/lot-template.js')
-  script(src='/remate/carousel-scripts.js')
-  script(src='/remate/lot-scripts.js')
+  script(src='/remate/lot-template.js?ver=2')
+  script(src='/remate/carousel-scripts.js?ver=2')
+  script(src='/remate/lot-scripts.js?ver=2')
   script(src='/remate/auctions.js?ver=202602052')      
   script(src='/remate/countdowns.js')
   script(src='/remate/toast_manager.js')
