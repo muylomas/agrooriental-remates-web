@@ -126,6 +126,24 @@ function currentCardIndex() {
     return closest;
 };
 
+// Ejecuta una mutación del DOM del track (agregar/sacar/mover una tarjeta) sin que
+// se note como un scroll: guarda qué tarjeta está a la vista antes de mutar y,
+// después, corrige el scrollLeft para que esa misma tarjeta quede en el mismo
+// lugar de la pantalla (el cambio de contenido no debe desplazar la vista).
+function preserveScrollPosition(mutationFn) {
+    const anchorCard = aocCards[currentCardIndex()] || null;
+    const anchorOffsetBefore = anchorCard ? anchorCard.offsetLeft : null;
+    const scrollBefore = aocTrack.scrollLeft;
+
+    mutationFn();
+
+    aocCards = Array.prototype.slice.call(aocTrack.children);
+
+    if (anchorCard && anchorCard.isConnected) {
+        aocTrack.scrollLeft = scrollBefore + (anchorCard.offsetLeft - anchorOffsetBefore);
+    }
+};
+
 function rebuildFeaturedDots() {
     aocDotsWrap.innerHTML = "";
 
@@ -291,8 +309,9 @@ function removeFeaturedLotCard(lotId, done) {
     card.classList.add('aoc-card-exit-active');
 
     setTimeout(function () {
-        card.remove();
-        aocCards = Array.prototype.slice.call(aocTrack.children);
+        preserveScrollPosition(function () {
+            card.remove();
+        });
         rebuildFeaturedDots();
         done();
     }, AOC_STEP_ANIMATION_MS);
@@ -301,10 +320,12 @@ function removeFeaturedLotCard(lotId, done) {
 function addFeaturedLotCard(lot, done) {
     const el = createFeaturedLotElement(lot);
     el.classList.add('aoc-card-enter');
-    aocTrack.appendChild(el);
+
+    preserveScrollPosition(function () {
+        aocTrack.appendChild(el);
+    });
 
     aocFeaturedIds.push(lot.lotId);
-    aocCards = Array.prototype.slice.call(aocTrack.children);
     rebuildFeaturedDots();
 
     // Doble rAF para asegurarnos de que el navegador pintó el estado "enter"
@@ -350,7 +371,11 @@ function reorderFeaturedLotCards(newOrder, done) {
     }
 
     const beforeLeft = card.offsetLeft;
-    aocTrack.insertBefore(card, referenceEl);
+
+    preserveScrollPosition(function () {
+        aocTrack.insertBefore(card, referenceEl);
+    });
+
     const afterLeft = card.offsetLeft;
     const delta = beforeLeft - afterLeft;
 
@@ -362,8 +387,6 @@ function reorderFeaturedLotCards(newOrder, done) {
         card.style.transition = 'transform ' + AOC_STEP_ANIMATION_MS + 'ms ease';
         card.style.transform = 'translateX(0)';
     });
-
-    aocCards = Array.prototype.slice.call(aocTrack.children);
 
     setTimeout(function () {
         card.style.transition = '';
