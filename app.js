@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const logger = require('morgan');
+const compression = require('compression');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const uuid = require('uuid/v4');
@@ -63,7 +65,6 @@ app.use(function (req, res, next) {
   }
 });
 
-const fs = require("fs");
 const sslOptions = {
   ca: fs.readFileSync('/etc/ssl/equinos_chain.pem'),
   key: fs.readFileSync('/etc/ssl/equinos_privkey.pem'),
@@ -96,7 +97,40 @@ app.use(bodyParser.raw({ limit: '50mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
+// Gzip/Brotli-compress responses (HTML, JSON, JS, CSS) before they go over
+// the wire. Big win for load time with zero risk: images/fonts are already
+// compressed and the `compression` filter skips them automatically.
+app.use(compression());
+
+// Assets built by `npm run build:assets` (see scripts/build-assets.js).
+// Filenames are content-hashed, so they can be cached "forever" — a new
+// build always gets a new filename, no manual `?ver=` bumping needed.
+app.use('/dist', express.static(path.join(__dirname, 'public-dist'), {
+  maxAge: '1y',
+  immutable: true,
+}));
+
+// Everything else under /public (vendor libs, fonts, images, unbuilt
+// assets). Not hashed, so we use a shorter cache window rather than
+// "immutable" to avoid serving stale content if a file changes.
+app.use(express.static(path.join(__dirname, 'public'), {
+  maxAge: '1d',
+}));
+
+// Reads the manifest written by scripts/build-assets.js once at startup
+// (same lifecycle as a `pm2 reload`, which is how this app already picks
+// up code changes). Use in views as `asset('/remate/scripts.js')` — it
+// resolves to the minified, hashed /dist path when one exists, or falls
+// back to the original path otherwise (e.g. before the first build, or
+// for files the build step intentionally skips).
+let assetManifest = {};
+try {
+  assetManifest = JSON.parse(fs.readFileSync(path.join(__dirname, 'public-dist', 'manifest.json'), 'utf8'));
+} catch (e) {
+  console.warn('[assets] public-dist/manifest.json not found — run `npm run build:assets`. Falling back to unminified assets.');
+}
+app.locals.asset = (originalPath) => assetManifest[originalPath] || originalPath;
 
 const middleware_authentication = require('./middlewares/authentication');
 

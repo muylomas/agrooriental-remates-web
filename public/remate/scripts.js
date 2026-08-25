@@ -124,15 +124,33 @@ function loginSwal() {
 };
 (function () {
     const scrollThreshold = 5;
-    let lastScrollTop = window.scrollY || document.documentElement.scrollTop;
 
+    // La página usa el layout "fsvs" (html.fsvs), cuyo CSS fija y le pone
+    // overflow:hidden al <html> aunque el plugin de scroll a pantalla
+    // completa nunca se inicialice acá. Eso deja a "window" sin scroll
+    // propio, así que el scroll real puede terminar ocurriendo en
+    // document.documentElement o document.body según el navegador.
+    // Tomamos el mayor de los tres para detectarlo sin importar cuál sea.
+    const getScrollTop = function () {
+        return Math.max(
+            window.scrollY || 0,
+            (document.documentElement && document.documentElement.scrollTop) || 0,
+            (document.body && document.body.scrollTop) || 0
+        );
+    };
+
+    let lastScrollTop = getScrollTop();
+
+    // capture:true para engancharnos aunque el scroll ocurra en un
+    // contenedor interno en vez de en window (los eventos "scroll" de
+    // elementos no burbujean, pero sí se capturan de arriba hacia abajo).
     window.addEventListener("scroll", function () {
         const headers = document.querySelectorAll(".balance-header.fixed-top");
         if (!headers.length) {
             return;
         }
 
-        const currentScroll = window.scrollY || document.documentElement.scrollTop;
+        const currentScroll = getScrollTop();
 
         if (Math.abs(currentScroll - lastScrollTop) <= scrollThreshold) {
             return;
@@ -147,5 +165,5 @@ function loginSwal() {
         }
 
         lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
-    }, { passive: true });
+    }, { passive: true, capture: true });
 })();

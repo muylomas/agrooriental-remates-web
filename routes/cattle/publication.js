@@ -236,10 +236,17 @@ Common.prototype.getViewParams = function (sessionID, lotId, callback) {
                                                 function (replyImagesArray) {
                                                     indexParams.lot.imagesArray = replyImagesArray;
                                                     if (indexParams.lot.lotId) {
+                                                        // 'cattle/lot-details' was never a real view (dead
+                                                        // template, would throw on render). The lot detail
+                                                        // UX today lives on the live auction page itself,
+                                                        // which scrolls/opens a lot by its #lote-<id> hash
+                                                        // (see goToLotById() in public/remate/lot-scripts.js)
+                                                        // — reuse that instead of rendering a page that
+                                                        // doesn't exist.
                                                         callback(
-                                                            'cattle/lot-details',
-                                                            indexParams,
-                                                            "render"
+                                                            '/#lote-' + indexParams.lot.lotId,
+                                                            {},
+                                                            "redirect"
                                                         );
                                                     }
                                                     else {
