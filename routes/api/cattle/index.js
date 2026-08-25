@@ -63,6 +63,17 @@ router.post('/lot/saved/delete', function (req, res, next) {
     }
 });
 
+router.get('/lots/refresh', function (req, res, next) {
+    searchProc.refreshLots(
+        req.sessionID,
+        function (replyLots) {
+            res.json({
+                lots: replyLots,
+            });
+        }
+    );
+});
+
 router.post('/lot/auction/bids', function (req, res, next) {
     if ("body" in req && req.body.lotId) {
         searchProc.auctionBidsByLotId(

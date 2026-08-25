@@ -48,4 +48,20 @@ Common.prototype.auctionBidsByLotId = function (sessionID, lotId, callback) {
     });
 };
 
+Common.prototype.refreshLots = function (sessionID, callback) {
+    common_auth.basic(sessionID, function (reply) {
+        if (reply.err) {
+            callback([]);
+        }
+        else {
+            cattle_home.getLotsRefresh(
+                reply.user.id,
+                function (returnLots) {
+                    callback(returnLots);
+                }
+            );
+        }
+    });
+};
+
 module.exports = new Common();

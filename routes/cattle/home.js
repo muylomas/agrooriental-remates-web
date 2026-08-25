@@ -371,4 +371,35 @@ Common.prototype.getLotsForMap = function (userId, params, callback) {
     );
 };
 
+// Usado por el polling del carrusel de Destacados (cada 15s, ver /remate/carousel-scripts.js).
+// Trae los lotes tal como al cargar la página (sin filtros de mapa) pero liviano:
+// solo suma las imágenes, sin razas/edades/promedios que no usa el carrusel.
+Common.prototype.getLotsRefresh = function (userId, callback) {
+    let indexParams = {
+        lots: [],
+        lotsIds: [],
+    };
+
+    common_cattle_home.getLots(
+        userId,
+        [],
+        [],
+        [],
+        "",
+        "",
+        function (returnLots, returnLotsIds) {
+            indexParams.lotsIds = returnLotsIds;
+            indexParams.lots = returnLots;
+
+            cattleImages(
+                indexParams.lotsIds,
+                indexParams,
+                function (returnIndexParamsImages) {
+                    callback(returnIndexParamsImages.lots);
+                }
+            );
+        }
+    );
+};
+
 module.exports = new Common();

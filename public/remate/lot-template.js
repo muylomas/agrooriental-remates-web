@@ -161,7 +161,7 @@ const lotTemplate =
 // Solo muestra la info esencial + un acceso directo a la tarjeta completa del lote.
 const lotCarouselTemplate =
     `
-        <div class="col-12 bg-agrooriental stretch-card">
+        <div class="col-12 bg-agrooriental stretch-card" data-lot-id="__lot_lotId__">
             <div class="card border-0 m-2">
                 <div class="cattle-media-container position-relative overflow-hidden w-100">
                     <img class="w-100" src="__lot_imagesArray_0__">
