@@ -69,19 +69,37 @@ const OUT_DIR = path.join(ROOT, 'public-dist');
 const EXCLUDE_DIRS = new Set(['vendors', 'majestic', 'accordion', 'fonts']);
 
 // key: virtual manifest path (doesn't exist as a real file under public/).
-// value: member files (relative to public/), in load order.
+//   members: source files (relative to public/), in load order.
+//   scopeViews: every .pug file (relative to views/) that can render on the
+//     SAME page as this bundle — its own template plus every layout/include
+//     in its extends/include chain. Used to scope the reserved-name check:
+//     a name is only a real collision risk if it can appear in the same
+//     browser tab as this bundle. Keeping this scoped (instead of checking
+//     the whole site) matters in practice — this codebase has lots of
+//     near-duplicate per-page files (e.g. public/home/chat-scripts.js vs.
+//     public/remate/chat-scripts.js) that happen to share generic function
+//     names; those two pages never coexist in a browser, so a name
+//     colliding with the *other* page's copy isn't a real risk and
+//     shouldn't block mangling it away.
 const BUNDLES = {
-  'remate/bundle.js': [
-    'remate/scripts.js',
-    'remate/search-scripts.js',
-    'remate/chat-scripts.js',
-    'remate/lot-template.js',
-    'remate/carousel-scripts.js',
-    'remate/lot-scripts.js',
-    'remate/auctions.js',
-    'remate/countdowns.js',
-    'remate/toast_manager.js',
-  ],
+  'remate/bundle.js': {
+    members: [
+      'remate/scripts.js',
+      'remate/search-scripts.js',
+      'remate/chat-scripts.js',
+      'remate/lot-template.js',
+      'remate/carousel-scripts.js',
+      'remate/lot-scripts.js',
+      'remate/auctions.js',
+      'remate/countdowns.js',
+      'remate/toast_manager.js',
+    ],
+    scopeViews: [
+      'cattle/remate.pug',
+      'cattle/home-baseHTML.pug',
+      'cattle/remate-includes/header.pug',
+    ],
+  },
 };
 
 function walk(dir, test, excludeDirs, files = []) {
@@ -169,12 +187,26 @@ function writeOutput(manifest, relKey, output) {
   manifest[`/${relKey}`] = `/dist/${outRel}`;
 }
 
+// Own asset paths (e.g. '/carousel/fsvs.js') a .pug source references, via
+// either the asset() helper or a plain literal src/href — used to find
+// which standalone JS/CSS files can actually appear on the same page as a
+// given bundle.
+function ownAssetPathsIn(pugSource) {
+  const paths = new Set();
+  const assetRe = /asset\(\s*'([^']+)'\s*\)/g;
+  let m;
+  while ((m = assetRe.exec(pugSource))) paths.add(m[1]);
+  const literalRe = /(?:src|href)\s*=\s*'(\/[^']+\.(?:js|css))'/g;
+  while ((m = literalRe.exec(pugSource))) paths.add(m[1]);
+  return paths;
+}
+
 async function build() {
   fs.rmSync(OUT_DIR, { recursive: true, force: true });
 
   const bundleSourceSet = new Set();
   for (const key of Object.keys(BUNDLES)) {
-    for (const rel of BUNDLES[key]) bundleSourceSet.add(path.join(SRC_DIR, rel));
+    for (const rel of BUNDLES[key].members) bundleSourceSet.add(path.join(SRC_DIR, rel));
   }
 
   const allFiles = walk(SRC_DIR, (name) => /\.(js|css)$/.test(name) && !/\.min\.(js|css)$/.test(name), EXCLUDE_DIRS);
@@ -187,10 +219,9 @@ async function build() {
   let failed = 0;
 
   const pugCorpus = pugFiles.map((f) => fs.readFileSync(f, 'utf8')).join('\n');
-  const standaloneCorpus = standaloneFiles.map((f) => fs.readFileSync(f, 'utf8')).join('\n');
   const bundleSource = {}; // bundleKey -> concatenated raw source
   for (const key of Object.keys(BUNDLES)) {
-    bundleSource[key] = BUNDLES[key].map((rel) => fs.readFileSync(path.join(SRC_DIR, rel), 'utf8')).join('\n;\n');
+    bundleSource[key] = BUNDLES[key].members.map((rel) => fs.readFileSync(path.join(SRC_DIR, rel), 'utf8')).join('\n;\n');
   }
 
   // --- Bundles ---
@@ -198,11 +229,27 @@ async function build() {
     const combinedSource = bundleSource[bundleKey];
     totalBefore += Buffer.byteLength(combinedSource);
 
+    // Scope the external corpus to only what can actually render on the
+    // same page as this bundle (see BUNDLES doc comment) — not the whole
+    // site, which would over-reserve names that only coincidentally match
+    // an unrelated page's own script.
+    const scopeViewFiles = BUNDLES[bundleKey].scopeViews.map((v) => path.join(VIEWS_DIR, v));
+    const scopedPugSources = scopeViewFiles.map((f) => fs.readFileSync(f, 'utf8'));
+    const scopedPugCorpus = scopedPugSources.join('\n');
+
+    const referencedAssetPaths = new Set();
+    for (const src of scopedPugSources) for (const p of ownAssetPathsIn(src)) referencedAssetPaths.add(p);
+    const scopedStandaloneFiles = standaloneFiles.filter((f) => {
+      const rel = `/${path.relative(SRC_DIR, f).split(path.sep).join('/')}`;
+      return referencedAssetPaths.has(rel);
+    });
+    const scopedStandaloneCorpus = scopedStandaloneFiles.map((f) => fs.readFileSync(f, 'utf8')).join('\n');
+
     const otherBundlesCorpus = Object.keys(BUNDLES)
       .filter((k) => k !== bundleKey)
       .map((k) => bundleSource[k])
       .join('\n');
-    const externalCorpus = `${pugCorpus}\n${standaloneCorpus}\n${otherBundlesCorpus}`;
+    const externalCorpus = `${scopedPugCorpus}\n${scopedStandaloneCorpus}\n${otherBundlesCorpus}`;
     const reserved = reservedNamesFor(combinedSource, externalCorpus);
 
     let output;
@@ -220,7 +267,7 @@ async function build() {
     }
     totalAfter += Buffer.byteLength(output);
     writeOutput(manifest, bundleKey, output);
-    console.log(`[build-assets] bundle ${bundleKey}: ${BUNDLES[bundleKey].length} file(s) combined, ${reserved.length} name(s) reserved`);
+    console.log(`[build-assets] bundle ${bundleKey}: ${BUNDLES[bundleKey].members.length} file(s) combined, ${scopedStandaloneFiles.length} co-loaded standalone file(s) in scope, ${reserved.length} name(s) reserved`);
   }
 
   // --- Standalone files (unchanged behavior: local-scope mangling only) ---
