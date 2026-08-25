@@ -72,6 +72,14 @@ select {
     background: #333333;
 }
 
+.balance-header.fixed-top {
+    transition: transform 0.3s ease-in-out;
+}
+
+.balance-header.fixed-top.header-hidden {
+    transform: translateY(-100%);
+}
+
 .balance-header .user-profile-icon {
     margin: auto;
     background-image: url("https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/customers/no-profile-img.png");

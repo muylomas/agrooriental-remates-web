@@ -122,3 +122,30 @@ function loginSwal() {
     }).then((value) => {
     });
 };
+(function () {
+    const scrollThreshold = 5;
+    let lastScrollTop = window.scrollY || document.documentElement.scrollTop;
+
+    window.addEventListener("scroll", function () {
+        const headers = document.querySelectorAll(".balance-header.fixed-top");
+        if (!headers.length) {
+            return;
+        }
+
+        const currentScroll = window.scrollY || document.documentElement.scrollTop;
+
+        if (Math.abs(currentScroll - lastScrollTop) <= scrollThreshold) {
+            return;
+        }
+
+        const headerHeight = headers[0].offsetHeight;
+
+        if (currentScroll > lastScrollTop && currentScroll > headerHeight) {
+            headers.forEach((header) => header.classList.add("header-hidden"));
+        } else {
+            headers.forEach((header) => header.classList.remove("header-hidden"));
+        }
+
+        lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+    }, { passive: true });
+})();
