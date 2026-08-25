@@ -24,8 +24,6 @@ const AOC_STEP_PAUSE_MS = 150;
 let aocWrap = null;
 let aocTrack = null;
 let aocDotsWrap = null;
-let aocPrevBtn = null;
-let aocNextBtn = null;
 
 let aocSlots = [];
 let aocDots = [];
@@ -151,13 +149,6 @@ function rebuildFeaturedDots() {
 };
 
 function bindCarouselControls() {
-    if (aocPrevBtn) {
-        aocPrevBtn.onclick = function () { scrollToCard(Math.max(0, currentCardIndex() - 1)); };
-    }
-    if (aocNextBtn) {
-        aocNextBtn.onclick = function () { scrollToCard(Math.min(aocSlots.length - 1, currentCardIndex() + 1)); };
-    }
-
     aocTrack.onscroll = function () {
         if (aocScrollTicking) {
             return;
@@ -204,9 +195,6 @@ function initFeaturedLotsCarousel() {
 
     rebuildFeaturedSlots(featuredLots);
     aocWrap.classList.remove('d-none');
-
-    aocPrevBtn = aocWrap.querySelector('.aoc-arrow.aoc-prev');
-    aocNextBtn = aocWrap.querySelector('.aoc-arrow.aoc-next');
 
     bindCarouselControls();
 

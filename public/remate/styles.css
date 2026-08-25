@@ -771,29 +771,6 @@ h5.aoc-piques-btn {
     }
 }
 
-.aoc-arrow {
-    display: none;
-    position: absolute;
-    top: 40%;
-    z-index: 2;
-    border-radius: 50%;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, .45);
-}
-
-@media (min-width: 768px) {
-    .aoc-arrow {
-        display: flex;
-    }
-}
-
-.aoc-arrow.aoc-prev {
-    left: 0;
-}
-
-.aoc-arrow.aoc-next {
-    right: 0;
-}
-
 /* Indicador "LOTE N" flotando sobre la imagen, en las tarjetas del carrusel */
 .aoc-carousel-track .cattle-media-container {
     position: relative;
