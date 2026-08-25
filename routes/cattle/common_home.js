@@ -185,6 +185,7 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
                             )
                         ) AS lastPrice,
                         auctions_bids.price AS lastPriceAuction,
+                        auctions_bids.created_at AS lastBidDate,
                         IF(
                             auctions_bids.customerId IS NULL,
                             0,

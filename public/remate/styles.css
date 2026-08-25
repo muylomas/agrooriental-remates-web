@@ -426,8 +426,42 @@ input[id^="auction-bid-price-"] {
     margin-right: 1.5rem !important;
 }
 
+/* El countdown se ve como un indicador (d/h/m/s), no como un botón */
+.countdown-container {
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 8px;
+    padding: 3px 10px;
+}
+
 .countdown-container h4 {
-    background: #4e7b44;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.countdown-container h4 .text-white {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.countdown-container h4::after {
+    color: #ffffff;
+    font-size: .85rem;
+    font-weight: 400;
+    opacity: .85;
+    margin-left: 1px;
+}
+
+.countdown-container h4:has(> span[id^="countdown-hours-"])::after {
+    content: "h";
+}
+
+.countdown-container h4:has(> span[id^="countdown-mins-"])::after {
+    content: "m";
+}
+
+.countdown-container h4:has(> span[id^="countdown-secs-"])::after {
+    content: "s";
 }
 
 /* Top bar infinite auto scroll */
@@ -489,4 +523,327 @@ input[id^="auction-bid-price-"] {
     50% {
         opacity: 0;
     }
+}
+
+/* ======================================================================
+   Rediseño de tarjetas de lote + carrusel de Destacados (#remate-lotes)
+   ====================================================================== */
+
+/* Tarjetas de lote (carrusel y grilla principal): borde más redondeado */
+#remate-lotes .card {
+    border-radius: 22px;
+    overflow: hidden;
+}
+
+#remate-lotes .cattle-media-container {
+    border-radius: 22px 22px 0 0;
+    overflow: hidden;
+}
+
+/* Botones con más relieve, radio y peso, sin tocar sus colores */
+#remate-lotes .btn {
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .35);
+    font-weight: 700;
+    transition: transform .1s ease, box-shadow .1s ease;
+}
+
+#remate-lotes .btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+}
+
+/* LOTE N: es una etiqueta/indicador, no un botón */
+#remate-lotes .btn.aoc-lot-tag,
+#remate-lotes .btn.aoc-lot-badge-float {
+    box-shadow: none !important;
+    border-radius: 4px !important;
+    font-weight: 600;
+    transform: none !important;
+}
+
+#remate-lotes .btn.aoc-lot-tag:active,
+#remate-lotes .btn.aoc-lot-badge-float:active {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Ajuste fino del botón "Ir" en el buscador de lote */
+#filtros-remate .btn.bid-action-button {
+    padding: .5rem 1.25rem;
+    margin-left: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
+}
+
+/* Solo en mobile: botones sobre la imagen (video/foto) un poco más grandes */
+@media (max-width: 767.98px) {
+    .cattle-media-container > .position-absolute.bottom-0.end-0.pe-2.pb-2 .btn {
+        transform: scale(1.2);
+    }
+
+    .cattle-media-container > .position-absolute.bottom-0.end-0.pe-2.pb-2 .btn:not(:last-child) {
+        margin-right: 16px !important;
+    }
+}
+
+/* Botón de foto/video sobre la imagen: subido un poco, con más margen del borde */
+.cattle-media-container > .position-absolute.bottom-0.end-0.pe-2.pb-2 {
+    bottom: 16px !important;
+    right: 12px !important;
+}
+
+/* Título del lote y línea de pedigrí: texto más grande */
+#remate-lotes .card-title {
+    font-size: 1.5rem !important;
+}
+
+#remate-lotes .text-truncate {
+    font-size: 1.1rem;
+}
+
+/* Características del lote: texto más grande y en su propia caja */
+.aoc-lot-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    font-size: 1.15rem;
+    margin: 10px 0 12px;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, .05);
+    border-radius: 10px;
+    border-top: 1px solid rgba(255, 255, 255, .08);
+}
+
+.aoc-lot-meta-item {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+}
+
+.aoc-lot-meta-item b {
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    opacity: .65;
+    font-weight: 700;
+}
+
+/* Precio + oferta en la misma fila, y PIQUES acomodado para ocupar menos alto */
+.aoc-lot-bid-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px 12px;
+    margin-bottom: 10px;
+}
+
+.aoc-piques-btn {
+    font-size: .9rem;
+    padding: .45rem .8rem;
+    white-space: nowrap;
+    border-radius: 8px;
+    order: 1;
+}
+
+/* "SIN PRE-OFERTAS" es un aviso, no un botón: radio casi nulo */
+h5.aoc-piques-btn {
+    border-radius: 3px;
+}
+
+.aoc-lot-price {
+    order: 2;
+    margin-right: auto;
+}
+
+.aoc-lot-price h1 {
+    white-space: nowrap;
+    font-size: 2.3rem;
+}
+
+.aoc-lot-installments {
+    font-size: .8rem;
+    line-height: 1.1;
+    margin: 0;
+    opacity: .85;
+}
+
+/* El/los botón(es) de ofertar pasan a ocupar toda la fila, en su propia línea */
+.aoc-lot-offer {
+    order: 3;
+    flex: 1 1 100%;
+}
+
+.aoc-lot-offer .btn.bid-action-button {
+    width: 100%;
+    font-size: 1.35rem;
+}
+
+.aoc-bid-stepper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+}
+
+.aoc-bid-stepper button.bid-action-button {
+    flex: 1 1 auto;
+    font-size: 1.2rem;
+}
+
+.aoc-bid-input {
+    width: 38px;
+    padding: .4rem .2rem !important;
+    flex: 0 0 auto;
+    font-size: 1rem !important;
+}
+
+/* Botones +/- más cuadrados que redondos */
+.aoc-bid-stepper button.bid-action-button-step {
+    border-radius: 6px;
+    width: 34px;
+    height: 34px;
+    padding: 0 !important;
+    flex: 0 0 auto;
+}
+
+/* ---- Carrusel de Destacados ---- */
+
+.aoc-carousel-wrap {
+    position: relative;
+    margin-bottom: 4px;
+}
+
+.aoc-carousel-track {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 8px 6px;
+    scrollbar-width: none;
+}
+
+.aoc-carousel-track::-webkit-scrollbar {
+    display: none;
+}
+
+.aoc-carousel-track .stretch-card {
+    scroll-snap-align: start;
+    flex: 0 0 80%;
+    max-width: 320px;
+}
+
+@media (min-width: 480px) {
+    .aoc-carousel-track .stretch-card {
+        flex: 0 0 60%;
+    }
+}
+
+@media (min-width: 768px) {
+    .aoc-carousel-track .stretch-card {
+        flex: 0 0 32%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .aoc-carousel-track .stretch-card {
+        flex: 0 0 23.5%;
+    }
+}
+
+.aoc-arrow {
+    display: none;
+    position: absolute;
+    top: 40%;
+    z-index: 2;
+    border-radius: 50%;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .45);
+}
+
+@media (min-width: 768px) {
+    .aoc-arrow {
+        display: flex;
+    }
+}
+
+.aoc-arrow.aoc-prev {
+    left: 0;
+}
+
+.aoc-arrow.aoc-next {
+    right: 0;
+}
+
+/* Indicador "LOTE N" flotando sobre la imagen, en las tarjetas del carrusel */
+.aoc-carousel-track .cattle-media-container {
+    position: relative;
+}
+
+.aoc-lot-badge-float {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+    background: rgba(0, 0, 0, .75) !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .4);
+}
+
+/* Información concentrada en las tarjetas del carrusel: categoría + RP + pelo */
+.aoc-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 10px;
+    font-size: .95rem;
+    margin: 0 0 10px;
+}
+
+.aoc-meta b {
+    font-weight: 700;
+}
+
+.aoc-meta .aoc-dot-sep {
+    opacity: .5;
+}
+
+.aoc-price-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    border-top: 1px solid rgba(255, 255, 255, .15);
+    padding-top: 10px;
+    margin-top: 2px;
+}
+
+.aoc-price-row h1 {
+    white-space: nowrap;
+}
+
+.aoc-price-row .btn {
+    flex: 0 0 auto;
+    width: auto;
+}
+
+/* Indicadores del carrusel en blanco */
+.aoc-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin: 2px 0 10px;
+}
+
+.aoc-dots button {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, .4);
+    padding: 0;
+}
+
+.aoc-dots button.active {
+    background: #ffffff;
+    width: 16px;
+    border-radius: 4px;
 }

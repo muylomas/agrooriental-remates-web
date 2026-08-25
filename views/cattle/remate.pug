@@ -19,6 +19,16 @@ block content
             .position-absolute.top-0.end-0.pe-2.pt-2(onclick="auctionInfo()")
                 i.mdi.mdi-information-outline.icon-md.text-warning
 
+        .row.mb-2
+          .col-12
+            #aoc-carousel-wrap.aoc-carousel-wrap.d-none
+              button.aoc-arrow.aoc-prev.btn.btn-dark.btn-rounded.btn-icon(aria-label="Anterior")
+                i.mdi.mdi-chevron-left
+              button.aoc-arrow.aoc-next.btn.btn-dark.btn-rounded.btn-icon(aria-label="Siguiente")
+                i.mdi.mdi-chevron-right
+              #aocTrack.aoc-carousel-track
+              #aocDots.aoc-dots
+
         #remate-lotes.row.portfolio-grid
           #filtros-remate.d-none
             card.border-0.d-flex.align-items-center.text-white.m-4.my-2
@@ -106,6 +116,7 @@ block content
   script(src='/remate/search-scripts.js')
   script(src='/remate/chat-scripts.js')
   script(src='/remate/lot-template.js')
+  script(src='/remate/carousel-scripts.js')
   script(src='/remate/lot-scripts.js')
   script(src='/remate/auctions.js?ver=202602052')      
   script(src='/remate/countdowns.js')
