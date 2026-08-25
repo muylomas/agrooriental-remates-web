@@ -165,7 +165,7 @@ const lotCarouselTemplate =
             <div class="card border-0 m-2">
                 <div class="cattle-media-container position-relative overflow-hidden w-100">
                     <img class="w-100" src="__lot_imagesArray_0__">
-                    <div class="btn btn-dark text-uppercase fs-5 p-2 m-0 aoc-lot-badge-float">
+                    <div class="btn btn-dark text-uppercase p-2 m-0 aoc-lot-badge-float">
                         <b>LOTE __lot_subId__</b>
                     </div>
                 </div>
