@@ -112,7 +112,7 @@ const lotTemplate =
                         </button>
                         <h5
                             id="auction-bid-no-history-__lot_lotId__"
-                            class="d-inline-block text-center bg-secondary lh-sm p-2 mb-0 d-none"
+                            class="d-inline-block text-center bg-secondary lh-sm p-2 px-3 mb-0 d-none"
                         >
                             <span class="text-white">SIN PRE-OFERTAS</span>
                         </h5>
