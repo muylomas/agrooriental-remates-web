@@ -742,19 +742,15 @@ h5.aoc-piques-btn {
     scroll-snap-align: start;
     flex: 0 0 80%;
     max-width: 320px;
-    transition: opacity .45s ease, transform .45s ease;
+    transition: opacity .35s ease;
 }
 
-/* Animación de entrada/salida cuando el carrusel de Destacados se actualiza
-   (ver refreshFeaturedLotsCarousel en /remate/carousel-scripts.js) */
-.aoc-carousel-track .stretch-card.aoc-card-enter {
+/* Cuando el carrusel de Destacados se actualiza (cada 15s, ver
+   refreshFeaturedLotsCarousel en /remate/carousel-scripts.js), el contenido
+   de una tarjeta cambia con este crossfade — la tarjeta en sí nunca se
+   agrega, saca ni mueve del DOM, así que el carrusel no hace scroll solo. */
+.aoc-carousel-track .stretch-card.aoc-card-fading {
     opacity: 0;
-    transform: scale(.92);
-}
-
-.aoc-carousel-track .stretch-card.aoc-card-exit-active {
-    opacity: 0;
-    transform: scale(.92);
 }
 
 @media (min-width: 480px) {

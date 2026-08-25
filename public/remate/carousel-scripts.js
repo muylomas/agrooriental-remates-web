@@ -9,11 +9,16 @@
 //
 // Cada AOC_REFRESH_INTERVAL_MS se vuelve a pedir el estado de los lotes a la
 // API (no se reusa el `lots` global de la grilla, para no interferir con los
-// piques en vivo por socket) y se recalcula la selección. Los lotes que
-// entran, salen o cambian de posición se animan de a uno, no todos juntos.
+// piques en vivo por socket) y se recalcula la selección.
+//
+// La cantidad de "slots" (tarjetas) del carrusel es fija: nunca se agregan,
+// sacan ni reordenan elementos del DOM. Cuando un lote entra, sale o cambia de
+// posición, lo único que pasa es que el slot correspondiente cambia de
+// contenido (con un crossfade), un slot a la vez. Como el track nunca cambia
+// de cantidad/orden de hijos, el scroll no se ve afectado.
 
 const AOC_REFRESH_INTERVAL_MS = 15000;
-const AOC_STEP_ANIMATION_MS = 450;
+const AOC_FADE_ANIMATION_MS = 350;
 const AOC_STEP_PAUSE_MS = 150;
 
 let aocWrap = null;
@@ -22,7 +27,7 @@ let aocDotsWrap = null;
 let aocPrevBtn = null;
 let aocNextBtn = null;
 
-let aocCards = [];
+let aocSlots = [];
 let aocDots = [];
 let aocLotsSource = [];
 let aocFeaturedIds = [];
@@ -101,12 +106,16 @@ function createFeaturedLotElement(lot) {
     return temp.firstElementChild;
 };
 
-function findFeaturedCardElement(lotId) {
-    return aocTrack.querySelector('[data-lot-id="' + lotId + '"]');
+// Actualiza el contenido de un slot ya existente en el DOM (no lo mueve, no lo
+// saca, no crea uno nuevo): solo cambia lo que hay adentro.
+function updateFeaturedSlotContent(slotEl, lot) {
+    const freshEl = createFeaturedLotElement(lot);
+    slotEl.setAttribute('data-lot-id', String(lot.lotId));
+    slotEl.innerHTML = freshEl.innerHTML;
 };
 
 function scrollToCard(i) {
-    const card = aocCards[i];
+    const card = aocSlots[i];
     if (!card) {
         return;
     }
@@ -116,7 +125,7 @@ function scrollToCard(i) {
 function currentCardIndex() {
     let closest = 0;
     let closestDist = Infinity;
-    aocCards.forEach(function (c, i) {
+    aocSlots.forEach(function (c, i) {
         const dist = Math.abs(c.offsetLeft - aocTrack.offsetLeft - aocTrack.scrollLeft);
         if (dist < closestDist) {
             closestDist = dist;
@@ -126,28 +135,10 @@ function currentCardIndex() {
     return closest;
 };
 
-// Ejecuta una mutación del DOM del track (agregar/sacar/mover una tarjeta) sin que
-// se note como un scroll: guarda qué tarjeta está a la vista antes de mutar y,
-// después, corrige el scrollLeft para que esa misma tarjeta quede en el mismo
-// lugar de la pantalla (el cambio de contenido no debe desplazar la vista).
-function preserveScrollPosition(mutationFn) {
-    const anchorCard = aocCards[currentCardIndex()] || null;
-    const anchorOffsetBefore = anchorCard ? anchorCard.offsetLeft : null;
-    const scrollBefore = aocTrack.scrollLeft;
-
-    mutationFn();
-
-    aocCards = Array.prototype.slice.call(aocTrack.children);
-
-    if (anchorCard && anchorCard.isConnected) {
-        aocTrack.scrollLeft = scrollBefore + (anchorCard.offsetLeft - anchorOffsetBefore);
-    }
-};
-
 function rebuildFeaturedDots() {
     aocDotsWrap.innerHTML = "";
 
-    aocCards.forEach(function (_, i) {
+    aocSlots.forEach(function (_, i) {
         const dot = document.createElement('button');
         if (i === 0) {
             dot.classList.add('active');
@@ -164,7 +155,7 @@ function bindCarouselControls() {
         aocPrevBtn.onclick = function () { scrollToCard(Math.max(0, currentCardIndex() - 1)); };
     }
     if (aocNextBtn) {
-        aocNextBtn.onclick = function () { scrollToCard(Math.min(aocCards.length - 1, currentCardIndex() + 1)); };
+        aocNextBtn.onclick = function () { scrollToCard(Math.min(aocSlots.length - 1, currentCardIndex() + 1)); };
     }
 
     aocTrack.onscroll = function () {
@@ -178,6 +169,21 @@ function bindCarouselControls() {
             aocScrollTicking = false;
         });
     };
+};
+
+// Reconstruye los slots desde cero (carga inicial, o el caso raro en que la
+// cantidad de destacados cambia entre un refresh y el siguiente).
+function rebuildFeaturedSlots(featuredLots) {
+    aocTrack.innerHTML = "";
+
+    featuredLots.forEach(function (lot) {
+        aocTrack.appendChild(createFeaturedLotElement(lot));
+    });
+
+    aocFeaturedIds = featuredLots.map(function (lot) { return lot.lotId; });
+    aocSlots = Array.prototype.slice.call(aocTrack.children);
+
+    rebuildFeaturedDots();
 };
 
 function initFeaturedLotsCarousel() {
@@ -196,18 +202,12 @@ function initFeaturedLotsCarousel() {
         return;
     }
 
-    featuredLots.forEach(function (lot) {
-        aocTrack.appendChild(createFeaturedLotElement(lot));
-    });
-
-    aocFeaturedIds = featuredLots.map(function (lot) { return lot.lotId; });
-    aocCards = Array.prototype.slice.call(aocTrack.children);
+    rebuildFeaturedSlots(featuredLots);
     aocWrap.classList.remove('d-none');
 
     aocPrevBtn = aocWrap.querySelector('.aoc-arrow.aoc-prev');
     aocNextBtn = aocWrap.querySelector('.aoc-arrow.aoc-next');
 
-    rebuildFeaturedDots();
     bindCarouselControls();
 
     setTimeout(refreshFeaturedLotsCarousel, AOC_REFRESH_INTERVAL_MS);
@@ -236,163 +236,62 @@ function applyFeaturedLotsDiff(newFeaturedLots) {
         return;
     }
 
-    const newIds = newFeaturedLots.map(function (lot) { return lot.lotId; });
-    const sameOrder =
-        newIds.length === aocFeaturedIds.length &&
-        newIds.every(function (id, i) { return id === aocFeaturedIds[i]; });
-
-    if (sameOrder) {
+    // Caso raro: cambió la cantidad de destacados (remates con 6 lotes o
+    // menos, donde esa cantidad total varió). Ahí sí reconstruimos todo.
+    if (newFeaturedLots.length !== aocSlots.length) {
+        rebuildFeaturedSlots(newFeaturedLots);
         return;
     }
 
-    const steps = [];
+    const newIds = newFeaturedLots.map(function (lot) { return lot.lotId; });
 
-    // 1) Lotes que salen del carrusel.
-    aocFeaturedIds.forEach(function (lotId) {
-        if (newIds.indexOf(lotId) === -1) {
-            steps.push({ type: 'remove', lotId: lotId });
+    const changedSlots = [];
+    for (let i = 0; i < newIds.length; i++) {
+        if (newIds[i] !== aocFeaturedIds[i]) {
+            changedSlots.push(i);
         }
-    });
+    }
 
-    // 2) Lotes que entran al carrusel.
-    newFeaturedLots.forEach(function (lot) {
-        if (aocFeaturedIds.indexOf(lot.lotId) === -1) {
-            steps.push({ type: 'add', lot: lot });
-        }
-    });
-
-    // 3) Lo que quedó en otro orden se corrige al final, un lote a la vez.
-    steps.push({ type: 'reorder', order: newIds });
+    if (!changedSlots.length) {
+        return;
+    }
 
     aocApplyingDiff = true;
-    runFeaturedStepsSequentially(steps, 0, function () {
+    updateSlotsSequentially(changedSlots, 0, newFeaturedLots, newIds, function () {
+        aocFeaturedIds = newIds;
         aocApplyingDiff = false;
     });
 };
 
-function runFeaturedStepsSequentially(steps, index, onComplete) {
-    if (index >= steps.length) {
-        if (onComplete) {
-            onComplete();
-        }
+// Actualiza, de a un slot por vez, solo los que efectivamente cambiaron de
+// lote (ya sea porque el lote es nuevo en el carrusel, salió, o simplemente
+// cambió de posición). Nunca se toca el DOM del track en sí (ni se agregan,
+// sacan ni mueven elementos), así que el scroll queda intacto.
+function updateSlotsSequentially(changedSlots, step, newFeaturedLots, newIds, onComplete) {
+    if (step >= changedSlots.length) {
+        onComplete();
         return;
     }
 
-    const step = steps[index];
-    const next = function () {
-        setTimeout(function () { runFeaturedStepsSequentially(steps, index + 1, onComplete); }, AOC_STEP_PAUSE_MS);
-    };
+    const slotIndex = changedSlots[step];
+    const slotEl = aocSlots[slotIndex];
+    const nextLot = newFeaturedLots[slotIndex];
 
-    if (step.type === 'remove') {
-        removeFeaturedLotCard(step.lotId, next);
-    }
-    else if (step.type === 'add') {
-        addFeaturedLotCard(step.lot, next);
-    }
-    else if (step.type === 'reorder') {
-        reorderFeaturedLotCards(step.order, next);
-    }
-    else {
-        next();
-    }
-};
-
-function removeFeaturedLotCard(lotId, done) {
-    const card = findFeaturedCardElement(lotId);
-    aocFeaturedIds = aocFeaturedIds.filter(function (id) { return id != lotId; });
-
-    if (!card) {
-        done();
-        return;
-    }
-
-    card.classList.add('aoc-card-exit-active');
+    slotEl.classList.add('aoc-card-fading');
 
     setTimeout(function () {
-        preserveScrollPosition(function () {
-            card.remove();
-        });
-        rebuildFeaturedDots();
-        done();
-    }, AOC_STEP_ANIMATION_MS);
-};
+        updateFeaturedSlotContent(slotEl, nextLot);
 
-function addFeaturedLotCard(lot, done) {
-    const el = createFeaturedLotElement(lot);
-    el.classList.add('aoc-card-enter');
+        slotEl.offsetHeight; // fuerza reflow para que el navegador registre el estado "fading" antes de sacarlo
 
-    preserveScrollPosition(function () {
-        aocTrack.appendChild(el);
-    });
-
-    aocFeaturedIds.push(lot.lotId);
-    rebuildFeaturedDots();
-
-    // Doble rAF para asegurarnos de que el navegador pintó el estado "enter"
-    // antes de sacarle la clase y disparar la transición hacia el estado final.
-    requestAnimationFrame(function () {
         requestAnimationFrame(function () {
-            el.classList.remove('aoc-card-enter');
+            slotEl.classList.remove('aoc-card-fading');
         });
-    });
 
-    setTimeout(done, AOC_STEP_ANIMATION_MS);
-};
-
-// Reordena de a un lote por vez: busca la primera posición que no coincide
-// con el orden nuevo, mueve ese lote a su lugar animando el desplazamiento
-// (técnica FLIP) y repite hasta que el orden en pantalla coincide.
-function reorderFeaturedLotCards(newOrder, done) {
-    const currentOrder = Array.prototype.slice.call(aocTrack.children)
-        .map(function (el) { return el.getAttribute('data-lot-id'); });
-
-    let mismatchIndex = -1;
-    for (let i = 0; i < newOrder.length; i++) {
-        if (String(newOrder[i]) !== currentOrder[i]) {
-            mismatchIndex = i;
-            break;
-        }
-    }
-
-    if (mismatchIndex === -1) {
-        aocFeaturedIds = newOrder.slice();
-        done();
-        return;
-    }
-
-    const lotIdToPlace = String(newOrder[mismatchIndex]);
-    const card = findFeaturedCardElement(lotIdToPlace);
-    const referenceEl = aocTrack.children[mismatchIndex];
-
-    if (!card || card === referenceEl) {
-        aocFeaturedIds = newOrder.slice();
-        done();
-        return;
-    }
-
-    const beforeLeft = card.offsetLeft;
-
-    preserveScrollPosition(function () {
-        aocTrack.insertBefore(card, referenceEl);
-    });
-
-    const afterLeft = card.offsetLeft;
-    const delta = beforeLeft - afterLeft;
-
-    card.style.transition = 'none';
-    card.style.transform = 'translateX(' + delta + 'px)';
-    card.offsetHeight; // fuerza reflow para que el navegador registre la posición inicial
-
-    requestAnimationFrame(function () {
-        card.style.transition = 'transform ' + AOC_STEP_ANIMATION_MS + 'ms ease';
-        card.style.transform = 'translateX(0)';
-    });
-
-    setTimeout(function () {
-        card.style.transition = '';
-        card.style.transform = '';
-        reorderFeaturedLotCards(newOrder, done);
-    }, AOC_STEP_ANIMATION_MS + AOC_STEP_PAUSE_MS);
+        setTimeout(function () {
+            updateSlotsSequentially(changedSlots, step + 1, newFeaturedLots, newIds, onComplete);
+        }, AOC_FADE_ANIMATION_MS + AOC_STEP_PAUSE_MS);
+    }, AOC_FADE_ANIMATION_MS);
 };
 
 window.addEventListener('load', function () {
