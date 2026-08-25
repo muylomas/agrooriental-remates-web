@@ -674,6 +674,7 @@ h5.aoc-piques-btn {
 
 .aoc-lot-offer .btn.bid-action-button {
     width: 100%;
+    height: 45px;
     font-size: 1.35rem;
 }
 
