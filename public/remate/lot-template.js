@@ -170,7 +170,7 @@ const lotCarouselTemplate =
                     </div>
                 </div>
                 <div class="card-body px-3">
-                    <h4 class="text-truncate card-title text-uppercase fs-5 mt-3 m-0">
+                    <h4 class="text-truncate card-title text-uppercase fs-5 m-0">
                         __lot_equineName__
                     </h4>
                     <p class="text-truncate mb-2">
@@ -179,7 +179,7 @@ const lotCarouselTemplate =
                     <p class="aoc-meta">
                         <b>__lot_type__</b><span class="aoc-dot-sep">•</span><b>RP __lot_equineRP__</b><span class="aoc-dot-sep">•</span><b>__lot_equineHair__</b>
                     </p>
-                    <div class="aoc-price-row">
+                    <div class="aoc-price-row pt-0">
                         <h1 class="text-primary m-0"><span class="fs-5">__lot_currency__</span> __lot_lastPriceAuction_formatted__</h1>
                         <a class="btn bid-action-button fs-5 lh-sm" href="#lote-__lot_subId__">Ver lote</a>
                     </div>
