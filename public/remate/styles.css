@@ -561,6 +561,7 @@ input[id^="auction-bid-price-"] {
     border-radius: 4px !important;
     font-weight: 600;
     transform: none !important;
+    font-size: 1rem !important;
 }
 
 #remate-lotes .btn.aoc-lot-tag:active,
