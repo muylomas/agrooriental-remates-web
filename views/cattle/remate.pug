@@ -36,12 +36,14 @@ block content
                       | Catálogo
 
           #aoc-carousel-wrap.aoc-carousel-wrap.d-none
-            button.aoc-arrow.aoc-prev.btn.btn-dark.btn-rounded.btn-icon(aria-label="Anterior")
-              i.mdi.mdi-chevron-left
-            button.aoc-arrow.aoc-next.btn.btn-dark.btn-rounded.btn-icon(aria-label="Siguiente")
-              i.mdi.mdi-chevron-right
-            #aocTrack.aoc-carousel-track
-            #aocDots.aoc-dots
+            h4.aoc-carousel-title Se están viendo y ofertando en este momento
+            .aoc-carousel-body
+              button.aoc-arrow.aoc-prev.btn.btn-dark.btn-rounded.btn-icon(aria-label="Anterior")
+                i.mdi.mdi-chevron-left
+              button.aoc-arrow.aoc-next.btn.btn-dark.btn-rounded.btn-icon(aria-label="Siguiente")
+                i.mdi.mdi-chevron-right
+              #aocTrack.aoc-carousel-track
+              #aocDots.aoc-dots
 
         #loading-lots.pt-5.pb-3.m-0
           h3.text-center.text-white Buscando lotes del remate...

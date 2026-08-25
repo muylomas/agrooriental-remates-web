@@ -702,8 +702,20 @@ h5.aoc-piques-btn {
 /* ---- Carrusel de Destacados ---- */
 
 .aoc-carousel-wrap {
-    position: relative;
     margin-bottom: 4px;
+}
+
+.aoc-carousel-title {
+    color: #ffffff;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    margin: 0 0 8px;
+    padding: 0 8px;
+}
+
+.aoc-carousel-body {
+    position: relative;
 }
 
 .aoc-carousel-track {
