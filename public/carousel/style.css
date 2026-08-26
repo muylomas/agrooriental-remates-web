@@ -233,7 +233,10 @@ html.fsvs #fsvs-body>* {
 
 html.fsvs.no-hijack {
     overflow: auto;
-    position: relative
+    position: relative;
+    height: auto;
+    width: auto;
+    min-height: 100%
 }
 
 html.fsvs.no-hijack #fsvs-body {
