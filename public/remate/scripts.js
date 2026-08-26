@@ -125,12 +125,13 @@ function loginSwal() {
 (function () {
     const scrollThreshold = 5;
 
-    // La página usa el layout "fsvs" (html.fsvs), cuyo CSS fija y le pone
-    // overflow:hidden al <html> aunque el plugin de scroll a pantalla
-    // completa nunca se inicialice acá. Eso deja a "window" sin scroll
-    // propio, así que el scroll real puede terminar ocurriendo en
-    // document.documentElement o document.body según el navegador.
-    // Tomamos el mayor de los tres para detectarlo sin importar cuál sea.
+    // El layout "fsvs" (html.fsvs) llegó a fijar el <html> con
+    // overflow:hidden aunque acá nunca se inicialice el plugin de scroll a
+    // pantalla completa (se corrigió agregando "no-hijack" en
+    // home-baseHTML.pug). Igual dejamos esta detección tomando el mayor
+    // entre los tres orígenes posibles de scrollTop, por las dudas de que
+    // algún navegador termine scrolleando document.documentElement o
+    // document.body en vez de "window".
     const getScrollTop = function () {
         return Math.max(
             window.scrollY || 0,
@@ -139,13 +140,17 @@ function loginSwal() {
         );
     };
 
+    const getHeaders = function () {
+        return document.querySelectorAll(".balance-header.fixed-top");
+    };
+
     let lastScrollTop = getScrollTop();
 
     // capture:true para engancharnos aunque el scroll ocurra en un
     // contenedor interno en vez de en window (los eventos "scroll" de
     // elementos no burbujean, pero sí se capturan de arriba hacia abajo).
     window.addEventListener("scroll", function () {
-        const headers = document.querySelectorAll(".balance-header.fixed-top");
+        const headers = getHeaders();
         if (!headers.length) {
             return;
         }
@@ -166,4 +171,20 @@ function loginSwal() {
 
         lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
     }, { passive: true, capture: true });
+
+    // Al volver de background (iOS restaura la pestaña desde bfcache sin
+    // recargar ni disparar "scroll"), forzamos que la barra vuelva a
+    // mostrarse y resincronizamos la posición conocida con la real, para
+    // que no quede pegada oculta hasta el próximo scroll hacia abajo.
+    const resetHeaderOnResume = function () {
+        getHeaders().forEach((header) => header.classList.remove("header-hidden"));
+        lastScrollTop = getScrollTop();
+    };
+
+    window.addEventListener("pageshow", resetHeaderOnResume);
+    document.addEventListener("visibilitychange", function () {
+        if (document.visibilityState === "visible") {
+            resetHeaderOnResume();
+        }
+    });
 })();
