@@ -938,15 +938,7 @@ h5.aoc-piques-btn {
     display: flex;
     flex-direction: column;
     gap: 10px;
-}
-
-.remate-en-vivo__wa-btn {
-    gap: 10px;
-}
-
-.remate-en-vivo__wa-btn:hover {
-    opacity: .9;
-}
+} 
 
 /* Desktop: video a la izquierda, WhatsApp a la derecha */
 @media (min-width: 768px) {
