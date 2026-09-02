@@ -942,9 +942,6 @@ h5.aoc-piques-btn {
 
 /* Desktop: video a la izquierda, WhatsApp a la derecha */
 @media (min-width: 768px) {
-    .remate-en-vivo {
-        padding: 40px;
-    }
 
     .remate-en-vivo__main {
         flex-direction: row;
