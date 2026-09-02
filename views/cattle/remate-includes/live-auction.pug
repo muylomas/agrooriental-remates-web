@@ -5,9 +5,11 @@ link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Poppins:400
 -
   // TODO: actualizar antes de cada remate (o cablear a un campo del
   // panel de administración si se agrega uno para el remate activo).
-  var remateEnVivoVideoId = 'rc2R8ACPgsU';
-  var remateEnVivoWhatsappCinthia = '59899419545';
-  var remateEnVivoWhatsappCamilo = '59899492041';
+  const remateEnVivoVideoId = 'rc2R8ACPgsU';
+  const remateEnVivoWhatsappCinthia = '59899419545';
+  const remateEnVivoWhatsappCamilo = '59899492041';
+  const message = "Hola! Estoy viendo el remate y tengo unas consultas para hacerte.";
+  const encodedMessage = encodeURIComponent(message)
 
 section.remate-en-vivo.pb-5
   div
@@ -19,10 +21,10 @@ section.remate-en-vivo.pb-5
     .remate-en-vivo__video-wrap
       iframe(src=`https://www.youtube.com/embed/${remateEnVivoVideoId}?controls=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&autoplay=1&mute=1&playsinline=1`, title="Transmisión en vivo del remate", allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture", allowfullscreen)
     .remate-en-vivo__contacts
-      a.btn.bid-action-button.rounded-pill.fs-5.fw-bold.lh-sm(href=`https://wa.me/${remateEnVivoWhatsappCinthia}`, target="_blank", rel="noopener")
+      a.btn.bid-action-button.rounded-pill.fs-5.fw-bold.lh-sm(href=`https://wa.me/${remateEnVivoWhatsappCinthia}?text=${encodedMessage}`, target="_blank", rel="noopener")
         i.mdi.mdi-whatsapp.me-1
         span Contactar a Cyntia
-      a.btn.bid-action-button.rounded-pill.fs-5.fw-bold.lh-sm(href=`https://wa.me/${remateEnVivoWhatsappCamilo}`, target="_blank", rel="noopener")
+      a.btn.bid-action-button.rounded-pill.fs-5.fw-bold.lh-sm(href=`https://wa.me/${remateEnVivoWhatsappCamilo}?text=${encodedMessage}`, target="_blank", rel="noopener")
         svg.me-1(width="20", height="20", viewBox="0 0 24 24", fill="none", stroke="#ffffff", stroke-width="1.7", stroke-linecap="round", stroke-linejoin="round")
           path(d="M4 20l1.4-4.2A8 8 0 1 1 8.8 19L4 20Z")
           path(d="M8.6 9.6c.2 1.6 1.5 3.4 2.6 4.4 1.1 1 2.9 2 4.4 2.1")
