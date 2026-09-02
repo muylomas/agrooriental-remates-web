@@ -8,54 +8,54 @@ block content
 
   .content-wrapper.bg-agrooriental.p-0.m-0
 
-    //- Sección "Remate en Vivo" (transmisión YouTube + contacto WhatsApp).
-    //- TEMPORAL: habilitada solo para el cliente Id=1 (Martin López) mientras
-    //- se prueba; sacar el `if(userId == 1)` para habilitarla a todos los
-    //- clientes una vez validada.
-    if(userId == 1)
-      link(rel='preconnect', href='https://fonts.googleapis.com')
-      link(rel='preconnect', href='https://fonts.gstatic.com', crossorigin)
-      link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Poppins:400,600,700')
-
-      -
-        // TODO: actualizar antes de cada remate (o cablear a un campo del
-        // panel de administración si se agrega uno para el remate activo).
-        var remateEnVivoVideoId = 'rc2R8ACPgsU';
-        var remateEnVivoWhatsappCinthia = '59899419545';
-        var remateEnVivoWhatsappCamilo = '59899492041';
-
-      section.remate-en-vivo
-        .remate-en-vivo__badge
-          span.remate-en-vivo__dot
-          span.remate-en-vivo__badge-text En vivo
-        div
-          h2.remate-en-vivo__title Remate en vivo
-          p.remate-en-vivo__subtitle Seguí la transmisión en directo por YouTube y consultá por WhatsApp.
-        .remate-en-vivo__main
-          .remate-en-vivo__video-wrap
-            iframe(src=`https://www.youtube.com/embed/${remateEnVivoVideoId}`, title="Transmisión en vivo del remate", allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture", allowfullscreen)
-          .remate-en-vivo__contacts
-            a.remate-en-vivo__wa-btn(href=`https://wa.me/${remateEnVivoWhatsappCinthia}`, target="_blank", rel="noopener")
-              svg(width="20", height="20", viewBox="0 0 24 24", fill="none", stroke="#ffffff", stroke-width="1.7", stroke-linecap="round", stroke-linejoin="round")
-                path(d="M4 20l1.4-4.2A8 8 0 1 1 8.8 19L4 20Z")
-                path(d="M8.6 9.6c.2 1.6 1.5 3.4 2.6 4.4 1.1 1 2.9 2 4.4 2.1")
-              span Escribir a Cinthia por WhatsApp
-            a.remate-en-vivo__wa-btn(href=`https://wa.me/${remateEnVivoWhatsappCamilo}`, target="_blank", rel="noopener")
-              svg(width="20", height="20", viewBox="0 0 24 24", fill="none", stroke="#ffffff", stroke-width="1.7", stroke-linecap="round", stroke-linejoin="round")
-                path(d="M4 20l1.4-4.2A8 8 0 1 1 8.8 19L4 20Z")
-                path(d="M8.6 9.6c.2 1.6 1.5 3.4 2.6 4.4 1.1 1 2.9 2 4.4 2.1")
-              span Escribir a Camilo por WhatsApp
-
     if(auctions.length)
       each auctionItem in auctions
         include remate-includes/header.pug 
         
-        .row.mb-2
-          .col-12.position-relative(style="background:#1a1a1a")
-            img.mobile-only.w-100(title=auctionItem.name, src=auctionItem.bannerMobile)
-            img.desktop-only.w-50.mx-auto(title=auctionItem.name, src=auctionItem.bannerDesktop)
-            .position-absolute.top-0.end-0.pe-2.pt-2(onclick="auctionInfo()")
-                i.mdi.mdi-information-outline.icon-md.text-warning
+        //- Sección "Remate en Vivo" (transmisión YouTube + contacto WhatsApp).
+        //- TEMPORAL: habilitada solo para el cliente Id=1 (Martin López) mientras
+        //- se prueba; sacar el `if(userId == 1)` para habilitarla a todos los
+        //- clientes una vez validada.
+        if(userId == 1)
+          link(rel='preconnect', href='https://fonts.googleapis.com')
+          link(rel='preconnect', href='https://fonts.gstatic.com', crossorigin)
+          link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Poppins:400,600,700')
+
+          -
+            // TODO: actualizar antes de cada remate (o cablear a un campo del
+            // panel de administración si se agrega uno para el remate activo).
+            var remateEnVivoVideoId = 'rc2R8ACPgsU';
+            var remateEnVivoWhatsappCinthia = '59899419545';
+            var remateEnVivoWhatsappCamilo = '59899492041';
+
+          section.remate-en-vivo
+            .remate-en-vivo__badge
+              span.remate-en-vivo__dot
+              span.remate-en-vivo__badge-text En vivo
+            div
+              h2.remate-en-vivo__title Remate en vivo
+              p.remate-en-vivo__subtitle Seguí la transmisión en directo por YouTube y consultá por WhatsApp.
+            .remate-en-vivo__main
+              .remate-en-vivo__video-wrap
+                iframe(src=`https://www.youtube.com/embed/${remateEnVivoVideoId}`, title="Transmisión en vivo del remate", allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture", allowfullscreen)
+              .remate-en-vivo__contacts
+                a.remate-en-vivo__wa-btn(href=`https://wa.me/${remateEnVivoWhatsappCinthia}`, target="_blank", rel="noopener")
+                  svg(width="20", height="20", viewBox="0 0 24 24", fill="none", stroke="#ffffff", stroke-width="1.7", stroke-linecap="round", stroke-linejoin="round")
+                    path(d="M4 20l1.4-4.2A8 8 0 1 1 8.8 19L4 20Z")
+                    path(d="M8.6 9.6c.2 1.6 1.5 3.4 2.6 4.4 1.1 1 2.9 2 4.4 2.1")
+                  span Contactar a Cyntia
+                a.remate-en-vivo__wa-btn(href=`https://wa.me/${remateEnVivoWhatsappCamilo}`, target="_blank", rel="noopener")
+                  svg(width="20", height="20", viewBox="0 0 24 24", fill="none", stroke="#ffffff", stroke-width="1.7", stroke-linecap="round", stroke-linejoin="round")
+                    path(d="M4 20l1.4-4.2A8 8 0 1 1 8.8 19L4 20Z")
+                    path(d="M8.6 9.6c.2 1.6 1.5 3.4 2.6 4.4 1.1 1 2.9 2 4.4 2.1")
+                  span Contactar a Camilo
+        else
+          .row.mb-2
+            .col-12.position-relative(style="background:#1a1a1a")
+              img.mobile-only.w-100(title=auctionItem.name, src=auctionItem.bannerMobile)
+              img.desktop-only.w-50.mx-auto(title=auctionItem.name, src=auctionItem.bannerDesktop)
+              .position-absolute.top-0.end-0.pe-2.pt-2(onclick="auctionInfo()")
+                  i.mdi.mdi-information-outline.icon-md.text-warning
 
         #remate-lotes.row.portfolio-grid
           #filtros-remate.d-none
