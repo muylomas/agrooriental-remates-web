@@ -941,18 +941,7 @@ h5.aoc-piques-btn {
 }
 
 .remate-en-vivo__wa-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     gap: 10px;
-    background: #4e7b44;
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 15px;
-    padding: 14px 18px;
-    border-radius: 10px;
-    min-height: 44px;
 }
 
 .remate-en-vivo__wa-btn:hover {
