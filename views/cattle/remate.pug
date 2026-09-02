@@ -16,7 +16,7 @@ block content
         //- TEMPORAL: habilitada solo para el cliente Id=1 (Martin López) mientras
         //- se prueba; sacar el `if(userId == 1)` para habilitarla a todos los
         //- clientes una vez validada.
-        if(userId == 1)
+        if(userId == 1 || userId == 2)
           include remate-includes/live-auction.pug
         else
           .row.mb-2
