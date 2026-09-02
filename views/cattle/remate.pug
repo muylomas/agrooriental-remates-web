@@ -15,8 +15,10 @@ block content
         //- Sección "Remate en Vivo" (transmisión YouTube + contacto WhatsApp).
         //- TEMPORAL: habilitada solo para el cliente Id=1 (Martin López) mientras
         //- se prueba; sacar el `if(userId == 1)` para habilitarla a todos los
-        //- clientes una vez validada.
-        if(userId == 1 || userId == 2)
+        //- clientes una vez validada. También se habilita para todos a partir
+        //- de las 18:00 hora de Uruguay (UTC-3, sin horario de verano).
+        - var uruguayHour = (new Date().getUTCHours() - 3 + 24) % 24
+        if(userId == 1 || userId == 2 || userId == 3 || uruguayHour >= 17)
           include remate-includes/live-auction.pug
         else
           .row.mb-2
