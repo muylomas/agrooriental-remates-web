@@ -852,7 +852,6 @@ h5.aoc-piques-btn {
 .remate-en-vivo {
     background: #1a1a1a;
     font-family: 'Poppins', Helvetica, Arial, Verdana, sans-serif;
-    padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 16px;
