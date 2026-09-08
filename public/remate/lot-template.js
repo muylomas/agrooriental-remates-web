@@ -81,7 +81,7 @@ const lotTemplate =
                         </a>
                     </p>
                     <p class="aoc-lot-meta">
-                        <span class="aoc-lot-meta-item"><b>Categoría</b>__lot_type__</span>
+                        <span class="aoc-lot-meta-item text-uppercase"><b>Categoría</b>__lot_type__</span>
                         <span class="aoc-lot-meta-item"><b>RP</b>__lot_equineRP__</span>
                         <span id="lot-params-height-__lot_lotId__" class="aoc-lot-meta-item"><b>Alzada</b>__lot_equineHeight__</span>
                         <span class="aoc-lot-meta-item"><b>Pelo</b>__lot_equineHair__</span>
