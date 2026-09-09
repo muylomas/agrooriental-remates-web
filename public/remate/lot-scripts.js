@@ -435,6 +435,7 @@ function insertLotLoop(lots, indSLots, callback) {
 
         if (!__aux_intermediate_lastPrice) {
             $('#last-auction-bid-price-auction-' + lots[indSLots].lotId).html("---");
+            $('#bid-auction-actions-container-' + lots[indSLots].lotId).remove();
         }
 
         if (!lots[indSLots].lotAuctionStarted) {
