@@ -429,6 +429,12 @@ function insertLotLoop(lots, indSLots, callback) {
             $('#lot-params-height-' + lots[indSLots].lotId).remove();
         }
 
+        if (!lots[indSLots].equineDescription) {
+            $('#lot-params-description-' + lots[indSLots].lotId).remove();
+        }
+
+        lot - params - description
+
         if (!__aux_intermediate_lastPrice) {
             $('#last-auction-bid-price-auction-' + lots[indSLots].lotId).html("---");
         }

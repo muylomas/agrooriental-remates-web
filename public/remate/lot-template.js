@@ -80,13 +80,18 @@ const lotTemplate =
                             __lot_equineFather__ <b>Y</b> __lot_equineMother__
                         </a>
                     </p>
-                    <p class="aoc-lot-meta">
+                    <p class="aoc-lot-meta mb-0">
                         <span class="aoc-lot-meta-item text-uppercase"><b>Categoría</b>__lot_type__</span>
                         <span class="aoc-lot-meta-item"><b>RP</b>__lot_equineRP__</span>
                         <span id="lot-params-height-__lot_lotId__" class="aoc-lot-meta-item"><b>Alzada</b>__lot_equineHeight__</span>
                         <span class="aoc-lot-meta-item"><b>Pelo</b>__lot_equineHair__</span>
                         <span class="aoc-lot-meta-item"><b>Nacimiento</b>__lot_equineBirth__</span>
                         <span class="aoc-lot-meta-item"><b>Cabaña</b>__lot_equineCabin__</span>
+                    </p>
+
+
+                    <p id="lot-params-description-__lot_lotId__" class="aoc-lot-meta mt-0 border border-danger">
+                        __lot_equineDescription__
                     </p>
 
                     <div id="auction-bid-status-container-__lot_lotId__" class="row mb-1 d-none">

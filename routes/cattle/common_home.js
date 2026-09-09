@@ -231,6 +231,7 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
                         cattle_lots_equines.maternalGrandfather AS equineMaternalGrandfather,
                         cattle_lots_equines.aru AS equineARU,
                         cattle_lots_equines.youtube AS equineYoutube,
+                        cattle_lots_equines.description AS equineDescription,
                         IF(
                             cattle_complete.auctionStart < NOW() - INTERVAL 3 HOUR,
                             1,
