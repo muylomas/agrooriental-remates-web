@@ -637,14 +637,13 @@ input[id^="auction-bid-price-"] {
     font-size: 1.15rem;
     margin: 10px 0 12px;
     padding: 10px 12px;
-    background: rgba(255, 255, 255, .05);
+    background: rgba(0, 0, 0, .045);
     border-radius: 10px;
-    border-top: 1px solid rgba(255, 255, 255, .08);
+    border: 1px solid rgba(0, 0, 0, .06);
 }
 
 .aoc-lot-description {
     margin: 0;
-    padding-right: 92px;
 }
 
 .aoc-lot-description.aoc-lot-description-collapsed {
