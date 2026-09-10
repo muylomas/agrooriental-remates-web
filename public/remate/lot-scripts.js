@@ -430,7 +430,10 @@ function insertLotLoop(lots, indSLots, callback) {
         }
 
         if (!lots[indSLots].equineDescription) {
-            $('#lot-params-description-' + lots[indSLots].lotId).remove();
+            $('#lot-params-description-container-' + lots[indSLots].lotId).remove();
+        }
+        else {
+            updateLotDescriptionToggleVisibility(lots[indSLots].lotId);
         }
 
         if (!__aux_intermediate_lastPrice) {
@@ -463,6 +466,23 @@ function insertLotLoop(lots, indSLots, callback) {
 
 function openYoutubeLink(link) {
     window.open(link, '_blank');
+}
+
+function toggleLotDescription(lotId) {
+    const $description = $('#lot-params-description-' + lotId);
+    const $toggle = $('#lot-params-description-toggle-' + lotId);
+    const isCollapsed = $description.toggleClass('aoc-lot-description-collapsed').hasClass('aoc-lot-description-collapsed');
+    $toggle.text(isCollapsed ? 'Mostrar más' : 'Mostrar menos');
+}
+
+function updateLotDescriptionToggleVisibility(lotId) {
+    const $description = $('#lot-params-description-' + lotId);
+    const $toggle = $('#lot-params-description-toggle-' + lotId);
+    if (!$description.length || !$toggle.length) {
+        return;
+    }
+    const overflows = $description[0].scrollHeight > $description[0].clientHeight + 1;
+    $toggle.toggleClass('d-none', !overflows);
 };
 
 function goToLotById() {

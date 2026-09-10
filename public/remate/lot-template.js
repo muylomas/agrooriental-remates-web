@@ -90,9 +90,19 @@ const lotTemplate =
                     </p>
 
 
-                    <p id="lot-params-description-__lot_lotId__" class="aoc-lot-meta mt-0 border border-danger">
-                        __lot_equineDescription__
-                    </p>
+                    <div id="lot-params-description-container-__lot_lotId__" class="aoc-lot-description-wrapper mt-0">
+                        <p id="lot-params-description-__lot_lotId__" class="aoc-lot-description aoc-lot-description-collapsed mb-0">
+                            __lot_equineDescription__
+                        </p>
+                        <button
+                            id="lot-params-description-toggle-__lot_lotId__"
+                            type="button"
+                            class="aoc-lot-description-toggle"
+                            onclick="javascript:toggleLotDescription(__lot_lotId__)"
+                        >
+                            Mostrar más
+                        </button>
+                    </div>
 
                     <div id="auction-bid-status-container-__lot_lotId__" class="row mb-1 d-none">
                         <div class="col-12 p-0 m-0">

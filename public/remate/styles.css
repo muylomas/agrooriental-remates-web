@@ -630,6 +630,55 @@ input[id^="auction-bid-price-"] {
     font-weight: 700;
 }
 
+/* Descripción del lote: expandible/colapsable con botón "Mostrar más" */
+.aoc-lot-description-wrapper {
+    position: relative;
+    display: block;
+    font-size: 1.15rem;
+    margin: 10px 0 12px;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, .05);
+    border-radius: 10px;
+    border-top: 1px solid rgba(255, 255, 255, .08);
+}
+
+.aoc-lot-description {
+    margin: 0;
+    padding-right: 92px;
+}
+
+.aoc-lot-description.aoc-lot-description-collapsed {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+}
+
+.aoc-lot-description-toggle {
+    position: absolute;
+    right: 6px;
+    bottom: 2px;
+    background: rgba(50, 50, 50, .85);
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 4px 14px;
+    font-size: .8rem;
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: nowrap;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .25);
+}
+
+.aoc-lot-description-toggle:hover,
+.aoc-lot-description-toggle:focus {
+    background: rgba(20, 20, 20, .95);
+    color: #fff;
+}
+
 /* Precio + oferta en la misma fila, y PIQUES acomodado para ocupar menos alto */
 .aoc-lot-bid-row {
     display: flex;
