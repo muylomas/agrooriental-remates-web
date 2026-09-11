@@ -100,7 +100,7 @@ const lotTemplate =
                             class="aoc-lot-description-toggle"
                             onclick="javascript:toggleLotDescription(__lot_lotId__)"
                         >
-                            Mostrar más
+                            más
                         </button>
                     </div>
 

@@ -472,7 +472,7 @@ function toggleLotDescription(lotId) {
     const $description = $('#lot-params-description-' + lotId);
     const $toggle = $('#lot-params-description-toggle-' + lotId);
     const isCollapsed = $description.toggleClass('aoc-lot-description-collapsed').hasClass('aoc-lot-description-collapsed');
-    $toggle.text(isCollapsed ? 'Mostrar más' : 'Mostrar menos');
+    $toggle.text(isCollapsed ? 'más' : 'menos');
 }
 
 function updateLotDescriptionToggleVisibility(lotId) {
