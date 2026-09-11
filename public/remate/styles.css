@@ -647,7 +647,7 @@ input[id^="auction-bid-price-"] {
 }
 
 /* Expandida (sin colapsar): más aire abajo para que el botón no tape la última línea */
-.aoc-lot-description-wrapper:has(.aoc-lot-description:not(.aoc-lot-description-collapsed)) {
+.aoc-lot-description-wrapper:has(.aoc-lot-description:not(.aoc-lot-description-collapsed)):has(.aoc-lot-description-toggle:not(.d-none)) {
     padding-bottom: 35px;
 }
 
