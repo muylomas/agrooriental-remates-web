@@ -646,6 +646,11 @@ input[id^="auction-bid-price-"] {
     margin: 0;
 }
 
+/* Expandida (sin colapsar): más aire abajo para que el botón no tape la última línea */
+.aoc-lot-description-wrapper:has(.aoc-lot-description:not(.aoc-lot-description-collapsed)) {
+    padding-bottom: 20px;
+}
+
 .aoc-lot-description.aoc-lot-description-collapsed {
     display: -webkit-box;
     -webkit-box-orient: vertical;
