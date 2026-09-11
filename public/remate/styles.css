@@ -664,7 +664,7 @@ input[id^="auction-bid-price-"] {
 .aoc-lot-description-toggle {
     position: absolute;
     right: 6px;
-    bottom: 2px;
+    bottom: 10px;
     background: rgba(50, 50, 50, .85);
     color: #fff;
     border: none;
