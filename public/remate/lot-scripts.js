@@ -483,6 +483,10 @@ function updateLotDescriptionToggleVisibility(lotId) {
     }
     const overflows = $description[0].scrollHeight > $description[0].clientHeight + 1;
     $toggle.toggleClass('d-none', !overflows);
+    if (!overflows) {
+        // El texto entra completo en 2 líneas: sin recorte ni degradado que estorbe la lectura.
+        $description.removeClass('aoc-lot-description-collapsed');
+    }
 };
 
 function goToLotById() {
