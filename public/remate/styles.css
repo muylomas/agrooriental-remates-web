@@ -457,7 +457,7 @@ input[id^="auction-bid-price-"] {
     font-size: .85rem;
     font-weight: 400;
     opacity: .85;
-    margin-left: 1px;
+    margin-left: 0 !important;
 }
 
 .countdown-container h4:has(> span[id^="countdown-hours-"])::after {
