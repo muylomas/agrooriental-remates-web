@@ -91,7 +91,7 @@ function loginSwal() {
                                                 <option value="5">+595</option>
                                             </select>
                                         </div>
-                                        <input class="form-control" type="number" name="phoneNumber" placeholder="99099099" min="91000000" max="99999999">
+                                        <input class="form-control" type="number" name="phoneNumber" placeholder="99099099">
                                     </div>
                                 </div>
                                 <button class="btn btn-block btn-warning text-dark btn-lg font-weight-medium w-100" type="submit"> Ingresar</button>
