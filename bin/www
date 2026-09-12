@@ -2,14 +2,24 @@
 
 /**
  * Polyfill Web Crypto API for Node.js runtimes where `globalThis.crypto`
- * isn't available by default (Node < 19). The AWS SDK v3 (@smithy/core)
- * requires `crypto.getRandomValues` and throws
+ * isn't usable. The AWS SDK v3 (@smithy/core) requires
+ * `crypto.getRandomValues` and throws
  * "TypeError: getRandomValues is not a function" without it.
+ *
+ * `globalThis.crypto` isn't defined at all before Node 19, and even
+ * `require('crypto').webcrypto` (experimental since Node 15) doesn't have a
+ * working `getRandomValues` until Node 17.4 — see
+ * https://github.com/nodejs/node/issues/49272. This server currently runs
+ * Node 16, so we implement `getRandomValues` ourselves on top of the
+ * classic `crypto.randomFillSync`, which has been available since Node 7.
  * Must run before anything that pulls in the AWS SDK (e.g. ../app).
  */
 if (typeof globalThis.crypto === 'undefined' || typeof globalThis.crypto.getRandomValues !== 'function') {
-  const { webcrypto } = require('crypto');
-  globalThis.crypto = webcrypto;
+  const nodeCrypto = require('crypto');
+  globalThis.crypto = {
+    ...globalThis.crypto,
+    getRandomValues: (typedArray) => nodeCrypto.randomFillSync(typedArray),
+  };
 }
 
 /**
