@@ -88,6 +88,7 @@ function loginSwal() {
                                                 <option value="2">+54</option>
                                                 <option value="3">+56</option>
                                                 <option value="4">+1</option>
+                                                <option value="5">+595</option>
                                             </select>
                                         </div>
                                         <input class="form-control" type="number" name="phoneNumber" placeholder="99099099" min="91000000" max="99999999">
