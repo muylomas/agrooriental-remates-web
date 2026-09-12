@@ -44,7 +44,7 @@ const lotTemplate =
                                     --
                                 </span>
                             </h4>
-                            <h4 class="countdown-time-separators-__lot_lotId__ mb-0 d-inline-block text-center p-2">
+                            <h4 class="countdown-time-separators-__lot_lotId__ mb-0 d-inline-block text-center p-2 px-0">
                                 <span class="text-white">:</span>
                             </h4>
                             <h4 class="mb-0 d-inline-block text-center p-2">
@@ -52,7 +52,7 @@ const lotTemplate =
                                     --
                                 </span>
                             </h4>
-                            <h4 class="countdown-time-separators-__lot_lotId__ mb-0 d-inline-block text-center p-2">
+                            <h4 class="countdown-time-separators-__lot_lotId__ mb-0 d-inline-block text-center p-2 px-0">
                                 <span class="text-white">:</span>
                             </h4>
                             <h4 class="mb-0 d-inline-block text-center p-2">
