@@ -87,7 +87,7 @@ function loginSwal() {
                                                 <option value="1">🇺🇾 +598</option>
                                                 <option value="2">🇦🇷 +54</option>
                                                 <option value="3">🇨🇱 +56</option>
-                                                <option value="4">🇺🇲 +1</option>
+                                                <option value="4">🇺🇸 +1</option>
                                                 <option value="6">🇧🇷 +55</option>
                                                 <option value="5">🇵🇾 +595</option>
                                                 <option value="7">🇩🇪 +49</option>
