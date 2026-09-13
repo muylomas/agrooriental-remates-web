@@ -84,11 +84,13 @@ function loginSwal() {
                                     <div class="input-group">
                                         <div class="input-group-prepend m-0 p-0">
                                             <select class="form-control px-2 py-1 h-100" name="phoneCountry"">
-                                                <option value="1">+598</option>
-                                                <option value="2">+54</option>
-                                                <option value="3">+56</option>
-                                                <option value="4">+1</option>
-                                                <option value="5">+595</option>
+                                                <option value="1">🇺🇾 +598</option>
+                                                <option value="2">🇦🇷 +54</option>
+                                                <option value="3">🇨🇱 +56</option>
+                                                <option value="4">🇺🇲 +1</option>
+                                                <option value="6">🇧🇷 +55</option>
+                                                <option value="5">🇵🇾 +595</option>
+                                                <option value="7">🇩🇪 +49</option>
                                             </select>
                                         </div>
                                         <input class="form-control" type="number" name="phoneNumber" placeholder="99099099">
