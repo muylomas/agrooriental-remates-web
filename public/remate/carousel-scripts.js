@@ -177,6 +177,22 @@ function rebuildFeaturedSlots(featuredLots) {
     rebuildFeaturedDots();
 };
 
+// Cuando todos los lotes muestran "Finalizada" (ver generalTimer en
+// countdowns.js) el carrusel se oculta y no se vuelve a mostrar. El polling
+// sigue corriendo igual (lo usa la recarga temporal de /lots/refresh).
+function aocAllLotsEnded() {
+    const lotIds = Object.keys(endDates);
+    return lotIds.length > 0 && lotIds.every(function (lotId) { return endDates[lotId] <= Date.now(); });
+};
+
+function hideFeaturedLotsCarouselIfEnded() {
+    if (aocWrap && aocAllLotsEnded()) {
+        aocWrap.classList.add('d-none');
+        return true;
+    }
+    return false;
+};
+
 function initFeaturedLotsCarousel() {
     aocWrap = document.getElementById('aoc-carousel-wrap');
     aocTrack = document.getElementById('aocTrack');
@@ -194,7 +210,9 @@ function initFeaturedLotsCarousel() {
     }
 
     rebuildFeaturedSlots(featuredLots);
-    aocWrap.classList.remove('d-none');
+    if (!hideFeaturedLotsCarouselIfEnded()) {
+        aocWrap.classList.remove('d-none');
+    }
 
     bindCarouselControls();
 
@@ -204,8 +222,12 @@ function initFeaturedLotsCarousel() {
 // ---- Actualización periódica (cada AOC_REFRESH_INTERVAL_MS) ----
 
 function refreshFeaturedLotsCarousel() {
-    $.get('/api/cattle/lots/refresh')
+    $.get('/api/cattle/lots/refresh?v=2')
         .done(function (response) {
+            if (hideFeaturedLotsCarouselIfEnded()) {
+                return;
+            }
+
             const freshLots = (response && response.lots && response.lots.length) ? response.lots : null;
             if (freshLots) {
                 aocLotsSource = freshLots;

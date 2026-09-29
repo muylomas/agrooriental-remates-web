@@ -163,6 +163,7 @@ try {
   console.warn('[assets] public-dist/manifest.json not found — run `npm run build:assets`. Falling back to unminified assets.');
 }
 app.locals.asset = (originalPath) => assetManifest[originalPath] || originalPath;
+app.locals.liveAuction = require('./helpers/live-auction');
 
 const middleware_authentication = require('./middlewares/authentication');
 

@@ -40,5 +40,7 @@ function generalTimer(lotId) {
         $('.countdown-time-separators-' + lotId).remove();
 
         $('#countdown-auction-ended-' + lotId).removeClass("d-none");
+
+        hideFeaturedLotsCarouselIfEnded();
     }
 };

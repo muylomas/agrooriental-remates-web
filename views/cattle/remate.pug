@@ -6,19 +6,22 @@ block content
   script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js')
   script(src='https://code.jquery.com/ui/1.14.1/jquery-ui.min.js')
 
+  //- Sección "Remate en Vivo" (transmisión YouTube + contacto WhatsApp).
+  //- Cuándo está activa se define en helpers/live-auction.js.
+  - const liveAuctionOn = liveAuction.isOn()
+  //- Si la página se renderizó antes de que se active, se recarga una sola
+  //- vez en ese momento (calculado con el reloj del servidor, no el del
+  //- cliente). Tras la recarga el servidor ya renderiza la sección en vivo,
+  //- así que no se vuelve a programar.
+  - const liveAuctionReloadMs = liveAuction.msUntilOn()
+
   .content-wrapper.bg-agrooriental.p-0.m-0
 
     if(auctions.length)
       each auctionItem in auctions
-        include remate-includes/header.pug 
-        
-        //- Sección "Remate en Vivo" (transmisión YouTube + contacto WhatsApp).
-        //- TEMPORAL: habilitada solo para el cliente Id=1 (Martin López) mientras
-        //- se prueba; sacar el `if(userId == 1)` para habilitarla a todos los
-        //- clientes una vez validada. También se habilita para todos a partir
-        //- de las 18:00 hora de Uruguay (UTC-3, sin horario de verano).
-        - var uruguayHour = (new Date().getUTCHours() - 3 + 24) % 24
-        if(userId == 1)
+        include remate-includes/header.pug
+
+        if(liveAuctionOn)
           include remate-includes/live-auction.pug
         else
           .row.mb-2
@@ -113,7 +116,11 @@ block content
     var endDates = {};
 
     var countdownTimers = {};
-  
+
+  if(!liveAuctionOn && liveAuctionReloadMs > 0)
+    script.
+      setTimeout(function () { location.reload(); }, #{liveAuctionReloadMs + 2000});
+
   script(src='/sweetalert.min.js')
   script(src='/vendors/jquery_toast/jquery.toast.min.js')
   script(src='/majestic/owlcarousel/owl.carousel.min.js')

@@ -3,6 +3,7 @@ const router = express.Router();
 const searchProc = require('./search');
 const newForm = require('./newLotForm');
 const saveProc = require('./save');
+const liveAuction = require('../../../helpers/live-auction');
 
 router.post('/search/for/map', function (req, res, next) {
     if (
@@ -64,6 +65,16 @@ router.post('/lot/saved/delete', function (req, res, next) {
 });
 
 router.get('/lots/refresh', function (req, res, next) {
+    // TEMPORAL (remate en vivo, ver helpers/live-auction.js): las páginas abiertas antes del
+    // deploy no traen el setTimeout de recarga, pero sí este polling vía
+    // $.get sin dataType, así que jQuery ejecuta la respuesta si viene como
+    // JavaScript. Las páginas nuevas mandan ?v=2 y nunca reciben esto, por lo
+    // que cada pestaña vieja recarga una sola vez.
+    if (!req.query.v && liveAuction.isOn()) {
+        res.type('application/javascript').send('location.reload();');
+        return;
+    }
+
     searchProc.refreshLots(
         req.sessionID,
         function (replyLots) {
