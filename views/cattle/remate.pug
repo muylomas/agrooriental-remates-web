@@ -18,7 +18,7 @@ block content
         //- clientes una vez validada. También se habilita para todos a partir
         //- de las 18:00 hora de Uruguay (UTC-3, sin horario de verano).
         - var uruguayHour = (new Date().getUTCHours() - 3 + 24) % 24
-        if(false)
+        if(userId == 1)
           include remate-includes/live-auction.pug
         else
           .row.mb-2
