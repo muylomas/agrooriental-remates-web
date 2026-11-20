@@ -45,6 +45,7 @@ const passport = require('passport');
 const crons = require('./crons/scheduler');
 
 const routes = require('./routes/index');
+const seguimiento = require('./routes/seguimiento');
 
 const web_login = require('./routes/auth/login');
 const web_register = require('./routes/auth/register');
@@ -86,6 +87,11 @@ app.use(function (req, res, next) {
     if (req.url.indexOf(".well-known/acme-challenge") != -1) {
       next();
     }
+    // The RuralIA tracking host is under agrooriental.com.uy: keep the same host (the branch
+    // below rebuilds it as *.agrooriental.uy).
+    else if (req.hostname === seguimiento.DOMINIO) {
+      res.redirect('https://' + req.hostname + req.url);
+    }
     else if (req.subdomains.length) {
       res.redirect('https://' + req.subdomains.reverse().join(".") + '.agrooriental.uy' + req.url);
     }
@@ -94,6 +100,16 @@ app.use(function (req, res, next) {
     }
     else
       next();
+  }
+});
+
+// RuralIA app tracking links (routes/seguimiento.js), only for their host and before CORS,
+// sessions and auth. ACME challenges go on to the static /public like every other host.
+app.use((req, res, next) => {
+  if (req.hostname === seguimiento.DOMINIO && req.url.indexOf(".well-known/acme-challenge") == -1) {
+    seguimiento(req, res, next);
+  } else {
+    next();
   }
 });
 
