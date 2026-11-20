@@ -121,7 +121,16 @@ const sslOptions = {
   rejectUnauthorized: false
 };
 
+const sslOptions2 = {
+  ca: fs.readFileSync('/etc/ssl/seguimiento_chain.pem'),
+  key: fs.readFileSync('/etc/ssl/seguimiento_privkey.pem'),
+  cert: fs.readFileSync('/etc/ssl/seguimiento_cert.pem'),
+  requestCert: false,
+  rejectUnauthorized: false
+};
+
 const https = require('https').Server(sslOptions, app);
+https.addContext('seguimiento.agrooriental.com.uy', sslOptions2);
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
