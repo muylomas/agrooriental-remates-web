@@ -115,3 +115,4 @@ dist
 **/node_modules/
 **/uploads/
 aws_credentials.ini
+public/.well-known/acme-challenge/
