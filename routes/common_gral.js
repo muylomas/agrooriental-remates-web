@@ -1,21 +1,9 @@
 const mime = require('mime');
 const fs = require('fs');
 const sha512 = require('js-sha512');
-const ChartJsImage = require('chartjs-to-image');
-const myChart = new ChartJsImage();
-const SES = require("./aws_ses_email_sender");
 const S3 = require("./aws_s3_uploader");
 
 function Common() { }
-
-Common.prototype.duplicateObject = function (input) {
-    var output = {};
-    for (var indIn in input) {
-        output[indIn] = input[indIn];
-    }
-
-    return output;
-}
 
 Common.prototype.redirectSavingSession = function (req, res, url) {
     req.session.save(function (err) {
@@ -87,16 +75,6 @@ Common.prototype.uploadFile = function (fileName, folder, fields, callback) {
     );
 };
 
-Common.prototype.randomProductImage = function () {
-    var left_side_image_array = [
-        'https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/login/posters/remate-1.jpg',
-        'https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/login/posters/remate-2.jpg',
-        'https://agro-oriental-remates.s3.us-west-1.amazonaws.com/images/login/posters/remate-3.jpg',
-    ];
-    var __index_image_random = Math.floor(Math.random() * left_side_image_array.length);
-    return left_side_image_array[__index_image_random] + "?v=" + Math.floor(Math.random() * 1000000);
-};
-
 Common.prototype.randomString = function (length) {
     var result = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -115,58 +93,6 @@ Common.prototype.randomStringNumbers = function (length) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
-};
-
-Common.prototype.sendPlainTextEmail = function (toArray, source, subject, content, callback) {
-
-    var params = {
-        Destination: {
-            ToAddresses: toArray
-        },
-        Source: source,
-        Message: {
-            Subject: {
-                Data: subject
-            },
-            Body: {
-                Html: {
-                    Data: content
-
-                },
-                Text: {
-                    Data: content
-                }
-            }
-        }
-    };
-
-    SES.email_sender(
-        params,
-        function (err, data) {
-            if (err) {
-                callback(true, err);
-            }
-            else {
-                callback(false, data);
-            }
-        }
-    );
-};
-
-Common.prototype.getMonths = function () {
-    return new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
-};
-
-Common.prototype.createChartImage = function (type, data, options, width, height) {
-    myChart.setConfig({
-        type: type,
-        data: data,
-        options: options,
-    });
-
-    myChart.setWidth(width).setHeight(height).setBackgroundColor('white');
-
-    return myChart.getUrl();
 };
 
 module.exports = new Common();

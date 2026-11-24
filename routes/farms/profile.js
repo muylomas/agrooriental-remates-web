@@ -1,7 +1,6 @@
 const connection = require('../connection_db');
 const common_auth = require('../common_auth');
 const common_farms = require('./common');
-const { fillColor } = require('pdfkit');
 
 function getCattle(farmId, callback) {
     let __aux_farms = [];

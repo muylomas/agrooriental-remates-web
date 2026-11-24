@@ -49,10 +49,4 @@ Common.prototype.basic = function (sessionID, callback) {
 };
 
 // True if the email is correct, false if fails test
-Common.prototype.verifyEmail = function (email) {
-    const formatEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    return formatEmail.test(email);
-};
-
 module.exports = new Common();

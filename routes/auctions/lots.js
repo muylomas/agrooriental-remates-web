@@ -2,28 +2,6 @@ const connection = require('../connection_db');
 
 function Common() { }
 
-Common.prototype.getActiveLots = function (callback) {
-    connection.query(
-        `
-            SELECT *
-            FROM cattle_complete
-            WHERE 
-                cattle_complete.active = 1
-            ORDER BY cattle_complete.lotId DESC
-            LIMIT 0, 3
-        `,
-        function (err, results) {
-            if (err) {
-                console.log(err);
-                callback({});
-            }
-            else {
-                callback(results);
-            }
-        }
-    );
-};
-
 Common.prototype.getAuctionsByLotId = function (lotId, callback) {
     let acutionBids = [];
 
