@@ -1,33 +1,31 @@
 .row.w-100.balance-header.align-items-center.m-0.p-0.px-3.pb-4.fixed-top
   .col-md-12.m-0.p-0
-    .d-flex.justify-content-between.flex-wrap.mt-3
-      .d-flex.align-items-center.flex-wrap
+    .d-flex.justify-content-between.align-items-center.flex-wrap.mt-3
+      //- Izquierda: acciones del remate, con formato de botón.
+      .d-flex.align-items-center.header-actions
+        if(multipleAuctions)
+          a.btn.header-action-button.header-action-icon(href='/', title='Inicio', aria-label='Volver al inicio')
+            i.mdi.mdi-arrow-left
+        a.btn.header-action-button(href='javascript:auctionInfo()')
+          | Info. y Condiciones
+      //- Derecha: Mis Piques y el avatar del usuario.
+      .d-flex.align-items-center
+        button#only-active-auctions-bids.btn.border-0.p-0.me-3.d-none(onclick="showActiveAuctionBids()")
+          .text-white.me-2(style="font-size: 15px;float: left;margin-top: 10px;")
+            b Mis Piques
+          i.mdi.mdi-toggle-switch-off.text-danger(style="font-size: 2.5rem;")
         - var __aux_style = ""
         if(customer)
           - __aux_style = customer.customerImage ? 'background-image:url(' + customer.customerImage + ');' : "";
         .user-profile-icon(style=__aux_style, onclick="window.location.href = '/usuario/perfil'")
           img.w-100(src='https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/transparent-pixel.png')
-        ul#header-nav-tabs.nav.nav-tabs.border-0(role='tablist')
-          if(multipleAuctions)
-            li.nav-item.ml-2
-              a.nav-link.text-white.pt-2(href='/')
-                i.mdi.mdi-arrow-left.me-1
-                b Inicio
-          li.nav-item.ml-2
-            a.nav-link.text-white.pt-2(href='javascript:auctionInfo()')  
-              b Info. y Condiciones
-      .d-flex.justify-content-between.align-items-center.align-items-end.flex-wrap
-        button#only-active-auctions-bids.btn.border-0.p-0.d-none(onclick="showActiveAuctionBids()")
-          .text-white.me-2(style="font-size: 15px;float: left;margin-top: 10px;")
-            b Mis Piques
-          i.mdi.mdi-toggle-switch-off.text-danger(style="font-size: 2.5rem;")
 
+//- Copia invisible que reserva el alto de la barra fija.
 .row.w-100.balance-header.align-items-center.m-0.p-0.px-3.pb-4.invisible
   .col-md-12.m-0.p-0
-    .d-flex.justify-content-between.flex-wrap.mt-3
-      .d-flex.align-items-center.flex-wrap
-        .user-profile-icon(style=__aux_style)
-          img.w-100(src='https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/transparent-pixel.png')
+    .d-flex.justify-content-between.align-items-center.flex-wrap.mt-3
+      .d-flex.align-items-center.header-actions
+        span.btn.header-action-button Info. y Condiciones
 
 script.
   auctionTerms = `!{auctionItem.terms}`;
