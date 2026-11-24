@@ -9,6 +9,12 @@ const homeFeed = require('./cattle/home');
 // la página para elegir (ver homeFeed.getViewParams).
 function renderAuction(req, res, auctionId) {
     common_auth.basic(req.sessionID, function (reply) {
+        // Sin sesión: si después se identifica (para ofertar o ver sus
+        // piques), el login lo devuelve a este remate y no a la home.
+        if (auctionId && !reply.user.id) {
+            req.session.redirectTo = req.originalUrl;
+        }
+
         homeFeed.getViewParams(
             reply.user,
             auctionId,

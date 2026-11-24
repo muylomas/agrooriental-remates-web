@@ -81,7 +81,13 @@ exports.authProcc = function (req, res, next) {
             "/ganado/lote/publicacion/",
             "/.well-known/acme-challenge",
             "/api/cattle/lot/auction/bids",
-            "/criollosparaganar"
+            "/criollosparaganar",
+            // Cada remate se puede ver sin sesión, igual que la home: lotes,
+            // precios, catálogo. Ofertar y ver los piques piden login desde
+            // la página (loginSwal en /remate/scripts.js).
+            "/remate/",
+            // Actualización del carrusel de Destacados de esas páginas.
+            "/api/cattle/lots/refresh"
           ];
 
           let exclude_urls_status = false;
