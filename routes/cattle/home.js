@@ -247,6 +247,10 @@ Common.prototype.getViewParams = function (user, auctionId, callback) {
             let indexParams = returnIndexParams;
 
             common_auctions.activeAuctions(function (returnAcutions) {
+                // Con más de un remate activo la home es la página para elegir:
+                // el remate muestra un enlace para volver a ella.
+                indexParams.multipleAuctions = returnAcutions.length > 1;
+
                 if (auctionId) {
                     const selectedAuctions = returnAcutions.filter(auction => auction.id == auctionId);
                     if (!selectedAuctions.length) {
