@@ -9,6 +9,33 @@ block content
     .remate-option { background: #1a1a1a; border-radius: 8px; overflow: hidden; }
     .remate-option a.remate-option-banner { display: block; }
 
+    /* Mismo formato que los botones de acción de los lotes (Ofertar, Ver lote):
+       ver "#remate-lotes .card .btn" y ".aoc-lot-offer .btn.bid-action-button"
+       en /remate/styles.css. */
+    .remate-option-actions { display: flex; gap: 10px; }
+    .remate-option-actions .btn {
+      flex: 1 1 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 45px;
+      padding: 0 16px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      line-height: 1;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, .35);
+      transition: transform .1s ease, box-shadow .1s ease;
+    }
+    .remate-option-actions .btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+    }
+    .remate-option-actions .btn i { font-size: 1.5rem; margin-right: 6px; }
+    @media (min-width: 768px) {
+      .remate-option-actions { flex: 0 0 auto; min-width: 380px; }
+    }
+
   .content-wrapper.bg-agrooriental.p-0.m-0
     .remates-choice.px-3.pt-4.pb-5
       h3.text-center.text-white.mb-4 Elegí el remate al que querés entrar
@@ -19,17 +46,17 @@ block content
           a.remate-option-banner(href=auctionUrl, title=auctionItem.name)
             img.mobile-only.w-100(alt=auctionItem.name, src=auctionItem.bannerMobile)
             img.desktop-only.w-50.mx-auto(alt=auctionItem.name, src=auctionItem.bannerDesktop)
-          .d-flex.justify-content-between.align-items-center.flex-wrap.p-3
-            .text-white.me-3
+          .d-md-flex.justify-content-between.align-items-center.p-3
+            .text-white.mb-3.mb-md-0.me-md-3
               h4.m-0= auctionItem.name
               if(auctionItem.lotsCount)
                 small #{auctionItem.lotsCount} #{auctionItem.lotsCount == 1 ? 'lote' : 'lotes'}
-            .d-flex.align-items-center.mt-2.mt-md-0
+            .remate-option-actions
               if(auctionItem.catalog)
-                a.btn.btn-danger.btn-icon-text.p-2.me-2(href=auctionItem.catalog, target="_blank")
-                  i.mdi.mdi-file-pdf.btn-icon-prepend
+                a.btn.btn-danger(href=auctionItem.catalog, target="_blank")
+                  i.mdi.mdi-file-pdf
                   | Catálogo
-              a.btn.bid-action-button.fs-5.px-4(href=auctionUrl)
+              a.btn.bid-action-button(href=auctionUrl)
                 | Ir al remate
 
     include remate-includes/footer.pug
