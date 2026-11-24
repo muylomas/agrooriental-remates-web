@@ -26,7 +26,9 @@ if [ $changed = 1 ]; then
     # needed right below to build public-dist/. It's regenerated on every
     # deploy now (see scripts/build-assets.js) instead of being committed,
     # so there's no separate "remember to rebuild before pushing" step.
-    if sudo runuser -l ubuntu -c 'cd '"$(pwd)"' && npm install && npm run build:assets'; then
+    # --no-audit/--no-fund: keep the deploy log to real problems. Check
+    # vulnerabilities separately with `npm audit`.
+    if sudo runuser -l ubuntu -c 'cd '"$(pwd)"' && npm install --no-audit --no-fund && npm run build:assets'; then
         sudo runuser -l ubuntu -c 'NODE_ENV=production pm2 reload all'
     else
         echo "pull-if-changes: build failed, skipping pm2 reload (old process keeps serving)" >&2
