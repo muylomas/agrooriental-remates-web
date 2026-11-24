@@ -236,14 +236,34 @@ function getCustomerActiveBids(customerId, callback) {
 
 function Common() { }
 
-Common.prototype.getViewParams = function (user, callback) {
+// auctionId: el remate a mostrar (ruta /remate/:auctionId). Sin él (la home):
+//   - 1 remate activo  -> se muestra ese remate, como siempre.
+//   - 2 o más          -> página para elegir a qué remate entrar.
+//   - ninguno          -> la página de remate vacía, como siempre.
+Common.prototype.getViewParams = function (user, auctionId, callback) {
     common_cattle.getViewParamsTemplate(
         user,
         function (returnIndexParams) {
             let indexParams = returnIndexParams;
 
             common_auctions.activeAuctions(function (returnAcutions) {
+                if (auctionId) {
+                    const selectedAuctions = returnAcutions.filter(auction => auction.id == auctionId);
+                    if (!selectedAuctions.length) {
+                        // Remate inexistente o ya no activo: a la home.
+                        callback('/', {}, "redirect");
+                        return;
+                    }
+                    returnAcutions = selectedAuctions;
+                }
+                else if (returnAcutions.length > 1) {
+                    indexParams.auctions = returnAcutions;
+                    callback('cattle/remates', indexParams, "render");
+                    return;
+                }
+
                 indexParams.auctions = returnAcutions;
+                indexParams.auctionId = returnAcutions.length ? returnAcutions[0].id : 0;
 
                 common_cattle_home.getLots(
                     user.id,
@@ -302,8 +322,8 @@ Common.prototype.getViewParams = function (user, callback) {
                                 );
                             }
                         );
-                    }
-
+                    },
+                    indexParams.auctionId
                 );
             });
         }
@@ -374,7 +394,7 @@ Common.prototype.getLotsForMap = function (userId, params, callback) {
 // Usado por el polling del carrusel de Destacados (cada 15s, ver /remate/carousel-scripts.js).
 // Trae los lotes tal como al cargar la página (sin filtros de mapa) pero liviano:
 // solo suma las imágenes, sin razas/edades/promedios que no usa el carrusel.
-Common.prototype.getLotsRefresh = function (userId, callback) {
+Common.prototype.getLotsRefresh = function (userId, auctionId, callback) {
     let indexParams = {
         lots: [],
         lotsIds: [],
@@ -398,7 +418,8 @@ Common.prototype.getLotsRefresh = function (userId, callback) {
                     callback(returnIndexParamsImages.lots);
                 }
             );
-        }
+        },
+        auctionId
     );
 };
 

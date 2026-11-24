@@ -34,7 +34,10 @@ function getCustomerFarms(userId, callback) {
 
 function Common() { }
 
-Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCaracteristics, cattleWintering, cattleSearchText, callback) {
+// auctionId (opcional, va al final para no tocar a los demás llamadores): si
+// viene, solo trae los lotes de ese remate. Sin él trae los de todos los
+// remates activos, como antes.
+Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCaracteristics, cattleWintering, cattleSearchText, callback, auctionId) {
     let lotsIds = [];
     let lots = [];
 
@@ -115,6 +118,13 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
                 else if (cattleWintering == "breeding") {
                     cattleWinteringQueryString = " AND cattle_types.wintering = 0 ";
                 }
+            }
+
+            let auctionQueryString = "";
+            let auctionQueryVals = [];
+            if (auctionId) {
+                auctionQueryString = " AND cattle_complete.auctionId = ? ";
+                auctionQueryVals = [parseInt(auctionId, 10)];
             }
 
             let cattleSearchTextString = [];
@@ -268,6 +278,7 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
                         ` + cattleCaracteristicsQueryString + `
                         ` + cattleWinteringQueryString + `
                         ` + cattleSearchTextQueryString + `
+                        ` + auctionQueryString + `
                     GROUP BY cattle_complete.lotId
                     ORDER BY cattle_complete.lotId ASC
                 `,
@@ -277,7 +288,8 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
                     .concat(customerFarms)
                     .concat(latLngArray)
                     .concat(cattleTypesQueryVals)
-                    .concat(cattleSearchTextString),
+                    .concat(cattleSearchTextString)
+                    .concat(auctionQueryVals),
                 function (err, results) {
                     if (err) {
                         console.log(err);

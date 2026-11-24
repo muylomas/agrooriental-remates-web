@@ -5,14 +5,13 @@ const common_auth = require('./common_auth');
 
 const homeFeed = require('./cattle/home');
 
-router.get('/', function (req, res, next) {
+// auctionId = 0 es la home: muestra el remate activo o, si hay más de uno,
+// la página para elegir (ver homeFeed.getViewParams).
+function renderAuction(req, res, auctionId) {
     common_auth.basic(req.sessionID, function (reply) {
-        /*if (reply.err) {
-            res.render('index-logout', {},);
-        }
-        else {*/
         homeFeed.getViewParams(
             reply.user,
+            auctionId,
             function (viewURLDir, indexParams, type) {
                 if (type == "redirect") {
                     res.redirect(viewURLDir);
@@ -27,8 +26,15 @@ router.get('/', function (req, res, next) {
                 }
             }
         );
-        //}
     });
+}
+
+router.get('/', function (req, res, next) {
+    renderAuction(req, res, 0);
+});
+
+router.get('/remate/:auctionId(\\d+)', function (req, res, next) {
+    renderAuction(req, res, parseInt(req.params.auctionId, 10));
 });
 
 module.exports = router;

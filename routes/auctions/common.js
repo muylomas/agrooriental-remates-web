@@ -14,6 +14,7 @@ Common.prototype.activeAuctions = function (callback) {
             WHERE
                 auctions.status = 1
             GROUP BY auctions.id
+            ORDER BY auctions.id ASC
         `,
         function (err, results) {
             if (err) {

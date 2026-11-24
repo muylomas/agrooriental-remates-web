@@ -48,7 +48,7 @@ Common.prototype.auctionBidsByLotId = function (sessionID, lotId, callback) {
     });
 };
 
-Common.prototype.refreshLots = function (sessionID, callback) {
+Common.prototype.refreshLots = function (sessionID, auctionId, callback) {
     common_auth.basic(sessionID, function (reply) {
         if (reply.err) {
             callback([]);
@@ -56,6 +56,7 @@ Common.prototype.refreshLots = function (sessionID, callback) {
         else {
             cattle_home.getLotsRefresh(
                 reply.user.id,
+                auctionId,
                 function (returnLots) {
                     callback(returnLots);
                 }

@@ -75,8 +75,12 @@ router.get('/lots/refresh', function (req, res, next) {
         return;
     }
 
+    // auctionId lo manda carousel-scripts.js (remate que se está viendo). Las
+    // pestañas abiertas antes de este cambio no lo mandan y reciben los lotes
+    // de todos los remates activos, como antes.
     searchProc.refreshLots(
         req.sessionID,
+        parseInt(req.query.auctionId, 10) || 0,
         function (replyLots) {
             res.json({
                 lots: replyLots,

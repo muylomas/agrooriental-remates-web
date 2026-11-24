@@ -222,7 +222,7 @@ function initFeaturedLotsCarousel() {
 // ---- Actualización periódica (cada AOC_REFRESH_INTERVAL_MS) ----
 
 function refreshFeaturedLotsCarousel() {
-    $.get('/api/cattle/lots/refresh?v=2')
+    $.get('/api/cattle/lots/refresh?v=2&auctionId=' + encodeURIComponent(currentAuctionId))
         .done(function (response) {
             if (hideFeaturedLotsCarouselIfEnded()) {
                 return;
