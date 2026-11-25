@@ -112,7 +112,7 @@ function loginSwal() {
                                     Crear una cuenta
                                 </a>
                                 <p class="mt-2 text-white">
-                                    Al crear una cuenta, adhieres a los <a class="css-1qaijid r-bcqeeo r-qvutc0 r-poiln3 r-1loqt21" href="#" target="_blank" role="link">Términos y Condiciones</a> y a la <a class="css-1qaijid r-bcqeeo r-qvutc0 r-poiln3 r-1loqt21" href="#" target="_blank" role="link">Política de Privacidad</a>, incluyendo el uso de <a class="css-1qaijid r-bcqeeo r-qvutc0 r-poiln3 r-1loqt21" href="" target="_blank">Cookies.</a>
+                                    Al crear una cuenta, adhieres a los <a class="css-1qaijid r-bcqeeo r-qvutc0 r-poiln3 r-1loqt21" href="/terminos-y-condiciones" target="_blank" role="link">Términos y Condiciones</a> y a la <a class="css-1qaijid r-bcqeeo r-qvutc0 r-poiln3 r-1loqt21" href="/politica-de-privacidad" target="_blank" role="link">Política de Privacidad</a>, incluyendo el uso de <a class="css-1qaijid r-bcqeeo r-qvutc0 r-poiln3 r-1loqt21" href="/politica-de-privacidad#cookies" target="_blank">Cookies.</a>
                                 </p>
                             </form>
                         </div>

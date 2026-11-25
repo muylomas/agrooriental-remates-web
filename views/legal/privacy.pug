@@ -1,0 +1,102 @@
+extends layout
+
+block content
+  h1 Política de Privacidad y Cookies
+  p.legal-updated Última actualización: #{legal.lastUpdated}
+
+  nav.legal-toc
+    ol
+      li: a(href='#responsable') Responsable
+      li: a(href='#datos') Datos que recolectamos
+      li: a(href='#finalidad') Para qué los usamos
+      li: a(href='#comunicacion') Con quién los compartimos
+      li: a(href='#conservacion') Conservación y seguridad
+      li: a(href='#derechos') Tus derechos
+      li: a(href='#cookies') Cookies
+      li: a(href='#cambios') Cambios en esta política
+
+  p
+    | En Agro Oriental cuidamos los datos personales de quienes usan el sitio de remates. Esta política explica qué datos tratamos, para qué y cuáles son tus derechos, conforme a la Ley N° 18.331 de Protección de Datos Personales y su normativa reglamentaria.
+
+  h2#responsable 1. Responsable
+  p
+    | El responsable de la base de datos es #{legal.companyName}
+    if legal.rut
+      | , RUT #{legal.rut}
+    if legal.address
+      | , con domicilio en #{legal.address}
+    | . Podés contactarnos
+    include contact
+    | .
+
+  h2#datos 2. Datos que recolectamos
+  h3 Datos que nos das
+  ul
+    li Al registrarte: nombre, apellido, documento de identidad, número de celular, email y contraseña (que se guarda cifrada).
+    li Si operás a nombre de una sociedad o con un establecimiento: los datos de la sociedad (razón social, RUT) y del establecimiento que cargues.
+  h3 Datos que se generan al usar el sitio
+  ul
+    li Las ofertas que realizás, los lotes en los que participás y las compras adjudicadas.
+    li Datos técnicos: dirección IP, tipo de navegador y dispositivo, páginas visitadas y fecha y hora de acceso.
+
+  h2#finalidad 3. Para qué los usamos
+  ul
+    li Crear y administrar tu cuenta, y verificar tu celular mediante un código por SMS.
+    li Habilitarte para ofertar, registrar tus ofertas y gestionar las compras y ventas resultantes de cada remate (facturación, cobro, entrega y flete).
+    li Comunicarnos con vos sobre tus operaciones y enviarte avisos sobre remates, que podés pedir dejar de recibir en cualquier momento.
+    li Mantener la seguridad del sitio y prevenir fraudes o usos indebidos.
+    li Analizar de forma agregada el uso del sitio para mejorarlo.
+    li Cumplir obligaciones legales, contables y tributarias.
+
+  h2#comunicacion 4. Con quién los compartimos
+  p No vendemos tus datos. Solo los compartimos cuando es necesario para prestar el servicio:
+  ul
+    li Con la contraparte de una operación (comprador o vendedor), en la medida necesaria para concretarla.
+    li Con proveedores que nos prestan servicios, como alojamiento y almacenamiento en la nube (Amazon Web Services), envío de SMS y medición de audiencia (Google Analytics). Estos proveedores pueden estar ubicados fuera de Uruguay y tratan los datos solo para prestarnos esos servicios.
+    li Con transportistas, escritorios rurales o entidades financieras que intervengan en la operación.
+    li Con autoridades públicas, cuando una norma o una orden judicial lo exija.
+
+  h2#conservacion 5. Conservación y seguridad
+  p
+    | Conservamos tus datos mientras tengas una cuenta activa y, después, durante los plazos necesarios para cumplir obligaciones legales o atender eventuales reclamos. Aplicamos medidas técnicas y organizativas razonables para protegerlos contra pérdida, acceso no autorizado o alteración.
+
+  h2#derechos 6. Tus derechos
+  p
+    | Tenés derecho a acceder a tus datos, pedir su rectificación o actualización, su inclusión o su supresión, y a oponerte a su tratamiento con fines publicitarios. Podés ejercerlos
+    include contact
+    | , indicando tu nombre y documento de identidad. Responderemos dentro de los plazos previstos en la Ley N° 18.331.
+  p
+    | Si considerás que no fueron atendidos, podés presentar un reclamo ante la Unidad Reguladora y de Control de Datos Personales (URCDP).
+
+  h2#cookies 7. Cookies
+  p
+    | Las cookies son pequeños archivos que el sitio guarda en tu navegador. Usamos las siguientes:
+  .table-wrap
+    table
+      thead
+        tr
+          th Cookie
+          th Tipo
+          th Para qué sirve
+          th Duración
+      tbody
+        tr
+          td agroOrientaApp
+          td Necesaria
+          td Mantiene tu sesión iniciada y recuerda a qué remate volver después de identificarte.
+          td Sesión
+        tr
+          td _ga, _ga_*
+          td Analítica (Google Analytics)
+          td Mide de forma agregada cuántas personas visitan el sitio y qué páginas usan.
+          td Hasta 2 años
+  p
+    | La cookie necesaria es indispensable para ingresar y ofertar. Las de analítica podés bloquearlas o borrarlas desde la configuración de tu navegador, o instalando el
+    a(href='https://tools.google.com/dlpage/gaoptout', target='_blank', rel='noopener') complemento de inhabilitación de Google Analytics
+    | ; el sitio va a seguir funcionando.
+
+  h2#cambios 8. Cambios en esta política
+  p
+    | Podemos actualizar esta política. La versión vigente es la publicada en esta página, con su fecha de actualización. Si los cambios son relevantes, te lo vamos a avisar por el sitio o por los medios de contacto que tengamos registrados. Ver también los
+    a(href='/terminos-y-condiciones') Términos y Condiciones
+    | .

@@ -1,0 +1,8 @@
+//- Cómo contactar a la empresa; usa los datos de LEGAL_INFO (routes/legal.js).
+//- Empieza con espacio porque se incluye a continuación de texto. Se usa
+//- interpolación #[...] para no depender de espacios al final de línea, que
+//- los editores suelen borrar.
+if legal.contactEmail
+  |  escribiendo a #[a(href='mailto:' + legal.contactEmail) #{legal.contactEmail}]
+else
+  |  a través de los canales de atención de #{legal.companyName}

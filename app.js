@@ -53,6 +53,7 @@ const web_resetPass = require('./routes/change-password');
 const web_logout = require('./routes/logout');
 
 const web_criollosparaganar = require('./routes/criollosparaganar');
+const web_legal = require('./routes/legal');
 
 // Controlled development
 const web_customers = require('./routes/customers');
@@ -250,6 +251,7 @@ app.use('/reset-password', web_resetPass);
 app.use('/logout', web_logout);
 
 app.use('/criollosparaganar', web_criollosparaganar);
+app.use('/', web_legal);
 
 //API
 app.use('/api/accounts', api_accounts);

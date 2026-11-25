@@ -1,5 +1,19 @@
 const connection = require('../routes/connection_db');
 
+// Páginas legales (routes/legal.js): las puede leer cualquiera, incluso quien
+// se está registrando y todavía no verificó el celular.
+const legal_urls = [
+  "/terminos-y-condiciones",
+  "/politica-de-privacidad",
+  "/politica-de-cookies",
+];
+
+function isLegalUrl(url) {
+  return legal_urls.some(function (legalUrl) {
+    return url.startsWith(legalUrl);
+  });
+}
+
 exports.authProcc = function (req, res, next) {
   if (!("session" in req)) {
     req.session = {
@@ -63,7 +77,7 @@ exports.authProcc = function (req, res, next) {
             );
           }
           else {
-            if (results[0].invitation || req.url.startsWith('/registro/codigo-verificacion'))
+            if (results[0].invitation || req.url.startsWith('/registro/codigo-verificacion') || isLegalUrl(req.url))
               next();
             else if (req.url.startsWith('/login') || req.url.startsWith('/ingresar'))
               next();
@@ -96,7 +110,7 @@ exports.authProcc = function (req, res, next) {
               exclude_urls_status = true;
           }
 
-          if (req.url == "" || req.url == "/")
+          if (req.url == "" || req.url == "/" || isLegalUrl(req.url))
             exclude_urls_status = true;
 
           if (!exclude_urls_status) {

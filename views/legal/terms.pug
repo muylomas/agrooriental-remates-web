@@ -1,0 +1,92 @@
+extends layout
+
+block content
+  h1 Términos y Condiciones
+  p.legal-updated Última actualización: #{legal.lastUpdated}
+
+  nav.legal-toc
+    ol
+      li: a(href='#aceptacion') Aceptación
+      li: a(href='#servicio') El servicio
+      li: a(href='#cuenta') Registro y cuenta
+      li: a(href='#ofertas') Ofertas en los remates
+      li: a(href='#adjudicacion') Adjudicación y operación
+      li: a(href='#lotes') Información de los lotes
+      li: a(href='#obligaciones') Obligaciones del usuario
+      li: a(href='#responsabilidad') Responsabilidad
+      li: a(href='#propiedad') Propiedad intelectual
+      li: a(href='#modificaciones') Modificaciones
+      li: a(href='#ley') Ley aplicable y jurisdicción
+      li: a(href='#contacto') Contacto
+
+  h2#aceptacion 1. Aceptación
+  p
+    | Estos Términos y Condiciones regulan el uso del sitio de remates de #{legal.companyName}
+    if legal.rut
+      |  (RUT #{legal.rut})
+    | , en adelante "Agro Oriental". Al crear una cuenta, ingresar o realizar una oferta en el sitio, el usuario declara haber leído y aceptado estos Términos y Condiciones y la
+    a(href='/politica-de-privacidad') Política de Privacidad
+    | . Si no está de acuerdo, no debe utilizar el sitio.
+
+  h2#servicio 2. El servicio
+  p
+    | El sitio permite ver los remates de ganado y equinos organizados por Agro Oriental, consultar la información de cada lote (fotos, videos, descripción, precios de salida) y, para usuarios registrados y habilitados, realizar ofertas en línea durante el remate.
+  p
+    | Cada remate tiene además sus propias condiciones particulares (forma y plazo de pago, comisiones, entrega, flete, garantías, etc.), que se publican en la sección "Info. y Condiciones" del remate. Las condiciones particulares de un remate prevalecen sobre estos Términos en lo que tengan de específico.
+
+  h2#cuenta 3. Registro y cuenta
+  ul
+    li Para ofertar es necesario registrarse con datos verdaderos, completos y actualizados, y verificar el número de celular mediante el código que se envía por SMS.
+    li Solo pueden registrarse personas mayores de 18 años con capacidad legal para contratar, o quienes actúen en representación de una sociedad con facultades suficientes.
+    li La cuenta es personal e intransferible. El usuario es responsable de mantener la confidencialidad de su acceso y de toda actividad realizada desde su cuenta.
+    li Agro Oriental puede solicitar información adicional, aprobar, limitar o rechazar la habilitación para ofertar, y suspender o dar de baja cuentas cuando existan datos falsos, incumplimientos o un uso indebido del sitio.
+
+  h2#ofertas 4. Ofertas en los remates
+  ul
+    li Toda oferta realizada desde una cuenta es firme, vinculante e irrevocable, y obliga al usuario a concretar la compra si resulta adjudicatario.
+    li Antes de registrar una oferta el sitio pide confirmarla. El usuario debe revisar el lote, el monto y la modalidad (por ejemplo, precio por kilo o por animal) antes de confirmar.
+    li Las ofertas se ordenan según el momento en que son recibidas por el servidor de Agro Oriental. La hora y el registro del sistema son los que se toman como válidos.
+    li El rematador conduce el remate y puede, por razones fundadas, retirar lotes, modificar el orden, anular ofertas evidentemente erróneas o suspender el remate.
+    li Agro Oriental no garantiza que el sitio funcione sin interrupciones. Problemas de conexión, del dispositivo o de terceros que impidan ofertar a tiempo no dan derecho a reclamar la adjudicación de un lote.
+
+  h2#adjudicacion 5. Adjudicación y operación
+  ul
+    li El lote se adjudica a la mejor oferta vigente al cierre, siempre que supere el precio base o de reserva cuando exista.
+    li La operación se perfecciona conforme a las condiciones particulares del remate: forma de pago, plazos, comisiones, impuestos, documentación sanitaria y de propiedad, entrega y flete.
+    li En caso de incumplimiento del adjudicatario, Agro Oriental podrá dejar sin efecto la adjudicación, reclamar los daños y perjuicios que correspondan e inhabilitar la cuenta para futuros remates.
+
+  h2#lotes 6. Información de los lotes
+  p
+    | La información de los lotes (descripción, raza, edad, peso estimado, fotos y videos) es proporcionada por los vendedores y se publica de buena fe. Es responsabilidad del comprador revisar esa información y, cuando lo considere necesario, inspeccionar los animales o consultar a Agro Oriental antes de ofertar. Los pesos y cantidades definitivos son los que surgen de la entrega, según las condiciones del remate.
+
+  h2#obligaciones 7. Obligaciones del usuario
+  p El usuario se compromete a:
+  ul
+    li No ofertar sin intención real de compra ni realizar ofertas en nombre de terceros sin autorización.
+    li No interferir con el funcionamiento del sitio ni intentar acceder a cuentas o información de otros usuarios.
+    li No usar sistemas automatizados para ofertar o extraer información del sitio.
+    li Cumplir con la normativa vigente aplicable a la compraventa y traslado de animales.
+
+  h2#responsabilidad 8. Responsabilidad
+  p
+    | Agro Oriental actúa como organizador y rematador. No será responsable por daños derivados de interrupciones del servicio, fallas técnicas ajenas a su control, ni por el uso que el usuario haga de su cuenta. Las responsabilidades de las partes en cada operación de compraventa se rigen por las condiciones particulares del remate y la normativa aplicable.
+
+  h2#propiedad 9. Propiedad intelectual
+  p
+    | Las marcas, logos, textos, fotos, videos y demás contenidos del sitio pertenecen a Agro Oriental o a sus respectivos titulares. No pueden copiarse, reproducirse ni utilizarse con fines comerciales sin autorización previa y por escrito.
+
+  h2#modificaciones 10. Modificaciones
+  p
+    | Agro Oriental puede modificar estos Términos y Condiciones en cualquier momento. La versión vigente es la publicada en esta página, con su fecha de actualización. Los cambios no afectan las ofertas ya realizadas ni los remates en curso.
+
+  h2#ley 11. Ley aplicable y jurisdicción
+  p
+    | Estos Términos y Condiciones se rigen por las leyes de la República Oriental del Uruguay. Cualquier controversia será sometida a los tribunales competentes de la ciudad de Montevideo.
+
+  h2#contacto 12. Contacto
+  p
+    | Por consultas sobre estos Términos y Condiciones podés comunicarte
+    include contact
+    if legal.address
+      |  o en #{legal.address}
+    | .
