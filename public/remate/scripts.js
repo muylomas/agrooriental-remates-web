@@ -9,15 +9,18 @@ function findIndexByLotId(lotId) {
     return result;
 };
 
+// Alterna foto/video del lote. Al pasar a video, la foto queda visible
+// mientras el video carga (debajo de ella); cuando el video empieza a
+// reproducirse ("playing"), la clase video-playing hace un único fundido:
+// la foto se desvanece y deja ver el video sobre fondo oscuro (styles.css).
+// Si el navegador no llega a reproducirlo, la foto queda como estaba.
 function changeVideoImageDisplay(lotId) {
-    if (
-        !($("#image-" + lotId).is(":hidden"))
-    ) {
-        $("#image-" + lotId).hide();
+    const $container = $("#cattle-media-container-" + lotId);
 
+    if (!$("#video-" + lotId).length) {
         const indexById = findIndexByLotId(lotId);
         if (indexById.found && indexById.id in lots && lots[indexById.id].video) {
-            $("#cattle-media-container-" + lotId).prepend(
+            $container.prepend(
                 `
                     <video id="video-`+ lotId + `" class="position-absolute top-50 start-50 translate-middle" preload="auto" playsinline="" autoplay="autoplay" loop="" muted="">
                         <source id="video-source-`+ lotId + `" type="video/mp4" src="` + lots[indexById.id].video + `"/>
@@ -25,15 +28,11 @@ function changeVideoImageDisplay(lotId) {
                 `
             );
 
-            // El fondo se oscurece recién cuando el video empieza a verse (no al
-            // tocar el botón), con un fundido definido en styles.css. Si el
-            // navegador no reproduce el video, la imagen de fondo queda.
             const videoElement = document.getElementById("video-" + lotId);
-            if (videoElement) {
-                videoElement.addEventListener("playing", function () {
-                    $("#cattle-media-container-" + lotId).addClass("video-playing");
-                }, { once: true });
-            }
+            videoElement.addEventListener("playing", function () {
+                $container.addClass("video-playing");
+            }, { once: true });
+
             $("#view-in-youtube-" + lotId).show();
             $("#view-in-youtube-" + lotId).removeClass("d-none");
             $("#view-media-selector-" + lotId + " i").removeClass("mdi-video");
@@ -41,12 +40,10 @@ function changeVideoImageDisplay(lotId) {
             $("#view-media-selector-" + lotId + " i").addClass("mdi-camera");
             $("#view-media-selector-" + lotId).addClass("btn-primary");
         }
-
     }
     else {
-        $("#image-" + lotId).show();
+        $container.removeClass("video-playing");
         $("#video-" + lotId).remove();
-        $("#cattle-media-container-" + lotId).removeClass("video-playing");
         $("#view-in-youtube-" + lotId).hide();
         $("#view-media-selector-" + lotId + " i").removeClass("mdi-camera");
         $("#view-media-selector-" + lotId).removeClass("btn-primary");
