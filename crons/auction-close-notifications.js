@@ -34,21 +34,17 @@ function run() {
                 winner.customerName AS winnerName,
                 winner.phoneCountryCode AS winnerPhoneCountryCode,
                 winner.phoneNumber AS winnerPhoneNumber,
-                winnerCustomer.whatsappOptIn AS winnerOptIn,
                 seller.customerId AS sellerId,
                 seller.customerName AS sellerName,
                 seller.phoneCountryCode AS sellerPhoneCountryCode,
-                seller.phoneNumber AS sellerPhoneNumber,
-                sellerCustomer.whatsappOptIn AS sellerOptIn
+                seller.phoneNumber AS sellerPhoneNumber
             FROM cattle_complete
             LEFT JOIN auctions_bids_max ON auctions_bids_max.lotId = cattle_complete.lotId
             LEFT JOIN auctions_bids ON
                 auctions_bids.id = auctions_bids_max.auctionBidId AND
                 auctions_bids.lotId = cattle_complete.lotId
             LEFT JOIN customers_complete AS winner ON winner.customerId = auctions_bids.customerId
-            LEFT JOIN customers AS winnerCustomer ON winnerCustomer.id = auctions_bids.customerId
             LEFT JOIN customers_complete AS seller ON seller.customerId = cattle_complete.customerId
-            LEFT JOIN customers AS sellerCustomer ON sellerCustomer.id = cattle_complete.customerId
             WHERE
                 cattle_complete.statusId = 5 AND
                 cattle_complete.auctionEnd > NOW() - INTERVAL 3 HOUR - INTERVAL ? HOUR AND
@@ -71,7 +67,7 @@ function run() {
                 const sold = lot.price != null && !!lot.winnerId;
 
                 const winnerPhone = meta_tapa.telefonoE164(lot.winnerPhoneCountryCode, lot.winnerPhoneNumber);
-                if (sold && lot.winnerOptIn == 1 && winnerPhone) {
+                if (sold && winnerPhone) {
                     meta_tapa.enviarEvento(
                         "auction.won",
                         "lote-" + lot.lotId + "-adjudicado-" + lot.auctionEndKey,
@@ -86,7 +82,7 @@ function run() {
                 }
 
                 const sellerPhone = meta_tapa.telefonoE164(lot.sellerPhoneCountryCode, lot.sellerPhoneNumber);
-                if (lot.sellerId && lot.sellerOptIn == 1 && sellerPhone) {
+                if (lot.sellerId && sellerPhone) {
                     const datos = { idLote: String(lot.lotId), lote: lotNumber, vendido: sold };
                     if (sold) datos.monto = Number(lot.price);
                     meta_tapa.enviarEvento(

@@ -11,14 +11,31 @@ router.get('/', function (req, res, next) {
     res.render('auth/login', {},);
 });
 
+function newPhoneCustomer(newPhone) {
+    return {
+        id: 0,
+        invitation: 0,
+        phoneCountryCode: common_auth.phoneCountryCode(newPhone.phoneCountry),
+        phoneNumber: newPhone.phoneNumber,
+    };
+}
+
 // "¿No te llegó? Mandarlo por SMS" en la pantalla del código.
 router.post('/reenviar-sms', function (req, res, next) {
+    // Celular sin cuenta todavía (ver más abajo, POST /).
+    const newPhone = req.session.newPhone;
+    if (!(parseInt(req.body.userId, 10) > 0)) {
+        if (!newPhone) return res.redirect('/ingresar');
+        return common_auth.sendLoginCode(req, newPhoneCustomer(newPhone), "sms", function (params) {
+            res.render('auth/register-form', params);
+        });
+    }
+
     connection.query(
         `
             SELECT
                 customers.id AS id,
                 customers.invitation AS invitation,
-                customers.whatsappOptIn AS whatsappOptIn,
                 customers_complete.phoneCountryCode AS phoneCountryCode,
                 customers_complete.phoneNumber AS phoneNumber
             FROM customers
@@ -65,7 +82,6 @@ router.post('/', function (req, res, next) {
                     SELECT 
                         customers_complete.customerId AS id, 
                         customers.invitation AS invitation, 
-                        customers.whatsappOptIn AS whatsappOptIn,
                         customers_complete.phoneCountryCode AS phoneCountryCode,
                         customers_complete.phoneNumber AS phoneNumber
                     FROM customers_complete
@@ -85,6 +101,7 @@ router.post('/', function (req, res, next) {
                     else {
                         if (results.length) {
                             const customer = results[0];
+                            delete req.session.newPhone;
 
                             // sessionPhone ata la verificación del código a esta sesión.
                             // El código lo genera y lo valida Meta Tapa; ya no se guarda acá.
@@ -117,6 +134,19 @@ router.post('/', function (req, res, next) {
                                 }
                             );
 
+                        }
+                        else if (common_auth.phoneCountryCode(req.body.phoneCountry)) {
+                            // Celular sin cuenta: se le manda el código igual y, si lo
+                            // ingresa bien, se le piden nombre y apellido para crearla
+                            // (routes/auth/register.js). Hasta entonces no se crea nada,
+                            // así un número mal escrito no deja una cuenta a medias.
+                            req.session.newPhone = {
+                                phoneCountry: String(req.body.phoneCountry),
+                                phoneNumber: parseInt(req.body.phoneNumber, 10),
+                            };
+                            common_auth.sendLoginCode(req, newPhoneCustomer(req.session.newPhone), "whatsapp", function (params) {
+                                res.render('auth/register-form', params);
+                            });
                         }
                         else {
                             res.redirect('/ingresar');

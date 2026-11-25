@@ -116,7 +116,7 @@ function verificarCodigo(telefono, proposito, codigo, callback) {
     llamar('POST', '/Otp/Verificar', { telefono: telefono, proposito: proposito || 'login', codigo: String(codigo) }, callback);
 }
 
-// Avisos por WhatsApp. La web solo los manda a clientes con whatsappOptIn = 1.
+// Avisos por WhatsApp. Son parte del servicio: se mandan a todos los clientes.
 // tipo: "bid.outbid" | "auction.won" | "auction.closed".
 function enviarEvento(tipo, idempotencyKey, destinatario, datos, callback) {
     llamar(

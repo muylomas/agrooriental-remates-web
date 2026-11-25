@@ -5,8 +5,7 @@
 // buscan los clientes aprobados que todavía no se avisaron
 // (approvalNotified = 0, ver scripts/sql/2026-11-25-approval-notified.sql).
 //
-// - Solo se manda a quien aceptó recibir WhatsApp (whatsappOptIn = 1). Al resto
-//   se lo marca como avisado igual, para no revisarlo cada minuto.
+// - Sin teléfono válido se lo marca como avisado igual, para no revisarlo cada minuto.
 // - Si Meta Tapa lo registra (o ya lo tenía: misma idempotencyKey), se marca.
 // - Si Meta Tapa lo rechaza por datos (4xx), se marca y queda en el log: un
 //   reintento daría el mismo error.
@@ -36,7 +35,6 @@ function run() {
         `
             SELECT
                 customers.id AS id,
-                customers.whatsappOptIn AS whatsappOptIn,
                 customers_complete.customerName AS name,
                 customers_complete.phoneCountryCode AS phoneCountryCode,
                 customers_complete.phoneNumber AS phoneNumber
@@ -68,7 +66,7 @@ function run() {
 
             results.forEach(function (customer) {
                 const telefono = meta_tapa.telefonoE164(customer.phoneCountryCode, customer.phoneNumber);
-                if (customer.whatsappOptIn != 1 || !telefono) {
+                if (!telefono) {
                     markNotified(customer.id);
                     return done();
                 }

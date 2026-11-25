@@ -27,19 +27,37 @@ setInterval(function () {
     });
 }, 600000).unref();
 
+// Prefijos de las opciones de país de views/auth/login.pug (customers.phoneCountry).
+// Se usan para mandar el código a un celular que todavía no tiene cuenta.
+const PHONE_COUNTRY_CODES = {
+    "1": "+598",
+    "2": "+54",
+    "3": "+56",
+    "4": "+1",
+    "5": "+595",
+    "6": "+55",
+    "7": "+49",
+};
+
 function Common() { }
+
+Common.prototype.phoneCountryCode = function (phoneCountry) {
+    return PHONE_COUNTRY_CODES[String(phoneCountry)] || "";
+};
 
 // Pide a Meta Tapa el código de ingreso y arma los parámetros de la pantalla
 // del código (views/auth/register-form.pug).
-// customer: { id, invitation, whatsappOptIn, phoneCountryCode, phoneNumber }
+// customer: { id, invitation, phoneCountryCode, phoneNumber }. id = 0 es un
+// celular sin cuenta: después del código se le piden nombre y apellido.
 // canal: "whatsapp" o "sms".
 Common.prototype.sendLoginCode = function (req, customer, canal, callback) {
     const params = {
         verification: "phone",
-        userId: customer.id,
+        userId: customer.id || 0,
+        newCustomer: !customer.id,
+        phoneDisplay: (customer.phoneCountryCode || "") + " " + parseInt(customer.phoneNumber, 10),
         codeSent: true,
-        pendingApproval: customer.invitation != 1,
-        whatsappOptIn: customer.whatsappOptIn == 1,
+        pendingApproval: !!customer.id && customer.invitation != 1,
     };
 
     if (customer.invitation != 1 && !allowUnapprovedCode(req.ip)) {

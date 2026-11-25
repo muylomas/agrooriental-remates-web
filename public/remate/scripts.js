@@ -83,7 +83,7 @@ function loginSwal() {
                         <div class="auth-form-transparent text-left p-5 text-center">
                             <form method="post" name="loginForm" action="/login">
                                 <h2 class="text-white mb-2 w-100 text-center">Ingresar</h2>
-                                <h4 class="text-white mb-5 w-100 text-center">Para ofertar debes tener una cuenta y loguearte</h4>
+                                <h4 class="text-white mb-5 w-100 text-center">Para ofertar ingresá con tu celular. Te mandamos un código por WhatsApp; si es tu primera vez, después te pedimos tu nombre.</h4>
                                 
                                 
                                 <input type="hidden" name='loginMethodType' value='phone'>
@@ -103,13 +103,9 @@ function loginSwal() {
                                         <input class="form-control" type="number" name="phoneNumber" placeholder="99099099">
                                     </div>
                                 </div>
-                                <button class="btn btn-block btn-warning text-dark btn-lg font-weight-medium w-100" type="submit"> Ingresar</button>
-                                <h4 class="text-white mt-5 mb-3 w-100 text-left">No tenés cuenta?</h4>
-                                <a class="btn btn-inverse-light btn-fw border-white text-white btn-lg font-weight-medium w-100" href="/registro">
-                                    Crear una cuenta
-                                </a>
-                                <p class="mt-2 text-white">
-                                    Al crear una cuenta, adhieres a los <a class="css-1qaijid r-bcqeeo r-qvutc0 r-poiln3 r-1loqt21" href="/terminos-y-condiciones" target="_blank" role="link">Términos y Condiciones</a> y a la <a class="css-1qaijid r-bcqeeo r-qvutc0 r-poiln3 r-1loqt21" href="/politica-de-privacidad" target="_blank" role="link">Política de Privacidad</a>, incluyendo el uso de <a class="css-1qaijid r-bcqeeo r-qvutc0 r-poiln3 r-1loqt21" href="/politica-de-privacidad#cookies" target="_blank">Cookies.</a>
+                                <button class="btn btn-block btn-warning text-dark btn-lg font-weight-medium w-100" type="submit"> Mandame el código</button>
+                                <p class="mt-4 text-white">
+                                    Al ingresar, adherís a los <a class="css-1qaijid r-bcqeeo r-qvutc0 r-poiln3 r-1loqt21" href="/terminos-y-condiciones" target="_blank" role="link">Términos y Condiciones</a> y a la <a class="css-1qaijid r-bcqeeo r-qvutc0 r-poiln3 r-1loqt21" href="/politica-de-privacidad" target="_blank" role="link">Política de Privacidad</a>, incluyendo el uso de <a class="css-1qaijid r-bcqeeo r-qvutc0 r-poiln3 r-1loqt21" href="/politica-de-privacidad#cookies" target="_blank">Cookies.</a>
                                 </p>
                             </form>
                         </div>

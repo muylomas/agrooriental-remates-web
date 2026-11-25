@@ -17,7 +17,6 @@ function sendCodeToNewCustomer(req, res, customerId) {
             SELECT
                 customers.id AS id,
                 customers.invitation AS invitation,
-                customers.whatsappOptIn AS whatsappOptIn,
                 customers_complete.phoneCountryCode AS phoneCountryCode,
                 customers_complete.phoneNumber AS phoneNumber
             FROM customers
@@ -39,13 +38,139 @@ function sendCodeToNewCustomer(req, res, customerId) {
     );
 }
 
-/* GET page. */
+// La cuenta se crea desde /ingresar: si el celular no tiene cuenta, se le manda
+// el código y después se le piden nombre y apellido (POST /registro/datos).
 router.get('/', function (req, res, next) {
-    res.render(
-        'auth/register-form',
-        {
-            verification: false,
-            userId: 0,
+    res.redirect('/ingresar');
+});
+
+// Un celular sin cuenta tiene 30 minutos desde que verificó el código para
+// completar nombre y apellido.
+const NEW_PHONE_VERIFIED_MS = 30 * 60 * 1000;
+
+function verifiedNewPhone(req) {
+    const newPhone = req.session.newPhone;
+    if (!newPhone || !newPhone.verifiedAt || Date.now() - newPhone.verifiedAt > NEW_PHONE_VERIFIED_MS) {
+        return null;
+    }
+    return newPhone;
+}
+
+function loggedIn(req, res, pendingApproval) {
+    delete req.session.newPhone;
+    delete req.session.redirectTo;
+    // Sin aprobar: al llegar al sitio se le explica que todavía no puede
+    // ofertar (views/cattle/remate-includes/pending-approval.pug).
+    if (pendingApproval) {
+        req.session.pendingApprovalNotice = true;
+    }
+    common_gral.redirectSavingSession(req, res, "/");
+}
+
+// Nombre y apellido de un celular nuevo, ya verificado con el código.
+router.post('/datos', function (req, res, next) {
+    const newPhone = verifiedNewPhone(req);
+    if (!newPhone) {
+        return res.redirect('/ingresar');
+    }
+
+    const userName = String(req.body.userName || "").trim().slice(0, 100);
+    const userSurname = String(req.body.userSurname || "").trim().slice(0, 100);
+    if (!userName || !userSurname) {
+        return res.render('auth/register-form', {
+            verification: "datos",
+            userName: userName,
+            userSurname: userSurname,
+            error: "Completá tu nombre y tu apellido.",
+        });
+    }
+
+    connection.query(
+        `
+            SELECT id, invitation
+            FROM customers
+            WHERE
+                phoneCountry = ? AND
+                phoneNumber = ?
+        `,
+        [
+            newPhone.phoneCountry,
+            newPhone.phoneNumber,
+        ],
+        function (err, results) {
+            if (err) {
+                console.log(err);
+                return res.redirect('/ingresar');
+            }
+
+            // Se creó mientras tanto (otra pestaña): el celular ya está
+            // verificado, así que entra a esa cuenta.
+            if (results.length) {
+                const existing = results[0];
+                return connection.query(
+                    `UPDATE customers SET session = ? WHERE id = ?`,
+                    [req.sessionID, existing.id],
+                    function (err) {
+                        if (err) {
+                            console.log(err);
+                            return res.redirect('/ingresar');
+                        }
+                        loggedIn(req, res, existing.invitation != 1);
+                    }
+                );
+            }
+
+            // phonePassword: nadie lo usa, el código lo valida Meta Tapa.
+            const phonePassword = sha512("phone" + common_gral.randomStringNumbers(4));
+            connection.query(
+                `
+                    INSERT INTO customers SET
+                        name = ?,
+                        surname = ?,
+                        phoneCountry = ?,
+                        phoneNumber = ?,
+                        phonePassword = ?,
+                        sessionPhone = ?,
+                        session = ?,
+                        provider = "phone",
+                        email = NULL,
+                        invitation = 0
+                `,
+                [
+                    userName,
+                    userSurname,
+                    newPhone.phoneCountry,
+                    newPhone.phoneNumber,
+                    phonePassword,
+                    req.sessionID,
+                    req.sessionID,
+                ],
+                function (err) {
+                    if (err) {
+                        console.log(err);
+                        return res.render('auth/register-form', {
+                            verification: "datos",
+                            userName: userName,
+                            userSurname: userSurname,
+                            error: "No pudimos crear tu cuenta. Probá de nuevo.",
+                        });
+                    }
+
+                    aws_sms_sender.sms_sender(
+                        {
+                            Message:
+                                "Nuevo registro: " + userName + " " + userSurname +
+                                ", tel: " + common_auth.phoneCountryCode(newPhone.phoneCountry) + newPhone.phoneNumber +
+                                " https://gestion.agrooriental.uy/personas",
+                            PhoneNumber: "+59899492041",
+                        },
+                        function (error) {
+                        }
+                    );
+
+                    loggedIn(req, res, true);
+                }
+            );
         }
     );
 });
@@ -117,7 +242,6 @@ router.post('/', function (req, res, next) {
         // Nadie recibe este código: el que vale es el que manda Meta Tapa al ingresar.
         const phoneCodeNumber = common_gral.randomStringNumbers(4);
         const phonePassword = sha512("phone" + phoneCodeNumber);
-        const whatsappOptIn = req.body.whatsappOptIn == "1" ? 1 : 0;
 
         if (req.body.registerMethodType == "phone") {
             common_auth.verifyPhoneAvailability(
@@ -135,9 +259,7 @@ router.post('/', function (req, res, next) {
                                     sessionPhone = ?,
                                     provider = "phone",
                                     email = NULL,
-                                    invitation = 0,
-                                    whatsappOptIn = ?,
-                                    whatsappOptInDate = IF(? = 1, NOW(), NULL)
+                                    invitation = 0
                             `,
                             [
                                 req.body.userName,
@@ -146,8 +268,6 @@ router.post('/', function (req, res, next) {
                                 parseInt(req.body.phoneNumber, 10),
                                 phonePassword,
                                 req.sessionID,
-                                whatsappOptIn,
-                                whatsappOptIn,
                             ],
                             function (err, results) {
                                 if (err) {
@@ -217,24 +337,46 @@ router.post('/', function (req, res, next) {
 router.post('/codigo-verificacion', function (req, res, next) {
     const code = ["code1", "code2", "code3", "code4"].map((k) => String(req.body[k] || "")).join("");
     const userId = parseInt(req.body.userId, 10) || 0;
-    // La casilla solo cuenta si estaba en el formulario (whatsappOptInShown).
-    const whatsappOptIn = req.body.whatsappOptInShown == "1" ? (req.body.whatsappOptIn == "1" ? 1 : 0) : null;
+    const newPhone = userId ? null : req.session.newPhone;
+
+    if (!userId && !newPhone) {
+        return res.redirect('/ingresar');
+    }
 
     const showError = function (error) {
-        res.render(
-            'auth/register-form',
-            {
-                verification: "phone",
-                userId: userId,
-                codeSent: true,
-                whatsappOptIn: whatsappOptIn == 1,
-                error: error,
-            }
-        );
+        const params = {
+            verification: "phone",
+            userId: userId,
+            codeSent: true,
+            error: error,
+        };
+        if (newPhone) {
+            params.newCustomer = true;
+            params.phoneDisplay = common_auth.phoneCountryCode(newPhone.phoneCountry) + " " + newPhone.phoneNumber;
+        }
+        res.render('auth/register-form', params);
     };
 
-    if (!/^[0-9]{4}$/.test(code) || !userId) {
+    if (!/^[0-9]{4}$/.test(code)) {
         return showError("Ingresá los 4 números del código.");
+    }
+
+    // Celular sin cuenta: con el código bien, se le piden nombre y apellido.
+    if (newPhone) {
+        return meta_tapa.verificarCodigo(
+            meta_tapa.telefonoE164(common_auth.phoneCountryCode(newPhone.phoneCountry), newPhone.phoneNumber),
+            "login",
+            code,
+            function (reply) {
+                if (!reply.ok) {
+                    return showError(meta_tapa.mensajeError(reply));
+                }
+                newPhone.verifiedAt = Date.now();
+                req.session.save(function () {
+                    res.render('auth/register-form', { verification: "datos" });
+                });
+            }
+        );
     }
 
     connection.query(
@@ -273,16 +415,11 @@ router.post('/codigo-verificacion', function (req, res, next) {
                     connection.query(
                         `
                             UPDATE customers SET
-                                session = ?,
-                                -- MySQL asigna en orden: la fecha va antes de cambiar whatsappOptIn.
-                                whatsappOptInDate = IF(? IS NULL OR ? = whatsappOptIn, whatsappOptInDate, NOW()),
-                                whatsappOptIn = IF(? IS NULL, whatsappOptIn, ?)
+                                session = ?
                             WHERE id = ?
                         `,
                         [
                             req.sessionID,
-                            whatsappOptIn, whatsappOptIn,
-                            whatsappOptIn, whatsappOptIn,
                             userId,
                         ],
                         function (err) {
@@ -290,13 +427,7 @@ router.post('/codigo-verificacion', function (req, res, next) {
                                 console.log(err);
                                 return showError("No pudimos iniciar tu sesión. Probá de nuevo.");
                             }
-                            delete req.session.redirectTo;
-                            // Sin aprobar: al llegar al sitio se le explica que todavía no puede
-                            // ofertar (views/cattle/remate-includes/pending-approval.pug).
-                            if (pendingApproval) {
-                                req.session.pendingApprovalNotice = true;
-                            }
-                            common_gral.redirectSavingSession(req, res, "/");
+                            loggedIn(req, res, pendingApproval);
                         }
                     );
                 }

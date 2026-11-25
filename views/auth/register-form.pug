@@ -80,13 +80,6 @@ block content
                       option(value="7") 🇩🇪 +49
                   input.form-control(type="number", name="phoneNumber", placeholder="99099099")
 
-              .form-group.phone-form-input.text-left
-                .form-check.form-check-warning.m-0
-                  label.form-check-label.text-white
-                    input.form-check-input(type='checkbox', name='whatsappOptIn', value='1')
-                    i.input-helper
-                    | Quiero recibir por WhatsApp los avisos de mis ofertas y remates
-
               .form-group.email-form-input
                 input.form-control.text-center(type='email', name="email", placeholder='mi@email.com')
               .form-group.email-form-input
@@ -98,8 +91,22 @@ block content
             a.btn.btn-inverse-light.btn-fw.border-white.text-white.btn-lg.font-weight-medium.w-100(href='/ingresar') 
               | Ingresar
 
+          else if(verification == "datos")
+            h4.text-white.mt-5.mb-3.w-100.text-center Tu celular quedó verificado
+            p.text-white
+              | Completá tus datos para crear tu cuenta.
+            form(method='post', action='/registro/datos')
+              if(error)
+                p.text-warning.font-weight-bold= error
+              .form-group
+                input.form-control.text-left(type='text', name="userName", placeholder='Nombre', value=userName, required, autofocus)
+              .form-group
+                input.form-control.text-left(type='text', name="userSurname", placeholder='Apellido', value=userSurname, required)
+              button.btn.btn-block.btn-agrooriental.text-dark.btn-lg.font-weight-medium.w-100(type='submit')
+                | Crear cuenta
+
           else 
-            if(verification && userId)
+            if(verification && (userId || newCustomer))
               script.
                 $(document).ready(function () {
                   const inputElements = [...document.querySelectorAll('input.code-input')]
@@ -143,7 +150,11 @@ block content
                 if(error)
                   p.text-warning.font-weight-bold= error
                 if(notice)
-                  p.text-white= notice + " Ingresalo a continuación."
+                  p.text-white
+                    | #{notice} 
+                    if(phoneDisplay)
+                      | Lo mandamos al #[strong.text-nowrap= phoneDisplay]. 
+                    | Ingresalo a continuación.
                 else if(!codeSent)
                   p.text-white
                     | No pudimos mandarte el código. Volvé a ingresar con tu celular para pedir uno nuevo.
@@ -160,17 +171,13 @@ block content
                   .col-3.px-2
                     input.code-input.form-control.text-center.p-2(type='number', name="code4", min="0", max="9")
 
-                if(codeSent)
-                  .form-group.text-left
-                    input(type="hidden", name="whatsappOptInShown", value="1")
-                    .form-check.form-check-warning.m-0
-                      label.form-check-label.text-white
-                        input.form-check-input(type='checkbox', name='whatsappOptIn', value='1', checked=whatsappOptIn)
-                        i.input-helper
-                        | Quiero recibir por WhatsApp los avisos de mis ofertas y remates
-
                 button.btn.btn-block.btn-agrooriental.text-dark.btn-lg.font-weight-medium.w-100(type='submit')
                   | Verificar
+
+              if(newCustomer)
+                p.text-white.small.border.border-warning.rounded.p-2.mt-4
+                  | ¿No te llega? Revisá que el número esté bien escrito: si te equivocaste en algún dígito, el código no te va a llegar. 
+                  a.text-warning.font-weight-bold(href='/ingresar') Corregir el número
 
               if(codeSent)
                 form.mt-3(method='post', action='/ingresar/reenviar-sms')
@@ -178,6 +185,7 @@ block content
                   button.btn.btn-link.text-white.w-100(type='submit')
                     | ¿No te llegó? Mandarlo por SMS
 
+              if(codeSent && !newCustomer)
                 .position-absolute.bottom-0.start-50.translate-middle-x.p-5.w-100  
                   h4.text-white.mt-5.mb-3.w-100.text-center Ingresar con otra cuenta
                   a.btn.btn-inverse-light.btn-fw.border-white.text-white.btn-lg.font-weight-medium.w-100(href='/ingresar') 

@@ -42,13 +42,11 @@ function isBidOk(bid, lotId, callback) {
                 customers_complete.customerId AS customerId,
                 customers_complete.customerName AS customerName,
                 customers_complete.phoneCountryCode AS phoneCountryCode,
-                customers_complete.phoneNumber AS phoneNumber,
-                customers.whatsappOptIn AS whatsappOptIn
+                customers_complete.phoneNumber AS phoneNumber
             FROM cattle
             LEFT JOIN auctions_bids_max ON auctions_bids_max.lotId = cattle.id
             LEFT JOIN auctions_bids ON auctions_bids.id = auctions_bids_max.auctionBidId
             LEFT JOIN customers_complete ON customers_complete.customerId = auctions_bids.customerId
-            LEFT JOIN customers ON customers.id = auctions_bids.customerId
             WHERE cattle.id = ?
         `,
         [
@@ -74,8 +72,7 @@ function isBidOk(bid, lotId, callback) {
                     customerId: results[0].customerId,
                     customerName: results[0].customerName,
                     phoneCountryCode: results[0].phoneCountryCode,
-                    phoneNumber: results[0].phoneNumber,
-                    whatsappOptIn: results[0].whatsappOptIn,
+                    phoneNumber: results[0].phoneNumber
                 }
             }
             else {
@@ -100,7 +97,7 @@ function isSalePrice(lastBid, salePrice, lotId, callback) {
 // lote y teléfono.
 function notifyOutbid(customer, lotId, price) {
     const telefono = meta_tapa.telefonoE164(customer.phoneCountryCode, customer.phoneNumber);
-    if (!customer.customerId || customer.whatsappOptIn != 1 || !telefono) {
+    if (!customer.customerId || !telefono) {
         return;
     }
 
