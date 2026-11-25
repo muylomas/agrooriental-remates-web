@@ -2,6 +2,12 @@ const cron = require('node-cron');
 const common = require('./common');
 
 const clear_scheduler_list = require('./clear_scheduler_list');
+const auction_close_notifications = require('./auction-close-notifications');
+
+// Avisos por WhatsApp de remates cerrados (adjudicado / cierre al vendedor).
+cron.schedule('*/5 * * * *', function () {
+    auction_close_notifications.run();
+});
 
 cron.schedule('*/5 * * * *', function () {
     const taskId = common.createNewTaskInScheduler("heartbeat-5m", 100);

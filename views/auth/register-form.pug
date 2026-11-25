@@ -79,7 +79,14 @@ block content
                       option(value="5") 🇵🇾 +595
                       option(value="7") 🇩🇪 +49
                   input.form-control(type="number", name="phoneNumber", placeholder="99099099")
-                        
+
+              .form-group.phone-form-input.text-left
+                .form-check.form-check-warning.m-0
+                  label.form-check-label.text-white
+                    input.form-check-input(type='checkbox', name='whatsappOptIn', value='1')
+                    i.input-helper
+                    | Quiero recibir por WhatsApp los avisos de mis ofertas y remates
+
               .form-group.email-form-input
                 input.form-control.text-center(type='email', name="email", placeholder='mi@email.com')
               .form-group.email-form-input
@@ -130,11 +137,16 @@ block content
                   console.log(code)
                 }
 
-              h4.text-white.mt-5.mb-3.w-100.text-center Ingresá el código de invitación
+              h4.text-white.mt-5.mb-3.w-100.text-center Ingresá el código de verificación
               form(method='post', action='/registro/codigo-verificacion')
                 input(type="hidden", name="userId", value=userId)
-                p.text-white 
-                  | Te enviamos un SMS a tu teléfono, ingrésalo a continuación.
+                if(error)
+                  p.text-warning.font-weight-bold= error
+                if(notice)
+                  p.text-white= notice + " Ingresalo a continuación."
+                else if(!invited)
+                  p.text-white
+                    | Tu cuenta está pendiente de aprobación. Cuando esté aprobada, ingresá de nuevo con tu celular y te mandamos el código por WhatsApp.
                 .form-group.row.pt-4
                   .col-3.px-2
                     input.code-input.form-control.text-center.p-2(type='number', name="code1", min="0", max="9")
@@ -144,9 +156,24 @@ block content
                     input.code-input.form-control.text-center.p-2(type='number', name="code3", min="0", max="9")
                   .col-3.px-2
                     input.code-input.form-control.text-center.p-2(type='number', name="code4", min="0", max="9")
-                
-                button.btn.btn-block.btn-agrooriental.text-dark.btn-lg.font-weight-medium.w-100(type='submit') 
+
+                if(invited)
+                  .form-group.text-left
+                    input(type="hidden", name="whatsappOptInShown", value="1")
+                    .form-check.form-check-warning.m-0
+                      label.form-check-label.text-white
+                        input.form-check-input(type='checkbox', name='whatsappOptIn', value='1', checked=whatsappOptIn)
+                        i.input-helper
+                        | Quiero recibir por WhatsApp los avisos de mis ofertas y remates
+
+                button.btn.btn-block.btn-agrooriental.text-dark.btn-lg.font-weight-medium.w-100(type='submit')
                   | Verificar
+
+              if(invited)
+                form.mt-3(method='post', action='/ingresar/reenviar-sms')
+                  input(type="hidden", name="userId", value=userId)
+                  button.btn.btn-link.text-white.w-100(type='submit')
+                    | ¿No te llegó? Mandarlo por SMS
 
                 .position-absolute.bottom-0.start-50.translate-middle-x.p-5.w-100  
                   h4.text-white.mt-5.mb-3.w-100.text-center Ingresar con otra cuenta

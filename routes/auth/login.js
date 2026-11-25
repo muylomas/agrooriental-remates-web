@@ -4,11 +4,68 @@ const connection = require('../connection_db');
 const sha512 = require('js-sha512');
 const common_gral = require('../common_gral');
 
-const aws_sms_sender = require('../aws_sms_sender');
+const meta_tapa = require('../../helpers/meta-tapa');
+
+// Parámetros de la pantalla del código después de pedirlo a Meta Tapa.
+function verificationParams(customer, reply) {
+    const params = {
+        verification: "phone",
+        userId: customer.id,
+        invited: true,
+        whatsappOptIn: customer.whatsappOptIn == 1,
+    };
+    if (reply.ok) {
+        params.notice = reply.data && reply.data.canal == "whatsapp" ?
+            "Te mandamos el código por WhatsApp." :
+            "Te mandamos el código por SMS.";
+    }
+    else {
+        params.error = meta_tapa.mensajeError(reply);
+    }
+    return params;
+}
 
 /* GET page. */
 router.get('/', function (req, res, next) {
     res.render('auth/login', {},);
+});
+
+// "¿No te llegó? Mandarlo por SMS" en la pantalla del código.
+router.post('/reenviar-sms', function (req, res, next) {
+    connection.query(
+        `
+            SELECT
+                customers.id AS id,
+                customers.whatsappOptIn AS whatsappOptIn,
+                customers_complete.phoneCountryCode AS phoneCountryCode,
+                customers_complete.phoneNumber AS phoneNumber
+            FROM customers
+            INNER JOIN customers_complete ON customers_complete.customerId = customers.id
+            WHERE
+                customers.id = ? AND
+                customers.invitation = 1 AND
+                customers.sessionPhone = ?
+        `,
+        [
+            parseInt(req.body.userId, 10) || 0,
+            req.sessionID,
+        ],
+        function (err, results) {
+            if (err || !results.length) {
+                if (err) console.log(err);
+                return res.redirect('/ingresar');
+            }
+            const customer = results[0];
+            meta_tapa.solicitarCodigo(
+                meta_tapa.telefonoE164(customer.phoneCountryCode, customer.phoneNumber),
+                "login",
+                "sms",
+                function (reply) {
+                    res.render('auth/register-form', verificationParams(customer, reply));
+                }
+            );
+        }
+    );
 });
 
 router.post('/', function (req, res, next) {
@@ -33,8 +90,10 @@ router.post('/', function (req, res, next) {
                     SELECT 
                         customers_complete.customerId AS id, 
                         customers.invitation AS invitation, 
-                        customers_complete.phoneCountryCode AS phoneCountryCode
-                    FROM customers_complete 
+                        customers.whatsappOptIn AS whatsappOptIn,
+                        customers_complete.phoneCountryCode AS phoneCountryCode,
+                        customers_complete.phoneNumber AS phoneNumber
+                    FROM customers_complete
                     INNER JOIN customers ON customers.id = customers_complete.customerId
                     WHERE
                         customers_complete.phoneCountry = ? AND 
@@ -50,17 +109,13 @@ router.post('/', function (req, res, next) {
                     }
                     else {
                         if (results.length) {
-                            const __aux_userId = results[0].id;
-                            const __aux_enableSMS = results[0].invitation;
-                            const __aux_phoneCountryCode = results[0].phoneCountryCode;
+                            const customer = results[0];
 
-                            const phoneCodeNumber = common_gral.randomStringNumbers(4);
-                            const phonePassword = sha512("phone" + phoneCodeNumber);
-
+                            // sessionPhone ata la verificación del código a esta sesión.
+                            // El código lo genera y lo valida Meta Tapa; ya no se guarda acá.
                             connection.query(
                                 `
                                     UPDATE customers SET
-                                        phonePassword = ?,
                                         sessionPhone = ?,
                                         phoneAdminCode = ""
                                     WHERE
@@ -68,7 +123,6 @@ router.post('/', function (req, res, next) {
                                         phoneNumber = ?
                                 `,
                                 [
-                                    phonePassword,
                                     req.sessionID,
                                     req.body.phoneCountry,
                                     parseInt(req.body.phoneNumber, 10),
@@ -78,23 +132,23 @@ router.post('/', function (req, res, next) {
                                         console.log(err);
                                         res.redirect('/ingresar');
                                     }
+                                    else if (customer.invitation == 1) {
+                                        // Solo a clientes aprobados: Meta Tapa no controla a quién se lo manda.
+                                        meta_tapa.solicitarCodigo(
+                                            meta_tapa.telefonoE164(customer.phoneCountryCode, customer.phoneNumber),
+                                            "login",
+                                            "whatsapp",
+                                            function (reply) {
+                                                res.render('auth/register-form', verificationParams(customer, reply));
+                                            }
+                                        );
+                                    }
                                     else {
-                                        if (__aux_enableSMS == 1) {
-                                            aws_sms_sender.sms_sender(
-                                                {
-                                                    Message: phoneCodeNumber + " es tu código de verificación de Agro Oriental https://equinos.agrooriental.uy",
-                                                    PhoneNumber: __aux_phoneCountryCode + parseInt(req.body.phoneNumber, 10),
-                                                },
-                                                function (error) {
-                                                }
-                                            );
-                                        }
-
                                         res.render(
                                             'auth/register-form',
                                             {
                                                 verification: "phone",
-                                                userId: __aux_userId,
+                                                userId: customer.id,
                                             }
                                         );
                                     }

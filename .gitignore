@@ -115,4 +115,5 @@ dist
 **/node_modules/
 **/uploads/
 aws_credentials.ini
+meta_tapa_config.json
 public/.well-known/acme-challenge/

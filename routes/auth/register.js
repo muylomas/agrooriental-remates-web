@@ -5,7 +5,9 @@ const common_gral = require('../common_gral');
 const common_auth = require('./common');
 const sha512 = require('js-sha512');
 
+// Solo para el aviso interno de "Nuevo registro"; los códigos los manda Meta Tapa.
 const aws_sms_sender = require('../aws_sms_sender');
+const meta_tapa = require('../../helpers/meta-tapa');
 
 /* GET page. */
 router.get('/', function (req, res, next) {
@@ -82,8 +84,10 @@ router.post('/', function (req, res, next) {
             )
         )
     ) {
+        // Nadie recibe este código: el que vale es el que manda Meta Tapa al ingresar.
         const phoneCodeNumber = common_gral.randomStringNumbers(4);
         const phonePassword = sha512("phone" + phoneCodeNumber);
+        const whatsappOptIn = req.body.whatsappOptIn == "1" ? 1 : 0;
 
         if (req.body.registerMethodType == "phone") {
             common_auth.verifyPhoneAvailability(
@@ -101,7 +105,9 @@ router.post('/', function (req, res, next) {
                                     sessionPhone = ?,
                                     provider = "phone",
                                     email = NULL,
-                                    invitation = 0
+                                    invitation = 0,
+                                    whatsappOptIn = ?,
+                                    whatsappOptInDate = IF(? = 1, NOW(), NULL)
                             `,
                             [
                                 req.body.userName,
@@ -110,6 +116,8 @@ router.post('/', function (req, res, next) {
                                 parseInt(req.body.phoneNumber, 10),
                                 phonePassword,
                                 req.sessionID,
+                                whatsappOptIn,
+                                whatsappOptIn,
                             ],
                             function (err, results) {
                                 if (err) {
@@ -181,88 +189,90 @@ router.post('/', function (req, res, next) {
     }
 });
 
+// Verifica con Meta Tapa el código que se pidió al ingresar (routes/auth/login.js).
 router.post('/codigo-verificacion', function (req, res, next) {
-    if (
-        "body" in req &&
-        "code1" in req.body &&
-        "code2" in req.body &&
-        "code3" in req.body &&
-        "code4" in req.body &&
-        "userId" in req.body && req.body.userId
-    ) {
+    const code = ["code1", "code2", "code3", "code4"].map((k) => String(req.body[k] || "")).join("");
+    const userId = parseInt(req.body.userId, 10) || 0;
+    // La casilla solo cuenta si estaba en el formulario (whatsappOptInShown).
+    const whatsappOptIn = req.body.whatsappOptInShown == "1" ? (req.body.whatsappOptIn == "1" ? 1 : 0) : null;
 
-        const phonePassword = sha512(
-            "phone" +
-            req.body.code1 +
-            req.body.code2 +
-            req.body.code3 +
-            req.body.code4
-        );
-
-        connection.query(
-            `
-                SELECT id
-                FROM customers 
-                WHERE 
-                    invitation = 1 AND
-                    phonePassword = ? AND
-                    sessionPhone = ?
-            `,
-            [
-                phonePassword,
-                req.sessionID,
-            ],
-            function (err, results) {
-                if (err) {
-                    console.log(err);
-                    res.render(
-                        'auth/register-form',
-                        {
-                            verification: "verificacion",
-                            userId: req.body.userId,
-                        }
-                    );
-                }
-                else if (results.length) {
-                    connection.query(
-                        `
-                                UPDATE customers SET
-                                    session = ?
-                                WHERE id = ?
-                            `,
-                        [
-                            req.sessionID,
-                            results[0].id,
-                        ],
-                        function (err, results) {
-                            if (err) {
-                                console.log(err);
-                                res.render(
-                                    'auth/register-form',
-                                    {
-                                        verification: "verificacion",
-                                        userId: req.body.userId,
-                                    }
-                                );
-                            }
-                            else {
-                                //const redirectTo = req.session.redirectTo || '/';
-                                delete req.session.redirectTo;
-                                common_gral.redirectSavingSession(req, res, "/");
-                            }
-                        }
-                    );
-                }
-                else {
-                    res.redirect('/registro/codigo-verificacion');
-                }
+    const showError = function (error) {
+        res.render(
+            'auth/register-form',
+            {
+                verification: "phone",
+                userId: userId,
+                invited: true,
+                whatsappOptIn: whatsappOptIn == 1,
+                error: error,
             }
         );
-    }
-    else {
-        res.redirect('/registro/codigo-verificacion');
+    };
+
+    if (!/^[0-9]{4}$/.test(code) || !userId) {
+        return showError("Ingresá los 4 números del código.");
     }
 
+    connection.query(
+        `
+            SELECT 
+                customers.id AS id,
+                customers_complete.phoneCountryCode AS phoneCountryCode,
+                customers_complete.phoneNumber AS phoneNumber
+            FROM customers
+            INNER JOIN customers_complete ON customers_complete.customerId = customers.id
+            WHERE 
+                customers.id = ? AND
+                customers.invitation = 1 AND
+                customers.sessionPhone = ?
+        `,
+        [
+            userId,
+            req.sessionID,
+        ],
+        function (err, results) {
+            if (err || !results.length) {
+                if (err) console.log(err);
+                return res.redirect('/ingresar');
+            }
+
+            meta_tapa.verificarCodigo(
+                meta_tapa.telefonoE164(results[0].phoneCountryCode, results[0].phoneNumber),
+                "login",
+                code,
+                function (reply) {
+                    if (!reply.ok) {
+                        return showError(meta_tapa.mensajeError(reply));
+                    }
+
+                    connection.query(
+                        `
+                            UPDATE customers SET
+                                session = ?,
+                                -- MySQL asigna en orden: la fecha va antes de cambiar whatsappOptIn.
+                                whatsappOptInDate = IF(? IS NULL OR ? = whatsappOptIn, whatsappOptInDate, NOW()),
+                                whatsappOptIn = IF(? IS NULL, whatsappOptIn, ?)
+                            WHERE id = ?
+                        `,
+                        [
+                            req.sessionID,
+                            whatsappOptIn, whatsappOptIn,
+                            whatsappOptIn, whatsappOptIn,
+                            userId,
+                        ],
+                        function (err) {
+                            if (err) {
+                                console.log(err);
+                                return showError("No pudimos iniciar tu sesión. Probá de nuevo.");
+                            }
+                            delete req.session.redirectTo;
+                            common_gral.redirectSavingSession(req, res, "/");
+                        }
+                    );
+                }
+            );
+        }
+    );
 });
 
 module.exports = router;

@@ -1,0 +1,4 @@
+{
+  "url": "https://<api de meta-tapa>/api/Integraciones",
+  "apiKey": "<la misma clave que Integraciones__Remates__ApiKey en Meta Tapa>"
+}

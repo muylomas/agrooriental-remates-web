@@ -2,7 +2,7 @@
  * Serve content over a socket
  */
 const connection = require('../../routes/connection_db');
-const aws_sms_sender = require('../../routes/aws_sms_sender');
+const meta_tapa = require('../../helpers/meta-tapa');
 
 
 
@@ -38,12 +38,15 @@ function isBidOk(bid, lotId, callback) {
                 cattle.startPrice AS startPrice, 
                 cattle.stepPrice AS stepPrice,
                 customers_complete.customerId AS customerId,
+                customers_complete.customerName AS customerName,
                 customers_complete.phoneCountryCode AS phoneCountryCode,
-                customers_complete.phoneNumber AS phoneNumber
+                customers_complete.phoneNumber AS phoneNumber,
+                customers.whatsappOptIn AS whatsappOptIn
             FROM cattle
             LEFT JOIN auctions_bids_max ON auctions_bids_max.lotId = cattle.id
             LEFT JOIN auctions_bids ON auctions_bids.id = auctions_bids_max.auctionBidId
             LEFT JOIN customers_complete ON customers_complete.customerId = auctions_bids.customerId
+            LEFT JOIN customers ON customers.id = auctions_bids.customerId
             WHERE cattle.id = ?
         `,
         [
@@ -67,8 +70,10 @@ function isBidOk(bid, lotId, callback) {
 
                 reply.customer = {
                     customerId: results[0].customerId,
+                    customerName: results[0].customerName,
                     phoneCountryCode: results[0].phoneCountryCode,
                     phoneNumber: results[0].phoneNumber,
+                    whatsappOptIn: results[0].whatsappOptIn,
                 }
             }
             else {
@@ -88,13 +93,51 @@ function isSalePrice(lastBid, salePrice, lotId, callback) {
         callback(false);
 };
 
-function sendSMSToLooser(customer, lotId) {
-    aws_sms_sender.sms_sender(
-        {
-            Message: "Superaron tu oferta para el lote " + lotId + ". Superala si no querés perderlo https://equinos.agrooriental.uy/#lote-" + lotId,
-            PhoneNumber: customer.phoneCountryCode + parseInt(customer.phoneNumber, 10),
-        },
-        function (error) {
+// Aviso por WhatsApp (Meta Tapa) al que tenía la mejor oferta. Se puede mandar
+// en cada puja: Meta Tapa agrupa y manda como mucho uno cada 10 minutos por
+// lote y teléfono.
+function notifyOutbid(customer, lotId, price) {
+    const telefono = meta_tapa.telefonoE164(customer.phoneCountryCode, customer.phoneNumber);
+    if (!customer.customerId || customer.whatsappOptIn != 1 || !telefono) {
+        return;
+    }
+
+    connection.query(
+        `
+            SELECT
+                cattle_complete.subId AS subId,
+                cattle_complete.type AS type,
+                cattle_totals.quantity AS totalQuantity,
+                DATE_FORMAT(cattle_complete.auctionEnd, '%Y-%m-%dT%H:%i:00-03:00') AS auctionEnd
+            FROM cattle_complete
+            LEFT JOIN cattle_totals ON cattle_totals.lotId = cattle_complete.lotId
+            WHERE cattle_complete.lotId = ?
+        `,
+        [
+            lotId,
+        ],
+        function (err, results) {
+            if (err || !results.length) {
+                if (err) console.log(err);
+                return;
+            }
+            const lot = results[0];
+            meta_tapa.enviarEvento(
+                "bid.outbid",
+                "outbid-" + lotId + "-" + price + "-" + customer.customerId,
+                {
+                    telefono: telefono,
+                    nombre: customer.customerName || "",
+                    idExterno: String(customer.customerId),
+                },
+                {
+                    idLote: String(lotId),
+                    lote: String(lot.subId || lotId),
+                    descripcion: ((lot.totalQuantity ? lot.totalQuantity + " " : "") + (lot.type || "")).trim() || "lote " + (lot.subId || lotId),
+                    monto: Number(price),
+                    cierre: lot.auctionEnd,
+                }
+            );
         }
     );
 };
@@ -205,8 +248,8 @@ module.exports = function (socket) {
                                                                         __aux_newBidMsg,
                                                                     );
 
-                                                                    if (lastAuctionCustomer.customerId != customerId) {
-                                                                        sendSMSToLooser(lastAuctionCustomer, results[0].subId);
+                                                                    if (lastAuctionCustomer.customerId && lastAuctionCustomer.customerId != customerId) {
+                                                                        notifyOutbid(lastAuctionCustomer, parameters.lotId, results[0].price);
                                                                     }
                                                                 }
                                                             );
