@@ -25,7 +25,15 @@ function changeVideoImageDisplay(lotId) {
                 `
             );
 
-            $("#cattle-media-container-" + lotId).addClass("video-playing");
+            // El fondo se oscurece recién cuando el video empieza a verse (no al
+            // tocar el botón), con un fundido definido en styles.css. Si el
+            // navegador no reproduce el video, la imagen de fondo queda.
+            const videoElement = document.getElementById("video-" + lotId);
+            if (videoElement) {
+                videoElement.addEventListener("playing", function () {
+                    $("#cattle-media-container-" + lotId).addClass("video-playing");
+                }, { once: true });
+            }
             $("#view-in-youtube-" + lotId).show();
             $("#view-in-youtube-" + lotId).removeClass("d-none");
             $("#view-media-selector-" + lotId + " i").removeClass("mdi-video");

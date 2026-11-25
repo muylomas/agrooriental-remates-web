@@ -140,14 +140,23 @@ select {
     height: auto;
 }
 
-/* Con el video reproduciéndose: fondo oscuro. La imagen de fondo se oculta
-   pero sigue ocupando su lugar, para que la tarjeta no cambie de tamaño. */
+/* Cuando el video empieza a reproducirse (clase agregada en scripts.js al
+   evento "playing"), la imagen de fondo se desvanece hacia un fondo oscuro.
+   Sigue ocupando su lugar, para que la tarjeta no cambie de tamaño. */
+.cattle-media-container {
+    transition: background-color .6s ease;
+}
+
+.cattle-media-container > img {
+    transition: opacity .6s ease;
+}
+
 .cattle-media-container.video-playing {
-    background: #000000;
+    background-color: #000000;
 }
 
 .cattle-media-container.video-playing > img {
-    visibility: hidden;
+    opacity: 0;
 }
 
 .cattle-media-container > .cattle-image {
