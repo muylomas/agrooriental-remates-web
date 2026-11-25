@@ -161,7 +161,20 @@ function closeComfirmSwal() {
     swal.close();
 };
 
+// Sin sesión no se muestra la confirmación: se pide identificarse primero.
+function requireLoginToBid() {
+    if (!userId) {
+        loginSwal();
+        return true;
+    }
+    return false;
+};
+
 function auctionBid(lotId, bidPrice) {
+    if (requireLoginToBid()) {
+        return;
+    }
+
     const searchedLot = getLotParamsById(lotId);
     const wrapper = document.createElement('div');
     wrapper.innerHTML =
@@ -214,6 +227,10 @@ function auctionBidFinal(lotId, bidPrice) {
 };
 
 function buyInmediatelly(lotId) {
+    if (requireLoginToBid()) {
+        return;
+    }
+
     const searchLot = getLotParamsById(lotId);
     const __aux_lot = searchLot.lot;
 

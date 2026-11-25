@@ -489,9 +489,21 @@ function updateLotDescriptionToggleVisibility(lotId) {
     }
 };
 
+// Va a la tarjeta del lote dentro de esta misma página. Se usa location.hash
+// y no un href "#lote-N" porque home-baseHTML.pug tiene <base href="/">: un
+// enlace relativo "#lote-N" lleva a "/#lote-N" (la home) y no al remate actual.
+function goToLot(subId) {
+    const target = document.getElementById("lote-" + subId);
+    // Deja el lote en la URL (para compartir o recargar) sin salir del remate.
+    history.replaceState(null, "", window.location.pathname + window.location.search + "#lote-" + subId);
+    if (target) {
+        target.scrollIntoView();
+    }
+};
+
 function goToLotById() {
     if ($("[name='filtro-lot-id']").val()) {
-        window.location.href = "#lote-" + $("[name='filtro-lot-id']").val();
+        goToLot($("[name='filtro-lot-id']").val());
     }
 };
 
@@ -506,7 +518,10 @@ function insertLotsInPage() {
                 initializeActionsAndDisplays();
                 if (window.location.hash !== '') {
                     setTimeout(() => {
-                        window.location.href = window.location.hash;
+                        const target = document.getElementById(window.location.hash.slice(1));
+                        if (target) {
+                            target.scrollIntoView();
+                        }
                     }, 2000);
                 }
             }

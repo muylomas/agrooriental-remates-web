@@ -196,7 +196,7 @@ const lotCarouselTemplate =
                     </p>
                     <div class="aoc-price-row pt-0">
                         <h1 class="text-primary m-0"><span class="fs-5">__lot_currency__</span> __lot_lastPriceAuction_formatted__</h1>
-                        <a class="btn bid-action-button fs-5 lh-sm" href="#lote-__lot_subId__">Ver lote</a>
+                        <a class="btn bid-action-button fs-5 lh-sm" href="#lote-__lot_subId__" onclick="goToLot(__lot_subId__); return false;">Ver lote</a>
                     </div>
                 </div>
             </div>
