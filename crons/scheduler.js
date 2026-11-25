@@ -3,6 +3,12 @@ const common = require('./common');
 
 const clear_scheduler_list = require('./clear_scheduler_list');
 const auction_close_notifications = require('./auction-close-notifications');
+const account_approved_notifications = require('./account-approved-notifications');
+
+// Aviso por WhatsApp cuando Agro Oriental aprueba una cuenta desde gestión.
+cron.schedule('* * * * *', function () {
+    account_approved_notifications.run();
+});
 
 // Avisos por WhatsApp de remates cerrados (adjudicado / cierre al vendedor).
 cron.schedule('*/5 * * * *', function () {

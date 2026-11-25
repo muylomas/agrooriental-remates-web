@@ -6,7 +6,7 @@ const connection = require('../../routes/connection_db');
 function getUserBySocket(socketId, callback) {
     connection.query(
         `
-            SELECT id
+            SELECT id, invitation
             FROM customers
             WHERE socketId = ?
         `,
@@ -15,14 +15,16 @@ function getUserBySocket(socketId, callback) {
         ],
         function (err, results) {
             let userId = 0;
+            let invitation = 0;
             if (err) {
                 console.log(err);
             }
             else if (results.length) {
                 userId = results[0].id;
+                invitation = results[0].invitation;
             }
 
-            callback(userId);
+            callback(userId, invitation);
         }
     );
 }
@@ -76,8 +78,19 @@ module.exports = function (socket) {
         ) {
             getUserBySocket(
                 socket.id,
-                function (customerId) {
-                    if (customerId) {
+                function (customerId, invitation) {
+                    // Ingresó, pero Agro Oriental todavía no lo habilitó: no puede comentar.
+                    if (customerId && invitation != 1) {
+                        socket.emit(
+                            'publishCommentError',
+                            {
+                                hash: parameters.hash,
+                                lotId: parameters.lotId,
+                                error: "pending_approval",
+                            },
+                        );
+                    }
+                    else if (customerId) {
                         connection.query(
                             `
                                 INSERT INTO cattle_comments 

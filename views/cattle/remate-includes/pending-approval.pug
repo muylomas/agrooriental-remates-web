@@ -1,7 +1,7 @@
 //- Aviso de cuenta pendiente de aprobación (invitation = 0).
 //- Se abre solo cuando pendingApprovalNotice (después de ingresar, o al querer
 //- entrar a algo que todavía no puede ver) y desde auctions.js cuando intenta
-//- ofertar (showPendingApproval()). No usa sweetalert: remates.pug no lo carga.
+//- ofertar o comentar (showPendingApproval('bid' | 'chat')). No usa sweetalert: remates.pug no lo carga.
 if userPendingApproval
   style.
     #pending-approval { position: fixed; inset: 0; z-index: 2000; display: none; align-items: center; justify-content: center; padding: 16px; background: rgba(0, 0, 0, .65); }
@@ -26,10 +26,14 @@ if userPendingApproval
         | .
       button(type="button", onclick="hidePendingApproval()") Entendido
   script.
-    function showPendingApproval(onBid) {
-      document.getElementById('pending-approval-text').textContent = onBid
-        ? 'Todavía no podés ofertar: Agro Oriental tiene que habilitar tu cuenta. Mientras tanto podés seguir viendo los remates.'
-        : 'Ya podés ver los remates, pero vas a poder ofertar cuando Agro Oriental habilite tu cuenta.';
+    // reason: 'bid' (quiso ofertar), 'chat' (quiso comentar) o nada (al llegar).
+    function showPendingApproval(reason) {
+      var texts = {
+        bid: 'Todavía no podés ofertar: Agro Oriental tiene que habilitar tu cuenta. Mientras tanto podés seguir viendo los remates.',
+        chat: 'Todavía no podés comentar en los lotes: Agro Oriental tiene que habilitar tu cuenta. Mientras tanto podés seguir viendo los remates.',
+      };
+      document.getElementById('pending-approval-text').textContent = texts[reason] ||
+        'Ya podés ver los remates, pero vas a poder ofertar y comentar cuando Agro Oriental habilite tu cuenta. Si aceptaste recibir avisos por WhatsApp, te avisamos por ahí cuando esté lista.';
       document.getElementById('pending-approval').classList.add('open');
     }
     function hidePendingApproval() {
@@ -41,4 +45,4 @@ if userPendingApproval
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') hidePendingApproval();
     });
-    if (!{pendingApprovalNotice ? 'true' : 'false'}) showPendingApproval(false);
+    if (!{pendingApprovalNotice ? 'true' : 'false'}) showPendingApproval();

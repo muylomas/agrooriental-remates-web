@@ -176,6 +176,13 @@ function getInitialComments(lotId) {
 };
 
 function publishComment(lotId) {
+    // Ingresó, pero Agro Oriental todavía no lo habilitó para comentar
+    // (views/cattle/remate-includes/pending-approval.pug).
+    if (typeof userPendingApproval !== 'undefined' && userPendingApproval) {
+        showPendingApproval('chat');
+        return;
+    }
+
     const comment = $("#comment-input-text-" + lotId).html();
 
     if (comment) {
@@ -212,6 +219,17 @@ function publishComment(lotId) {
         );
     }
 };
+
+// El servidor no publicó el comentario (cuenta pendiente de aprobación):
+// se saca el que se mostró enseguida y se explica por qué.
+socket.on('publishCommentError', (commentParams) => {
+    if (commentParams && commentParams.hash) {
+        $("#chat-msg-" + commentParams.hash).remove();
+    }
+    if (commentParams && commentParams.error == "pending_approval" && typeof showPendingApproval === 'function') {
+        showPendingApproval('chat');
+    }
+});
 
 socket.on('publishCommentUpdate', (commentParams) => {
     if (commentParams.hash) {
