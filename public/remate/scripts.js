@@ -103,7 +103,7 @@ function loginSwal() {
                                         <input class="form-control" type="number" name="phoneNumber" placeholder="99099099">
                                     </div>
                                 </div>
-                                <button class="btn btn-block btn-warning text-dark btn-lg font-weight-medium w-100" type="submit"> Mandame el código</button>
+                                <button class="btn btn-block btn-warning text-dark btn-lg font-weight-medium w-100" type="submit">Ingresar</button>
                                 <p class="mt-4 text-white">
                                     Al ingresar, adherís a los <a class="css-1qaijid r-bcqeeo r-qvutc0 r-poiln3 r-1loqt21" href="/terminos-y-condiciones" target="_blank" role="link">Términos y Condiciones</a> y a la <a class="css-1qaijid r-bcqeeo r-qvutc0 r-poiln3 r-1loqt21" href="/politica-de-privacidad" target="_blank" role="link">Política de Privacidad</a>, incluyendo el uso de <a class="css-1qaijid r-bcqeeo r-qvutc0 r-poiln3 r-1loqt21" href="/politica-de-privacidad#cookies" target="_blank">Cookies.</a>
                                 </p>
