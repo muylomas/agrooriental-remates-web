@@ -9,39 +9,11 @@ const sha512 = require('js-sha512');
 const aws_sms_sender = require('../aws_sms_sender');
 const meta_tapa = require('../../helpers/meta-tapa');
 
-// Recién registrado (invitation = 0): se le manda el código para que entre
-// y navegue; para ofertar tiene que habilitarlo Agro Oriental.
-function sendCodeToNewCustomer(req, res, customerId) {
-    connection.query(
-        `
-            SELECT
-                customers.id AS id,
-                customers.invitation AS invitation,
-                customers_complete.phoneCountryCode AS phoneCountryCode,
-                customers_complete.phoneNumber AS phoneNumber
-            FROM customers
-            INNER JOIN customers_complete ON customers_complete.customerId = customers.id
-            WHERE customers.id = ?
-        `,
-        [
-            customerId,
-        ],
-        function (err, results) {
-            if (err || !results.length) {
-                if (err) console.log(err);
-                return res.render('auth/register-form', { verification: "phone", userId: customerId });
-            }
-            common_auth.sendLoginCode(req, results[0], "whatsapp", function (params) {
-                res.render('auth/register-form', params);
-            });
-        }
-    );
-}
-
-// La cuenta se crea desde /ingresar: si el celular no tiene cuenta, se le manda
-// el código y después se le piden nombre y apellido (POST /registro/datos).
+// Crear cuenta: nombre, apellido y celular; después el código (POST /registro).
+// También se puede crear desde /ingresar con un celular sin cuenta: ahí el
+// nombre y el apellido se piden después del código (POST /registro/datos).
 router.get('/', function (req, res, next) {
-    res.redirect('/ingresar');
+    res.render('auth/register-form', { verification: false, userId: 0 });
 });
 
 // Un celular sin cuenta tiene 30 minutos desde que verificó el código para
@@ -67,6 +39,10 @@ function loggedIn(req, res, pendingApproval) {
     common_gral.redirectSavingSession(req, res, "/");
 }
 
+function cleanName(value) {
+    return String(value || "").trim().slice(0, 100);
+}
+
 // Nombre y apellido de un celular nuevo, ya verificado con el código.
 router.post('/datos', function (req, res, next) {
     const newPhone = verifiedNewPhone(req);
@@ -74,8 +50,8 @@ router.post('/datos', function (req, res, next) {
         return res.redirect('/ingresar');
     }
 
-    const userName = String(req.body.userName || "").trim().slice(0, 100);
-    const userSurname = String(req.body.userSurname || "").trim().slice(0, 100);
+    const userName = cleanName(req.body.userName);
+    const userSurname = cleanName(req.body.userSurname);
     if (!userName || !userSurname) {
         return res.render('auth/register-form', {
             verification: "datos",
@@ -85,6 +61,12 @@ router.post('/datos', function (req, res, next) {
         });
     }
 
+    createCustomer(req, res, newPhone, userName, userSurname);
+});
+
+// Crea la cuenta de un celular ya verificado con el código y deja la sesión
+// iniciada. Si el celular ya tiene cuenta (otra pestaña), entra a esa.
+function createCustomer(req, res, newPhone, userName, userSurname) {
     connection.query(
         `
             SELECT id, invitation
@@ -173,7 +155,7 @@ router.post('/datos', function (req, res, next) {
             );
         }
     );
-});
+}
 
 router.get('/error', function (req, res, next) {
     res.render(
@@ -244,59 +226,56 @@ router.post('/', function (req, res, next) {
         const phonePassword = sha512("phone" + phoneCodeNumber);
 
         if (req.body.registerMethodType == "phone") {
-            common_auth.verifyPhoneAvailability(
-                req.body.phoneNumber,
-                function (availability) {
-                    if (availability) {
-                        connection.query(
-                            `
-                                INSERT INTO customers SET
-                                    name = ?,
-                                    surname = ?,
-                                    phoneCountry = ?,
-                                    phoneNumber = ?,
-                                    phonePassword = ?,
-                                    sessionPhone = ?,
-                                    provider = "phone",
-                                    email = NULL,
-                                    invitation = 0
-                            `,
-                            [
-                                req.body.userName,
-                                req.body.userSurname,
-                                req.body.phoneCountry,
-                                parseInt(req.body.phoneNumber, 10),
-                                phonePassword,
-                                req.sessionID,
-                            ],
-                            function (err, results) {
-                                if (err) {
-                                    console.log(err);
-                                    res.redirect('/registro/error');
-                                }
-                                else {
-                                    aws_sms_sender.sms_sender(
-                                        {
-                                            Message:
-                                                "Nuevo registro: " + req.body.userName + " " + req.body.userSurname +
-                                                ", tel: " + req.body.phoneCountry + parseInt(req.body.phoneNumber, 10) +
-                                                " https://gestion.agrooriental.uy/personas",
-                                            PhoneNumber: "+59899492041",
-                                        },
-                                        function (error) {
-                                        }
-                                    );
+            const userName = cleanName(req.body.userName);
+            const userSurname = cleanName(req.body.userSurname);
+            const phoneCountry = String(req.body.phoneCountry);
+            const phoneNumber = parseInt(req.body.phoneNumber, 10);
+            const formError = function (error) {
+                res.render('auth/register-form', {
+                    verification: false,
+                    userId: 0,
+                    userName: userName,
+                    userSurname: userSurname,
+                    phoneCountry: phoneCountry,
+                    phoneNumber: phoneNumber,
+                    error: error,
+                });
+            };
 
-                                    sendCodeToNewCustomer(req, res, results.insertId);
-                                }
-                            }
-                        );
-                    }
-                    else {
-                        res.redirect('/registro/error');
-                    }
+            if (!userName || !userSurname) {
+                return formError("Completá tu nombre y tu apellido.");
+            }
+            if (!common_auth.phoneCountryCode(phoneCountry)) {
+                return formError("Elegí el país de tu celular.");
+            }
+
+            return common_auth.findCustomerByPhone(phoneCountry, phoneNumber, function (err, customer) {
+                if (err) {
+                    return formError("No pudimos crear tu cuenta. Probá de nuevo.");
                 }
-            );
+
+                // Ya tiene cuenta: se le manda el código para ingresar a esa.
+                if (customer) {
+                    delete req.session.newPhone;
+                    return common_auth.startLogin(req, customer, "whatsapp", function (params) {
+                        params.notice = "Ese celular ya tiene una cuenta. " + (params.notice || "");
+                        res.render('auth/register-form', params);
+                    });
+                }
+
+                // La cuenta se crea recién cuando ingresa bien el código
+                // (POST /registro/codigo-verificacion): un número mal escrito
+                // no deja una cuenta a medias.
+                req.session.newPhone = {
+                    phoneCountry: phoneCountry,
+                    phoneNumber: phoneNumber,
+                    userName: userName,
+                    userSurname: userSurname,
+                };
+                common_auth.sendLoginCode(req, common_auth.newPhoneCustomer(req.session.newPhone), "whatsapp", function (params) {
+                    res.render('auth/register-form', params);
+                });
+            });
         }
         else {
             const password = sha512("admin" + req.body.email + req.body.password);
@@ -353,6 +332,7 @@ router.post('/codigo-verificacion', function (req, res, next) {
         if (newPhone) {
             params.newCustomer = true;
             params.phoneDisplay = common_auth.phoneCountryCode(newPhone.phoneCountry) + " " + newPhone.phoneNumber;
+            params.fixPhoneUrl = newPhone.userName ? "/registro" : "/ingresar";
         }
         res.render('auth/register-form', params);
     };
@@ -376,8 +356,18 @@ router.post('/codigo-verificacion', function (req, res, next) {
                         if (!err && req.session.newPhone && req.session.newPhone.verifiedAt) {
                             return res.render('auth/register-form', { verification: "datos" });
                         }
-                        showError(meta_tapa.mensajeError(reply));
+                        // Venía de /registro y el primer envío ya creó la cuenta.
+                        common_auth.findCustomerByPhone(newPhone.phoneCountry, newPhone.phoneNumber, function (err, customer) {
+                            if (!err && customer && customer.session == req.sessionID) {
+                                return loggedIn(req, res, customer.invitation != 1);
+                            }
+                            showError(meta_tapa.mensajeError(reply));
+                        });
                     });
+                }
+                // Vino de "Crear cuenta": ya tiene nombre y apellido.
+                if (newPhone.userName && newPhone.userSurname) {
+                    return createCustomer(req, res, newPhone, newPhone.userName, newPhone.userSurname);
                 }
                 newPhone.verifiedAt = Date.now();
                 req.session.save(function () {

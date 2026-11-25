@@ -7,6 +7,11 @@ block content
         img.app-profile-img.w-75.m-5.mb-0(style="max-width: 350px;", src='https://agro-oriental-remates.s3.us-west-1.amazonaws.com/web/images/logos/agrooriental-remates-login-logo-w.png', alt='Agro Oriental')
         .auth-form-transparent.text-left.p-5.text-center
           if(!verification)
+            h4.text-white.mt-4.mb-2.w-100.text-center Crear una cuenta
+            p.text-white.mb-4
+              | Te mandamos un código por WhatsApp para verificar tu celular.
+            if(error)
+              p.text-warning.font-weight-bold= error
             form(method='post', name="registerForm", action='/registro')
               .form-group.row.text-white.d-none
                 .col-1
@@ -61,24 +66,24 @@ block content
 
               .form-group.row.text-white
                 .col-12.text-left
-                  input.form-control.text-left(type='text', name="userName", placeholder='Nombre')
+                  input.form-control.text-left(type='text', name="userName", placeholder='Nombre', value=userName, required)
               
               .form-group.row.text-white
                 .col-12.text-left
-                  input.form-control.text-left(type='text', name="userSurname", placeholder='Apellido')
+                  input.form-control.text-left(type='text', name="userSurname", placeholder='Apellido', value=userSurname, required)
 
               .form-group.phone-form-input
                 .input-group
                   .input-group-prepend.m-0.p-0
                     select.form-control.px-2.py-1(name="phoneCountry", style="line-height: 12px; height: 44px; position: relative; top: 1px;")
-                      option(value="1") 🇺🇾 +598
-                      option(value="2") 🇦🇷 +54
-                      option(value="3") 🇨🇱 +56
-                      option(value="4") 🇺🇸 +1
-                      option(value="6") 🇧🇷 +55
-                      option(value="5") 🇵🇾 +595
-                      option(value="7") 🇩🇪 +49
-                  input.form-control(type="number", name="phoneNumber", placeholder="99099099")
+                      option(value="1", selected=(phoneCountry == "1")) 🇺🇾 +598
+                      option(value="2", selected=(phoneCountry == "2")) 🇦🇷 +54
+                      option(value="3", selected=(phoneCountry == "3")) 🇨🇱 +56
+                      option(value="4", selected=(phoneCountry == "4")) 🇺🇸 +1
+                      option(value="6", selected=(phoneCountry == "6")) 🇧🇷 +55
+                      option(value="5", selected=(phoneCountry == "5")) 🇵🇾 +595
+                      option(value="7", selected=(phoneCountry == "7")) 🇩🇪 +49
+                  input.form-control(type="number", name="phoneNumber", placeholder="99099099", value=phoneNumber, required)
 
               .form-group.email-form-input
                 input.form-control.text-center(type='email', name="email", placeholder='mi@email.com')
@@ -171,7 +176,7 @@ block content
               if(newCustomer)
                 p.text-white.small.border.border-warning.rounded.p-2.mt-4
                   | ¿No te llega? Revisá que el número esté bien escrito: si te equivocaste en algún dígito, el código no te va a llegar. 
-                  a.text-warning.font-weight-bold(href='/ingresar') Corregir el número
+                  a.text-warning.font-weight-bold(href=fixPhoneUrl || '/ingresar') Corregir el número
 
               if(codeSent)
                 form.mt-3(method='post', action='/ingresar/reenviar-sms')
