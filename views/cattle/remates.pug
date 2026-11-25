@@ -5,7 +5,44 @@ extends ./home-baseHTML.pug
 block content
   link(href=asset('/remate/styles.css'), rel='stylesheet', type='text/css')
   style.
-    .remates-choice { max-width: 1100px; margin: 0 auto; }
+    /* Ocupa al menos todo el alto de la pantalla con el contenido centrado:
+       con pocas tarjetas, el footer queda debajo y solo se ve al bajar. */
+    .remates-choice {
+      max-width: 1100px;
+      margin: 0 auto;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .remates-title { text-align: center; margin-bottom: 2rem; }
+    .remates-title h1 {
+      color: #ffffff;
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    .remates-title h1::after {
+      content: "";
+      display: block;
+      width: 64px;
+      height: 4px;
+      margin: 12px auto 0;
+      border-radius: 2px;
+      background: #4e7b44;
+    }
+    .remates-title p {
+      color: rgba(255, 255, 255, .7);
+      font-size: 1rem;
+      margin: 12px 0 0;
+    }
+    @media (min-width: 768px) {
+      .remates-title h1 { font-size: 2.6rem; }
+    }
     .remate-option { background: #1a1a1a; border-radius: 8px; overflow: hidden; }
     .remate-option a.remate-option-banner { display: block; }
 
@@ -37,8 +74,10 @@ block content
     }
 
   .content-wrapper.bg-agrooriental.p-0.m-0
-    .remates-choice.px-3.pt-4.pb-5
-      h3.text-center.text-white.mb-4 Elegí el remate al que querés entrar
+    .remates-choice.px-3.py-5
+      .remates-title
+        h1 Remates activos
+        p Elegí el remate al que querés entrar
 
       each auctionItem in auctions
         - const auctionUrl = '/remate/' + auctionItem.id

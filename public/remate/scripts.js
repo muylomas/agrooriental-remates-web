@@ -25,6 +25,7 @@ function changeVideoImageDisplay(lotId) {
                 `
             );
 
+            $("#cattle-media-container-" + lotId).addClass("video-playing");
             $("#view-in-youtube-" + lotId).show();
             $("#view-in-youtube-" + lotId).removeClass("d-none");
             $("#view-media-selector-" + lotId + " i").removeClass("mdi-video");
@@ -37,6 +38,7 @@ function changeVideoImageDisplay(lotId) {
     else {
         $("#image-" + lotId).show();
         $("#video-" + lotId).remove();
+        $("#cattle-media-container-" + lotId).removeClass("video-playing");
         $("#view-in-youtube-" + lotId).hide();
         $("#view-media-selector-" + lotId + " i").removeClass("mdi-camera");
         $("#view-media-selector-" + lotId).removeClass("btn-primary");

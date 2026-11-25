@@ -140,6 +140,16 @@ select {
     height: auto;
 }
 
+/* Con el video reproduciéndose: fondo oscuro. La imagen de fondo se oculta
+   pero sigue ocupando su lugar, para que la tarjeta no cambie de tamaño. */
+.cattle-media-container.video-playing {
+    background: #000000;
+}
+
+.cattle-media-container.video-playing > img {
+    visibility: hidden;
+}
+
 .cattle-media-container > .cattle-image {
     background-position: center;
     background-size: cover;
