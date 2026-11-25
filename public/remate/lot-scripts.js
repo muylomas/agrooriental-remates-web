@@ -252,6 +252,12 @@ function insertLotLoop(lots, indSLots, callback) {
     if (indSLots < lots.length) {
         let __aux_slideHTML = lotTemplate;
 
+        // Sin link de ARU, "padre Y madre" queda como texto: un <a> sin href no
+        // es clickeable (con href vacío abría la misma página en otra pestaña).
+        if (!lots[indSLots].equineARU) {
+            __aux_slideHTML = __aux_slideHTML.replace('href="__lot_equineARU__" target="_blank" ', '');
+        }
+
         for (let indObj in lots[indSLots]) {
             if (__aux_slideHTML.indexOf("__lot_" + indObj + "__") != -1) {
                 __aux_slideHTML =
