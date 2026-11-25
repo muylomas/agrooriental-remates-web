@@ -369,7 +369,15 @@ router.post('/codigo-verificacion', function (req, res, next) {
             code,
             function (reply) {
                 if (!reply.ok) {
-                    return showError(meta_tapa.mensajeError(reply));
+                    // Formulario enviado dos veces: el primer envío ya usó el código y
+                    // Meta Tapa responde "vencido" al segundo. Si esta sesión ya quedó
+                    // verificada, se sigue a los datos en vez de mostrar el error.
+                    return req.session.reload(function (err) {
+                        if (!err && req.session.newPhone && req.session.newPhone.verifiedAt) {
+                            return res.render('auth/register-form', { verification: "datos" });
+                        }
+                        showError(meta_tapa.mensajeError(reply));
+                    });
                 }
                 newPhone.verifiedAt = Date.now();
                 req.session.save(function () {
@@ -409,7 +417,19 @@ router.post('/codigo-verificacion', function (req, res, next) {
                 code,
                 function (reply) {
                     if (!reply.ok) {
-                        return showError(meta_tapa.mensajeError(reply));
+                        // Formulario enviado dos veces: si el primer envío ya inició
+                        // la sesión con este código, se entra en vez de mostrar
+                        // "El código venció".
+                        return connection.query(
+                            `SELECT id FROM customers WHERE id = ? AND session = ?`,
+                            [userId, req.sessionID],
+                            function (err, logged) {
+                                if (!err && logged.length) {
+                                    return loggedIn(req, res, pendingApproval);
+                                }
+                                showError(meta_tapa.mensajeError(reply));
+                            }
+                        );
                     }
 
                     connection.query(

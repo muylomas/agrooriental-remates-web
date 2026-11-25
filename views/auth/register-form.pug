@@ -137,12 +137,6 @@ block content
                 });
 
 
-                // mini example on how to pull the data on submit of the form
-                function onSubmit(e){
-                  e.preventDefault()
-                  const code = inputElements.map(({value})=>value).join('')
-                  console.log(code)
-                }
 
               h4.text-white.mt-5.mb-3.w-100.text-center Ingresá el código de verificación
               form(method='post', action='/registro/codigo-verificacion')
@@ -195,4 +189,20 @@ block content
               a.btn.btn-inverse-light.btn-fw.border-white.text-white.btn-lg.font-weight-medium.w-100(href='/ingresar') 
                 | Ingresar
 
-
+  script.
+    // Un solo envío por formulario: un doble toque mandaba el código dos veces y
+    // el segundo envío respondía "El código venció" aunque ya se había entrado.
+    document.querySelectorAll('form').forEach(function (form) {
+      form.addEventListener('submit', function (e) {
+        if (form.dataset.sent) { e.preventDefault(); return; }
+        form.dataset.sent = '1';
+        form.querySelectorAll('button[type=submit]').forEach(function (b) { b.disabled = true; });
+      });
+    });
+    // Volver atrás desde otra página (bfcache) deja los botones habilitados.
+    window.addEventListener('pageshow', function () {
+      document.querySelectorAll('form').forEach(function (form) {
+        delete form.dataset.sent;
+        form.querySelectorAll('button[type=submit]').forEach(function (b) { b.disabled = false; });
+      });
+    });
