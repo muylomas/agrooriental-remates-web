@@ -41,6 +41,7 @@ if (!config.url || !config.apiKey) {
 // errorCode = "sin_conexion".
 function llamar(metodo, ruta, cuerpo, callback) {
     if (!config.url || !config.apiKey) {
+        console.error('Meta Tapa:', metodo, ruta, 'sin configurar (META_TAPA_URL / META_TAPA_API_KEY o meta_tapa_config.json)');
         return callback({ ok: false, status: 0, errorCode: 'sin_configuracion', message: 'Meta Tapa sin configurar' });
     }
 
@@ -48,6 +49,9 @@ function llamar(metodo, ruta, cuerpo, callback) {
     const responder = (r) => {
         if (!terminado) {
             terminado = true;
+            if (!r.ok && r.errorCode != 'sin_conexion') {
+                console.error('Meta Tapa:', metodo, ruta, 'respondió', r.status, r.errorCode || '', r.message || '', r.detail != null ? 'detail=' + r.detail : '');
+            }
             callback(r);
         }
     };
@@ -121,7 +125,7 @@ function enviarEvento(tipo, idempotencyKey, destinatario, datos, callback) {
         { tipo: tipo, idempotencyKey: idempotencyKey, destinatario: destinatario, datos: datos },
         (r) => {
             if (!r.ok) {
-                console.error('Meta Tapa: evento', tipo, idempotencyKey, 'no registrado:', r.status, r.errorCode, r.message || '');
+                console.error('Meta Tapa: evento', tipo, idempotencyKey, 'no registrado');
             }
             if (callback) callback(r);
         }
