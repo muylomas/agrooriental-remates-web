@@ -144,9 +144,12 @@ block content
                   p.text-warning.font-weight-bold= error
                 if(notice)
                   p.text-white= notice + " Ingresalo a continuación."
-                else if(!invited)
+                else if(!codeSent)
                   p.text-white
-                    | Tu cuenta está pendiente de aprobación. Cuando esté aprobada, ingresá de nuevo con tu celular y te mandamos el código por WhatsApp.
+                    | No pudimos mandarte el código. Volvé a ingresar con tu celular para pedir uno nuevo.
+                if(pendingApproval)
+                  p.text-white.small.border.border-warning.rounded.p-2
+                    | Tu cuenta está pendiente de aprobación por parte de Agro Oriental. Con el código ya podés entrar y ver los remates, pero vas a poder ofertar cuando te habilitemos.
                 .form-group.row.pt-4
                   .col-3.px-2
                     input.code-input.form-control.text-center.p-2(type='number', name="code1", min="0", max="9")
@@ -157,7 +160,7 @@ block content
                   .col-3.px-2
                     input.code-input.form-control.text-center.p-2(type='number', name="code4", min="0", max="9")
 
-                if(invited)
+                if(codeSent)
                   .form-group.text-left
                     input(type="hidden", name="whatsappOptInShown", value="1")
                     .form-check.form-check-warning.m-0
@@ -169,7 +172,7 @@ block content
                 button.btn.btn-block.btn-agrooriental.text-dark.btn-lg.font-weight-medium.w-100(type='submit')
                   | Verificar
 
-              if(invited)
+              if(codeSent)
                 form.mt-3(method='post', action='/ingresar/reenviar-sms')
                   input(type="hidden", name="userId", value=userId)
                   button.btn.btn-link.text-white.w-100(type='submit')

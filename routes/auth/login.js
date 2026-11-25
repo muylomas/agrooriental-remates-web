@@ -4,26 +4,7 @@ const connection = require('../connection_db');
 const sha512 = require('js-sha512');
 const common_gral = require('../common_gral');
 
-const meta_tapa = require('../../helpers/meta-tapa');
-
-// Parámetros de la pantalla del código después de pedirlo a Meta Tapa.
-function verificationParams(customer, reply) {
-    const params = {
-        verification: "phone",
-        userId: customer.id,
-        invited: true,
-        whatsappOptIn: customer.whatsappOptIn == 1,
-    };
-    if (reply.ok) {
-        params.notice = reply.data && reply.data.canal == "whatsapp" ?
-            "Te mandamos el código por WhatsApp." :
-            "Te mandamos el código por SMS.";
-    }
-    else {
-        params.error = meta_tapa.mensajeError(reply);
-    }
-    return params;
-}
+const common_auth = require('./common');
 
 /* GET page. */
 router.get('/', function (req, res, next) {
@@ -36,6 +17,7 @@ router.post('/reenviar-sms', function (req, res, next) {
         `
             SELECT
                 customers.id AS id,
+                customers.invitation AS invitation,
                 customers.whatsappOptIn AS whatsappOptIn,
                 customers_complete.phoneCountryCode AS phoneCountryCode,
                 customers_complete.phoneNumber AS phoneNumber
@@ -43,7 +25,6 @@ router.post('/reenviar-sms', function (req, res, next) {
             INNER JOIN customers_complete ON customers_complete.customerId = customers.id
             WHERE
                 customers.id = ? AND
-                customers.invitation = 1 AND
                 customers.sessionPhone = ?
         `,
         [
@@ -55,15 +36,9 @@ router.post('/reenviar-sms', function (req, res, next) {
                 if (err) console.log(err);
                 return res.redirect('/ingresar');
             }
-            const customer = results[0];
-            meta_tapa.solicitarCodigo(
-                meta_tapa.telefonoE164(customer.phoneCountryCode, customer.phoneNumber),
-                "login",
-                "sms",
-                function (reply) {
-                    res.render('auth/register-form', verificationParams(customer, reply));
-                }
-            );
+            common_auth.sendLoginCode(req, results[0], "sms", function (params) {
+                res.render('auth/register-form', params);
+            });
         }
     );
 });
@@ -132,25 +107,12 @@ router.post('/', function (req, res, next) {
                                         console.log(err);
                                         res.redirect('/ingresar');
                                     }
-                                    else if (customer.invitation == 1) {
-                                        // Solo a clientes aprobados: Meta Tapa no controla a quién se lo manda.
-                                        meta_tapa.solicitarCodigo(
-                                            meta_tapa.telefonoE164(customer.phoneCountryCode, customer.phoneNumber),
-                                            "login",
-                                            "whatsapp",
-                                            function (reply) {
-                                                res.render('auth/register-form', verificationParams(customer, reply));
-                                            }
-                                        );
-                                    }
                                     else {
-                                        res.render(
-                                            'auth/register-form',
-                                            {
-                                                verification: "phone",
-                                                userId: customer.id,
-                                            }
-                                        );
+                                        // También a clientes sin aprobar: entran y navegan, pero no
+                                        // pueden ofertar hasta que Agro Oriental los habilite.
+                                        common_auth.sendLoginCode(req, customer, "whatsapp", function (params) {
+                                            res.render('auth/register-form', params);
+                                        });
                                     }
                                 }
                             );

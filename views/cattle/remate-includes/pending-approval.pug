@@ -1,0 +1,44 @@
+//- Aviso de cuenta pendiente de aprobación (invitation = 0).
+//- Se abre solo cuando pendingApprovalNotice (después de ingresar, o al querer
+//- entrar a algo que todavía no puede ver) y desde auctions.js cuando intenta
+//- ofertar (showPendingApproval()). No usa sweetalert: remates.pug no lo carga.
+if userPendingApproval
+  style.
+    #pending-approval { position: fixed; inset: 0; z-index: 2000; display: none; align-items: center; justify-content: center; padding: 16px; background: rgba(0, 0, 0, .65); }
+    #pending-approval.open { display: flex; }
+    #pending-approval, #pending-approval * { box-sizing: border-box; }
+    #pending-approval .pa-card { max-width: 420px; width: 100%; background: #fff; color: #222; border-radius: 10px; padding: 28px 24px 22px; text-align: center; box-shadow: 0 10px 40px rgba(0, 0, 0, .4); }
+    #pending-approval .pa-icon { font-size: 44px; line-height: 1; color: #c9a227; margin-bottom: 10px; }
+    #pending-approval h3 { font-size: 1.3rem; margin: 0 0 12px; color: #222; }
+    #pending-approval p { font-size: 1rem; line-height: 1.45; margin: 0 0 10px; color: #444; }
+    #pending-approval .pa-contact { font-size: .9rem; color: #666; }
+    #pending-approval .pa-contact a { color: #4e7b44; font-weight: 600; white-space: nowrap; }
+    #pending-approval button { margin-top: 12px; width: 100%; border: 0; border-radius: 6px; padding: 12px; font-size: 1.05rem; background: #4e7b44; color: #fff; cursor: pointer; }
+  #pending-approval(role="dialog", aria-modal="true", aria-labelledby="pending-approval-title")
+    .pa-card
+      .pa-icon
+        i.mdi.mdi-account-clock
+      h3#pending-approval-title Tu cuenta está pendiente de aprobación
+      p#pending-approval-text
+      p.pa-contact
+        | Si tenés dudas, comunicate con Agro Oriental al#{" "}
+        a(href="tel:+59898950792") +598 98 950 792
+        | .
+      button(type="button", onclick="hidePendingApproval()") Entendido
+  script.
+    function showPendingApproval(onBid) {
+      document.getElementById('pending-approval-text').textContent = onBid
+        ? 'Todavía no podés ofertar: Agro Oriental tiene que habilitar tu cuenta. Mientras tanto podés seguir viendo los remates.'
+        : 'Ya podés ver los remates, pero vas a poder ofertar cuando Agro Oriental habilite tu cuenta.';
+      document.getElementById('pending-approval').classList.add('open');
+    }
+    function hidePendingApproval() {
+      document.getElementById('pending-approval').classList.remove('open');
+    }
+    document.getElementById('pending-approval').addEventListener('click', function (e) {
+      if (e.target === this) hidePendingApproval();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') hidePendingApproval();
+    });
+    if (!{pendingApprovalNotice ? 'true' : 'false'}) showPendingApproval(false);

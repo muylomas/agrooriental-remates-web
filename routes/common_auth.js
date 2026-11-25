@@ -17,7 +17,7 @@ Common.prototype.basic = function (sessionID, callback) {
 
     connection.query(
         `
-            SELECT id, name, surname, image 
+            SELECT id, name, surname, image, invitation 
             FROM customers 
             WHERE session = ?
             LIMIT 0, 1
@@ -37,6 +37,8 @@ Common.prototype.basic = function (sessionID, callback) {
                     data.user.image = results[0].picture;
                     data.user.type = results[0].type;
                     data.user.sector = results[0].sector;
+                    // 1 = Agro Oriental lo habilitó para ofertar.
+                    data.user.invitation = results[0].invitation;
                 }
                 else {
                     data.err = true;

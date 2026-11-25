@@ -9,7 +9,7 @@ const meta_tapa = require('../../helpers/meta-tapa');
 function getUserBySocket(socketId, callback) {
     connection.query(
         `
-            SELECT id
+            SELECT id, invitation
             FROM customers
             WHERE socketId = ?
         `,
@@ -18,14 +18,16 @@ function getUserBySocket(socketId, callback) {
         ],
         function (err, results) {
             let userId = 0;
+            let invitation = 0;
             if (err) {
                 console.log(err);
             }
             else if (results.length) {
                 userId = results[0].id;
+                invitation = results[0].invitation;
             }
 
-            callback(userId);
+            callback(userId, invitation);
         }
     );
 }
@@ -151,8 +153,18 @@ module.exports = function (socket) {
         ) {
             getUserBySocket(
                 socket.id,
-                function (customerId) {
-                    if (customerId) {
+                function (customerId, invitation) {
+                    // Ingresó, pero Agro Oriental todavía no lo habilitó para ofertar.
+                    if (customerId && invitation != 1) {
+                        socket.emit(
+                            'auctionBidError',
+                            {
+                                error: "1.3",
+                                msg: "Tu cuenta está pendiente de aprobación por parte de Agro Oriental. Vas a poder ofertar cuando te habilitemos.",
+                            },
+                        );
+                    }
+                    else if (customerId) {
                         isBidOk(
                             parameters.bid,
                             parameters.lotId,

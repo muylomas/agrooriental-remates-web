@@ -14,6 +14,33 @@ function isLegalUrl(url) {
   });
 }
 
+// Lo que se puede ver sin sesión. También es lo único que ve un cliente que
+// todavía no aprobó Agro Oriental (invitation = 0).
+const public_urls = [
+  "?", "/?",
+  "/login", "/ingresar",
+  "/registro", "/registro/codigo-verificacion",
+  "/reset-password",
+  "/auth/",
+  "/ganado/lote/publicacion/",
+  "/.well-known/acme-challenge",
+  "/api/cattle/lot/auction/bids",
+  "/criollosparaganar",
+  // Cada remate se puede ver sin sesión, igual que la home: lotes,
+  // precios, catálogo. Ofertar y ver los piques piden login desde
+  // la página (loginSwal en /remate/scripts.js).
+  "/remate/",
+  // Actualización del carrusel de Destacados de esas páginas.
+  "/api/cattle/lots/refresh"
+];
+
+function isPublicUrl(url) {
+  if (url == "" || url == "/" || isLegalUrl(url)) return true;
+  return public_urls.some(function (publicUrl) {
+    return url.startsWith(publicUrl);
+  });
+}
+
 exports.authProcc = function (req, res, next) {
   if (!("session" in req)) {
     req.session = {
@@ -77,41 +104,20 @@ exports.authProcc = function (req, res, next) {
             );
           }
           else {
-            if (results[0].invitation || req.url.startsWith('/registro/codigo-verificacion') || isLegalUrl(req.url))
+            if (results[0].invitation)
               next();
-            else if (req.url.startsWith('/login') || req.url.startsWith('/ingresar'))
+            // Sin aprobar: navega lo público (y puede cerrar sesión); en lo demás
+            // se lo devuelve a la home con el aviso de cuenta pendiente.
+            else if (isPublicUrl(req.url) || req.url.startsWith('/logout'))
               next();
-            else
-              res.redirect('/registro/codigo-verificacion');
+            else {
+              req.session.pendingApprovalNotice = true;
+              res.redirect('/');
+            }
           }
         }
         else {
-          const exclude_urls = [
-            "?", "/?",
-            "/login", "/ingresar",
-            "/registro", "/registro/codigo-verificacion",
-            "/reset-password",
-            "/auth/",
-            "/ganado/lote/publicacion/",
-            "/.well-known/acme-challenge",
-            "/api/cattle/lot/auction/bids",
-            "/criollosparaganar",
-            // Cada remate se puede ver sin sesión, igual que la home: lotes,
-            // precios, catálogo. Ofertar y ver los piques piden login desde
-            // la página (loginSwal en /remate/scripts.js).
-            "/remate/",
-            // Actualización del carrusel de Destacados de esas páginas.
-            "/api/cattle/lots/refresh"
-          ];
-
-          let exclude_urls_status = false;
-          for (let index in exclude_urls) {
-            if (req.url.startsWith(exclude_urls[index]))
-              exclude_urls_status = true;
-          }
-
-          if (req.url == "" || req.url == "/" || isLegalUrl(req.url))
-            exclude_urls_status = true;
+          const exclude_urls_status = isPublicUrl(req.url);
 
           if (!exclude_urls_status) {
             if (req.originalUrl && req.originalUrl !== undefined) {

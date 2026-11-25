@@ -23,6 +23,13 @@ function renderAuction(req, res, auctionId) {
                     res.redirect(viewURLDir);
                 }
                 else {
+                    // Cliente con sesión que Agro Oriental todavía no habilitó: no puede
+                    // ofertar. El aviso se muestra solo al llegar (después de ingresar o
+                    // de querer entrar a algo que no puede ver).
+                    indexParams.userPendingApproval = !!(reply.user.id && reply.user.invitation != 1);
+                    indexParams.pendingApprovalNotice = indexParams.userPendingApproval && !!req.session.pendingApprovalNotice;
+                    delete req.session.pendingApprovalNotice;
+
                     common_gral.renderSavingSession(
                         req,
                         res,

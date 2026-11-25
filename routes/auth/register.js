@@ -9,6 +9,36 @@ const sha512 = require('js-sha512');
 const aws_sms_sender = require('../aws_sms_sender');
 const meta_tapa = require('../../helpers/meta-tapa');
 
+// Recién registrado (invitation = 0): se le manda el código para que entre
+// y navegue; para ofertar tiene que habilitarlo Agro Oriental.
+function sendCodeToNewCustomer(req, res, customerId) {
+    connection.query(
+        `
+            SELECT
+                customers.id AS id,
+                customers.invitation AS invitation,
+                customers.whatsappOptIn AS whatsappOptIn,
+                customers_complete.phoneCountryCode AS phoneCountryCode,
+                customers_complete.phoneNumber AS phoneNumber
+            FROM customers
+            INNER JOIN customers_complete ON customers_complete.customerId = customers.id
+            WHERE customers.id = ?
+        `,
+        [
+            customerId,
+        ],
+        function (err, results) {
+            if (err || !results.length) {
+                if (err) console.log(err);
+                return res.render('auth/register-form', { verification: "phone", userId: customerId });
+            }
+            common_auth.sendLoginCode(req, results[0], "whatsapp", function (params) {
+                res.render('auth/register-form', params);
+            });
+        }
+    );
+}
+
 /* GET page. */
 router.get('/', function (req, res, next) {
     res.render(
@@ -137,13 +167,7 @@ router.post('/', function (req, res, next) {
                                         }
                                     );
 
-                                    res.render(
-                                        'auth/register-form',
-                                        {
-                                            verification: "phone",
-                                            userId: results.insertId,
-                                        }
-                                    );
+                                    sendCodeToNewCustomer(req, res, results.insertId);
                                 }
                             }
                         );
@@ -202,7 +226,7 @@ router.post('/codigo-verificacion', function (req, res, next) {
             {
                 verification: "phone",
                 userId: userId,
-                invited: true,
+                codeSent: true,
                 whatsappOptIn: whatsappOptIn == 1,
                 error: error,
             }
@@ -217,13 +241,13 @@ router.post('/codigo-verificacion', function (req, res, next) {
         `
             SELECT 
                 customers.id AS id,
+                customers.invitation AS invitation,
                 customers_complete.phoneCountryCode AS phoneCountryCode,
                 customers_complete.phoneNumber AS phoneNumber
             FROM customers
             INNER JOIN customers_complete ON customers_complete.customerId = customers.id
             WHERE 
                 customers.id = ? AND
-                customers.invitation = 1 AND
                 customers.sessionPhone = ?
         `,
         [
@@ -235,6 +259,7 @@ router.post('/codigo-verificacion', function (req, res, next) {
                 if (err) console.log(err);
                 return res.redirect('/ingresar');
             }
+            const pendingApproval = results[0].invitation != 1;
 
             meta_tapa.verificarCodigo(
                 meta_tapa.telefonoE164(results[0].phoneCountryCode, results[0].phoneNumber),
@@ -266,6 +291,11 @@ router.post('/codigo-verificacion', function (req, res, next) {
                                 return showError("No pudimos iniciar tu sesión. Probá de nuevo.");
                             }
                             delete req.session.redirectTo;
+                            // Sin aprobar: al llegar al sitio se le explica que todavía no puede
+                            // ofertar (views/cattle/remate-includes/pending-approval.pug).
+                            if (pendingApproval) {
+                                req.session.pendingApprovalNotice = true;
+                            }
                             common_gral.redirectSavingSession(req, res, "/");
                         }
                     );

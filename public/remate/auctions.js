@@ -167,6 +167,12 @@ function requireLoginToBid() {
         loginSwal();
         return true;
     }
+    // Ingresó, pero Agro Oriental todavía no lo habilitó para ofertar
+    // (views/cattle/remate-includes/pending-approval.pug).
+    if (typeof userPendingApproval !== 'undefined' && userPendingApproval) {
+        showPendingApproval(true);
+        return true;
+    }
     return false;
 };
 
@@ -288,6 +294,9 @@ socket.on('auctionBidUpdate', (auctionBidUpdate) => {
 socket.on('auctionBidError', (auctionBidUpdate) => {
     if (auctionBidUpdate && "error" in auctionBidUpdate && auctionBidUpdate.error == "1.1") {
         loginSwal();
+    }
+    else if (auctionBidUpdate && auctionBidUpdate.error == "1.3" && typeof showPendingApproval === 'function') {
+        showPendingApproval(true);
     }
     else {
         swal({

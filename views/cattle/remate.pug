@@ -66,10 +66,14 @@ block content
 
     include remate-includes/footer.pug
 
+    include remate-includes/pending-approval.pug
+
   script.
     var lots = !{JSON.stringify(lots)};
     const currentAuctionId = #{auctionId || 0};
     const userId = #{userId};
+    // Con sesión pero sin habilitar por Agro Oriental: no puede ofertar.
+    const userPendingApproval = #{userPendingApproval ? 'true' : 'false'};
     const activeAuctionBids = !{JSON.stringify(activeAuctionBids)};
     const activeAuctionBidsLotIds = [];
     const customerFarms = !{("farms" in customer && customer.farms.length) ? JSON.stringify(customer.farms) : "[]"};
