@@ -267,6 +267,7 @@ app.use('/api/comments', api_comments);
 // mercado-agro Sockets
 const socketIo = require('socket.io')(https);
 app.set('socketapp', socketIo);
+require('./models/sockets/presence').init();
 socketIo.on('connect', require('./models/sockets/customerSocket'));
 socketIo.on('connection', require('./models/sockets/disconnection'));
 socketIo.on('connection', require('./models/sockets/auctionBid'));

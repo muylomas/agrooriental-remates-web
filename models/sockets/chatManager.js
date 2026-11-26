@@ -2,31 +2,10 @@
  * Serve content over a socket
  */
 const connection = require('../../routes/connection_db');
+const presence = require('./presence');
 
 function getUserBySocket(socketId, callback) {
-    connection.query(
-        `
-            SELECT id, invitation
-            FROM customers
-            WHERE socketId = ?
-        `,
-        [
-            socketId,
-        ],
-        function (err, results) {
-            let userId = 0;
-            let invitation = 0;
-            if (err) {
-                console.log(err);
-            }
-            else if (results.length) {
-                userId = results[0].id;
-                invitation = results[0].invitation;
-            }
-
-            callback(userId, invitation);
-        }
-    );
+    presence.getCustomerBySocket(socketId, callback);
 }
 
 function getInsertedComment(commentId, callback) {

@@ -1,6 +1,6 @@
 const cookie = require('cookie');
 const cookieParser = require('cookie-parser');
-const connection = require('../../routes/connection_db');
+const presence = require('./presence');
 
 module.exports = function (socket) {
 
@@ -27,24 +27,7 @@ module.exports = function (socket) {
             const agroOrientaAppParsed = cookieParser.signedCookie(cookieParsed.agroOrientaApp, 'LoktOOtNBvuFajNrBnx4');
 
             if (agroOrientaAppParsed) {
-                connection.query(
-                    `
-                        UPDATE customers SET 
-                            socketId = ?,
-                            socketActive = 1
-                        WHERE 
-                            session = ?;
-                    `,
-                    [
-                        socket.id,
-                        agroOrientaAppParsed,
-                    ],
-                    function (err, results) {
-                        if (err) {
-                            console.log(err);
-                        }
-                    }
-                );
+                presence.register(socket, agroOrientaAppParsed);
             }
         }
     }
