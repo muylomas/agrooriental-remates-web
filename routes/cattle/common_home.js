@@ -232,9 +232,12 @@ Common.prototype.getLots = function (userId, latLngArray, cattleTypes, cattleCar
                         cattle_lots_equines.name AS equineName,
                         cattle_lots_equines.hair AS equineHair,
                         cattle_lots_equines.height AS equineHeight,
-                        DATE_FORMAT(
-                            cattle_lots_equines.birth,
-                            '%d/%m/%Y'
+                        NULLIF(
+                            DATE_FORMAT(
+                                cattle_lots_equines.birth,
+                                '%d/%m/%Y'
+                            ),
+                            '00/00/0000'
                         ) AS equineBirth,
                         cattle_lots_equines.father AS equineFather,
                         cattle_lots_equines.mother AS equineMother,

@@ -221,7 +221,7 @@ function stripEmptyEquineFields(html, lot) {
             .replace('<span class="aoc-lot-meta-item"><b>Pelo</b>__lot_equineHair__</span>', '')
             .replace('<span class="aoc-dot-sep">•</span><b>__lot_equineHair__</b>', '');
     }
-    if (!lot.equineBirth) {
+    if (!lot.equineBirth || lot.equineBirth == '00/00/0000') {
         html = html.replace('<span class="aoc-lot-meta-item"><b>Nacimiento</b>__lot_equineBirth__</span>', '');
     }
     return html;
