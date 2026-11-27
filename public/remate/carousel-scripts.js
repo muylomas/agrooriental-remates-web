@@ -72,7 +72,7 @@ function getFeaturedLots(sourceLots) {
 };
 
 function buildFeaturedLotCard(lot) {
-    let cardHTML = lotCarouselTemplate;
+    let cardHTML = stripEmptyEquineFields(lotCarouselTemplate, lot);
 
     for (let field in lot) {
         if (cardHTML.indexOf("__lot_" + field + "__") != -1) {

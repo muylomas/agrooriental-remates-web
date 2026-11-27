@@ -250,7 +250,7 @@ function auctionBidsHistory(lotId) {
 
 function insertLotLoop(lots, indSLots, callback) {
     if (indSLots < lots.length) {
-        let __aux_slideHTML = lotTemplate;
+        let __aux_slideHTML = stripEmptyEquineFields(lotTemplate, lots[indSLots]);
 
         // Sin link de ARU, "padre Y madre" queda como texto: un <a> sin href no
         // es clickeable (con href vacío abría la misma página en otra pestaña).

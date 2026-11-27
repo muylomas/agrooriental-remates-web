@@ -202,3 +202,27 @@ const lotCarouselTemplate =
             </div>
         </div>
     `;
+
+// Quita de una plantilla de lote (lotTemplate o lotCarouselTemplate) las
+// líneas de datos equinos que el lote no tiene, para que no queden "Y",
+// "RP 0" o "null" sueltos (p. ej. ponis cargados solo con nombre y foto).
+// Se aplica antes de reemplazar los __lot_*__.
+function stripEmptyEquineFields(html, lot) {
+    if (!lot.equineFather && !lot.equineMother) {
+        html = html.replace(/<p class="text-truncate mb-2">\s*(<a[^>]*>)?\s*__lot_equineFather__ <b>Y<\/b> __lot_equineMother__\s*(<\/a>)?\s*<\/p>/g, '');
+    }
+    if (!lot.equineRP) {
+        html = html
+            .replace('<span class="aoc-lot-meta-item"><b>RP</b>__lot_equineRP__</span>', '')
+            .replace('<span class="aoc-dot-sep">•</span><b>RP __lot_equineRP__</b>', '');
+    }
+    if (!lot.equineHair) {
+        html = html
+            .replace('<span class="aoc-lot-meta-item"><b>Pelo</b>__lot_equineHair__</span>', '')
+            .replace('<span class="aoc-dot-sep">•</span><b>__lot_equineHair__</b>', '');
+    }
+    if (!lot.equineBirth) {
+        html = html.replace('<span class="aoc-lot-meta-item"><b>Nacimiento</b>__lot_equineBirth__</span>', '');
+    }
+    return html;
+}
